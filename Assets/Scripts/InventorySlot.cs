@@ -77,10 +77,10 @@ public class InventorySlot : MonoBehaviour
         // SOLUCIÓN ESTRUCTURAL: Si forceUpdate es true, siempre actualizar incluso si el item es el mismo
         // Esto es necesario cuando el panel se reactiva porque Unity puede haber limpiado los sprites
         if (forceUpdate || currentItem != itemInstance)
-        {
-            currentItem = itemInstance;
+    {
+        currentItem = itemInstance;
             UpdateVisuals(forceUpdate);
-            OnItemChanged?.Invoke(this, itemInstance);
+        OnItemChanged?.Invoke(this, itemInstance);
         }
     }
 

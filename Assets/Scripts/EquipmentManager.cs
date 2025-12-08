@@ -497,8 +497,8 @@ public class EquipmentManager : MonoBehaviour
             
             // Solo añadir si no está ya en el inventario
             if (!itemAlreadyInInventory)
-            {
-                inventoryManager.AddItem(previousItem);
+        {
+            inventoryManager.AddItem(previousItem);
             }
             else
             {

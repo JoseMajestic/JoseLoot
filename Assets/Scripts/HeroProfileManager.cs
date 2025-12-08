@@ -226,7 +226,7 @@ public class HeroProfileManager : MonoBehaviour
             }
             
             if (!allImagesReady)
-            {
+    {
                 yield return null;
                 waitFrames++;
             }
@@ -391,7 +391,7 @@ public class HeroProfileManager : MonoBehaviour
                     // Asegurar que el componente Image esté habilitado y activo
                     if (!slotImage.enabled)
                     {
-                        slotImage.enabled = true;
+                    slotImage.enabled = true;
                     }
                     
                     // Asegurar que el GameObject esté activo
