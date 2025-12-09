@@ -102,6 +102,13 @@ public class ItemImprovementSystem : MonoBehaviour
         playerMoney.SubtractMoney(improvementCost);
         itemInstance.LevelUp();
 
+        // SOLUCIÓN: Guardar el perfil ANTES de invocar el evento
+        // Esto asegura que cuando los listeners se ejecuten, el perfil ya esté actualizado
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
+
         OnItemImproved?.Invoke(itemInstance, previousLevel, itemInstance.currentLevel);
         Debug.Log($"Item '{itemInstance.GetItemName()}' mejorado de nivel {previousLevel} a {itemInstance.currentLevel}. Coste: {improvementCost}.");
 

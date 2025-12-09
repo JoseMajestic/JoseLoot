@@ -34,10 +34,31 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        // Si está configurado para cargar test items automáticamente al hacer Play
+        // SOLUCIÓN: Solo cargar test items si el inventario está vacío
+        // Esto evita que los test items sobrescriban el inventario cargado desde PlayerPrefs
         if (loadTestItemsOnPlay)
         {
-            AddAllTestItems();
+            // Verificar si el inventario está vacío antes de cargar test items
+            bool inventoryIsEmpty = true;
+            for (int i = 0; i < INVENTORY_SIZE; i++)
+            {
+                if (inventory[i] != null && inventory[i].IsValid())
+                {
+                    inventoryIsEmpty = false;
+                    break;
+                }
+            }
+            
+            // Solo cargar test items si el inventario está vacío
+            // Si hay datos guardados (cargados desde PlayerPrefs), no sobrescribirlos
+            if (inventoryIsEmpty)
+            {
+                AddAllTestItems();
+            }
+            else
+            {
+                Debug.Log("Inventario ya contiene datos guardados. No se cargarán test items para evitar sobrescribir el progreso.");
+            }
         }
     }
 
@@ -170,6 +191,29 @@ public class InventoryManager : MonoBehaviour
         inventory[index] = null;
         OnItemRemoved?.Invoke(index);
         OnInventoryChanged?.Invoke();
+        return true;
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Elimina un item del inventario sin disparar eventos.
+    /// Útil para carga silenciosa del equipo.
+    /// </summary>
+    public bool RemoveItemSilent(int index)
+    {
+        if (index < 0 || index >= INVENTORY_SIZE)
+        {
+            Debug.LogWarning($"Índice fuera de rango: {index}");
+            return false;
+        }
+
+        if (inventory[index] == null || !inventory[index].IsValid())
+        {
+            Debug.LogWarning($"El slot {index} ya está vacío.");
+            return false;
+        }
+
+        inventory[index] = null;
+        // No disparar eventos
         return true;
     }
 
@@ -409,7 +453,9 @@ public class InventoryManager : MonoBehaviour
     /// Deserializa el inventario desde BD.
     /// Requiere ItemDatabase para buscar los ItemData por nombre.
     /// </summary>
-    public void DeserializeInventory(string[] serialized)
+    /// <param name="serialized">Array de strings serializados</param>
+    /// <param name="silent">Si es true, no dispara OnInventoryChanged (útil para carga inicial)</param>
+    public void DeserializeInventory(string[] serialized, bool silent = false)
     {
         if (serialized == null || serialized.Length != INVENTORY_SIZE)
         {
@@ -445,7 +491,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        OnInventoryChanged?.Invoke();
+        // SOLUCIÓN: Solo disparar evento si no es carga silenciosa
+        // Esto evita que se refresque la UI antes de que el inventario esté completamente cargado
+        if (!silent)
+        {
+            OnInventoryChanged?.Invoke();
+        }
     }
 
     /// <summary>

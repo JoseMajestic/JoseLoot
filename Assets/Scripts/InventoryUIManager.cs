@@ -37,6 +37,9 @@ public class InventoryUIManager : MonoBehaviour
     [Tooltip("Referencia al EquipmentManager (necesario para detectar items equipados)")]
     [SerializeField] private EquipmentManager equipmentManager;
 
+    [Tooltip("Referencia al ItemImprovementSystem (opcional, para detectar mejoras de items)")]
+    [SerializeField] private ItemImprovementSystem improvementSystem;
+
     [Tooltip("Referencia al PlayerMoney (para mostrar dinero y vender items)")]
     [SerializeField] private PlayerMoney playerMoney;
 
@@ -94,6 +97,9 @@ public class InventoryUIManager : MonoBehaviour
     [Tooltip("Texto que muestra la Rareza del item seleccionado")]
     [SerializeField] private TextMeshProUGUI rarezaText;
     
+    [Tooltip("Texto que muestra el título/nombre del item seleccionado")]
+    [SerializeField] private TextMeshProUGUI itemTitleText;
+
     [Tooltip("Texto que muestra la Descripción del item seleccionado")]
     [SerializeField] private TextMeshProUGUI descriptionText;
 
@@ -120,9 +126,71 @@ public class InventoryUIManager : MonoBehaviour
     private InventorySlot[] slotComponents; // Componentes InventorySlot de cada botón
     private InventorySlot currentlySelectedSlot; // Slot actualmente seleccionado
     private ItemInstance currentlyViewedItem; // Item actualmente visualizado en el visor
+    private System.Action onInventoryChangedHandler; // Referencia al handler para poder desuscribirse
+    
+    // Estado guardado del inventario para comparación
+    private ItemInstance[] savedVisualState; // Estado VISUAL de los slots la última vez que se cerró el panel (lo que cada slot mostraba)
+    private bool initialized; // Evita inicializar más de una vez cuando el GO estaba inactivo
+
+    private void Awake()
+    {
+        EnsureInitialized();
+    }
 
     private void Start()
     {
+        // Awake ya garantiza EnsureInitialized() incluso si estaba inactivo
+        EnsureInitialized();
+    }
+
+    /// <summary>
+    /// Se llama cuando el GameObject se activa.
+    /// Refresca la UI para asegurar que se muestre correctamente aunque el panel estuviera desactivado al inicio.
+    /// Compara el estado actual del inventario con el guardado y refresca si hay cambios.
+    /// </summary>
+    private void OnEnable()
+    {
+        EnsureInitialized();
+        
+        // SOLUCIÓN: Sincronizar niveles desde el perfil guardado sin recargar todo el inventario
+        // Esto asegura que los niveles estén actualizados incluso si el panel estaba inactivo
+        // cuando se mejoró un objeto, pero sin sobrescribir el inventario en memoria
+        if (GameDataManager.Instance != null && inventoryManager != null)
+        {
+            // Sincronizar niveles desde PlayerPrefs sin recargar todo
+            GameDataManager.Instance.SyncInventoryLevelsFromProfile();
+        }
+        
+        // SOLUCIÓN ARQUITECTÓNICA: Polling para detectar y corregir discrepancias de nivel
+        // Compara el nivel actual del ItemInstance en memoria con el nivel mostrado en el slot
+        // Si hay diferencia, fuerza actualización
+        PollAndUpdateAllSlots();
+        
+        // Si el inventario ya está inicializado, refrescar la UI
+        // Esto es importante si el panel estaba desactivado al inicio
+        if (inventoryManager != null && slotComponents != null)
+        {
+            // SOLUCIÓN: SIEMPRE forzar actualización completa de todos los slots al abrir el panel
+            // Esto asegura que todos los niveles y sprites se actualicen correctamente
+            // Los niveles ahora están sincronizados desde el perfil guardado
+            StartCoroutine(RefreshAllSlotsWhenReady(forceRefresh: true));
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando el GameObject se desactiva.
+    /// Guarda el estado VISUAL actual de los slots (lo que cada slot está mostrando) para comparación la próxima vez que se abra.
+    /// </summary>
+    private void OnDisable()
+    {
+        SaveVisualState();
+    }
+
+    private void EnsureInitialized()
+    {
+        if (initialized)
+            return;
+
         // Configurar botón de vender (no depende de GameDataManager)
         if (sellButton != null)
         {
@@ -137,7 +205,9 @@ public class InventoryUIManager : MonoBehaviour
         {
             inventoryManager.OnItemAdded += OnItemAdded;
             inventoryManager.OnItemRemoved += OnItemRemoved;
-            inventoryManager.OnInventoryChanged += RefreshAllSlots;
+            // Guardar referencia al handler para poder desuscribirse correctamente
+            onInventoryChangedHandler = () => RefreshAllSlots(false);
+            inventoryManager.OnInventoryChanged += onInventoryChangedHandler;
         }
 
         // Suscribirse a eventos del equipo (no depende de GameDataManager)
@@ -148,35 +218,104 @@ public class InventoryUIManager : MonoBehaviour
             equipmentManager.OnEquipmentChanged += RefreshEquippedPanels;
         }
 
+        // Suscribirse a eventos de mejora de items (para actualizar niveles cuando se mejora desde Forja)
+        if (improvementSystem != null)
+        {
+            improvementSystem.OnItemImproved += OnItemImproved;
+        }
+
         // Inicializar referencias de GameDataManager después de un frame
         // Esto asegura que GameDataManager esté completamente inicializado
         StartCoroutine(InitializeGameDataManagerReferences());
         
         // Refrescar todos los slots al inicio (después de un frame para asegurar orden)
         StartCoroutine(RefreshAfterFrame());
+
+        initialized = true;
     }
 
     /// <summary>
-    /// Se llama cuando el GameObject se activa.
-    /// Refresca la UI para asegurar que se muestre correctamente aunque el panel estuviera desactivado al inicio.
+    /// Guarda el estado VISUAL actual de los slots (lo que cada slot está mostrando).
+    /// Esto se guarda después de refrescar, para comparar con el estado visual la próxima vez que se abra el panel.
     /// </summary>
-    private void OnEnable()
+    private void SaveVisualState()
     {
-        // Si el inventario ya está inicializado, refrescar la UI
-        // Esto es importante si el panel estaba desactivado al inicio
-        if (inventoryManager != null && slotComponents != null)
+        if (slotComponents == null)
+            return;
+
+        savedVisualState = new ItemInstance[InventoryManager.INVENTORY_SIZE];
+        for (int i = 0; i < InventoryManager.INVENTORY_SIZE && i < slotComponents.Length; i++)
         {
-            // SOLUCIÓN: Usar corrutina para esperar a que los componentes estén listos
-            // Unity necesita tiempo para inicializar los componentes Image cuando se activa el GameObject
-            StartCoroutine(RefreshAllSlotsWhenReady());
+            if (slotComponents[i] != null)
+            {
+                // Guardar lo que el slot está mostrando visualmente (su currentItem)
+                savedVisualState[i] = slotComponents[i].GetItem();
+            }
+            else
+            {
+                savedVisualState[i] = null;
+            }
         }
+    }
+
+    /// <summary>
+    /// Compara el estado VISUAL guardado (lo que los slots mostraban) con el estado REAL del inventario.
+    /// Detecta cambios: nuevos items, items eliminados, o items mejorados (cambio de nivel).
+    /// </summary>
+    /// <returns>True si hay cambios que requieren refresco completo, false si no hay cambios</returns>
+    private bool CompareVisualStateWithInventory()
+    {
+        if (inventoryManager == null || slotComponents == null)
+            return true; // Si no hay inventario o slots, refrescar por seguridad
+
+        // Si no hay estado visual guardado, siempre refrescar
+        if (savedVisualState == null)
+        {
+            return true;
+        }
+
+        // Comparar el estado visual guardado (lo que los slots mostraban) con el estado real del inventario
+        for (int i = 0; i < InventoryManager.INVENTORY_SIZE && i < slotComponents.Length; i++)
+        {
+            // Estado REAL del inventario (lo que debería mostrarse)
+            ItemInstance realItem = inventoryManager.GetItem(i);
+            
+            // Estado VISUAL guardado (lo que el slot mostraba la última vez)
+            ItemInstance savedVisualItem = savedVisualState[i];
+
+            // Si el item cambió (nuevo item, item eliminado, o referencia diferente)
+            if (realItem != savedVisualItem)
+            {
+                return true; // Hay cambios, necesita refresco
+            }
+
+            // Si ambos items existen, comparar por identidad y nivel
+            if (realItem != null && realItem.IsValid() && savedVisualItem != null && savedVisualItem.IsValid())
+            {
+                // Si no son la misma instancia, hay cambios
+                if (!realItem.IsSameInstance(savedVisualItem))
+                {
+                    return true;
+                }
+
+                // Si el nivel cambió (item mejorado), hay cambios
+                if (realItem.currentLevel != savedVisualItem.currentLevel)
+                {
+                    return true;
+                }
+            }
+        }
+
+        // No hay cambios
+        return false;
     }
 
     /// <summary>
     /// Refresca todos los slots cuando los componentes están listos.
     /// SOLUCIÓN 4: Asignación diferida - Verifica que el Canvas y todos los Image estén completamente listos antes de asignar sprites.
     /// </summary>
-    private IEnumerator RefreshAllSlotsWhenReady()
+    /// <param name="forceRefresh">Si es true, fuerza actualización completa incluso si no hay cambios detectados</param>
+    private IEnumerator RefreshAllSlotsWhenReady(bool forceRefresh = true)
     {
         if (inventoryManager == null || slotComponents == null)
             yield break;
@@ -242,30 +381,118 @@ public class InventoryUIManager : MonoBehaviour
         yield return null; // Frame adicional
         yield return new WaitForEndOfFrame(); // Esperar hasta el final del frame
         
-        // SOLUCIÓN ESTRUCTURAL: Forzar actualización completa de todos los slots
-        // SIN comparaciones - esto asegura que los sprites se recarguen incluso si el item es el mismo
-        // "Clonamos" la información del inventario leyendo directamente desde InventoryManager
-        for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
-        {
-            if (i < slotComponents.Length && slotComponents[i] != null)
-            {
-                // Leer directamente desde el inventario (como si fuera una "instancia/clon" fresca)
-                ItemInstance item = inventoryManager.GetItem(i);
-                
-                // Forzar actualización con forceUpdate=true
-                // UpdateVisuals() ahora maneja la limpieza y recarga del sprite cuando forceUpdate es true
-                slotComponents[i].SetItem(item, forceUpdate: true);
-            }
-        }
+        // SOLUCIÓN ESTRUCTURAL: Forzar actualización completa de todos los slots si hay cambios o si se fuerza
+        // Esto lee directamente desde InventoryManager y fuerza la actualización de sprites y textos
+        RefreshAllSlots(forceRefreshAll: forceRefresh);
+        
+        // SOLUCIÓN: Forzar actualización de todos los TextMeshProUGUI después de refrescar
+        // Esto asegura que los textos se rendericen correctamente incluso si el panel estaba inactivo
+        ForceUpdateAllLevelTexts();
+        
+        // Guardar el nuevo estado VISUAL después de refrescar (lo que los slots están mostrando ahora)
+        SaveVisualState();
         
         // Esperar otro frame para que Unity procese los cambios de sprites
         yield return null;
         
+        // SOLUCIÓN SENCILLA: Refresco final agresivo de todos los textos después de que todo esté listo
+        // Esto lee directamente desde el inventario y actualiza todos los textos sin pasar por SetItem()
+        // Se ejecuta al final para asegurar que los niveles ya están sincronizados y los componentes están activos
+        yield return null; // Frame adicional para asegurar que todo se procesó
+        yield return new WaitForEndOfFrame(); // Esperar hasta el final del frame
+        
+        ForceRefreshAllLevelTextsDirectly();
+        
         // Forzar actualización del canvas para asegurar que los sprites se rendericen
         UnityEngine.Canvas.ForceUpdateCanvases();
-        
-        // Refrescar paneles de equipado
-        RefreshEquippedPanels();
+    }
+
+    /// <summary>
+    /// SOLUCIÓN ARQUITECTÓNICA: Polling para detectar y corregir discrepancias de nivel.
+    /// Compara el nivel actual del ItemInstance en memoria con el nivel mostrado en el slot.
+    /// Si hay diferencia, fuerza actualización. Se llama en OnEnable() después de sincronizar niveles.
+    /// </summary>
+    private void PollAndUpdateAllSlots()
+    {
+        if (slotComponents == null || inventoryManager == null)
+            return;
+
+        for (int i = 0; i < slotComponents.Length && i < InventoryManager.INVENTORY_SIZE; i++)
+        {
+            if (slotComponents[i] != null)
+            {
+                ItemInstance slotItem = slotComponents[i].GetItem();
+                ItemInstance inventoryItem = inventoryManager.GetItem(i);
+                
+                // Si hay item en inventario y en slot, comparar niveles
+                if (slotItem != null && slotItem.IsValid() && 
+                    inventoryItem != null && inventoryItem.IsValid() &&
+                    slotItem.IsSameInstance(inventoryItem))
+                {
+                    // Si el nivel en memoria es diferente al mostrado, forzar actualización
+                    // Esto puede pasar si el panel estaba inactivo cuando se mejoró el item
+                    if (slotItem.currentLevel != inventoryItem.currentLevel)
+                    {
+                        // El nivel cambió, forzar actualización
+                        slotComponents[i].SetItem(inventoryItem, forceUpdate: true);
+                    }
+                }
+                // Si hay item en inventario pero el slot está vacío (o viceversa), actualizar
+                else if ((inventoryItem != null && inventoryItem.IsValid()) != 
+                         (slotItem != null && slotItem.IsValid()))
+                {
+                    // Hay discrepancia, forzar actualización
+                    slotComponents[i].SetItem(inventoryItem, forceUpdate: true);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Fuerza la actualización de todos los slots directamente, sin simular clicks.
+    /// Lee el ItemInstance desde el inventario y actualiza los visuales (sprites y textos) directamente.
+    /// Se ejecuta al final de RefreshAllSlotsWhenReady() para asegurar que todo esté listo.
+    /// Esta solución evita depender del EventSystem que requiere clicks reales del mouse.
+    /// </summary>
+    private void ForceRefreshAllLevelTextsDirectly()
+    {
+        if (slotComponents == null || inventoryManager == null)
+            return;
+
+        // Iterar sobre todos los slots y actualizar los visuales directamente
+        for (int i = 0; i < slotComponents.Length && i < InventoryManager.INVENTORY_SIZE; i++)
+        {
+            if (slotComponents[i] != null)
+            {
+                // Asegurar que el slot esté activo
+                if (!slotComponents[i].gameObject.activeSelf)
+                {
+                    slotComponents[i].gameObject.SetActive(true);
+                }
+
+                // Leer el ItemInstance actualizado directamente desde el inventario
+                ItemInstance item = inventoryManager.GetItem(i);
+                
+                // SOLUCIÓN: FORZAR actualización completa del slot (incluyendo currentItem y visuales)
+                // Usar forceUpdate: true para asegurar que se actualice incluso si el item es el mismo
+                // Esto garantiza que currentItem esté actualizado antes de llamar a ForceUpdateVisualsDirectly()
+                if (item != null && item.IsValid())
+                {
+                    slotComponents[i].SetItem(item, forceUpdate: true); // FORZAR actualización completa
+                }
+                else
+                {
+                    // Slot vacío: limpiar también con forceUpdate
+                    slotComponents[i].SetItem(null, forceUpdate: true);
+                }
+                
+                // SOLUCIÓN: Forzar actualización directa de los visuales (sprites y textos)
+                // Esto evita depender del EventSystem y del estado del componente que requiere un click real
+                // ForceUpdateVisualsDirectly() llama internamente a UpdateVisuals(forceRefresh: true)
+                // que actualiza tanto sprites como textos de forma agresiva
+                slotComponents[i].ForceUpdateVisualsDirectly();
+            }
+        }
     }
 
     /// <summary>
@@ -376,7 +603,10 @@ public class InventoryUIManager : MonoBehaviour
         {
             inventoryManager.OnItemAdded -= OnItemAdded;
             inventoryManager.OnItemRemoved -= OnItemRemoved;
-            inventoryManager.OnInventoryChanged -= RefreshAllSlots;
+            if (onInventoryChangedHandler != null)
+            {
+                inventoryManager.OnInventoryChanged -= onInventoryChangedHandler;
+            }
         }
 
         // Desuscribirse de eventos del equipo
@@ -385,6 +615,12 @@ public class InventoryUIManager : MonoBehaviour
             equipmentManager.OnItemEquipped -= OnItemEquipped;
             equipmentManager.OnItemUnequipped -= OnItemUnequipped;
             equipmentManager.OnEquipmentChanged -= RefreshEquippedPanels;
+        }
+
+        // Desuscribirse de eventos de mejora de items
+        if (improvementSystem != null)
+        {
+            improvementSystem.OnItemImproved -= OnItemImproved;
         }
 
         // Desuscribirse de eventos de los slots
@@ -440,7 +676,8 @@ public class InventoryUIManager : MonoBehaviour
     {
         if (slotIndex >= 0 && slotIndex < slotComponents.Length && slotComponents[slotIndex] != null)
         {
-            slotComponents[slotIndex].SetItem(itemInstance);
+            // Forzar actualización cuando se añade un item nuevo (especialmente desde cofres)
+            slotComponents[slotIndex].SetItem(itemInstance, forceUpdate: true);
         }
     }
 
@@ -461,7 +698,8 @@ public class InventoryUIManager : MonoBehaviour
     /// Preserva el visor de detalles si hay un item visualizado.
     /// Evita actualizaciones innecesarias comparando items antes de actualizar.
     /// </summary>
-    private void RefreshAllSlots()
+    /// <param name="forceRefreshAll">Si es true, fuerza actualización completa de todos los slots sin comparaciones (útil al reactivar panel)</param>
+    private void RefreshAllSlots(bool forceRefreshAll = false)
     {
         if (inventoryManager == null)
             return;
@@ -470,6 +708,61 @@ public class InventoryUIManager : MonoBehaviour
         ItemInstance savedViewedItem = currentlyViewedItem;
         InventorySlot savedSelectedSlot = currentlySelectedSlot;
 
+        // Si forceRefreshAll es true, actualizar TODOS los slots sin comparaciones
+        // Esto es necesario cuando se reactiva el panel para asegurar que todos los sprites se carguen correctamente
+        if (forceRefreshAll)
+        {
+            // Forzar actualización completa de todos los slots desde el inventario
+            for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
+            {
+                if (i < slotComponents.Length && slotComponents[i] != null)
+                {
+                    ItemInstance item = inventoryManager.GetItem(i);
+                    // SIEMPRE forzar actualización cuando se reactiva el panel
+                    slotComponents[i].SetItem(item, forceUpdate: true);
+                }
+            }
+
+            // Restaurar el visor si había un item visualizado
+            if (savedSelectedSlot != null && savedViewedItem != null && savedViewedItem.IsValid())
+            {
+                // Buscar el slot que ahora contiene el item visualizado (puede haber cambiado de posición)
+                bool found = false;
+                for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
+                {
+                    if (i < slotComponents.Length && slotComponents[i] != null)
+                    {
+                        ItemInstance currentItem = slotComponents[i].GetItem();
+                        if (currentItem != null && currentItem.IsValid() &&
+                            savedViewedItem != null && savedViewedItem.IsValid() &&
+                            savedViewedItem.IsSameInstance(currentItem))
+                        {
+                            // Encontrado el slot con el mismo item, restaurar el visor
+                            UpdateDetailView(slotComponents[i]);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                
+                // Si no se encontró el item, limpiar el visor
+                if (!found)
+                {
+                    ClearDetailView();
+                }
+            }
+            else
+            {
+                // Si no había item visualizado, asegurar que el visor esté limpio
+                ClearDetailView();
+            }
+
+            // Refrescar paneles de equipado
+            RefreshEquippedPanels();
+            return;
+        }
+
+        // Lógica normal con comparaciones (optimizada para eventos normales)
         // Guardar estados de los items antes de refrescar (para evitar actualizaciones innecesarias)
         ItemInstance[] savedItems = new ItemInstance[InventoryManager.INVENTORY_SIZE];
         for (int i = 0; i < InventoryManager.INVENTORY_SIZE && i < slotComponents.Length; i++)
@@ -485,6 +778,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             if (i < slotComponents.Length && slotComponents[i] != null)
             {
+                // SOLUCIÓN: Leer siempre el item actualizado directamente desde InventoryManager
+                // Esto asegura que si un item fue mejorado, leemos el nivel actualizado
                 ItemInstance item = inventoryManager.GetItem(i);
                 
                 // Solo actualizar si el item realmente cambió (comparación por referencia)
@@ -508,21 +803,19 @@ public class InventoryUIManager : MonoBehaviour
                     // El slot visual tiene un item pero el inventario está vacío
                     needsUpdate = true;
                 }
-                // SOLUCIÓN ESTRUCTURAL: Si el item es el mismo pero el sprite podría no estar cargado, forzar actualización
-                bool forceUpdate = false;
-                if (item != null && item.IsValid() && previousItem != null && previousItem.IsValid() &&
-                    item == previousItem)
+                // SOLUCIÓN ESTRUCTURAL: Si el item es el mismo pero el nivel cambió (item mejorado), forzar actualización
+                else if (item != null && item.IsValid() && previousItem != null && previousItem.IsValid())
                 {
-                    // Mismo item, pero forzar actualización visual por si el sprite no se cargó correctamente
-                    // Esto es necesario cuando el panel estaba desactivado o cuando se añadió un item desde otro panel
-                    needsUpdate = true;
-                    forceUpdate = true;
+                    if (item.IsSameInstance(previousItem) && item.currentLevel != previousItem.currentLevel)
+                    {
+                        needsUpdate = true; // El item fue mejorado, necesita actualizar el nivel
+                    }
                 }
                 
                 if (needsUpdate)
                 {
-                    // SOLUCIÓN ESTRUCTURAL: Usar forceUpdate cuando el item es el mismo para recargar sprites
-                    slotComponents[i].SetItem(item, forceUpdate: forceUpdate);
+                    // SOLUCIÓN ESTRUCTURAL: Usar forceUpdate para recargar sprites y actualizar niveles
+                    slotComponents[i].SetItem(item, forceUpdate: true);
                 }
             }
         }
@@ -538,8 +831,8 @@ public class InventoryUIManager : MonoBehaviour
                 {
                     ItemInstance currentItem = slotComponents[i].GetItem();
                     if (currentItem != null && currentItem.IsValid() &&
-                        currentItem.baseItem == savedViewedItem.baseItem &&
-                        currentItem.currentLevel == savedViewedItem.currentLevel)
+                        savedViewedItem != null && savedViewedItem.IsValid() &&
+                        savedViewedItem.IsSameInstance(currentItem))
                     {
                         // Encontrado el slot con el mismo item, restaurar el visor
                         UpdateDetailView(slotComponents[i]);
@@ -628,13 +921,40 @@ public class InventoryUIManager : MonoBehaviour
             detailViewPanel.SetActive(true);
         }
 
-        // Obtener las stats finales del item
-        ItemStats stats = item.GetFinalStats();
-        ItemData baseItem = item.baseItem;
+        // SOLUCIÓN CRÍTICA: Leer el item actualizado directamente desde el inventario
+        // Esto asegura que tenemos la referencia más reciente con el nivel y stats actualizados
+        // El problema es que cuando se mejora un objeto, el ItemInstance se actualiza pero el slot
+        // puede tener una referencia antigua, por lo que necesitamos leer desde el inventario
+        ItemInstance updatedItem = item;
+        if (currentlySelectedSlot != null && inventoryManager != null)
+        {
+            int slotIndex = currentlySelectedSlot.GetSlotIndex();
+            ItemInstance inventoryItem = inventoryManager.GetItem(slotIndex);
+            if (inventoryItem != null && inventoryItem.IsValid() && inventoryItem.IsSameInstance(item))
+            {
+                // Usar el item del inventario que tiene el nivel más reciente
+                updatedItem = inventoryItem;
+            }
+        }
+        
+        // Obtener las stats finales del item actualizado
+        ItemStats stats = updatedItem.GetFinalStats();
+        ItemData baseItem = updatedItem.baseItem;
 
-        // Actualizar todos los textos de estadísticas
+        // Título del item (nombre con color de rareza)
+        if (itemTitleText != null)
+        {
+            itemTitleText.text = baseItem != null ? baseItem.itemName : item.GetItemName();
+            if (baseItem != null)
+            {
+                Color rarityColor = GetRarityColor(baseItem.rareza);
+                itemTitleText.color = rarityColor;
+            }
+        }
+
+        // Actualizar todos los textos de estadísticas usando el item actualizado
         if (levelText != null)
-            levelText.text = $"Nv. {item.currentLevel}";
+            levelText.text = $"Nv. {updatedItem.currentLevel}";
 
         if (hpText != null)
             hpText.text = stats.hp.ToString();
@@ -731,6 +1051,12 @@ public class InventoryUIManager : MonoBehaviour
             rarezaText.color = Color.white; // Restaurar color por defecto
         }
 
+        if (itemTitleText != null)
+        {
+            itemTitleText.text = "";
+            itemTitleText.color = Color.white;
+        }
+
         if (descriptionText != null)
         {
             descriptionText.text = "";
@@ -757,6 +1083,73 @@ public class InventoryUIManager : MonoBehaviour
 
         // Buscar el slot del inventario que contiene este item
         UpdateEquippedPanelForItem(itemInstance, true);
+    }
+
+    /// <summary>
+    /// Se llama cuando se mejora un item. Refresca todos los slots para actualizar los niveles.
+    /// </summary>
+    private void OnItemImproved(ItemInstance itemInstance, int previousLevel, int newLevel)
+    {
+        // SOLUCIÓN: Forzar actualización completa de todos los slots cuando se mejora un item
+        // Esto asegura que los niveles se actualicen correctamente sin necesidad de hacer clic
+        RefreshAllSlots(forceRefreshAll: true);
+        
+        // SOLUCIÓN: Forzar actualización de todos los TextMeshProUGUI después de refrescar
+        // Esto asegura que los textos se rendericen correctamente incluso si el panel estaba inactivo
+        ForceUpdateAllLevelTexts();
+        
+        // SOLUCIÓN CRÍTICA: Si el objeto mejorado es el que está siendo visualizado en el visor,
+        // actualizar el visor para mostrar los nuevos datos (nivel y stats actualizados)
+        // El problema es que cuando se mejora un objeto, el ItemInstance se actualiza pero el visor
+        // no se actualiza automáticamente, por lo que muestra los valores antiguos
+        if (currentlyViewedItem != null && currentlyViewedItem.IsValid() && 
+            currentlyViewedItem.IsSameInstance(itemInstance))
+        {
+            // El objeto visualizado fue mejorado, actualizar el visor con los nuevos datos
+            // Leer el item actualizado directamente desde el inventario para asegurar que tenemos
+            // la referencia más reciente con el nivel y stats actualizados
+            if (currentlySelectedSlot != null)
+            {
+                int slotIndex = currentlySelectedSlot.GetSlotIndex();
+                ItemInstance updatedItem = inventoryManager.GetItem(slotIndex);
+                if (updatedItem != null && updatedItem.IsValid() && updatedItem.IsSameInstance(itemInstance))
+                {
+                    // Actualizar el slot con el item actualizado
+                    currentlySelectedSlot.SetItem(updatedItem, forceUpdate: true);
+                    // Actualizar el visor con los nuevos datos
+                    UpdateDetailView(currentlySelectedSlot);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fuerza la actualización de todos los textos de nivel en los slots del inventario.
+    /// Útil cuando el panel estaba inactivo durante una mejora de item.
+    /// </summary>
+    private void ForceUpdateAllLevelTexts()
+    {
+        if (slotComponents == null)
+            return;
+
+        for (int i = 0; i < slotComponents.Length && i < InventoryManager.INVENTORY_SIZE; i++)
+        {
+            if (slotComponents[i] != null)
+            {
+                ItemInstance item = slotComponents[i].GetItem();
+                if (item != null && item.IsValid())
+                {
+                    // SOLUCIÓN: Leer el item actualizado directamente desde el inventario
+                    // Esto asegura que tenemos el nivel más reciente
+                    ItemInstance inventoryItem = inventoryManager.GetItem(i);
+                    if (inventoryItem != null && inventoryItem.IsValid())
+                    {
+                        // Forzar actualización del slot para asegurar que el texto se renderice
+                        slotComponents[i].SetItem(inventoryItem, forceUpdate: true);
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -791,12 +1184,8 @@ public class InventoryUIManager : MonoBehaviour
             {
                 ItemInstance slotItem = slotComponents[i].GetItem();
                 
-                // Comparar items: primero por referencia directa (más rápido y preciso)
-                // Si no coincide, comparar por ItemData base y nivel
-                bool isSameItem = (slotItem == itemInstance) || // Misma referencia
-                                 (slotItem != null && slotItem.IsValid() &&
-                                  slotItem.baseItem == itemInstance.baseItem &&
-                                  slotItem.currentLevel == itemInstance.currentLevel);
+                // Comparar instancias por identidad (instanceId) o referencia
+                bool isSameItem = slotItem != null && slotItem.IsValid() && slotItem.IsSameInstance(itemInstance);
                 
                 if (isSameItem)
                 {
@@ -1015,6 +1404,12 @@ public class InventoryUIManager : MonoBehaviour
             playerMoney.AddMoney(sellPrice);
 
             Debug.Log($"Item '{itemInSlot.GetItemName()}' (nivel {itemInSlot.currentLevel}) vendido por {sellPrice} monedas.");
+
+            // SOLUCIÓN: Limpiar también la selección en EquipmentManager para evitar duplicación al equipar
+            if (equipmentManager != null)
+            {
+                equipmentManager.SetSelectedItemForEquip(null);
+            }
 
             // Limpiar el visor ya que el item ya no existe
             ClearDetailView();

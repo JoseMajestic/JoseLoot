@@ -19,9 +19,15 @@ public class HeroProfileManager : MonoBehaviour
     [Tooltip("Referencia al PlayerMoney")]
     [SerializeField] private PlayerMoney playerMoney;
 
+    [Tooltip("Referencia al ItemImprovementSystem (opcional, para detectar mejoras de items)")]
+    [SerializeField] private ItemImprovementSystem improvementSystem;
+
     [Header("UI de Monedas")]
     [Tooltip("Texto que muestra las monedas del jugador")]
     [SerializeField] private TextMeshProUGUI moneyText;
+
+    [Tooltip("Texto que muestra el tiempo jugado total")]
+    [SerializeField] private TextMeshProUGUI totalPlayTimeText;
 
     [Header("UI de Slots de Equipo")]
     [Tooltip("Image que muestra el sprite del item equipado en el slot Arma")]
@@ -116,6 +122,15 @@ public class HeroProfileManager : MonoBehaviour
     [Tooltip("Destreza base del héroe (sin equipo)")]
     [SerializeField] private int baseDestreza = 0;
 
+    [Header("Tiempo Jugado")]
+    [Tooltip("Tiempo total jugado en segundos (se actualizará desde el sistema de guardado)")]
+    [SerializeField] private float totalPlayTimeSeconds = 0f;
+
+    [Tooltip("Si está marcado, el tiempo se incrementa automáticamente cada segundo")]
+    [SerializeField] private bool autoIncrementTime = true;
+
+    private Coroutine timeUpdateCoroutine;
+
     private void Start()
     {
         // Obtener referencias desde GameDataManager si no están asignadas
@@ -157,8 +172,33 @@ public class HeroProfileManager : MonoBehaviour
             playerMoney.OnMoneyChanged += OnMoneyChanged;
         }
 
+        // Suscribirse a eventos de mejora de items (para actualizar niveles cuando se mejora desde Forja)
+        if (improvementSystem != null)
+        {
+            improvementSystem.OnItemImproved += OnItemImproved;
+        }
+        
+        // SOLUCIÓN ARQUITECTÓNICA: Suscribirse a OnLevelChanged de items equipados para recibir notificaciones directas
+        // Esto asegura que cuando un item equipado cambia de nivel, el panel se actualice inmediatamente
+        if (equipmentManager != null)
+        {
+            // Suscribirse a cambios de nivel de todos los items equipados actuales
+            SubscribeToEquippedItemsLevelChanges();
+        }
+
         // Refrescar toda la UI al inicio (después de un frame para asegurar orden)
         StartCoroutine(RefreshAfterFrame());
+
+        // Iniciar actualización continua del tiempo si está habilitado
+        if (autoIncrementTime && totalPlayTimeText != null)
+        {
+            StartTimeUpdate();
+        }
+        else if (totalPlayTimeText != null)
+        {
+            // Si no se auto-incrementa, actualizar una vez con el tiempo actual
+            UpdateTotalPlayTime(totalPlayTimeSeconds);
+        }
     }
 
     /// <summary>
@@ -178,6 +218,19 @@ public class HeroProfileManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // SOLUCIÓN CRÍTICA: Sincronizar niveles de items equipados desde el perfil guardado
+        // Esto asegura que los niveles estén actualizados incluso si el panel estaba inactivo
+        // cuando se mejoró un objeto en la forja
+        if (GameDataManager.Instance != null && equipmentManager != null)
+        {
+            GameDataManager.Instance.SyncEquippedItemLevelsFromProfile();
+        }
+        
+        // SOLUCIÓN ARQUITECTÓNICA: Polling para detectar y corregir discrepancias de nivel en slots de equipo
+        // Compara el nivel actual del ItemInstance en memoria con el nivel mostrado en el slot
+        // Si hay diferencia, fuerza actualización
+        PollAndUpdateEquipmentSlots();
+        
         // Si el equipo ya está inicializado, refrescar la UI
         if (equipmentManager != null)
         {
@@ -185,11 +238,28 @@ public class HeroProfileManager : MonoBehaviour
             // Unity necesita tiempo para inicializar los componentes Image cuando se activa el GameObject
             StartCoroutine(RefreshEquipmentSlotsWhenReady());
         }
+
+        // Reiniciar actualización del tiempo si está habilitado
+        if (autoIncrementTime && totalPlayTimeText != null && timeUpdateCoroutine == null)
+        {
+            StartTimeUpdate();
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Detener actualización del tiempo cuando el panel se desactiva
+        if (timeUpdateCoroutine != null)
+        {
+            StopCoroutine(timeUpdateCoroutine);
+            timeUpdateCoroutine = null;
+        }
     }
 
     /// <summary>
     /// Refresca los slots de equipo cuando los componentes están listos.
     /// SOLUCIÓN 4: Asignación diferida - Verifica que el Canvas y todos los Image estén completamente listos antes de asignar sprites.
+    /// SIEMPRE fuerza la actualización completa de todos los slots al abrir el panel.
     /// </summary>
     private IEnumerator RefreshEquipmentSlotsWhenReady()
     {
@@ -226,7 +296,7 @@ public class HeroProfileManager : MonoBehaviour
             }
             
             if (!allImagesReady)
-    {
+            {
                 yield return null;
                 waitFrames++;
             }
@@ -239,7 +309,8 @@ public class HeroProfileManager : MonoBehaviour
         yield return null; // Frame adicional
         yield return new WaitForEndOfFrame(); // Esperar hasta el final del frame
         
-        // Refrescar todos los slots de equipo (con forceRefresh=true)
+        // SOLUCIÓN: SIEMPRE forzar actualización completa de todos los slots al abrir el panel
+        // Esto asegura que todos los niveles y sprites se actualicen correctamente
         RefreshAllEquipmentSlots();
         
         // Refrescar monedas
@@ -251,12 +322,186 @@ public class HeroProfileManager : MonoBehaviour
         // Esperar otro frame para que Unity procese los cambios de sprites
         yield return null;
         
+        // SOLUCIÓN: Forzar actualización de todos los textos de nivel después de que los componentes estén listos
+        // Esto asegura que los textos se rendericen correctamente incluso si el panel estaba inactivo
+        ForceUpdateAllLevelTexts();
+        
+        // SOLUCIÓN SENCILLA: Refresco final agresivo de todos los textos después de que todo esté listo
+        // Esto lee directamente desde EquipmentManager y actualiza todos los textos sin pasar por UpdateEquipmentSlot()
+        // Se ejecuta al final para asegurar que los niveles ya están sincronizados y los componentes están activos
+        yield return null; // Frame adicional para asegurar que todo se procesó
+        yield return new WaitForEndOfFrame(); // Esperar hasta el final del frame
+        
+        ForceRefreshAllEquipmentLevelTextsDirectly();
+        
         // Forzar actualización del canvas para asegurar que los sprites se rendericen
         UnityEngine.Canvas.ForceUpdateCanvases();
     }
 
+    /// <summary>
+    /// SOLUCIÓN ARQUITECTÓNICA: Polling para detectar y corregir discrepancias de nivel en slots de equipo.
+    /// Compara el nivel actual del ItemInstance en memoria con el nivel mostrado en el slot.
+    /// Si hay diferencia, fuerza actualización. Se llama en OnEnable().
+    /// </summary>
+    private void PollAndUpdateEquipmentSlots()
+    {
+        if (equipmentManager == null)
+            return;
+
+        // Iterar sobre todos los slots de equipo
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            if (equippedItem != null && equippedItem.IsValid())
+            {
+                // Obtener el nivel actual mostrado en el slot (si existe)
+                // Para esto, necesitamos leer el nivel desde el TextMeshProUGUI o forzar actualización
+                // Como no tenemos acceso directo al nivel mostrado, simplemente forzamos actualización
+                // si el item está equipado (el polling detectará cambios si los hay)
+                UpdateEquipmentSlot(slotType, equippedItem, forceRefresh: true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// SOLUCIÓN SENCILLA: Fuerza la actualización de todos los textos de nivel de equipamiento directamente.
+    /// Lee el ItemInstance desde EquipmentManager y actualiza el texto sin pasar por UpdateEquipmentSlot().
+    /// Se ejecuta al final de RefreshEquipmentSlotsWhenReady() para asegurar que todo esté listo.
+    /// </summary>
+    private void ForceRefreshAllEquipmentLevelTextsDirectly()
+    {
+        if (equipmentManager == null)
+            return;
+
+        // Iterar sobre todos los slots de equipo y actualizar el texto directamente
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            if (equippedItem != null && equippedItem.IsValid())
+            {
+                // Obtener referencias al Image y Text según el slot
+                TextMeshProUGUI slotLevelText = null;
+                
+                switch (slotType)
+                {
+                    case EquipmentManager.EquipmentSlotType.Arma:
+                        slotLevelText = armaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
+                        slotLevelText = armaSecundariaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Sombrero:
+                        slotLevelText = sombreroLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Pechera:
+                        slotLevelText = pecheraLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Botas:
+                        slotLevelText = botasLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Montura:
+                        slotLevelText = monturaLevelText;
+                        break;
+                }
+
+                // SOLUCIÓN SENCILLA: Actualizar el texto directamente desde el ItemInstance
+                if (slotLevelText != null)
+                {
+                    // Asegurar que el componente esté activo y habilitado
+                    if (!slotLevelText.gameObject.activeSelf)
+                    {
+                        slotLevelText.gameObject.SetActive(true);
+                    }
+                    if (!slotLevelText.enabled)
+                    {
+                        slotLevelText.enabled = true;
+                    }
+
+                    // Limpiar primero para forzar actualización
+                    slotLevelText.text = "";
+                    Canvas.ForceUpdateCanvases();
+                    
+                    // Actualizar con el nivel actual del ItemInstance
+                    slotLevelText.text = $"Nv. {equippedItem.currentLevel}";
+                    
+                    // Forzar actualización del TextMeshProUGUI
+                    slotLevelText.ForceMeshUpdate();
+                    UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(slotLevelText.rectTransform);
+                    Canvas.ForceUpdateCanvases();
+                    
+                    // Registrar para rebuild del canvas
+                    if (slotLevelText.canvas != null)
+                    {
+                        UnityEngine.UI.CanvasUpdateRegistry.RegisterCanvasElementForGraphicRebuild(slotLevelText);
+                    }
+                }
+            }
+            else
+            {
+                // Slot vacío: limpiar texto
+                TextMeshProUGUI slotLevelText = null;
+                switch (slotType)
+                {
+                    case EquipmentManager.EquipmentSlotType.Arma:
+                        slotLevelText = armaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
+                        slotLevelText = armaSecundariaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Sombrero:
+                        slotLevelText = sombreroLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Pechera:
+                        slotLevelText = pecheraLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Botas:
+                        slotLevelText = botasLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Montura:
+                        slotLevelText = monturaLevelText;
+                        break;
+                }
+                
+                if (slotLevelText != null)
+                {
+                    slotLevelText.text = "";
+                    slotLevelText.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fuerza la actualización de todos los textos de nivel en los slots de equipo.
+    /// Útil cuando el panel estaba inactivo durante una mejora de item.
+    /// </summary>
+    private void ForceUpdateAllLevelTexts()
+    {
+        if (equipmentManager == null)
+            return;
+
+        // Forzar actualización de todos los slots de equipo para asegurar que los textos se rendericen
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            if (equippedItem != null && equippedItem.IsValid())
+            {
+                // Leer el item actualizado directamente desde EquipmentManager y forzar actualización
+                UpdateEquipmentSlot(slotType, equippedItem, forceRefresh: true);
+            }
+        }
+    }
+
     private void OnDestroy()
     {
+        // SOLUCIÓN ARQUITECTÓNICA: Desuscribirse de OnLevelChanged de items equipados
+        UnsubscribeFromEquippedItemsLevelChanges();
+        
         // Desuscribirse de eventos del equipo
         if (equipmentManager != null)
         {
@@ -270,6 +515,19 @@ public class HeroProfileManager : MonoBehaviour
         {
             playerMoney.OnMoneyChanged -= OnMoneyChanged;
         }
+
+        // Desuscribirse de eventos de mejora de items
+        if (improvementSystem != null)
+        {
+            improvementSystem.OnItemImproved -= OnItemImproved;
+        }
+
+        // Detener actualización del tiempo
+        if (timeUpdateCoroutine != null)
+        {
+            StopCoroutine(timeUpdateCoroutine);
+            timeUpdateCoroutine = null;
+        }
     }
 
     /// <summary>
@@ -277,6 +535,12 @@ public class HeroProfileManager : MonoBehaviour
     /// </summary>
     private void OnItemEquipped(EquipmentManager.EquipmentSlotType slot, ItemInstance itemInstance)
     {
+        // SOLUCIÓN ARQUITECTÓNICA: Suscribirse a OnLevelChanged del item equipado
+        if (itemInstance != null && itemInstance.IsValid())
+        {
+            itemInstance.OnLevelChanged += OnEquippedItemLevelChanged;
+        }
+        
         // Forzar actualización inmediata del slot específico
         UpdateEquipmentSlot(slot, itemInstance, forceRefresh: true);
         
@@ -292,8 +556,81 @@ public class HeroProfileManager : MonoBehaviour
     /// </summary>
     private void OnItemUnequipped(EquipmentManager.EquipmentSlotType slot, ItemInstance itemInstance)
     {
+        // SOLUCIÓN ARQUITECTÓNICA: Desuscribirse de OnLevelChanged del item desequipado
+        if (itemInstance != null && itemInstance.IsValid())
+        {
+            itemInstance.OnLevelChanged -= OnEquippedItemLevelChanged;
+        }
+        
         UpdateEquipmentSlot(slot, null, forceRefresh: true); // Forzar actualización del sprite
         RefreshHeroStats(); // Actualizar características cuando se desequipa
+    }
+    
+    /// <summary>
+    /// SOLUCIÓN ARQUITECTÓNICA: Se llama cuando el nivel de un item equipado cambia.
+    /// Fuerza la actualización del slot correspondiente en el panel de héroe.
+    /// </summary>
+    private void OnEquippedItemLevelChanged(ItemInstance item, int oldLevel, int newLevel)
+    {
+        if (equipmentManager == null || item == null || !item.IsValid())
+            return;
+        
+        // Buscar en qué slot está equipado este item
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            if (equippedItem != null && equippedItem.IsValid() && equippedItem.IsSameInstance(item))
+            {
+                // El item está equipado en este slot, forzar actualización
+                UpdateEquipmentSlot(slotType, equippedItem, forceRefresh: true);
+                RefreshHeroStats(); // Actualizar stats porque el nivel cambió
+                break;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// SOLUCIÓN ARQUITECTÓNICA: Suscribe a OnLevelChanged de todos los items equipados actuales.
+    /// </summary>
+    private void SubscribeToEquippedItemsLevelChanges()
+    {
+        if (equipmentManager == null)
+            return;
+        
+        // Suscribirse a cambios de nivel de todos los items equipados
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            if (equippedItem != null && equippedItem.IsValid())
+            {
+                equippedItem.OnLevelChanged += OnEquippedItemLevelChanged;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// SOLUCIÓN ARQUITECTÓNICA: Desuscribe de OnLevelChanged de todos los items equipados.
+    /// </summary>
+    private void UnsubscribeFromEquippedItemsLevelChanges()
+    {
+        if (equipmentManager == null)
+            return;
+        
+        // Desuscribirse de cambios de nivel de todos los items equipados
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            if (equippedItem != null && equippedItem.IsValid())
+            {
+                equippedItem.OnLevelChanged -= OnEquippedItemLevelChanged;
+            }
+        }
     }
 
     /// <summary>
@@ -327,6 +664,52 @@ public class HeroProfileManager : MonoBehaviour
     private void OnMoneyChanged(int newMoney)
     {
         RefreshMoney();
+    }
+
+    /// <summary>
+    /// Se llama cuando se mejora un item. Actualiza el slot correspondiente si el item está equipado.
+    /// </summary>
+    private void OnItemImproved(ItemInstance itemInstance, int previousLevel, int newLevel)
+    {
+        if (itemInstance == null || !itemInstance.IsValid() || equipmentManager == null)
+            return;
+
+        // SOLUCIÓN: Siempre refrescar todos los slots de equipo cuando se mejora un item
+        // Esto asegura que si el panel está activo, se actualice inmediatamente
+        // Y si el panel está inactivo, se actualizará cuando se abra (OnEnable llama a RefreshAllEquipmentSlots)
+        RefreshAllEquipmentSlots();
+        RefreshHeroStats();
+        
+        // También buscar específicamente el slot donde está equipado para forzar actualización
+        for (int i = 0; i < 6; i++)
+        {
+            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            
+            // Si el item mejorado está equipado en este slot, forzar actualización específica
+            if (equippedItem != null && equippedItem.IsValid() && equippedItem.IsSameInstance(itemInstance))
+            {
+                // SOLUCIÓN: Leer el item actualizado directamente desde EquipmentManager
+                // Esto asegura que tenemos la referencia más reciente con el nivel actualizado
+                ItemInstance updatedItem = equipmentManager.GetEquippedItem(slotType);
+                
+                // Forzar actualización del slot para mostrar el nuevo nivel
+                UpdateEquipmentSlot(slotType, updatedItem, forceRefresh: true);
+                
+                // Forzar actualización del canvas después de un frame
+                StartCoroutine(ForceUpdateAfterFrame());
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fuerza actualización del canvas después de un frame para asegurar que los cambios se rendericen.
+    /// </summary>
+    private IEnumerator ForceUpdateAfterFrame()
+    {
+        yield return null;
+        Canvas.ForceUpdateCanvases();
     }
 
     /// <summary>
@@ -438,8 +821,29 @@ public class HeroProfileManager : MonoBehaviour
         {
             if (itemInstance != null && itemInstance.IsValid())
             {
+                // SOLUCIÓN: Asegurar que el TextMeshProUGUI esté activo y habilitado antes de actualizar
+                // Esto es crítico cuando el panel estaba inactivo durante la mejora del item
+                if (!slotLevelText.gameObject.activeSelf)
+                {
+                    slotLevelText.gameObject.SetActive(true);
+                }
+                if (!slotLevelText.enabled)
+                {
+                    slotLevelText.enabled = true;
+                }
+                
+                // SOLUCIÓN: Usar siempre el nivel actual del ItemInstance directamente
+                // EquipmentManager tiene la referencia actualizada al ItemInstance, así que siempre será correcto
+                // El perfil guardado es solo para persistencia, pero para mostrar usamos el ItemInstance actual
                 slotLevelText.text = $"Nv. {itemInstance.currentLevel}";
-                slotLevelText.gameObject.SetActive(true);
+                
+                // Forzar actualización del TextMeshProUGUI para asegurar que se renderice
+                // Solo funciona si el componente está activo y habilitado
+                if (slotLevelText.isActiveAndEnabled)
+                {
+                    slotLevelText.ForceMeshUpdate();
+                    Canvas.ForceUpdateCanvases();
+                }
             }
             else
             {
@@ -489,6 +893,127 @@ public class HeroProfileManager : MonoBehaviour
         {
             moneyText.text = playerMoney.GetMoney().ToString();
         }
+    }
+
+    /// <summary>
+    /// Inicia la actualización continua del tiempo jugado.
+    /// </summary>
+    private void StartTimeUpdate()
+    {
+        if (timeUpdateCoroutine != null)
+        {
+            StopCoroutine(timeUpdateCoroutine);
+        }
+        timeUpdateCoroutine = StartCoroutine(UpdateTimeContinuously());
+    }
+
+    /// <summary>
+    /// Corrutina que actualiza el tiempo jugado cada segundo.
+    /// </summary>
+    private IEnumerator UpdateTimeContinuously()
+    {
+        while (true)
+        {
+            // Actualizar el tiempo
+            UpdateTotalPlayTime(totalPlayTimeSeconds);
+            
+            // Incrementar el tiempo si está habilitado
+            if (autoIncrementTime)
+            {
+                totalPlayTimeSeconds += 1f;
+            }
+            
+            // Esperar 1 segundo
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    /// <summary>
+    /// Actualiza el texto del tiempo jugado total con el formato especificado.
+    /// Formato: HH:MM:SS hasta 24h, luego D HH:MM:SS, luego M D HH:MM:SS, luego A M D HH:MM:SS
+    /// </summary>
+    /// <param name="totalPlayTimeSeconds">Tiempo total jugado en segundos</param>
+    public void UpdateTotalPlayTime(float totalPlayTimeSeconds)
+    {
+        if (totalPlayTimeText != null)
+        {
+            totalPlayTimeText.text = FormatPlayTime(totalPlayTimeSeconds);
+        }
+    }
+
+    /// <summary>
+    /// Formatea el tiempo jugado según las reglas:
+    /// - Hasta 24 horas: HH:MM:SS
+    /// - Después de 24 horas: D HH:MM:SS (días)
+    /// - Después de 30 días: M D HH:MM:SS (meses)
+    /// - Después de 12 meses: A M D HH:MM:SS (años)
+    /// </summary>
+    private string FormatPlayTime(float totalSeconds)
+    {
+        int totalSecondsInt = Mathf.FloorToInt(totalSeconds);
+        
+        // Calcular años (12 meses = 1 año)
+        int secondsPerMonth = 30 * 24 * 3600; // 30 días en segundos
+        int secondsPerYear = 12 * secondsPerMonth; // 12 meses en segundos
+        int years = totalSecondsInt / secondsPerYear;
+        totalSecondsInt %= secondsPerYear;
+        
+        // Calcular meses (30 días = 1 mes)
+        int months = totalSecondsInt / secondsPerMonth;
+        totalSecondsInt %= secondsPerMonth;
+        
+        // Calcular días (24 horas = 1 día)
+        int secondsPerDay = 24 * 3600;
+        int days = totalSecondsInt / secondsPerDay;
+        totalSecondsInt %= secondsPerDay;
+        
+        // Calcular horas, minutos y segundos
+        int hours = totalSecondsInt / 3600;
+        totalSecondsInt %= 3600;
+        int minutes = totalSecondsInt / 60;
+        int seconds = totalSecondsInt % 60;
+        
+        // Formatear según las reglas
+        if (years > 0)
+        {
+            // A M D HH:MM:SS
+            return $"{years}A {months}M {days}D {hours:00}:{minutes:00}:{seconds:00}";
+        }
+        else if (months > 0)
+        {
+            // M D HH:MM:SS
+            return $"{months}M {days}D {hours:00}:{minutes:00}:{seconds:00}";
+        }
+        else if (days > 0)
+        {
+            // D HH:MM:SS
+            return $"{days}D {hours:00}:{minutes:00}:{seconds:00}";
+        }
+        else
+        {
+            // HH:MM:SS
+            return $"{hours:00}:{minutes:00}:{seconds:00}";
+        }
+    }
+
+    /// <summary>
+    /// Establece el tiempo total jugado (desde el sistema de guardado).
+    /// </summary>
+    public void SetTotalPlayTime(float seconds)
+    {
+        totalPlayTimeSeconds = seconds;
+        if (totalPlayTimeText != null)
+        {
+            UpdateTotalPlayTime(totalPlayTimeSeconds);
+        }
+    }
+
+    /// <summary>
+    /// Obtiene el tiempo total jugado en segundos.
+    /// </summary>
+    public float GetTotalPlayTime()
+    {
+        return totalPlayTimeSeconds;
     }
 
     /// <summary>

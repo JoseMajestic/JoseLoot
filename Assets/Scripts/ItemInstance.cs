@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +18,18 @@ public class ItemInstance
     [Range(1, 999)]
     public int currentLevel = 1;
 
+    [Header("Identidad única")]
+    [SerializeField, Tooltip("Identificador único de la instancia (NO cambia, identifica el objeto físico)")]
+    private string instanceId;
+
+    [Header("Versión del objeto")]
+    [SerializeField, Tooltip("Versión que cambia cuando el nivel cambia (para detectar actualizaciones visuales)")]
+    private int version = 1;
+
+    // SOLUCIÓN ARQUITECTÓNICA: Evento que se dispara cuando el nivel cambia
+    // Permite que los slots se suscriban directamente a cambios en el ItemInstance
+    public System.Action<ItemInstance, int, int> OnLevelChanged; // item, nivelAnterior, nivelNuevo
+
     /// <summary>
     /// Constructor por defecto (requerido para serialización).
     /// </summary>
@@ -24,6 +37,7 @@ public class ItemInstance
     {
         baseItem = null;
         currentLevel = 1;
+        GenerateInstanceIdIfNeeded();
     }
 
     /// <summary>
@@ -41,6 +55,7 @@ public class ItemInstance
 
         baseItem = itemData;
         currentLevel = 1; // Todas las instancias nuevas empiezan en nivel 1
+        GenerateInstanceIdIfNeeded();
     }
 
     /// <summary>
@@ -58,6 +73,7 @@ public class ItemInstance
 
         baseItem = itemData;
         currentLevel = Mathf.Clamp(level, 1, 999);
+        GenerateInstanceIdIfNeeded();
     }
 
     /// <summary>
@@ -130,6 +146,7 @@ public class ItemInstance
 
     /// <summary>
     /// Aumenta el nivel del objeto en 1 (hasta máximo 999).
+    /// También incrementa la versión para que los slots detecten el cambio.
     /// </summary>
     /// <returns>True si se aumentó el nivel, false si ya está en el máximo.</returns>
     public bool LevelUp()
@@ -140,22 +157,38 @@ public class ItemInstance
             return false;
         }
 
+        int oldLevel = currentLevel;
         currentLevel++;
+        version++; // Incrementar versión cuando el nivel cambia para que los slots detecten el cambio
+        
+        // SOLUCIÓN ARQUITECTÓNICA: Disparar evento cuando el nivel cambia
+        OnLevelChanged?.Invoke(this, oldLevel, currentLevel);
+        
         return true;
     }
 
     /// <summary>
     /// Establece el nivel del objeto directamente.
+    /// También incrementa la versión si el nivel cambió.
     /// </summary>
     /// <param name="level">Nivel a establecer (1-999)</param>
     public void SetLevel(int level)
     {
-        currentLevel = Mathf.Clamp(level, 1, 999);
+        int newLevel = Mathf.Clamp(level, 1, 999);
+        if (newLevel != currentLevel)
+        {
+            int oldLevel = currentLevel;
+            currentLevel = newLevel;
+            version++; // Incrementar versión cuando el nivel cambia
+            
+            // SOLUCIÓN ARQUITECTÓNICA: Disparar evento cuando el nivel cambia
+            OnLevelChanged?.Invoke(this, oldLevel, currentLevel);
+        }
     }
 
     /// <summary>
     /// Serializa la instancia para guardar en BD.
-    /// Formato: "nombreItemData|nivel"
+    /// Formato: "nombreItemData|nivel|id|version"
     /// </summary>
     public string Serialize()
     {
@@ -164,14 +197,15 @@ public class ItemInstance
             return "";
         }
 
-        return $"{baseItem.name}|{currentLevel}";
+        GenerateInstanceIdIfNeeded();
+        return $"{baseItem.name}|{currentLevel}|{instanceId}|{version}";
     }
 
     /// <summary>
     /// Deserializa la instancia desde BD.
     /// Requiere ItemDatabase para buscar el ItemData por nombre.
     /// </summary>
-    /// <param name="serialized">String en formato "nombreItemData|nivel"</param>
+    /// <param name="serialized">String en formato "nombreItemData|nivel|id"</param>
     /// <param name="itemDatabase">ItemDatabase para buscar el ItemData</param>
     /// <returns>True si se deserializó correctamente, false si falló</returns>
     public bool Deserialize(string serialized, ItemDatabase itemDatabase)
@@ -190,9 +224,9 @@ public class ItemInstance
         }
 
         string[] parts = serialized.Split('|');
-        if (parts.Length != 2)
+        if (parts.Length < 2)
         {
-            Debug.LogWarning($"Formato de serialización inválido: '{serialized}'. Formato esperado: 'nombreItemData|nivel'");
+            Debug.LogWarning($"Formato de serialización inválido: '{serialized}'. Formato esperado: 'nombreItemData|nivel|id|version'");
             return false;
         }
 
@@ -211,7 +245,78 @@ public class ItemInstance
         }
 
         currentLevel = Mathf.Clamp(level, 1, 999);
+
+        // Si hay un tercer componente, úsalo como instanceId; si no, genera uno nuevo (compatibilidad hacia atrás)
+        if (parts.Length >= 3 && !string.IsNullOrEmpty(parts[2]))
+        {
+            instanceId = parts[2];
+        }
+        else
+        {
+            GenerateInstanceIdIfNeeded();
+        }
+
+        // Si hay un cuarto componente, úsalo como version; si no, inicializa en 1 (compatibilidad hacia atrás)
+        if (parts.Length >= 4 && !string.IsNullOrEmpty(parts[3]) && int.TryParse(parts[3], out int savedVersion))
+        {
+            version = savedVersion;
+        }
+        else
+        {
+            version = 1; // Por defecto, versión 1 para items antiguos sin versión
+        }
+
         return true;
+    }
+
+    /// <summary>
+    /// Obtiene el identificador único de la instancia.
+    /// </summary>
+    public string GetInstanceId()
+    {
+        GenerateInstanceIdIfNeeded();
+        return instanceId;
+    }
+
+    /// <summary>
+    /// Compara identidad exacta de instancias (referencia o instanceId).
+    /// El GUID no cambia, por lo que identifica el mismo objeto físico incluso si el nivel cambió.
+    /// </summary>
+    public bool IsSameInstance(ItemInstance other)
+    {
+        if (ReferenceEquals(this, other))
+            return true;
+        if (other == null)
+            return false;
+        if (!string.IsNullOrEmpty(instanceId) && !string.IsNullOrEmpty(other.instanceId))
+            return instanceId == other.instanceId;
+        return false;
+    }
+
+    /// <summary>
+    /// Verifica si la versión del objeto cambió (útil para detectar mejoras sin cambiar el GUID).
+    /// </summary>
+    public bool HasChangedVersion(ItemInstance other)
+    {
+        if (other == null)
+            return true;
+        return version != other.version;
+    }
+
+    /// <summary>
+    /// Obtiene la versión actual del objeto.
+    /// </summary>
+    public int GetVersion()
+    {
+        return version;
+    }
+
+    private void GenerateInstanceIdIfNeeded()
+    {
+        if (string.IsNullOrEmpty(instanceId))
+        {
+            instanceId = Guid.NewGuid().ToString("N");
+        }
     }
 
     /// <summary>

@@ -112,6 +112,12 @@ public class EquipmentManager : MonoBehaviour
         }
         OnEquipmentChanged?.Invoke();
 
+        // Guardar perfil del jugador después de equipar
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
+
         return previousItem;
     }
 
@@ -147,6 +153,12 @@ public class EquipmentManager : MonoBehaviour
         SetEquippedItem(slot, null);
         OnItemUnequipped?.Invoke(slot, item);
         OnEquipmentChanged?.Invoke();
+
+        // Guardar perfil del jugador después de desequipar
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
 
         // Auto-organizar inventario si está configurado (el item se añadirá al inventario desde fuera)
         if (inventoryAutoOrganizer != null)
@@ -208,6 +220,16 @@ public class EquipmentManager : MonoBehaviour
                 montura = itemInstance;
                 break;
         }
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Establece el ItemInstance en el slot especificado sin disparar eventos.
+    /// Útil para carga silenciosa del equipo desde el perfil guardado.
+    /// </summary>
+    public void SetEquippedItemDirectly(EquipmentSlotType slot, ItemInstance itemInstance)
+    {
+        SetEquippedItem(slot, itemInstance);
+        // No disparar eventos - esto es para carga silenciosa
     }
 
     /// <summary>
@@ -485,9 +507,7 @@ public class EquipmentManager : MonoBehaviour
             for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
             {
                 ItemInstance invItem = inventoryManager.GetItem(i);
-                if (invItem != null && invItem.IsValid() && 
-                    invItem.baseItem == previousItem.baseItem &&
-                    invItem.currentLevel == previousItem.currentLevel)
+                if (invItem != null && invItem.IsValid() && previousItem.IsSameInstance(invItem))
                 {
                     // El item ya está en el inventario (mismo ItemData y nivel)
                     itemAlreadyInInventory = true;
@@ -528,8 +548,7 @@ public class EquipmentManager : MonoBehaviour
         // Verificar si realmente está equipado
         ItemInstance equippedInSlot = GetEquippedItem(slotToUnequip);
         if (equippedInSlot == null || !equippedInSlot.IsValid() ||
-            equippedInSlot.baseItem != selectedItemForEquip.baseItem ||
-            equippedInSlot.currentLevel != selectedItemForEquip.currentLevel)
+            !equippedInSlot.IsSameInstance(selectedItemForEquip))
         {
             Debug.LogWarning("El item visualizado no está equipado.");
             return;
@@ -559,8 +578,7 @@ public class EquipmentManager : MonoBehaviour
             EquipmentSlotType slotType = (EquipmentSlotType)i;
             ItemInstance equipped = GetEquippedItem(slotType);
             if (equipped != null && equipped.IsValid() &&
-                equipped.baseItem == itemInstance.baseItem &&
-                equipped.currentLevel == itemInstance.currentLevel)
+                equipped.IsSameInstance(itemInstance))
             {
                 return slotType;
             }
