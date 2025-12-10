@@ -113,6 +113,16 @@ public class InventoryUIManager : MonoBehaviour
     [Tooltip("Botón para vender el item visualizado en el visor")]
     [SerializeField] private Button sellButton;
 
+    [Header("Panel de Confirmación de Venta")]
+    [Tooltip("Panel de confirmación que se muestra al intentar vender un item equipado")]
+    [SerializeField] private GameObject confirmSellPanel;
+
+    [Tooltip("Botón de Aceptar en el panel de confirmación (vende el item equipado)")]
+    [SerializeField] private Button confirmSellButton;
+
+    [Tooltip("Botón de Cancelar en el panel de confirmación (cierra el panel sin vender)")]
+    [SerializeField] private Button cancelSellButton;
+
     [Header("UI de Dinero del Jugador")]
     [Tooltip("Texto que muestra las monedas del jugador (siempre visible, se actualiza automáticamente)")]
     [SerializeField] private TextMeshProUGUI playerMoneyText;
@@ -127,6 +137,10 @@ public class InventoryUIManager : MonoBehaviour
     private InventorySlot currentlySelectedSlot; // Slot actualmente seleccionado
     private ItemInstance currentlyViewedItem; // Item actualmente visualizado en el visor
     private System.Action onInventoryChangedHandler; // Referencia al handler para poder desuscribirse
+    
+    // CORRECCIÓN: Variables para el panel de confirmación de venta de items equipados
+    private ItemInstance pendingSellItem; // Item que se intenta vender (si está equipado)
+    private int pendingSellSlotIndex; // Índice del slot del item que se intenta vender
     
     // Estado guardado del inventario para comparación
     private ItemInstance[] savedVisualState; // Estado VISUAL de los slots la última vez que se cerró el panel (lo que cada slot mostraba)
@@ -195,6 +209,23 @@ public class InventoryUIManager : MonoBehaviour
         if (sellButton != null)
         {
             sellButton.onClick.AddListener(OnSellButtonClicked);
+        }
+
+        // CORRECCIÓN: Configurar botones del panel de confirmación
+        if (confirmSellButton != null)
+        {
+            confirmSellButton.onClick.AddListener(OnConfirmSellEquippedItem);
+        }
+
+        if (cancelSellButton != null)
+        {
+            cancelSellButton.onClick.AddListener(OnCancelSellEquippedItem);
+        }
+
+        // Asegurar que el panel de confirmación esté oculto al inicio
+        if (confirmSellPanel != null)
+        {
+            confirmSellPanel.SetActive(false);
         }
 
         // Inicializar componentes InventorySlot (no depende de GameDataManager)
@@ -596,6 +627,17 @@ public class InventoryUIManager : MonoBehaviour
         if (sellButton != null)
         {
             sellButton.onClick.RemoveListener(OnSellButtonClicked);
+        }
+
+        // CORRECCIÓN: Desuscribirse de eventos de los botones del panel de confirmación
+        if (confirmSellButton != null)
+        {
+            confirmSellButton.onClick.RemoveListener(OnConfirmSellEquippedItem);
+        }
+
+        if (cancelSellButton != null)
+        {
+            cancelSellButton.onClick.RemoveListener(OnCancelSellEquippedItem);
         }
 
         // Desuscribirse de eventos del inventario
@@ -1213,9 +1255,9 @@ public class InventoryUIManager : MonoBehaviour
 
         // Obtener todos los items equipados
         List<ItemInstance> equippedItems = new List<ItemInstance>();
-        for (int i = 0; i < 6; i++) // 6 slots de equipo
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             if (equippedItem != null && equippedItem.IsValid())
             {
@@ -1397,6 +1439,99 @@ public class InventoryUIManager : MonoBehaviour
             return;
         }
 
+        // CORRECCIÓN: Verificar si el item está equipado
+        if (equipmentManager != null)
+        {
+            EquipmentManager.EquipmentSlotType? equippedSlot = FindEquippedSlot(itemInSlot);
+            if (equippedSlot.HasValue)
+            {
+                // El item está equipado, mostrar panel de confirmación
+                if (confirmSellPanel != null)
+                {
+                    // Guardar el item y el slot para venderlo después de confirmar
+                    pendingSellItem = itemInSlot;
+                    pendingSellSlotIndex = slotIndex;
+                    
+                    // Mostrar el panel de confirmación
+                    confirmSellPanel.SetActive(true);
+                    Debug.Log($"Item '{itemInSlot.GetItemName()}' está equipado. Mostrando panel de confirmación...");
+                }
+                else
+                {
+                    Debug.LogWarning("Panel de confirmación no asignado. Desequipando y vendiendo directamente...");
+                    // Si no hay panel, desequipar y vender directamente (comportamiento anterior)
+                    equipmentManager.UnequipItem(equippedSlot.Value);
+                    SellItemDirectly(itemInSlot, slotIndex);
+                }
+                return; // Salir aquí, la venta se completará cuando el usuario confirme
+            }
+        }
+
+        // Si no está equipado, vender directamente
+        SellItemDirectly(itemInSlot, slotIndex);
+    }
+
+    /// <summary>
+    /// Actualiza el display de monedas del jugador.
+    /// Se llama automáticamente cuando cambia el dinero.
+    /// </summary>
+    private void UpdatePlayerMoneyDisplay(int newAmount)
+    {
+        if (playerMoneyText == null)
+            return;
+
+        string formattedAmount = formatMoneyWithThousands ? FormatNumber(newAmount) : newAmount.ToString();
+        playerMoneyText.text = string.Format(moneyFormat, formattedAmount);
+    }
+
+    /// <summary>
+    /// Formatea un número con separadores de miles.
+    /// </summary>
+    private string FormatNumber(int number)
+    {
+        return number.ToString("N0");
+    }
+
+    /// <summary>
+    /// CORRECCIÓN: Busca en qué slot de equipo está equipado un item específico.
+    /// </summary>
+    /// <param name="itemInstance">ItemInstance a buscar</param>
+    /// <returns>El slot donde está equipado, o null si no está equipado</returns>
+    private EquipmentManager.EquipmentSlotType? FindEquippedSlot(ItemInstance itemInstance)
+    {
+        if (equipmentManager == null || itemInstance == null || !itemInstance.IsValid())
+            return null;
+
+        // Buscar en todos los slots de equipo
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
+        {
+            ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+            if (equippedItem != null && equippedItem.IsValid() && equippedItem.IsSameInstance(itemInstance))
+            {
+                return slotType;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// CORRECCIÓN: Vende un item directamente sin mostrar panel de confirmación.
+    /// Se usa cuando el item no está equipado o cuando el usuario confirma la venta de un item equipado.
+    /// </summary>
+    private void SellItemDirectly(ItemInstance itemInSlot, int slotIndex)
+    {
+        // CORRECCIÓN: Verificar si el item está equipado y desequiparlo antes de vender
+        if (equipmentManager != null)
+        {
+            EquipmentManager.EquipmentSlotType? equippedSlot = FindEquippedSlot(itemInSlot);
+            if (equippedSlot.HasValue)
+            {
+                Debug.Log($"Item '{itemInSlot.GetItemName()}' está equipado en el slot {equippedSlot.Value}. Desequipando antes de vender...");
+                equipmentManager.UnequipItem(equippedSlot.Value);
+            }
+        }
+
         // Calcular precio de venta
         int sellPrice = CalculateSellPrice(itemInSlot);
 
@@ -1433,24 +1568,47 @@ public class InventoryUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actualiza el display de monedas del jugador.
-    /// Se llama automáticamente cuando cambia el dinero.
+    /// CORRECCIÓN: Se llama cuando el usuario confirma la venta de un item equipado.
+    /// Vende el item y lo desequipa.
     /// </summary>
-    private void UpdatePlayerMoneyDisplay(int newAmount)
+    private void OnConfirmSellEquippedItem()
     {
-        if (playerMoneyText == null)
-            return;
+        if (confirmSellPanel != null)
+        {
+            confirmSellPanel.SetActive(false);
+        }
 
-        string formattedAmount = formatMoneyWithThousands ? FormatNumber(newAmount) : newAmount.ToString();
-        playerMoneyText.text = string.Format(moneyFormat, formattedAmount);
+        if (pendingSellItem != null && pendingSellItem.IsValid())
+        {
+            // Vender el item (ya incluye desequipar si está equipado)
+            SellItemDirectly(pendingSellItem, pendingSellSlotIndex);
+            
+            // Limpiar las variables pendientes
+            pendingSellItem = null;
+            pendingSellSlotIndex = -1;
+        }
+        else
+        {
+            Debug.LogWarning("No hay item pendiente para vender.");
+        }
     }
 
     /// <summary>
-    /// Formatea un número con separadores de miles.
+    /// CORRECCIÓN: Se llama cuando el usuario cancela la venta de un item equipado.
+    /// Cierra el panel sin vender el item.
     /// </summary>
-    private string FormatNumber(int number)
+    private void OnCancelSellEquippedItem()
     {
-        return number.ToString("N0");
+        if (confirmSellPanel != null)
+        {
+            confirmSellPanel.SetActive(false);
+        }
+
+        // Limpiar las variables pendientes
+        pendingSellItem = null;
+        pendingSellSlotIndex = -1;
+        
+        Debug.Log("Venta de item equipado cancelada.");
     }
 }
 

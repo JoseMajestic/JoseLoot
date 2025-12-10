@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Guantes II
   m_EditorClassIdentifier: 
   itemName: Abismo Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: af9afdc71b5612343a74df231d7f23f6, type: 3}
   description: Las llamas del infierno arden eternamente dentro de cada pieza de
     este set.
   price: 1958
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 27
   nivel: 1
   rareza: Demoniaco
-  itemType: 1
+  itemType: 6

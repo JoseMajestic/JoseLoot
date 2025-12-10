@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Armadura II
   m_EditorClassIdentifier: 
   itemName: Abismo Armadura II
-  itemSprite: {fileID: 21300000, guid: 8cc9ddbaed8d29f48bf3b21d246c3581, type: 3}
+  itemSprite: {fileID: 21300000, guid: 84bc052193d27e643bb8a6c3c4e8f08d, type: 3}
   description: Las llamas del infierno arden eternamente dentro de cada pieza de
     este set.
   price: 1958
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Casco I
   m_EditorClassIdentifier: 
   itemName: Abismo Casco I
-  itemSprite: {fileID: 21300000, guid: 8460cc35fdbf22a40aa98fd3c476dee2, type: 3}
+  itemSprite: {fileID: 21300000, guid: 46ec7b95c5dc3ac4ca1c856d1e1f1bb7, type: 3}
   description: Quien lo porte sentira el susurro de mil demonios guiando cada golpe.
   price: 1632
   hp: 163

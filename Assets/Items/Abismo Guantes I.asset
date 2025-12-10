@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Guantes I
   m_EditorClassIdentifier: 
   itemName: Abismo Guantes I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 30645c0d84585b64cb9971a823608344, type: 3}
   description: Los demonios mas antiguos temen el poder que emana de este equipo
     maldito.
   price: 1632
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 27
   nivel: 1
   rareza: Demoniaco
-  itemType: 1
+  itemType: 6

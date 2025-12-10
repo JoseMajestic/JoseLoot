@@ -533,9 +533,9 @@ public class HeroProfileManager : MonoBehaviour
             return;
 
         // Forzar actualización de todos los slots de equipo para asegurar que los textos se rendericen
-        for (int i = 0; i < 6; i++)
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             if (equippedItem != null && equippedItem.IsValid())
             {
@@ -624,9 +624,9 @@ public class HeroProfileManager : MonoBehaviour
             return;
         
         // Buscar en qué slot está equipado este item
-        for (int i = 0; i < 6; i++)
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             
             if (equippedItem != null && equippedItem.IsValid() && equippedItem.IsSameInstance(item))
@@ -648,9 +648,9 @@ public class HeroProfileManager : MonoBehaviour
             return;
         
         // Suscribirse a cambios de nivel de todos los items equipados
-        for (int i = 0; i < 6; i++)
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             
             if (equippedItem != null && equippedItem.IsValid())
@@ -669,9 +669,9 @@ public class HeroProfileManager : MonoBehaviour
             return;
         
         // Desuscribirse de cambios de nivel de todos los items equipados
-        for (int i = 0; i < 6; i++)
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             
             if (equippedItem != null && equippedItem.IsValid())
@@ -729,9 +729,9 @@ public class HeroProfileManager : MonoBehaviour
         RefreshHeroStats();
         
         // También buscar específicamente el slot donde está equipado para forzar actualización
-        for (int i = 0; i < 6; i++)
+        // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+        foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
         {
-            EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
             
             // Si el item mejorado está equipado en este slot, forzar actualización específica

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Abismo Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 3b3ac781c991a9b4fbcb2f61b7018e5e, type: 3}
   description: Un corcel nacido en las profundidades del abismo, donde la luz jamas
     ha tocado.
   price: 1200
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Demoniaco
-  itemType: 6
+  itemType: 0

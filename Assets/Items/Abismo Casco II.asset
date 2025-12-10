@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Casco II
   m_EditorClassIdentifier: 
   itemName: Abismo Casco II
-  itemSprite: {fileID: 21300000, guid: f7966cb47a83ea540a7255d670d2b582, type: 3}
+  itemSprite: {fileID: 21300000, guid: 25100036fede32d41aa56d0e7a58559a, type: 3}
   description: El precio de este poder es alto pero la recompensa es absoluta.
   price: 1958
   hp: 163

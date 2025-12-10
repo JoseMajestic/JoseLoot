@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Montura II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Abismo Montura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 20b14db9797a83b4ab4d3f405f8f0a25, type: 3}
   description: La montura demoniaca que se alimenta de la oscuridad eterna.
   price: 1200
   hp: 150
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Demoniaco
-  itemType: 6
+  itemType: 0

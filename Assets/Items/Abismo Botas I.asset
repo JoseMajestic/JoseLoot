@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Botas I
   m_EditorClassIdentifier: 
   itemName: Abismo Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 2f831cde8784a7d43b3e696492e9e3b3, type: 3}
   description: Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad.
   price: 1632
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Demoniaco
-  itemType: 1
+  itemType: 9

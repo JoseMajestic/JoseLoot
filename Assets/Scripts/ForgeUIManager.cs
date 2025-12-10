@@ -103,6 +103,10 @@ public class ForgeUIManager : MonoBehaviour
         }
    
         
+        // CORRECCIÓN: Validar si el item seleccionado todavía existe en el inventario
+        // Esto previene que se pueda mejorar un item que fue vendido
+        ValidateSelectedItem();
+        
         // SOLUCIÓN ARQUITECTÓNICA: Esperar a que el Canvas y los Image estén completamente listos antes de refrescar
         // PollAndUpdateForgeSlots() se llamará al final de RefreshForgeGridWhenReady() después de que los slots estén inicializados
         // AHORA el inventario ya está sincronizado, así que RefreshForgeGrid() encontrará los items
@@ -119,6 +123,7 @@ public class ForgeUIManager : MonoBehaviour
         {
             inventoryManager.OnItemAdded -= OnInventoryItemAdded;
             inventoryManager.OnInventoryChanged -= RefreshForgeGrid;
+            inventoryManager.OnItemRemoved -= OnItemRemoved; // CORRECCIÓN: Desuscribirse de OnItemRemoved
         }
 
         // Desuscribirse de eventos del equipo
@@ -154,6 +159,7 @@ public class ForgeUIManager : MonoBehaviour
         {
             inventoryManager.OnItemAdded += OnInventoryItemAdded;
             inventoryManager.OnInventoryChanged += RefreshForgeGrid;
+            inventoryManager.OnItemRemoved += OnItemRemoved; // CORRECCIÓN: Detectar cuando se vende un item
         }
 
         // Suscribirse a eventos del equipo para refrescar paneles de equipado
@@ -197,9 +203,83 @@ public class ForgeUIManager : MonoBehaviour
         UpdateDetailView(selectedItem);
     }
 
+    /// <summary>
+    /// CORRECCIÓN: Valida si el item seleccionado todavía existe en el inventario.
+    /// Si el item fue vendido o removido, limpia el visor para prevenir mejoras de items inexistentes.
+    /// </summary>
+    private void ValidateSelectedItem()
+    {
+        if (selectedItem == null || !selectedItem.IsValid() || inventoryManager == null)
+        {
+            // Si no hay item seleccionado o es inválido, limpiar el visor
+            if (selectedItem != null)
+            {
+                selectedItem = null;
+                ClearDetailView();
+            }
+            return;
+        }
+        
+        // Buscar el item en el inventario
+        bool itemExists = false;
+        for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
+        {
+            ItemInstance item = inventoryManager.GetItem(i);
+            if (item != null && item.IsValid() && item.IsSameInstance(selectedItem))
+            {
+                itemExists = true;
+                // Actualizar la referencia al item del inventario (por si cambió)
+                selectedItem = item;
+                break;
+            }
+        }
+        
+        // Si el item no existe, limpiar el visor
+        if (!itemExists)
+        {
+            Debug.Log("Item seleccionado ya no existe en el inventario. Limpiando visor de forja.");
+            selectedItem = null;
+            ClearDetailView();
+        }
+    }
+
     private void OnInventoryItemAdded(int slotIndex, ItemInstance itemInstance)
     {
         // Refrescar el grid cuando se añade un item
+        RefreshForgeGrid();
+    }
+
+    /// <summary>
+    /// CORRECCIÓN: Se llama cuando se remueve un item del inventario (por ejemplo, al venderlo).
+    /// Si el item removido es el que está seleccionado, limpia el visor para prevenir mejoras de items vendidos.
+    /// </summary>
+    private void OnItemRemoved(int slotIndex)
+    {
+        // Si el item removido es el que está seleccionado, limpiar el visor
+        if (selectedItem != null && selectedItem.IsValid() && inventoryManager != null)
+        {
+            // Verificar si el item seleccionado todavía existe en el inventario
+            bool itemStillExists = false;
+            for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
+            {
+                ItemInstance item = inventoryManager.GetItem(i);
+                if (item != null && item.IsValid() && item.IsSameInstance(selectedItem))
+                {
+                    itemStillExists = true;
+                    break;
+                }
+            }
+            
+            // Si el item ya no existe, limpiar el visor
+            if (!itemStillExists)
+            {
+                Debug.Log("Item seleccionado fue removido del inventario. Limpiando visor de forja.");
+                selectedItem = null;
+                ClearDetailView();
+            }
+        }
+        
+        // Refrescar el grid
         RefreshForgeGrid();
     }
 
@@ -387,9 +467,10 @@ public class ForgeUIManager : MonoBehaviour
                 bool isEquipped = false;
                 if (equipmentManager != null && item != null && item.IsValid())
                 {
-                    for (int s = 0; s < 6; s++)
+                    // CORRECCIÓN: Iterar sobre todos los slots disponibles (10 en lugar de 6)
+                    foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
                     {
-                        var eq = equipmentManager.GetEquippedItem((EquipmentManager.EquipmentSlotType)s);
+                        var eq = equipmentManager.GetEquippedItem(slotType);
                         if (eq != null && eq.IsValid() && eq.IsSameInstance(item))
                         {
                             isEquipped = true;
@@ -414,6 +495,10 @@ public class ForgeUIManager : MonoBehaviour
             }
         }
         
+        // CORRECCIÓN: Validar si el item seleccionado todavía existe después de refrescar el grid
+        // Esto asegura que si se vendió un item, el visor se limpie
+        ValidateSelectedItem();
+        
         // SOLUCIÓN ARQUITECTÓNICA: Forzar actualización final del canvas para asegurar que los sprites se rendericen
         // Esto es crítico cuando se carga la partida guardada
         Canvas.ForceUpdateCanvases();
@@ -423,6 +508,33 @@ public class ForgeUIManager : MonoBehaviour
     {
         if (selectedItem == null || !selectedItem.IsValid())
             return;
+
+        // CORRECCIÓN: Validar que el item todavía existe en el inventario antes de mejorar
+        // Esto previene mejorar items que fueron vendidos
+        if (inventoryManager != null)
+        {
+            bool itemExists = false;
+            for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
+            {
+                ItemInstance item = inventoryManager.GetItem(i);
+                if (item != null && item.IsValid() && item.IsSameInstance(selectedItem))
+                {
+                    itemExists = true;
+                    // Actualizar la referencia al item del inventario (por si cambió)
+                    selectedItem = item;
+                    break;
+                }
+            }
+            
+            if (!itemExists)
+            {
+                Debug.LogWarning("No se puede mejorar: el item ya no está en el inventario.");
+                selectedItem = null;
+                ClearDetailView();
+                RefreshForgeGrid();
+                return;
+            }
+        }
 
         if (improvementSystem == null)
         {

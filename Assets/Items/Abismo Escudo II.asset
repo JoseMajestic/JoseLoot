@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Escudo II
   m_EditorClassIdentifier: 
   itemName: Abismo Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 712a4cae797c50b40a5d6c4176018655, type: 3}
   description: Las llamas del infierno arden eternamente dentro de cada pieza de
     este set.
   price: 1958
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Demoniaco
-  itemType: 1
+  itemType: 5
