@@ -1305,18 +1305,28 @@ public class InventoryUIManager : MonoBehaviour
         // Si no coincide con casos especiales, usar el ItemType
         switch (itemData.itemType)
         {
-            case ItemType.Weapon:
+            case ItemType.Montura:
+                return "Montura";
+            case ItemType.Casco:
+                return "Casco";
+            case ItemType.Collar:
+                return "Collar";
+            case ItemType.Arma:
                 return "Arma";
-            case ItemType.Armor:
+            case ItemType.Armadura:
                 return "Armadura";
-            case ItemType.Accessory:
-                return "Accesorio";
-            case ItemType.Consumable:
-                return "Consumible";
-            case ItemType.Material:
-                return "Material";
-            case ItemType.Quest:
-                return "Objeto de Misión";
+            case ItemType.Escudo:
+                return "Escudo";
+            case ItemType.Guantes:
+                return "Guantes";
+            case ItemType.Cinturon:
+                return "Cinturón";
+            case ItemType.Anillo:
+                return "Anillo";
+            case ItemType.Botas:
+                return "Botas";
+            case ItemType.Otros:
+                return "Otros";
             default:
                 return "Desconocido";
         }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Anillo II
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Conquistador Anillo II
+  itemSprite: {fileID: 0}
+  description: El poder de liderazgo se concentra en este anillo de mando.
+  price: 250
+  hp: 20
+  mana: 48
+  ataque: 0
+  defensa: 6
+  velocidadAtaque: 3
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 7
+  destreza: 4
+  nivel: 1
+  rareza: Raro
+  itemType: 9

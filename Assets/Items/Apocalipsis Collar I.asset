@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Apocalipsis Collar I
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Apocalipsis Collar I
+  itemSprite: {fileID: 0}
+  description: Un collar forjado en el fuego del apocalipsis que arraso con todo.
+  price: 1080
+  hp: 56
+  mana: 33
+  ataque: 0
+  defensa: 14
+  velocidadAtaque: 0
+  ataqueCritico: 28
+  danoCritico: 0
+  suerte: 3
+  destreza: 0
+  nivel: 1
+  rareza: Demoniaco
+  itemType: 7

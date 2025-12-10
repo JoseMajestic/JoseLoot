@@ -151,23 +151,32 @@ public class EquipmentSlot : MonoBehaviour
 
     /// <summary>
     /// Obtiene el nombre del tipo de slot para mostrar en la UI.
+    /// Orden: Montura, Casco, Collar, Arma, Armadura, Escudo, Guantes, Cinturon, Anillo, Botas
     /// </summary>
     private string GetSlotTypeName()
     {
         switch (slotType)
         {
-            case EquipmentManager.EquipmentSlotType.Arma:
-                return "Arma";
-            case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
-                return "Arma Sec.";
-            case EquipmentManager.EquipmentSlotType.Sombrero:
-                return "Sombrero";
-            case EquipmentManager.EquipmentSlotType.Pechera:
-                return "Pechera";
-            case EquipmentManager.EquipmentSlotType.Botas:
-                return "Botas";
             case EquipmentManager.EquipmentSlotType.Montura:
                 return "Montura";
+            case EquipmentManager.EquipmentSlotType.Casco:
+                return "Casco";
+            case EquipmentManager.EquipmentSlotType.Collar:
+                return "Collar";
+            case EquipmentManager.EquipmentSlotType.Arma:
+                return "Arma";
+            case EquipmentManager.EquipmentSlotType.Armadura:
+                return "Armadura";
+            case EquipmentManager.EquipmentSlotType.Escudo:
+                return "Escudo";
+            case EquipmentManager.EquipmentSlotType.Guantes:
+                return "Guantes";
+            case EquipmentManager.EquipmentSlotType.Cinturon:
+                return "Cinturón";
+            case EquipmentManager.EquipmentSlotType.Anillo:
+                return "Anillo";
+            case EquipmentManager.EquipmentSlotType.Botas:
+                return "Botas";
             default:
                 return "Equipo";
         }

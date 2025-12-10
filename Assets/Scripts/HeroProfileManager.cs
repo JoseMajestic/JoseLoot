@@ -30,41 +30,65 @@ public class HeroProfileManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalPlayTimeText;
 
     [Header("UI de Slots de Equipo")]
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Montura")]
+    [SerializeField] private Image monturaImage;
+    
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Montura")]
+    [SerializeField] private TextMeshProUGUI monturaLevelText;
+
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Casco")]
+    [SerializeField] private Image cascoImage;
+    
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Casco")]
+    [SerializeField] private TextMeshProUGUI cascoLevelText;
+
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Collar")]
+    [SerializeField] private Image collarImage;
+    
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Collar")]
+    [SerializeField] private TextMeshProUGUI collarLevelText;
+
     [Tooltip("Image que muestra el sprite del item equipado en el slot Arma")]
     [SerializeField] private Image armaImage;
     
     [Tooltip("Texto que muestra el nivel del item equipado en el slot Arma")]
     [SerializeField] private TextMeshProUGUI armaLevelText;
 
-    [Tooltip("Image que muestra el sprite del item equipado en el slot ArmaSecundaria")]
-    [SerializeField] private Image armaSecundariaImage;
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Armadura")]
+    [SerializeField] private Image armaduraImage;
     
-    [Tooltip("Texto que muestra el nivel del item equipado en el slot ArmaSecundaria")]
-    [SerializeField] private TextMeshProUGUI armaSecundariaLevelText;
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Armadura")]
+    [SerializeField] private TextMeshProUGUI armaduraLevelText;
 
-    [Tooltip("Image que muestra el sprite del item equipado en el slot Sombrero")]
-    [SerializeField] private Image sombreroImage;
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Escudo")]
+    [SerializeField] private Image escudoImage;
     
-    [Tooltip("Texto que muestra el nivel del item equipado en el slot Sombrero")]
-    [SerializeField] private TextMeshProUGUI sombreroLevelText;
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Escudo")]
+    [SerializeField] private TextMeshProUGUI escudoLevelText;
 
-    [Tooltip("Image que muestra el sprite del item equipado en el slot Pechera")]
-    [SerializeField] private Image pecheraImage;
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Guantes")]
+    [SerializeField] private Image guantesImage;
     
-    [Tooltip("Texto que muestra el nivel del item equipado en el slot Pechera")]
-    [SerializeField] private TextMeshProUGUI pecheraLevelText;
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Guantes")]
+    [SerializeField] private TextMeshProUGUI guantesLevelText;
+
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Cinturón")]
+    [SerializeField] private Image cinturonImage;
+    
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Cinturón")]
+    [SerializeField] private TextMeshProUGUI cinturonLevelText;
+
+    [Tooltip("Image que muestra el sprite del item equipado en el slot Anillo")]
+    [SerializeField] private Image anilloImage;
+    
+    [Tooltip("Texto que muestra el nivel del item equipado en el slot Anillo")]
+    [SerializeField] private TextMeshProUGUI anilloLevelText;
 
     [Tooltip("Image que muestra el sprite del item equipado en el slot Botas")]
     [SerializeField] private Image botasImage;
     
     [Tooltip("Texto que muestra el nivel del item equipado en el slot Botas")]
     [SerializeField] private TextMeshProUGUI botasLevelText;
-
-    [Tooltip("Image que muestra el sprite del item equipado en el slot Montura")]
-    [SerializeField] private Image monturaImage;
-    
-    [Tooltip("Texto que muestra el nivel del item equipado en el slot Montura")]
-    [SerializeField] private TextMeshProUGUI monturaLevelText;
 
     [Header("UI de Características del Héroe")]
     [Tooltip("Texto que muestra el HP total del héroe (base + equipo)")]
@@ -284,7 +308,7 @@ public class HeroProfileManager : MonoBehaviour
             allImagesReady = true;
             
             // Verificar que todos los Image de los slots estén listos
-            Image[] equipmentImages = { armaImage, armaSecundariaImage, sombreroImage, pecheraImage, botasImage, monturaImage };
+            Image[] equipmentImages = { monturaImage, cascoImage, collarImage, armaImage, armaduraImage, escudoImage, guantesImage, cinturonImage, anilloImage, botasImage };
             
             foreach (Image slotImage in equipmentImages)
             {
@@ -349,7 +373,7 @@ public class HeroProfileManager : MonoBehaviour
             return;
 
         // Iterar sobre todos los slots de equipo
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
             EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
@@ -376,7 +400,7 @@ public class HeroProfileManager : MonoBehaviour
             return;
 
         // Iterar sobre todos los slots de equipo y actualizar el texto directamente
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
             EquipmentManager.EquipmentSlotType slotType = (EquipmentManager.EquipmentSlotType)i;
             ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
@@ -388,23 +412,35 @@ public class HeroProfileManager : MonoBehaviour
                 
                 switch (slotType)
                 {
+                    case EquipmentManager.EquipmentSlotType.Montura:
+                        slotLevelText = monturaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Casco:
+                        slotLevelText = cascoLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Collar:
+                        slotLevelText = collarLevelText;
+                        break;
                     case EquipmentManager.EquipmentSlotType.Arma:
                         slotLevelText = armaLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
-                        slotLevelText = armaSecundariaLevelText;
+                    case EquipmentManager.EquipmentSlotType.Armadura:
+                        slotLevelText = armaduraLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.Sombrero:
-                        slotLevelText = sombreroLevelText;
+                    case EquipmentManager.EquipmentSlotType.Escudo:
+                        slotLevelText = escudoLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.Pechera:
-                        slotLevelText = pecheraLevelText;
+                    case EquipmentManager.EquipmentSlotType.Guantes:
+                        slotLevelText = guantesLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Cinturon:
+                        slotLevelText = cinturonLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Anillo:
+                        slotLevelText = anilloLevelText;
                         break;
                     case EquipmentManager.EquipmentSlotType.Botas:
                         slotLevelText = botasLevelText;
-                        break;
-                    case EquipmentManager.EquipmentSlotType.Montura:
-                        slotLevelText = monturaLevelText;
                         break;
                 }
 
@@ -446,23 +482,35 @@ public class HeroProfileManager : MonoBehaviour
                 TextMeshProUGUI slotLevelText = null;
                 switch (slotType)
                 {
+                    case EquipmentManager.EquipmentSlotType.Montura:
+                        slotLevelText = monturaLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Casco:
+                        slotLevelText = cascoLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Collar:
+                        slotLevelText = collarLevelText;
+                        break;
                     case EquipmentManager.EquipmentSlotType.Arma:
                         slotLevelText = armaLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
-                        slotLevelText = armaSecundariaLevelText;
+                    case EquipmentManager.EquipmentSlotType.Armadura:
+                        slotLevelText = armaduraLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.Sombrero:
-                        slotLevelText = sombreroLevelText;
+                    case EquipmentManager.EquipmentSlotType.Escudo:
+                        slotLevelText = escudoLevelText;
                         break;
-                    case EquipmentManager.EquipmentSlotType.Pechera:
-                        slotLevelText = pecheraLevelText;
+                    case EquipmentManager.EquipmentSlotType.Guantes:
+                        slotLevelText = guantesLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Cinturon:
+                        slotLevelText = cinturonLevelText;
+                        break;
+                    case EquipmentManager.EquipmentSlotType.Anillo:
+                        slotLevelText = anilloLevelText;
                         break;
                     case EquipmentManager.EquipmentSlotType.Botas:
                         slotLevelText = botasLevelText;
-                        break;
-                    case EquipmentManager.EquipmentSlotType.Montura:
-                        slotLevelText = monturaLevelText;
                         break;
                 }
                 
@@ -723,29 +771,45 @@ public class HeroProfileManager : MonoBehaviour
         // Obtener referencias al Image y Text según el slot
         switch (slot)
         {
+            case EquipmentManager.EquipmentSlotType.Montura:
+                slotImage = monturaImage;
+                slotLevelText = monturaLevelText;
+                break;
+            case EquipmentManager.EquipmentSlotType.Casco:
+                slotImage = cascoImage;
+                slotLevelText = cascoLevelText;
+                break;
+            case EquipmentManager.EquipmentSlotType.Collar:
+                slotImage = collarImage;
+                slotLevelText = collarLevelText;
+                break;
             case EquipmentManager.EquipmentSlotType.Arma:
                 slotImage = armaImage;
                 slotLevelText = armaLevelText;
                 break;
-            case EquipmentManager.EquipmentSlotType.ArmaSecundaria:
-                slotImage = armaSecundariaImage;
-                slotLevelText = armaSecundariaLevelText;
+            case EquipmentManager.EquipmentSlotType.Armadura:
+                slotImage = armaduraImage;
+                slotLevelText = armaduraLevelText;
                 break;
-            case EquipmentManager.EquipmentSlotType.Sombrero:
-                slotImage = sombreroImage;
-                slotLevelText = sombreroLevelText;
+            case EquipmentManager.EquipmentSlotType.Escudo:
+                slotImage = escudoImage;
+                slotLevelText = escudoLevelText;
                 break;
-            case EquipmentManager.EquipmentSlotType.Pechera:
-                slotImage = pecheraImage;
-                slotLevelText = pecheraLevelText;
+            case EquipmentManager.EquipmentSlotType.Guantes:
+                slotImage = guantesImage;
+                slotLevelText = guantesLevelText;
+                break;
+            case EquipmentManager.EquipmentSlotType.Cinturon:
+                slotImage = cinturonImage;
+                slotLevelText = cinturonLevelText;
+                break;
+            case EquipmentManager.EquipmentSlotType.Anillo:
+                slotImage = anilloImage;
+                slotLevelText = anilloLevelText;
                 break;
             case EquipmentManager.EquipmentSlotType.Botas:
                 slotImage = botasImage;
                 slotLevelText = botasLevelText;
-                break;
-            case EquipmentManager.EquipmentSlotType.Montura:
-                slotImage = monturaImage;
-                slotLevelText = monturaLevelText;
                 break;
         }
 
@@ -866,18 +930,27 @@ public class HeroProfileManager : MonoBehaviour
         // SOLUCIÓN ESTRUCTURAL: Leer directamente desde EquipmentManager (como una "instancia/clon" fresca)
         // Esto asegura que siempre leemos los objetos equipados actuales, no referencias antiguas
         // y forzar actualización de todos los slots con forceRefresh=true
-        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Arma, 
-            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Arma), forceRefresh: true);
-        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.ArmaSecundaria, 
-            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.ArmaSecundaria), forceRefresh: true);
-        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Sombrero, 
-            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Sombrero), forceRefresh: true);
-        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Pechera, 
-            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Pechera), forceRefresh: true);
-        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Botas, 
-            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Botas), forceRefresh: true);
+        // Orden: Montura, Casco, Collar, Arma, Armadura, Escudo, Guantes, Cinturon, Anillo, Botas
         UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Montura, 
             equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Montura), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Casco, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Casco), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Collar, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Collar), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Arma, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Arma), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Armadura, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Armadura), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Escudo, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Escudo), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Guantes, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Guantes), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Cinturon, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Cinturon), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Anillo, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Anillo), forceRefresh: true);
+        UpdateEquipmentSlot(EquipmentManager.EquipmentSlotType.Botas, 
+            equipmentManager.GetEquippedItem(EquipmentManager.EquipmentSlotType.Botas), forceRefresh: true);
         
         // Forzar actualización del canvas después de actualizar todos los slots
         // Esto asegura que todos los sprites se rendericen correctamente

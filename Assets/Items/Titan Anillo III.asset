@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Titan Anillo III
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Titan Anillo III
+  itemSprite: {fileID: 0}
+  description: El anillo de los titanes, que otorga poder sobre la creacion misma.
+  price: 2400
+  hp: 105
+  mana: 218
+  ataque: 0
+  defensa: 35
+  velocidadAtaque: 4
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 9
+  destreza: 6
+  nivel: 1
+  rareza: Legendario
+  itemType: 9

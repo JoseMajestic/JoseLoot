@@ -49,15 +49,22 @@ public class ItemData : ScriptableObject
     public string rareza = "Comun";
     
     [Header("=== Tipo de Item ===")]
-    public ItemType itemType = ItemType.Weapon;
+    public ItemType itemType = ItemType.Arma;
 }
 
 public enum ItemType
 {
-    Weapon,     // Arma
-    Armor,      // Armadura
-    Accessory,  // Accesorio
-    Consumable, // Consumible
-    Material,   // Material
-    Quest       // Objeto de mision
+    // Tipos específicos de equipo (todos equipables)
+    Montura,
+    Casco,
+    Collar,
+    Arma,
+    Armadura,
+    Escudo,
+    Guantes,
+    Cinturon,
+    Anillo,
+    Botas,
+    // No equipables
+    Otros
 }
