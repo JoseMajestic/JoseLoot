@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53606abb665b34f4b9a634a7ed2e4dd8, type: 3}
+  m_Name: Esqueleto_Novato
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: Esqueleto Novato
+  description: "Un esqueleto reci\xE9n reanimado. Sus huesos crujen con cada movimiento."
+  enemySprite: {fileID: 0}
+  hp: 70
+  ataque: 10
+  defensa: 4
+  velocidadAtaque: 7
+  ataqueCritico: 1
+  danoCritico: 2
+  suerte: 0
+  destreza: 1
+  rewardCoins: 35
+  requiredLevel: 0
+  level: 1
+  availableAttacks: []

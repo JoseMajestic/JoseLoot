@@ -29,6 +29,29 @@ public class HeroProfileManager : MonoBehaviour
     [Tooltip("Texto que muestra el tiempo jugado total")]
     [SerializeField] private TextMeshProUGUI totalPlayTimeText;
 
+    [Header("UI de Estadísticas")]
+    [Tooltip("Texto que muestra el total de enfrentamientos")]
+    [SerializeField] private TextMeshProUGUI totalClashesText;
+
+    [Tooltip("Texto que muestra el total de cofres abiertos")]
+    [SerializeField] private TextMeshProUGUI totalOpenChestsText;
+
+    [Tooltip("Texto que muestra el total de peleas ganadas")]
+    [SerializeField] private TextMeshProUGUI totalWonFightsText;
+
+    [Tooltip("Texto que muestra el total de peleas perdidas")]
+    [SerializeField] private TextMeshProUGUI totalLostFightsText;
+
+    [Header("UI de Experiencia del Héroe")]
+    [Tooltip("Slider que muestra la experiencia del héroe")]
+    [SerializeField] private Slider heroExperienceSlider;
+
+    [Tooltip("Texto que muestra la experiencia actual y necesaria (ej: 150/200)")]
+    [SerializeField] private TextMeshProUGUI heroExperienceText;
+
+    [Tooltip("Texto que muestra el nivel actual del héroe")]
+    [SerializeField] private TextMeshProUGUI heroLevelText;
+
     [Header("UI de Slots de Equipo")]
     [Tooltip("Image que muestra el sprite del item equipado en el slot Montura")]
     [SerializeField] private Image monturaImage;
@@ -223,6 +246,12 @@ public class HeroProfileManager : MonoBehaviour
             // Si no se auto-incrementa, actualizar una vez con el tiempo actual
             UpdateTotalPlayTime(totalPlayTimeSeconds);
         }
+
+        // Actualizar estadísticas al inicio
+        RefreshStatistics();
+        
+        // Actualizar experiencia al inicio
+        RefreshHeroExperience();
     }
 
     /// <summary>
@@ -342,6 +371,12 @@ public class HeroProfileManager : MonoBehaviour
         
         // Refrescar características del héroe
         RefreshHeroStats();
+        
+        // Refrescar estadísticas
+        RefreshStatistics();
+        
+        // Refrescar experiencia
+        RefreshHeroExperience();
         
         // Esperar otro frame para que Unity procese los cambios de sprites
         yield return null;
@@ -1138,6 +1173,81 @@ public class HeroProfileManager : MonoBehaviour
         
         if (destrezaText != null)
             destrezaText.text = totalDestreza.ToString();
+    }
+
+    /// <summary>
+    /// Refresca las estadísticas del jugador (enfrentamientos, cofres, peleas ganadas/perdidas).
+    /// Puede ser llamado desde GameDataManager cuando se actualizan las estadísticas.
+    /// </summary>
+    public void RefreshStatistics()
+    {
+        if (GameDataManager.Instance == null)
+            return;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        if (profile == null)
+            return;
+
+        // Actualizar total de enfrentamientos
+        if (totalClashesText != null)
+        {
+            totalClashesText.text = profile.totalClashes.ToString();
+        }
+
+        // Actualizar total de cofres abiertos
+        if (totalOpenChestsText != null)
+        {
+            totalOpenChestsText.text = profile.totalOpenChests.ToString();
+        }
+
+        // Actualizar total de peleas ganadas
+        if (totalWonFightsText != null)
+        {
+            totalWonFightsText.text = profile.totalWonFights.ToString();
+        }
+
+        // Actualizar total de peleas perdidas
+        if (totalLostFightsText != null)
+        {
+            totalLostFightsText.text = profile.totalLostFights.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Refresca la UI de experiencia del héroe.
+    /// </summary>
+    public void RefreshHeroExperience()
+    {
+        if (GameDataManager.Instance == null)
+            return;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        if (profile == null)
+            return;
+
+        int currentExp = profile.heroExperience;
+        int neededExp = profile.GetExperienceNeededForNextLevel();
+        int level = profile.heroLevel;
+
+        // Actualizar slider
+        if (heroExperienceSlider != null)
+        {
+            heroExperienceSlider.minValue = 0;
+            heroExperienceSlider.maxValue = neededExp;
+            heroExperienceSlider.value = currentExp;
+        }
+
+        // Actualizar texto de experiencia
+        if (heroExperienceText != null)
+        {
+            heroExperienceText.text = $"{currentExp}/{neededExp}";
+        }
+
+        // Actualizar texto de nivel
+        if (heroLevelText != null)
+        {
+            heroLevelText.text = $"Nivel {level}";
+        }
     }
 }
 

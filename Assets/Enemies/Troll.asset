@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53606abb665b34f4b9a634a7ed2e4dd8, type: 3}
+  m_Name: Troll
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: Troll
+  description: "Un troll grande y resistente. Su piel gruesa lo hace dif\xEDcil de
+    da\xF1ar."
+  enemySprite: {fileID: 0}
+  hp: 180
+  ataque: 20
+  defensa: 10
+  velocidadAtaque: 7
+  ataqueCritico: 5
+  danoCritico: 6
+  suerte: 2
+  destreza: 3
+  rewardCoins: 90
+  requiredLevel: 2
+  level: 3
+  availableAttacks: []

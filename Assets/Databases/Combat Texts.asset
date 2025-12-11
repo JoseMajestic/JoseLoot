@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cac6d597e077074681300e0b9dbe4ef, type: 3}
+  m_Name: Combat Texts
+  m_EditorClassIdentifier: Assembly-CSharp::CombatTexts
+  selectAttack: Selecciona un ataque
+  attackSelected: 'Ataque seleccionado: {0}
+
+    {1}'
+  playerBasicAttack: "Jugador usa ataque b\xE1sico y causa {0} de da\xF1o."
+  playerAttack: "Jugador usa {0} y causa {1} de da\xF1o."
+  playerHeal: Jugador usa {0} y se cura {1} de HP.
+  playerLuck: "\xA1Suerte activada! El jugador ataca de nuevo."
+  playerLuckAttack: "Jugador ataca de nuevo y causa {0} de da\xF1o."
+  enemyBasicAttack: "{0} usa ataque b\xE1sico y causa {1} de da\xF1o."
+  enemyAttack: "{0} usa {1} y causa {2} de da\xF1o."
+  enemyHeal: '{0} usa {1} y se cura {2} de HP.'
+  enemyLuck: "\xA1Suerte activada! {0} ataca de nuevo."
+  enemyLuckAttack: "{0} usa {1} de nuevo y causa {2} de da\xF1o."
+  poisonEnemy: "\xA1Veneno! {0} pierde {1} de HP."
+  poisonPlayer: "\xA1Veneno! El jugador pierde {0} de HP."
+  poisonAppliedEnemy: "{0} est\xE1 envenenado ({1}% de HP por ronda)."
+  poisonAppliedPlayer: "El jugador est\xE1 envenenado ({0}% de HP por ronda)."
+  stunEnemy: "{0} est\xE1 aturdido y perder\xE1 su siguiente turno."
+  stunPlayer: "El jugador est\xE1 aturdido y perder\xE1 su siguiente turno."
+  stunFailed: "{0} fall\xF3. {1} resisti\xF3 el aturdimiento."
+  multipleAttack: "{0} ejecut\xF3 {1} golpes con {2}."
+  strongBlow: "{0} usa {1} ({2}x) y causa {3} de da\xF1o."
+  attackBuff: '{0} usa {1}. Ataque aumentado {2}% por {3} rondas.'
+  defenseBuff: '{0} usa {1}. Defensa aumentada {2}% por {3} rondas.'
+  playerStunned: "El jugador est\xE1 aturdido y no puede atacar."
+  enemyStunned: "{0} est\xE1 aturdido y no puede atacar."
+  nextRound: Siguiente ronda
+  typewriterSpeed: 30
+  delayBetweenMessages: 1.5

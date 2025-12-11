@@ -11,6 +11,10 @@ public class EnemyData : ScriptableObject
     [Tooltip("Nombre del enemigo")]
     public string enemyName = "Nuevo Enemigo";
     
+    [TextArea(2, 4)]
+    [Tooltip("Descripción del enemigo")]
+    public string description = "";
+    
     [Tooltip("Imagen del enemigo")]
     public Sprite enemySprite;
     
@@ -43,11 +47,20 @@ public class EnemyData : ScriptableObject
     [Tooltip("Monedas que otorga al vencer")]
     public int rewardCoins = 50;
     
+    [Tooltip("Experiencia que otorga al vencer")]
+    public int experienceReward = 10;
+    
     [Header("=== PROGRESO ===")]
     [Tooltip("Nivel requerido para desbloquear (0 = siempre disponible)")]
     public int requiredLevel = 0;
     
     [Tooltip("Nivel del enemigo (opcional)")]
     public int level = 1;
+    
+    [Header("=== ATAQUES ===")]
+    [Tooltip("Array de ataques disponibles para este enemigo. Se selecciona uno aleatoriamente cada turno. Si está vacío, usa ataque básico.")]
+    public AttackData[] availableAttacks = new AttackData[0];
 }
+
+
 

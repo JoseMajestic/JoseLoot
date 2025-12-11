@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53606abb665b34f4b9a634a7ed2e4dd8, type: 3}
+  m_Name: Boss_Final
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: Boss Final
+  description: "El enemigo definitivo. Combina todas las habilidades y es el m\xE1s
+    poderoso de todos."
+  enemySprite: {fileID: 0}
+  hp: 600
+  ataque: 50
+  defensa: 25
+  velocidadAtaque: 10
+  ataqueCritico: 18
+  danoCritico: 20
+  suerte: 10
+  destreza: 12
+  rewardCoins: 300
+  requiredLevel: 5
+  level: 6
+  availableAttacks: []

@@ -375,5 +375,142 @@ public class GameDataManager : MonoBehaviour
         
         return playerProfile.IsEnemyLevelUnlocked(level);
     }
+
+    /// <summary>
+    /// Marca un enemigo como derrotado.
+    /// </summary>
+    /// <param name="enemyName">Nombre del enemigo derrotado</param>
+    public void MarkEnemyDefeated(string enemyName)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.MarkEnemyDefeated(enemyName);
+            SavePlayerProfile();
+        }
+    }
+
+    /// <summary>
+    /// Incrementa el contador de enfrentamientos.
+    /// </summary>
+    public void IncrementTotalClashes()
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.totalClashes++;
+            SavePlayerProfile();
+            RefreshHeroProfileStatistics();
+        }
+    }
+
+    /// <summary>
+    /// Incrementa el contador de cofres abiertos.
+    /// </summary>
+    public void IncrementTotalOpenChests()
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.totalOpenChests++;
+            SavePlayerProfile();
+            RefreshHeroProfileStatistics();
+        }
+    }
+
+    /// <summary>
+    /// Incrementa el contador de peleas ganadas.
+    /// </summary>
+    public void IncrementTotalWonFights()
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.totalWonFights++;
+            SavePlayerProfile();
+            RefreshHeroProfileStatistics();
+        }
+    }
+
+    /// <summary>
+    /// Incrementa el contador de peleas perdidas.
+    /// </summary>
+    public void IncrementTotalLostFights()
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.totalLostFights++;
+            SavePlayerProfile();
+            RefreshHeroProfileStatistics();
+        }
+    }
+
+    /// <summary>
+    /// Refresca las estadísticas en HeroProfileManager si está disponible.
+    /// </summary>
+    private void RefreshHeroProfileStatistics()
+    {
+        HeroProfileManager heroProfileManager = FindFirstObjectByType<HeroProfileManager>();
+        if (heroProfileManager != null)
+        {
+            heroProfileManager.RefreshStatistics();
+            heroProfileManager.RefreshHeroExperience();
+        }
+    }
+
+    /// <summary>
+    /// Agrega experiencia al héroe y actualiza la UI.
+    /// </summary>
+    public void AddHeroExperience(int experience)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            int oldLevel = playerProfile.heroLevel;
+            playerProfile.AddHeroExperience(experience);
+            SavePlayerProfile();
+            
+            // Si subió de nivel, actualizar botones de ataque
+            if (playerProfile.heroLevel > oldLevel)
+            {
+                RefreshHeroProfileStatistics();
+                // Notificar a CombatManager si está activo
+                CombatManager combatManager = FindFirstObjectByType<CombatManager>();
+                if (combatManager != null)
+                {
+                    combatManager.OnHeroLevelUp();
+                }
+            }
+            else
+            {
+                RefreshHeroProfileStatistics();
+            }
+        }
+    }
 }
 

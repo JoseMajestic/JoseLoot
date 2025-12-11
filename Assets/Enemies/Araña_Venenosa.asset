@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53606abb665b34f4b9a634a7ed2e4dd8, type: 3}
+  m_Name: "Ara\xF1a_Venenosa"
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: "Ara\xF1a Venenosa"
+  description: "Una ara\xF1a gigante con veneno letal. Sus mordeduras pueden ser
+    peligrosas."
+  enemySprite: {fileID: 21300000, guid: 92e614f48fbfb3a4da2a4c1d46b79b97, type: 3}
+  hp: 100
+  ataque: 12
+  defensa: 5
+  velocidadAtaque: 11
+  ataqueCritico: 4
+  danoCritico: 5
+  suerte: 2
+  destreza: 3
+  rewardCoins: 55
+  requiredLevel: 1
+  level: 2
+  availableAttacks:
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}

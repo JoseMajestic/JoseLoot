@@ -303,6 +303,8 @@ public class ChestManager : MonoBehaviour
             // Esto asegura que el inventario esté actualizado en el perfil guardado
             if (GameDataManager.Instance != null)
             {
+                // Incrementar contador de cofres abiertos
+                GameDataManager.Instance.IncrementTotalOpenChests();
                 GameDataManager.Instance.SavePlayerProfile();
             }
         }

@@ -94,7 +94,10 @@ public class BattleManager : MonoBehaviour
         {
             return GameDataManager.Instance.GetPlayerProfile();
         }
-        return new PlayerProfileData();
+        // Si no hay GameDataManager, crear perfil básico con nivel 0 desbloqueado
+        PlayerProfileData profile = new PlayerProfileData();
+        profile.UnlockEnemyLevel(0); // Desbloquear nivel 0 por defecto
+        return profile;
     }
 
     /// <summary>
@@ -117,10 +120,32 @@ public class BattleManager : MonoBehaviour
                 
                 if (enemy != null)
                 {
-                    // Verificar si el enemigo está desbloqueado
-                    bool isUnlocked = enemy.requiredLevel == 0 || playerProfile.IsEnemyLevelUnlocked(enemy.requiredLevel);
+                    bool isUnlocked = false;
                     
-                    enemyButtons[i].button.gameObject.SetActive(isUnlocked);
+                    // El primer enemigo (índice 0) siempre está desbloqueado
+                    if (i == 0)
+                    {
+                        isUnlocked = true;
+                    }
+                    else
+                    {
+                        // Para los demás, verificar si el enemigo anterior fue derrotado
+                        EnemyData previousEnemy = enemyButtons[i - 1].enemyData;
+                        if (previousEnemy != null)
+                        {
+                            isUnlocked = playerProfile.IsEnemyDefeated(previousEnemy.enemyName);
+                        }
+                        else
+                        {
+                            // Si no hay enemigo anterior asignado, no desbloquear
+                            isUnlocked = false;
+                        }
+                    }
+                    
+                    // Asegurar que el botón esté visible
+                    enemyButtons[i].button.gameObject.SetActive(true);
+                    // Deshabilitar/habilitar según si está desbloqueado
+                    enemyButtons[i].button.interactable = isUnlocked;
                     
                     // Opcional: Actualizar texto del botón con el nombre del enemigo
                     var buttonText = enemyButtons[i].button.GetComponentInChildren<TextMeshProUGUI>();
@@ -131,7 +156,7 @@ public class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    // Si no hay enemigo asignado, desactivar el botón
+                    // Si no hay enemigo asignado, ocultar el botón completamente
                     enemyButtons[i].button.gameObject.SetActive(false);
                 }
             }

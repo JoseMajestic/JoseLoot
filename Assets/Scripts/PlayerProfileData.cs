@@ -27,6 +27,30 @@ public class PlayerProfileData
     // Sistema de niveles desbloqueados de enemigos
     [Tooltip("Lista de niveles de enemigos desbloqueados")]
     public List<int> unlockedEnemyLevels = new List<int>();
+    
+    // Sistema de enemigos derrotados (para desbloqueo secuencial)
+    [Tooltip("Lista de nombres de enemigos derrotados (para desbloqueo secuencial)")]
+    public List<string> defeatedEnemies = new List<string>();
+
+    // Estadísticas del jugador
+    [Tooltip("Total de enfrentamientos realizados")]
+    public int totalClashes = 0;
+
+    [Tooltip("Total de cofres abiertos")]
+    public int totalOpenChests = 0;
+
+    [Tooltip("Total de peleas ganadas")]
+    public int totalWonFights = 0;
+
+    [Tooltip("Total de peleas perdidas")]
+    public int totalLostFights = 0;
+
+    // Sistema de experiencia del héroe
+    [Tooltip("Experiencia actual del héroe")]
+    public int heroExperience = 1;
+
+    [Tooltip("Nivel actual del héroe")]
+    public int heroLevel = 1;
 
     /// <summary>
     /// Guarda el estado actual del equipo en el perfil.
@@ -239,6 +263,62 @@ public class PlayerProfileData
         }
 
         return unlockedEnemyLevels.Contains(level);
+    }
+
+    /// <summary>
+    /// Marca un enemigo como derrotado.
+    /// </summary>
+    /// <param name="enemyName">Nombre del enemigo derrotado</param>
+    public void MarkEnemyDefeated(string enemyName)
+    {
+        if (defeatedEnemies == null)
+        {
+            defeatedEnemies = new List<string>();
+        }
+        
+        if (!string.IsNullOrEmpty(enemyName) && !defeatedEnemies.Contains(enemyName))
+        {
+            defeatedEnemies.Add(enemyName);
+            Debug.Log($"Enemigo '{enemyName}' marcado como derrotado.");
+        }
+    }
+
+    /// <summary>
+    /// Verifica si un enemigo ha sido derrotado.
+    /// </summary>
+    /// <param name="enemyName">Nombre del enemigo a verificar</param>
+    /// <returns>True si el enemigo fue derrotado, false en caso contrario</returns>
+    public bool IsEnemyDefeated(string enemyName)
+    {
+        if (defeatedEnemies == null || string.IsNullOrEmpty(enemyName))
+            return false;
+        
+        return defeatedEnemies.Contains(enemyName);
+    }
+
+    /// <summary>
+    /// Calcula la experiencia necesaria para el siguiente nivel.
+    /// Fórmula: experienciaNecesaria = nivelActual * 100
+    /// </summary>
+    public int GetExperienceNeededForNextLevel()
+    {
+        return heroLevel * 100;
+    }
+
+    /// <summary>
+    /// Agrega experiencia al héroe y sube de nivel si es necesario.
+    /// </summary>
+    public void AddHeroExperience(int experience)
+    {
+        heroExperience += experience;
+        
+        // Subir de nivel mientras haya suficiente experiencia
+        while (heroExperience >= GetExperienceNeededForNextLevel())
+        {
+            heroExperience -= GetExperienceNeededForNextLevel();
+            heroLevel++;
+            Debug.Log($"¡El héroe subió al nivel {heroLevel}!");
+        }
     }
 }
 
