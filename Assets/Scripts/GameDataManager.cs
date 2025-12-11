@@ -335,5 +335,45 @@ public class GameDataManager : MonoBehaviour
             Debug.Log("Niveles de items equipados sincronizados desde el perfil guardado.");
         }
     }
+
+    /// <summary>
+    /// Obtiene el perfil del jugador.
+    /// </summary>
+    public PlayerProfileData GetPlayerProfile()
+    {
+        // Asegurar que el perfil esté cargado
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        return playerProfile;
+    }
+
+    /// <summary>
+    /// Desbloquea un nivel de enemigo y guarda el progreso.
+    /// </summary>
+    public void UnlockEnemyLevel(int level)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        playerProfile.UnlockEnemyLevel(level);
+        SavePlayerProfile();
+    }
+
+    /// <summary>
+    /// Verifica si un nivel de enemigo está desbloqueado.
+    /// </summary>
+    public bool IsEnemyLevelUnlocked(int level)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        return playerProfile.IsEnemyLevelUnlocked(level);
+    }
 }
 

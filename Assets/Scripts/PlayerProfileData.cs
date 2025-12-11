@@ -24,6 +24,10 @@ public class PlayerProfileData
     // Array de strings, cada string es "nombreItemData|nivel|id|version" o null si el slot está vacío
     public string[] inventoryData = new string[InventoryManager.INVENTORY_SIZE];
 
+    // Sistema de niveles desbloqueados de enemigos
+    [Tooltip("Lista de niveles de enemigos desbloqueados")]
+    public List<int> unlockedEnemyLevels = new List<int>();
+
     /// <summary>
     /// Guarda el estado actual del equipo en el perfil.
     /// </summary>
@@ -195,6 +199,46 @@ public class PlayerProfileData
         {
             inventoryManager.DeserializeInventory(inventoryData, silent: silent);
         }
+    }
+
+    /// <summary>
+    /// Desbloquea un nivel de enemigo.
+    /// </summary>
+    /// <param name="level">Nivel a desbloquear</param>
+    public void UnlockEnemyLevel(int level)
+    {
+        if (unlockedEnemyLevels == null)
+        {
+            unlockedEnemyLevels = new List<int>();
+        }
+
+        if (!unlockedEnemyLevels.Contains(level))
+        {
+            unlockedEnemyLevels.Add(level);
+            Debug.Log($"Nivel de enemigo {level} desbloqueado.");
+        }
+    }
+
+    /// <summary>
+    /// Verifica si un nivel de enemigo está desbloqueado.
+    /// </summary>
+    /// <param name="level">Nivel a verificar</param>
+    /// <returns>True si el nivel está desbloqueado, false en caso contrario</returns>
+    public bool IsEnemyLevelUnlocked(int level)
+    {
+        if (unlockedEnemyLevels == null)
+        {
+            unlockedEnemyLevels = new List<int>();
+            return false;
+        }
+
+        // El nivel 0 siempre está desbloqueado (siempre disponible)
+        if (level == 0)
+        {
+            return true;
+        }
+
+        return unlockedEnemyLevels.Contains(level);
     }
 }
 
