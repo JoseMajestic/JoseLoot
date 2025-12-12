@@ -895,6 +895,11 @@ public class InventoryUIManager : MonoBehaviour
             // Si no había item visualizado, asegurar que el visor esté limpio
             ClearDetailView();
         }
+
+        // SOLUCIÓN CRÍTICA: Refrescar paneles de equipado DESPUÉS de actualizar todos los slots
+        // Esto asegura que los paneles de equipado se actualicen correctamente después de la reorganización
+        // del inventario, buscando items equipados por instancia en lugar de por posición
+        RefreshEquippedPanels();
     }
 
     /// <summary>
@@ -1213,21 +1218,27 @@ public class InventoryUIManager : MonoBehaviour
     /// <summary>
     /// Actualiza el panel de "equipado" para un item específico.
     /// Busca el slot del inventario que contiene este item y muestra/oculta el panel.
+    /// SOLUCIÓN: Busca por instancia (GUID) en lugar de por posición para evitar errores después de reorganización.
     /// </summary>
     private void UpdateEquippedPanelForItem(ItemInstance itemInstance, bool isEquipped)
     {
         if (itemInstance == null || !itemInstance.IsValid() || inventoryManager == null)
             return;
 
-        // Buscar en todos los slots del inventario
+        // SOLUCIÓN CRÍTICA: Buscar en todos los slots del inventario por instancia (GUID)
+        // en lugar de asumir una posición fija. Esto es necesario porque después de la reorganización,
+        // los items pueden estar en diferentes posiciones.
         for (int i = 0; i < InventoryManager.INVENTORY_SIZE; i++)
         {
             if (i < slotComponents.Length && slotComponents[i] != null)
             {
-                ItemInstance slotItem = slotComponents[i].GetItem();
+                // SOLUCIÓN: Leer el item directamente desde el inventario en lugar del slot visual
+                // Esto asegura que tenemos la referencia más reciente después de la reorganización
+                ItemInstance inventoryItem = inventoryManager.GetItem(i);
                 
-                // Comparar instancias por identidad (instanceId) o referencia
-                bool isSameItem = slotItem != null && slotItem.IsValid() && slotItem.IsSameInstance(itemInstance);
+                // Comparar instancias por GUID (más seguro que por referencia después de reorganización)
+                bool isSameItem = inventoryItem != null && inventoryItem.IsValid() && 
+                                 inventoryItem.IsSameInstance(itemInstance);
                 
                 if (isSameItem)
                 {
@@ -1235,7 +1246,7 @@ public class InventoryUIManager : MonoBehaviour
                     if (i < panelsEquipped.Length && panelsEquipped[i] != null)
                     {
                         panelsEquipped[i].SetActive(isEquipped);
-                        Debug.Log($"Panel de equipado {(isEquipped ? "mostrado" : "ocultado")} para slot {i}");
+                        Debug.Log($"Panel de equipado {(isEquipped ? "mostrado" : "ocultado")} para slot {i} (item: {itemInstance.GetItemName()})");
                     }
                     return; // Encontrado, salir
                 }

@@ -116,6 +116,73 @@ public class CombatTexts : ScriptableObject
     [Tooltip("Texto de siguiente ronda")]
     public string nextRound = "Siguiente ronda";
     
+    [Header("=== ESTADOS AL INICIO DE RONDA ===")]
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador todavía está envenenado al inicio de la ronda. {0} = porcentaje, {1} = rondas restantes")]
+    public string playerStillPoisoned = "El héroe todavía está envenenado ({0}% de HP por ronda) durante {1} rondas más.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo todavía está envenenado al inicio de la ronda. {0} = nombre del enemigo, {1} = porcentaje, {2} = rondas restantes")]
+    public string enemyStillPoisoned = "{0} todavía está envenenado ({1}% de HP por ronda) durante {2} rondas más.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador todavía está aturdido al inicio de la ronda")]
+    public string playerStillStunned = "El héroe todavía está aturdido durante esta ronda.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo todavía está aturdido al inicio de la ronda. {0} = nombre del enemigo")]
+    public string enemyStillStunned = "{0} todavía está aturdido durante esta ronda.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador tiene buff de ataque activo al inicio. {0} = porcentaje, {1} = rondas restantes")]
+    public string playerAttackBuffActive = "El héroe tiene buff de ataque {0}% durante {1} rondas más.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo tiene buff de ataque activo al inicio. {0} = nombre del enemigo, {1} = porcentaje, {2} = rondas restantes")]
+    public string enemyAttackBuffActive = "{0} tiene buff de ataque {1}% durante {2} rondas más.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador tiene buff de defensa activo al inicio. {0} = porcentaje, {1} = rondas restantes")]
+    public string playerDefenseBuffActive = "El héroe tiene buff de defensa {0}% durante {1} rondas más.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo tiene buff de defensa activo al inicio. {0} = nombre del enemigo, {1} = porcentaje, {2} = rondas restantes")]
+    public string enemyDefenseBuffActive = "{0} tiene buff de defensa {1}% durante {2} rondas más.";
+    
+    [Header("=== ESTADOS AL FINAL DE RONDA ===")]
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el buff de ataque del jugador termina. {0} = rondas restantes (0 significa que terminó)")]
+    public string playerAttackBuffRemaining = "Buff de ataque del héroe: {0} rondas restantes.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el buff de ataque del enemigo termina. {0} = nombre del enemigo, {1} = rondas restantes (0 significa que terminó)")]
+    public string enemyAttackBuffRemaining = "Buff de ataque de {0}: {1} rondas restantes.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el buff de defensa del jugador termina. {0} = rondas restantes (0 significa que terminó)")]
+    public string playerDefenseBuffRemaining = "Buff de defensa del héroe: {0} rondas restantes.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el buff de defensa del enemigo termina. {0} = nombre del enemigo, {1} = rondas restantes (0 significa que terminó)")]
+    public string enemyDefenseBuffRemaining = "Buff de defensa de {0}: {1} rondas restantes.";
+    
+    [Header("=== ORDEN DE ATAQUE ===")]
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador ataca primero. {0} = nombre del jugador (ej: 'Héroe' o 'Jugador')")]
+    public string playerAttacksFirst = "{0} ataca primero.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo ataca primero. {0} = nombre del enemigo")]
+    public string enemyAttacksFirst = "{0} ataca primero.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando es el turno del jugador. {0} = nombre del jugador (ej: 'Héroe' o 'Jugador')")]
+    public string nowPlayerAttacks = "Ahora ataca {0}.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando es el turno del enemigo. {0} = nombre del enemigo")]
+    public string nowEnemyAttacks = "Ahora ataca {0}.";
+    
     [Header("=== CONFIGURACIÓN ===")]
     [Tooltip("Velocidad de escritura (caracteres por segundo)")]
     [Range(10f, 100f)]
@@ -125,4 +192,6 @@ public class CombatTexts : ScriptableObject
     [Range(0.5f, 5f)]
     public float delayBetweenMessages = 1.5f;
 }
+
+
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -297,6 +298,17 @@ public class ChestManager : MonoBehaviour
             if (inventoryAutoOrganizer != null)
             {
                 inventoryAutoOrganizer.OrganizeInventory();
+                
+                // SOLUCIÓN: Asegurar que los paneles de equipado se actualicen después de la reorganización
+                // Buscar InventoryUIManager y forzar actualización de paneles
+                InventoryUIManager uiManager = FindFirstObjectByType<InventoryUIManager>();
+                if (uiManager != null)
+                {
+                    // El evento OnInventoryChanged ya debería haber disparado RefreshAllSlots(),
+                    // pero forzamos una actualización adicional de los paneles de equipado para asegurar
+                    // que se muestren correctamente después de la reorganización
+                    StartCoroutine(RefreshEquippedPanelsAfterReorganization());
+                }
             }
             
             // SOLUCIÓN: Guardar el inventario cuando se añade un item desde el cofre
@@ -319,6 +331,23 @@ public class ChestManager : MonoBehaviour
 
         // Limpiar referencia al item
         currentObtainedItem = null;
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Refresca los paneles de equipado después de la reorganización.
+    /// Espera un frame para asegurar que los slots visuales ya se actualizaron.
+    /// </summary>
+    private System.Collections.IEnumerator RefreshEquippedPanelsAfterReorganization()
+    {
+        // Esperar un frame para que RefreshAllSlots() termine de actualizar los slots visuales
+        yield return null;
+        
+        // Disparar evento OnEquipmentChanged para que InventoryUIManager actualice los paneles
+        EquipmentManager equipmentManager = FindFirstObjectByType<EquipmentManager>();
+        if (equipmentManager != null)
+        {
+            equipmentManager.OnEquipmentChanged?.Invoke();
+        }
     }
 
     /// <summary>

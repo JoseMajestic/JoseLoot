@@ -42,8 +42,12 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private GameObject enemyImagePanel;
     
     [Header("Detalles de Ronda")]
-    [Tooltip("Texto con detalles de la ronda")]
+    [Tooltip("Texto con detalles de la ronda (solo información durante el combate)")]
     [SerializeField] private TextMeshProUGUI roundDetailsText;
+    
+    [Header("Detalles de Ataque Seleccionado")]
+    [Tooltip("Texto que muestra los detalles del ataque seleccionado antes de iniciar la ronda")]
+    [SerializeField] private TextMeshProUGUI selectedAttackDetailsText;
     
     [Header("Panel de Combate")]
     [Tooltip("Panel principal de combate (se cierra al aceptar victoria/derrota)")]
@@ -144,6 +148,7 @@ public class CombatManager : MonoBehaviour
     private int playerDefenseBuffPercent = 0;
     private int playerDefenseBuffRounds = 0;
     private int playerPoisonPercent = 0;
+    private int playerPoisonRounds = 0; // SOLUCIÓN: Contador de rondas de veneno del jugador
     private bool playerStunned = false;
     
     // Efectos activos del enemigo
@@ -152,6 +157,7 @@ public class CombatManager : MonoBehaviour
     private int enemyDefenseBuffPercent = 0;
     private int enemyDefenseBuffRounds = 0;
     private int enemyPoisonPercent = 0;
+    private int enemyPoisonRounds = 0; // SOLUCIÓN: Contador de rondas de veneno del enemigo
     private bool enemyStunned = false;
 
     private void Start()
@@ -297,6 +303,18 @@ public class CombatManager : MonoBehaviour
         selectedAttack = null;
         enemySelectedAttack = null;
         
+        // SOLUCIÓN: Limpiar texto del ataque seleccionado al iniciar combate
+        if (selectedAttackDetailsText != null)
+        {
+            selectedAttackDetailsText.text = "";
+        }
+        
+        // Limpiar detalles de ronda
+        if (roundDetailsText != null)
+        {
+            roundDetailsText.text = "";
+        }
+        
         // Resetear efectos activos
         ResetActiveEffects();
         
@@ -350,6 +368,7 @@ public class CombatManager : MonoBehaviour
         playerDefenseBuffPercent = 0;
         playerDefenseBuffRounds = 0;
         playerPoisonPercent = 0;
+        playerPoisonRounds = 0; // SOLUCIÓN: Resetear rondas de veneno
         playerStunned = false;
         
         // Efectos del enemigo
@@ -358,6 +377,7 @@ public class CombatManager : MonoBehaviour
         enemyDefenseBuffPercent = 0;
         enemyDefenseBuffRounds = 0;
         enemyPoisonPercent = 0;
+        enemyPoisonRounds = 0; // SOLUCIÓN: Resetear rondas de veneno
         enemyStunned = false;
     }
 
@@ -424,12 +444,157 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
+    /// SOLUCIÓN: Muestra los estados activos al inicio de la ronda (ANTES de aplicar efectos y actualizar buffs).
+    /// Muestra veneno, stun y buffs con sus rondas restantes.
+    /// </summary>
+    private IEnumerator DisplayActiveStatesAtRoundStart()
+    {
+        if (roundDetailsText == null || combatTexts == null || currentEnemy == null)
+            yield break;
+
+        List<string> stateMessages = new List<string>();
+
+        // Veneno del jugador
+        if (playerPoisonPercent > 0 && playerPoisonRounds > 0)
+        {
+            string text = FormatText(combatTexts.playerStillPoisoned, playerPoisonPercent, playerPoisonRounds);
+            stateMessages.Add(text);
+        }
+
+        // Veneno del enemigo
+        if (enemyPoisonPercent > 0 && enemyPoisonRounds > 0)
+        {
+            string text = FormatText(combatTexts.enemyStillPoisoned, currentEnemy.enemyName, enemyPoisonPercent, enemyPoisonRounds);
+            stateMessages.Add(text);
+        }
+
+        // Stun del jugador (si todavía está activo desde la ronda anterior)
+        if (playerStunned)
+        {
+            stateMessages.Add(combatTexts.playerStillStunned);
+        }
+
+        // Stun del enemigo (si todavía está activo desde la ronda anterior)
+        if (enemyStunned)
+        {
+            string text = FormatText(combatTexts.enemyStillStunned, currentEnemy.enemyName);
+            stateMessages.Add(text);
+        }
+
+        // Buff de ataque del jugador (mostrar rondas ANTES de decrementar)
+        if (playerAttackBuffRounds > 0 && playerAttackBuffPercent > 0)
+        {
+            string text = FormatText(combatTexts.playerAttackBuffActive, playerAttackBuffPercent, playerAttackBuffRounds);
+            stateMessages.Add(text);
+        }
+
+        // Buff de ataque del enemigo
+        if (enemyAttackBuffRounds > 0 && enemyAttackBuffPercent > 0)
+        {
+            string text = FormatText(combatTexts.enemyAttackBuffActive, currentEnemy.enemyName, enemyAttackBuffPercent, enemyAttackBuffRounds);
+            stateMessages.Add(text);
+        }
+
+        // Buff de defensa del jugador
+        if (playerDefenseBuffRounds > 0 && playerDefenseBuffPercent > 0)
+        {
+            string text = FormatText(combatTexts.playerDefenseBuffActive, playerDefenseBuffPercent, playerDefenseBuffRounds);
+            stateMessages.Add(text);
+        }
+
+        // Buff de defensa del enemigo
+        if (enemyDefenseBuffRounds > 0 && enemyDefenseBuffPercent > 0)
+        {
+            string text = FormatText(combatTexts.enemyDefenseBuffActive, currentEnemy.enemyName, enemyDefenseBuffPercent, enemyDefenseBuffRounds);
+            stateMessages.Add(text);
+        }
+
+        // Mostrar todos los mensajes de estado
+        foreach (string message in stateMessages)
+        {
+            yield return StartCoroutine(DisplayTextWithDelay(message));
+        }
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Muestra los estados restantes al final de la ronda (DESPUÉS de UpdateBuffs).
+    /// Muestra cuántas rondas quedan de buffs activos.
+    /// </summary>
+    private IEnumerator DisplayActiveStatesAtRoundEnd(bool hadPlayerAttackBuff, bool hadPlayerDefenseBuff, 
+                                                       bool hadEnemyAttackBuff, bool hadEnemyDefenseBuff)
+    {
+        if (roundDetailsText == null || combatTexts == null || currentEnemy == null)
+            yield break;
+
+        List<string> stateMessages = new List<string>();
+
+        // Buff de ataque del jugador (mostrar rondas DESPUÉS de decrementar)
+        if (playerAttackBuffRounds > 0)
+        {
+            string text = FormatText(combatTexts.playerAttackBuffRemaining, playerAttackBuffRounds);
+            stateMessages.Add(text);
+        }
+        else if (hadPlayerAttackBuff && playerAttackBuffRounds == 0)
+        {
+            // El buff acaba de terminar en esta ronda
+            string text = FormatText(combatTexts.playerAttackBuffRemaining, 0);
+            stateMessages.Add(text);
+        }
+
+        // Buff de ataque del enemigo
+        if (enemyAttackBuffRounds > 0)
+        {
+            string text = FormatText(combatTexts.enemyAttackBuffRemaining, currentEnemy.enemyName, enemyAttackBuffRounds);
+            stateMessages.Add(text);
+        }
+        else if (hadEnemyAttackBuff && enemyAttackBuffRounds == 0)
+        {
+            // El buff acaba de terminar en esta ronda
+            string text = FormatText(combatTexts.enemyAttackBuffRemaining, currentEnemy.enemyName, 0);
+            stateMessages.Add(text);
+        }
+
+        // Buff de defensa del jugador
+        if (playerDefenseBuffRounds > 0)
+        {
+            string text = FormatText(combatTexts.playerDefenseBuffRemaining, playerDefenseBuffRounds);
+            stateMessages.Add(text);
+        }
+        else if (hadPlayerDefenseBuff && playerDefenseBuffRounds == 0)
+        {
+            // El buff acaba de terminar en esta ronda
+            string text = FormatText(combatTexts.playerDefenseBuffRemaining, 0);
+            stateMessages.Add(text);
+        }
+
+        // Buff de defensa del enemigo
+        if (enemyDefenseBuffRounds > 0)
+        {
+            string text = FormatText(combatTexts.enemyDefenseBuffRemaining, currentEnemy.enemyName, enemyDefenseBuffRounds);
+            stateMessages.Add(text);
+        }
+        else if (hadEnemyDefenseBuff && enemyDefenseBuffRounds == 0)
+        {
+            // El buff acaba de terminar en esta ronda
+            string text = FormatText(combatTexts.enemyDefenseBuffRemaining, currentEnemy.enemyName, 0);
+            stateMessages.Add(text);
+        }
+
+        // Mostrar todos los mensajes de estado
+        foreach (string message in stateMessages)
+        {
+            yield return StartCoroutine(DisplayTextWithDelay(message));
+        }
+    }
+
+    /// <summary>
     /// Aplica efectos de veneno al inicio de la ronda.
+    /// SOLUCIÓN: Decrementa las rondas de veneno después de aplicar el daño.
     /// </summary>
     private IEnumerator ApplyPoisonEffects()
     {
-        // Veneno del jugador (aplicado al enemigo)
-        if (enemyPoisonPercent > 0)
+        // Veneno del enemigo (aplicado por el jugador)
+        if (enemyPoisonPercent > 0 && enemyPoisonRounds > 0)
         {
             int poisonDamage = Mathf.RoundToInt(enemyMaxHp * enemyPoisonPercent / 100f);
             enemyCurrentHp = Mathf.Max(0, enemyCurrentHp - poisonDamage);
@@ -441,6 +606,15 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
+            // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
+            enemyPoisonRounds--;
+            if (enemyPoisonRounds <= 0)
+            {
+                // El veneno terminó, limpiar
+                enemyPoisonPercent = 0;
+                enemyPoisonRounds = 0;
+            }
+            
             yield return new WaitForSeconds(1f);
             
             // Verificar si el enemigo murió
@@ -450,8 +624,8 @@ public class CombatManager : MonoBehaviour
             }
         }
         
-        // Veneno del enemigo (aplicado al jugador)
-        if (playerPoisonPercent > 0)
+        // Veneno del jugador (aplicado por el enemigo)
+        if (playerPoisonPercent > 0 && playerPoisonRounds > 0)
         {
             int poisonDamage = Mathf.RoundToInt(playerMaxHp * playerPoisonPercent / 100f);
             playerCurrentHp = Mathf.Max(0, playerCurrentHp - poisonDamage);
@@ -461,6 +635,15 @@ public class CombatManager : MonoBehaviour
             {
                 string text = FormatText(combatTexts.poisonPlayer, poisonDamage);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
+            }
+            
+            // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
+            playerPoisonRounds--;
+            if (playerPoisonRounds <= 0)
+            {
+                // El veneno terminó, limpiar
+                playerPoisonPercent = 0;
+                playerPoisonRounds = 0;
             }
             
             yield return new WaitForSeconds(1f);
@@ -572,11 +755,17 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        // Mostrar detalles del ataque
-        if (roundDetailsText != null && combatTexts != null)
+        // SOLUCIÓN: Mostrar detalles del ataque en el texto específico para ataques seleccionados
+        // NO usar roundDetailsText, que es solo para información de la ronda durante el combate
+        if (selectedAttackDetailsText != null && combatTexts != null)
         {
             string text = FormatText(combatTexts.attackSelected, selectedAttack.attackName, selectedAttack.description);
-            StartCoroutine(DisplayTextWithTypewriter(text));
+            selectedAttackDetailsText.text = text;
+        }
+        else if (selectedAttackDetailsText != null)
+        {
+            // Si no hay combatTexts, mostrar información básica
+            selectedAttackDetailsText.text = $"{selectedAttack.attackName}: {selectedAttack.description}";
         }
 
         // Habilitar botón de combate
@@ -608,6 +797,13 @@ public class CombatManager : MonoBehaviour
         playerLuckUsedThisRound = false;
         enemyLuckUsedThisRound = false;
 
+        // SOLUCIÓN: Limpiar texto del ataque seleccionado al iniciar la ronda
+        // Los detalles del ataque ya no son relevantes, ahora se mostrará información de la ronda
+        if (selectedAttackDetailsText != null)
+        {
+            selectedAttackDetailsText.text = "";
+        }
+
         // Actualizar texto de ronda
         if (roundText != null)
         {
@@ -629,6 +825,9 @@ public class CombatManager : MonoBehaviour
             combatButton.interactable = false;
         }
 
+        // SOLUCIÓN: Mostrar estados activos al inicio de la ronda (ANTES de aplicar efectos y actualizar buffs)
+        yield return StartCoroutine(DisplayActiveStatesAtRoundStart());
+        
         // Aplicar efectos de veneno al inicio de la ronda
         yield return StartCoroutine(ApplyPoisonEffects());
         
@@ -644,6 +843,12 @@ public class CombatManager : MonoBehaviour
             yield break;
         }
         
+        // SOLUCIÓN: Guardar estado de buffs antes de actualizar para detectar cuáles terminaron
+        bool hadPlayerAttackBuff = playerAttackBuffRounds > 0;
+        bool hadPlayerDefenseBuff = playerDefenseBuffRounds > 0;
+        bool hadEnemyAttackBuff = enemyAttackBuffRounds > 0;
+        bool hadEnemyDefenseBuff = enemyDefenseBuffRounds > 0;
+        
         // Actualizar duración de buffs
         UpdateBuffs();
         
@@ -653,6 +858,23 @@ public class CombatManager : MonoBehaviour
 
         // Determinar orden de ataque
         bool playerAttacksFirst = DetermineAttackOrder();
+
+        // SOLUCIÓN: Mostrar quién ataca primero antes de comenzar la ronda
+        if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+        {
+            string firstAttackerText;
+            if (playerAttacksFirst)
+            {
+                // El jugador ataca primero
+                firstAttackerText = FormatText(combatTexts.playerAttacksFirst, "Héroe");
+            }
+            else
+            {
+                // El enemigo ataca primero
+                firstAttackerText = FormatText(combatTexts.enemyAttacksFirst, currentEnemy.enemyName);
+            }
+            yield return StartCoroutine(DisplayTextWithDelay(firstAttackerText));
+        }
 
         if (playerAttacksFirst)
         {
@@ -699,6 +921,9 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        // SOLUCIÓN: Mostrar estados restantes al final de la ronda (DESPUÉS de UpdateBuffs)
+        yield return StartCoroutine(DisplayActiveStatesAtRoundEnd(hadPlayerAttackBuff, hadPlayerDefenseBuff, hadEnemyAttackBuff, hadEnemyDefenseBuff));
+        
         // Si ambos siguen vivos, habilitar botón para siguiente ronda
         if (combatButton != null)
         {
@@ -917,6 +1142,7 @@ public class CombatManager : MonoBehaviour
 
     /// <summary>
     /// Procesa un ataque de veneno.
+    /// SOLUCIÓN: Establece las rondas de veneno cuando se aplica (usa duration del AttackData o 3 rondas por defecto).
     /// </summary>
     private IEnumerator ProcessPoisonAttack(AttackData attack, bool isPlayer)
     {
@@ -926,9 +1152,13 @@ public class CombatManager : MonoBehaviour
         // Luego aplica el veneno (se aplicará al inicio de la siguiente ronda)
         int poisonPercent = attack.effectValue; // 10, 15, 20
         
+        // SOLUCIÓN: Determinar duración del veneno (usar duration del AttackData si está disponible, o 3 rondas por defecto)
+        int poisonDuration = attack.duration > 0 ? attack.duration : 3; // Por defecto 3 rondas
+        
         if (isPlayer)
         {
             enemyPoisonPercent = poisonPercent;
+            enemyPoisonRounds = poisonDuration; // SOLUCIÓN: Establecer rondas de veneno
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.poisonAppliedEnemy, currentEnemy.enemyName, poisonPercent);
@@ -942,6 +1172,7 @@ public class CombatManager : MonoBehaviour
         else
         {
             playerPoisonPercent = poisonPercent;
+            playerPoisonRounds = poisonDuration; // SOLUCIÓN: Establecer rondas de veneno
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.poisonAppliedPlayer, poisonPercent);
@@ -1184,6 +1415,13 @@ public class CombatManager : MonoBehaviour
             yield break;
         }
 
+        // SOLUCIÓN: Mostrar mensaje de que ahora ataca el jugador
+        if (roundDetailsText != null && combatTexts != null)
+        {
+            string text = FormatText(combatTexts.nowPlayerAttacks, "Héroe");
+            yield return StartCoroutine(DisplayTextWithDelay(text));
+        }
+
         // Procesar el ataque seleccionado
         yield return StartCoroutine(ProcessAttack(selectedAttack, true));
 
@@ -1275,6 +1513,13 @@ public class CombatManager : MonoBehaviour
             }
             enemyStunned = false; // Resetear stun después de perder el turno
             yield break;
+        }
+
+        // SOLUCIÓN: Mostrar mensaje de que ahora ataca el enemigo
+        if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+        {
+            string text = FormatText(combatTexts.nowEnemyAttacks, currentEnemy.enemyName);
+            yield return StartCoroutine(DisplayTextWithDelay(text));
         }
 
         // Seleccionar ataque aleatorio del enemigo

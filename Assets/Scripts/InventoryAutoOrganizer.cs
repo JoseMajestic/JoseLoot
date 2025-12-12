@@ -33,6 +33,23 @@ public class InventoryAutoOrganizer : MonoBehaviour
         { "Titan", 10 }         // Mejor
     };
 
+    // SOLUCIÓN: Orden de tipos de items según Hero Profile Manager
+    // Orden: Montura, Casco, Collar, Arma, Armadura, Escudo, Guantes, Cinturon, Anillo, Botas
+    private static readonly Dictionary<ItemType, int> ItemTypeOrder = new Dictionary<ItemType, int>
+    {
+        { ItemType.Montura, 1 },
+        { ItemType.Casco, 2 },
+        { ItemType.Collar, 3 },
+        { ItemType.Arma, 4 },
+        { ItemType.Armadura, 5 },
+        { ItemType.Escudo, 6 },
+        { ItemType.Guantes, 7 },
+        { ItemType.Cinturon, 8 },
+        { ItemType.Anillo, 9 },
+        { ItemType.Botas, 10 },
+        { ItemType.Otros, 99 }  // Items no equipables al final
+    };
+
     private void OnEnable()
     {
         // Suscribirse a eventos del inventario si está configurado
@@ -140,13 +157,63 @@ public class InventoryAutoOrganizer : MonoBehaviour
 
     /// <summary>
     /// Ordena una lista de items según las reglas de organización.
+    /// SOLUCIÓN: Primero ordena por tipo de item (según Hero Profile Manager),
+    /// luego por set, nivel del set y stats.
     /// </summary>
     private List<ItemInstance> SortItems(List<ItemInstance> items)
     {
-        return items.OrderBy(item => GetSetOrderValue(item))
+        return items.OrderBy(item => GetItemTypeOrderValue(item))
+                    .ThenBy(item => GetSetOrderValue(item))
                     .ThenBy(item => GetSetLevelValue(item))
                     .ThenByDescending(item => GetTotalStatsValue(item))
                     .ToList();
+    }
+
+    /// <summary>
+    /// SOLUCIÓN: Obtiene el valor de orden del tipo de item según Hero Profile Manager.
+    /// Orden: Montura (1), Casco (2), Collar (3), Arma (4), Armadura (5), Escudo (6), 
+    /// Guantes (7), Cinturon (8), Anillo (9), Botas (10), Otros (99).
+    /// </summary>
+    private int GetItemTypeOrderValue(ItemInstance item)
+    {
+        if (item == null || !item.IsValid() || item.baseItem == null)
+            return 99; // Items inválidos al final
+
+        ItemType itemType = item.baseItem.itemType;
+        
+        // Si el tipo está en el diccionario, usar ese valor
+        if (ItemTypeOrder.ContainsKey(itemType))
+        {
+            return ItemTypeOrder[itemType];
+        }
+
+        // Fallback: intentar determinar el tipo por el nombre del item
+        string itemNameLower = item.baseItem.itemName.ToLower();
+        
+        // Verificar por nombre (compatibilidad con items antiguos)
+        if (itemNameLower.Contains("montura"))
+            return 1;
+        if (itemNameLower.Contains("casco") || itemNameLower.Contains("sombrero"))
+            return 2;
+        if (itemNameLower.Contains("collar"))
+            return 3;
+        if (itemNameLower.Contains("arma"))
+            return 4;
+        if (itemNameLower.Contains("armadura") || itemNameLower.Contains("pechera"))
+            return 5;
+        if (itemNameLower.Contains("escudo"))
+            return 6;
+        if (itemNameLower.Contains("guantes"))
+            return 7;
+        if (itemNameLower.Contains("cinturon") || itemNameLower.Contains("cinturón"))
+            return 8;
+        if (itemNameLower.Contains("anillo"))
+            return 9;
+        if (itemNameLower.Contains("botas"))
+            return 10;
+
+        // Si no se puede determinar, ponerlo al final
+        return 99;
     }
 
     /// <summary>
