@@ -73,26 +73,57 @@ public class EnergySystem : MonoBehaviour
     
     /// <summary>
     /// Obtiene la energía actual del héroe.
+    /// Valida y corrige valores sospechosos (48, 49) que pueden ser corruptos.
+    /// NO corrige valores válidos como 0 (después de reset) o valores normales.
     /// </summary>
     public int GetCurrentEnergy()
     {
         if (gameDataManager == null)
-            return MAX_ENERGY;
+            return 0; // Cambiar de MAX_ENERGY a 0 como valor por defecto
         
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
-            return MAX_ENERGY;
+            return 0; // Cambiar de MAX_ENERGY a 0 como valor por defecto
         
         int energy = profile.currentEnergy;
         
-        // DEBUG: Detectar específicamente el valor 49
-        if (energy == 49)
+        // SOLUCIÓN CRÍTICA: Validar y corregir valores sospechosos (48, 49)
+        // Estos valores son típicamente corruptos y no tienen sentido lógico
+        // NO corregir valores válidos como 0 (después de reset)
+        if (energy == 48 || energy == 49)
         {
-            Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR 49 DETECTADO EN GetCurrentEnergy ⚠️⚠️⚠️");
-            Debug.LogError($"[ENERGY DEBUG] profile.currentEnergy = {energy}");
-            Debug.LogError($"[ENERGY DEBUG] profile.isSleeping = {profile.isSleeping}");
-            Debug.LogError($"[ENERGY DEBUG] profile.lastSleepTimeString = '{profile.lastSleepTimeString}'");
-            Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
+            // Si no está durmiendo, estos valores son definitivamente corruptos
+            if (!profile.isSleeping)
+            {
+                Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR SOSPECHOSO {energy} DETECTADO EN GetCurrentEnergy ⚠️⚠️⚠️");
+                Debug.LogError($"[ENERGY DEBUG] profile.currentEnergy = {energy}, isSleeping = {profile.isSleeping}");
+                Debug.LogError($"[ENERGY DEBUG] Corrigiendo a 0 (valor por defecto cuando no está durmiendo y hay corrupción)");
+                Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
+                
+                // Corregir el valor corrupto a 0 (no a 100)
+                profile.currentEnergy = 0;
+                profile.isSleeping = false;
+                
+                // Guardar el valor corregido
+                gameDataManager.SavePlayerProfile();
+                
+                return 0;
+            }
+            // Si está durmiendo, 48 o 49 podrían ser válidos (recuperación parcial)
+            // Pero es sospechoso, así que lo registramos
+            else
+            {
+                Debug.LogWarning($"[ENERGY DEBUG] Valor sospechoso {energy} detectado mientras duerme. Podría ser válido o corrupto.");
+            }
+        }
+        
+        // Validar rango (0-100 es válido, no corregir valores válidos)
+        if (energy < 0 || energy > MAX_ENERGY)
+        {
+            Debug.LogError($"[ENERGY DEBUG] Valor de energía fuera de rango: {energy}. Corrigiendo a 0.");
+            profile.currentEnergy = 0; // Cambiar de MAX_ENERGY a 0
+            gameDataManager.SavePlayerProfile();
+            return 0;
         }
         
         return energy;

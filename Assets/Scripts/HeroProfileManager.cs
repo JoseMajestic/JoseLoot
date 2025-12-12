@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Gestiona el perfil del jugador (Hero), mostrando:
@@ -178,6 +179,9 @@ public class HeroProfileManager : MonoBehaviour
 
     private Coroutine timeUpdateCoroutine;
 
+    // Diccionario para guardar los sprites por defecto de cada slot
+    private Dictionary<Image, Sprite> defaultSlotSprites = new Dictionary<Image, Sprite>();
+
     private void Start()
     {
         // Obtener referencias desde GameDataManager si no están asignadas
@@ -252,6 +256,9 @@ public class HeroProfileManager : MonoBehaviour
         
         // Actualizar experiencia al inicio
         RefreshHeroExperience();
+
+        // Guardar los sprites por defecto de todos los slots antes de cualquier modificación
+        SaveDefaultSlotSprites();
     }
 
     /// <summary>
@@ -909,8 +916,18 @@ public class HeroProfileManager : MonoBehaviour
             }
             else
             {
-                // Slot vacío: limpiar sprite para que vuelva al sprite por defecto del Image
-                slotImage.sprite = null;
+                // Slot vacío: restaurar el sprite por defecto del Image en lugar de poner null
+                if (defaultSlotSprites.ContainsKey(slotImage))
+                {
+                    // Restaurar el sprite por defecto que tenía el Image al inicio
+                    slotImage.sprite = defaultSlotSprites[slotImage];
+                }
+                else
+                {
+                    // Si no se guardó un sprite por defecto, no modificar el sprite actual
+                    // Esto permite que el sprite configurado en Unity se mantenga
+                    // No poner null para evitar que se borre el sprite del Image
+                }
                 slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
             }
         }
@@ -1275,6 +1292,27 @@ public class HeroProfileManager : MonoBehaviour
         if (heroLevelText != null)
         {
             heroLevelText.text = $"Nivel {level}";
+        }
+    }
+
+    /// <summary>
+    /// Guarda los sprites por defecto de todos los slots de equipo.
+    /// Estos sprites se restaurarán cuando un slot esté vacío.
+    /// </summary>
+    private void SaveDefaultSlotSprites()
+    {
+        Image[] equipmentImages = { 
+            monturaImage, cascoImage, collarImage, armaImage, armaduraImage, 
+            escudoImage, guantesImage, cinturonImage, anilloImage, botasImage 
+        };
+        
+        foreach (Image slotImage in equipmentImages)
+        {
+            if (slotImage != null && slotImage.sprite != null)
+            {
+                // Guardar el sprite por defecto del Image
+                defaultSlotSprites[slotImage] = slotImage.sprite;
+            }
         }
     }
 }

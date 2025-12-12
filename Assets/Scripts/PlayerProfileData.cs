@@ -76,7 +76,7 @@ public class PlayerProfileData
 
     // Sistema de energía
     [Tooltip("Energía actual del héroe (0-100)")]
-    public int currentEnergy = 100;
+    public int currentEnergy = 0;
     
     [Tooltip("Energía máxima del héroe")]
     public int maxEnergy = 100;
@@ -493,7 +493,7 @@ public class PlayerProfileData
         breedDiscipline = 0;
         
         // Resetear energía
-        currentEnergy = 100;
+        currentEnergy = 0; // Energía empieza en 0 después del reset
         isSleeping = false; // Despertar al resetear
         
         // Resetear tiempo de vida

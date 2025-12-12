@@ -170,7 +170,6 @@ public class BreedManager : MonoBehaviour
         
         if (gameDataManager == null)
         {
-            Debug.LogError("BreedManager: GameDataManager no encontrado.");
             return;
         }
         
@@ -192,6 +191,12 @@ public class BreedManager : MonoBehaviour
         
         // Cargar y actualizar UI inicial
         RefreshAllUI();
+        
+        // Inicializar estado anterior de sueño
+        if (energySystem != null)
+        {
+            previousIsSleeping = energySystem.IsSleeping();
+        }
         
         // Actualizar estado de botones de acción inicial
         UpdateActionButtonsState();
@@ -248,9 +253,16 @@ public class BreedManager : MonoBehaviour
         if (profile == null)
             return;
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
         profile.breedHunger = Mathf.Min(100, profile.breedHunger + actionFillAmount);
         gameDataManager.SavePlayerProfile();
         RefreshBreedStatsUI();
+        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
     }
     
     /// <summary>
@@ -262,9 +274,16 @@ public class BreedManager : MonoBehaviour
         if (profile == null)
             return;
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
         profile.breedDiscipline = Mathf.Min(100, profile.breedDiscipline + actionFillAmount);
         gameDataManager.SavePlayerProfile();
         RefreshBreedStatsUI();
+        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
     }
     
     /// <summary>
@@ -274,7 +293,6 @@ public class BreedManager : MonoBehaviour
     {
         if (energySystem == null)
         {
-            Debug.LogWarning("BreedManager: EnergySystem no encontrado.");
             return;
         }
         
@@ -285,14 +303,12 @@ public class BreedManager : MonoBehaviour
         // Si ya está durmiendo, no hacer nada
         if (profile.isSleeping)
         {
-            Debug.Log("BreedManager: El héroe ya está durmiendo.");
             return;
         }
         
         // Si la energía ya está al máximo, no puede dormir
         if (profile.currentEnergy >= 100)
         {
-            Debug.Log("BreedManager: La energía ya está al máximo, no es necesario dormir.");
             return;
         }
         
@@ -304,8 +320,6 @@ public class BreedManager : MonoBehaviour
         
         // Actualizar estado de botones (el botón de dormir se deshabilitará)
         UpdateActionButtonsState();
-        
-        Debug.Log("BreedManager: El héroe comenzó a dormir. La energía se recuperará automáticamente hasta llegar al 100% en 4 horas.");
     }
     
     /// <summary>
@@ -317,9 +331,16 @@ public class BreedManager : MonoBehaviour
         if (profile == null)
             return;
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
         profile.breedHappiness = Mathf.Min(100, profile.breedHappiness + actionFillAmount);
         gameDataManager.SavePlayerProfile();
         RefreshBreedStatsUI();
+        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
     }
     
     /// <summary>
@@ -346,12 +367,6 @@ public class BreedManager : MonoBehaviour
         
         if (!EvolutionSystem.CanEvolve(profile.evolutionClass, profile.heroLevel, lastEvolutionTime))
         {
-            string requirements = EvolutionSystem.GetEvolutionRequirements(
-                profile.evolutionClass, 
-                profile.heroLevel, 
-                lastEvolutionTime
-            );
-            Debug.LogWarning($"BreedManager: No se puede evolucionar. {requirements}");
             return;
         }
         
@@ -366,8 +381,6 @@ public class BreedManager : MonoBehaviour
         
         // Actualizar estado de botones (el botón de evolución se deshabilitará si ya no puede evolucionar más)
         UpdateActionButtonsState();
-        
-        Debug.Log($"BreedManager: ¡El héroe evolucionó a {EvolutionSystem.GetClassName(profile.evolutionClass)} Clase!");
     }
     
     /// <summary>
@@ -379,9 +392,16 @@ public class BreedManager : MonoBehaviour
         if (profile == null)
             return;
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
         profile.breedHygiene = Mathf.Min(100, profile.breedHygiene + actionFillAmount);
         gameDataManager.SavePlayerProfile();
         RefreshBreedStatsUI();
+        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
     }
     
     /// <summary>
@@ -393,9 +413,16 @@ public class BreedManager : MonoBehaviour
         if (profile == null)
             return;
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
         profile.breedWork = Mathf.Min(100, profile.breedWork + actionFillAmount);
         gameDataManager.SavePlayerProfile();
         RefreshBreedStatsUI();
+        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
     }
     
     /// <summary>
@@ -427,7 +454,6 @@ public class BreedManager : MonoBehaviour
         }
         
         RefreshAllUI();
-        Debug.Log("BreedManager: Datos de crianza reseteados completamente.");
     }
     
     /// <summary>
@@ -446,7 +472,8 @@ public class BreedManager : MonoBehaviour
     /// <summary>
     /// Corrutina que decae las stats automáticamente (solo 5 stats, NO energía).
     /// Decae: Trabajo, Hambre, Felicidad, Higiene, Disciplina.
-    /// NO decae: Energía (solo se descarga manualmente).
+    /// NO decae: Energía (breedEnergy y currentEnergy NO se tocan aquí).
+    /// La energía solo se descarga manualmente (combates o mejoras de estadísticas).
     /// Fórmula: 100 puntos en 6 horas = ~0.00463 puntos/segundo.
     /// </summary>
     private IEnumerator DecayStats()
@@ -466,16 +493,48 @@ public class BreedManager : MonoBehaviour
             // Calcular decaimiento proporcional al tiempo transcurrido
             float decayAmount = deltaTime * DECAY_RATE_PER_SECOND;
             
-            // Decaer stats (NO energía)
+            // IMPORTANTE: Decaer SOLO las 5 stats de crianza (NO energía)
+            // La energía (breedEnergy y currentEnergy) NO se decae automáticamente.
+            // La energía solo se descarga cuando se usa (combates o mejoras).
+            
+            // SOLUCIÓN CRÍTICA: Obtener el valor CORRECTO de energía desde EnergySystem
+            // NO confiar en profile.currentEnergy porque podría estar corrupto (48, 49)
+            // EnergySystem es la fuente de verdad única para la energía
+            int correctCurrentEnergy = profile.currentEnergy; // Valor por defecto
+            bool correctIsSleeping = profile.isSleeping; // Valor por defecto
+            
+            if (energySystem != null)
+            {
+                // Obtener el valor correcto desde EnergySystem (fuente de verdad)
+                correctCurrentEnergy = energySystem.GetCurrentEnergy();
+                correctIsSleeping = energySystem.IsSleeping();
+                
+                // Si el valor del perfil es diferente al correcto, corregirlo
+                if (profile.currentEnergy != correctCurrentEnergy)
+                {
+                    profile.currentEnergy = correctCurrentEnergy;
+                    profile.isSleeping = correctIsSleeping;
+                }
+            }
+            
+            // Decaer solo las stats de crianza
             profile.breedWork = Mathf.Max(0, profile.breedWork - Mathf.RoundToInt(decayAmount));
             profile.breedHunger = Mathf.Max(0, profile.breedHunger - Mathf.RoundToInt(decayAmount));
             profile.breedHappiness = Mathf.Max(0, profile.breedHappiness - Mathf.RoundToInt(decayAmount));
             profile.breedHygiene = Mathf.Max(0, profile.breedHygiene - Mathf.RoundToInt(decayAmount));
             profile.breedDiscipline = Mathf.Max(0, profile.breedDiscipline - Mathf.RoundToInt(decayAmount));
             
-            // NO decaer energía (solo se descarga manualmente)
+            // NO modificar breedEnergy ni currentEnergy aquí.
+            // La energía solo se modifica en:
+            // - EnergySystem.SpendEnergy() (combates y mejoras)
+            // - EnergySystem.Update() (recuperación mientras duerme)
             
-            // Guardar cambios
+            // SOLUCIÓN CRÍTICA: Asegurar que la energía tenga el valor correcto antes de guardar
+            // Esto previene que se guarde un valor corrupto de energía junto con las stats de crianza
+            profile.currentEnergy = correctCurrentEnergy;
+            profile.isSleeping = correctIsSleeping;
+            
+            // Guardar cambios (solo stats de crianza, energía protegida)
             gameDataManager.SavePlayerProfile();
             
             // Actualizar UI
@@ -622,44 +681,17 @@ public class BreedManager : MonoBehaviour
             int currentEnergy = energySystem.GetCurrentEnergy();
             int maxEnergy = energySystem.GetMaxEnergy();
             
-            // DEBUG: Detectar específicamente el valor 49
-            if (currentEnergy == 49)
-            {
-                Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR 49 DETECTADO EN RefreshBreedStatsUI ⚠️⚠️⚠️");
-                Debug.LogError($"[ENERGY DEBUG] currentEnergy leído: {currentEnergy}");
-                PlayerProfileData profileDebug = gameDataManager?.GetPlayerProfile();
-                if (profileDebug != null)
-                {
-                    Debug.LogError($"[ENERGY DEBUG] profile.currentEnergy directo: {profileDebug.currentEnergy}");
-                    Debug.LogError($"[ENERGY DEBUG] profile.lastSleepTimeString: '{profileDebug.lastSleepTimeString}'");
-                }
-                Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
-            }
-            
-            Debug.Log($"[ENERGY DEBUG] RefreshBreedStatsUI - Leyendo energía: {currentEnergy} / {maxEnergy} (desde EnergySystem.GetCurrentEnergy())");
-            
             if (energySlider != null)
             {
-                int sliderValueBefore = Mathf.RoundToInt(energySlider.value);
                 energySlider.value = currentEnergy;
-                if (sliderValueBefore != currentEnergy)
-                {
-                    Debug.Log($"[ENERGY DEBUG] RefreshBreedStatsUI - Slider actualizado: {sliderValueBefore} -> {currentEnergy}");
-                }
             }
             if (energyText != null)
             {
-                string textBefore = energyText.text;
                 energyText.text = $"{currentEnergy}% / {maxEnergy}%";
-                if (textBefore != energyText.text)
-                {
-                    Debug.Log($"[ENERGY DEBUG] RefreshBreedStatsUI - Texto actualizado: '{textBefore}' -> '{energyText.text}'");
-                }
             }
         }
         else
         {
-            Debug.LogWarning("[ENERGY DEBUG] RefreshBreedStatsUI - EnergySystem es null, mostrando 0");
             // Si no hay EnergySystem, mostrar 0
             if (energySlider != null)
                 energySlider.value = 0;
@@ -695,6 +727,7 @@ public class BreedManager : MonoBehaviour
     
     /// <summary>
     /// Actualiza el cooldown de evolución.
+    /// Si el cooldown está completo pero faltan niveles, muestra cuántos niveles faltan.
     /// </summary>
     private void RefreshEvolutionCooldown()
     {
@@ -703,8 +736,41 @@ public class BreedManager : MonoBehaviour
             return;
         
         DateTime lastEvolutionTime = profile.GetLastEvolutionTime();
-        string cooldown = EvolutionSystem.FormatEvolutionCooldown(lastEvolutionTime);
-        evolutionCooldownText.text = cooldown;
+        float hoursRemaining = EvolutionSystem.GetTimeUntilEvolution(lastEvolutionTime);
+        
+        // Si el cooldown está completo (horasRemaining <= 0), verificar si faltan niveles
+        if (hoursRemaining <= 0f)
+        {
+            // Calcular el nivel requerido para la siguiente clase
+            int nextClass = profile.evolutionClass + 1;
+            int requiredLevel = nextClass * 5; // Fórmula: clase * 5
+            int currentLevel = profile.heroLevel;
+            int levelsNeeded = requiredLevel - currentLevel;
+            
+            // Si faltan niveles, mostrar el mensaje apropiado
+            if (levelsNeeded > 0)
+            {
+                if (levelsNeeded == 1)
+                {
+                    evolutionCooldownText.text = "Sube 1 nivel más para evolucionar";
+                }
+                else
+                {
+                    evolutionCooldownText.text = $"Sube {levelsNeeded} niveles más para evolucionar";
+                }
+            }
+            else
+            {
+                // Cooldown completo y nivel suficiente: puede evolucionar
+                evolutionCooldownText.text = "¡LISTO!";
+            }
+        }
+        else
+        {
+            // Cooldown aún no completado: mostrar tiempo restante
+            string cooldown = EvolutionSystem.FormatEvolutionCooldown(lastEvolutionTime);
+            evolutionCooldownText.text = cooldown;
+        }
     }
     
     /// <summary>
@@ -771,6 +837,9 @@ public class BreedManager : MonoBehaviour
         }
     }
     
+    // Variable para rastrear el estado anterior de sueño
+    private bool previousIsSleeping = false;
+    
     private void Update()
     {
         // Actualizar tiempo de vida (solo cuenta cuando se juega)
@@ -793,41 +862,36 @@ public class BreedManager : MonoBehaviour
                 // La recuperación se aplica solo cuando es necesario (al iniciar, al dormir, al abrir panel)
                 int currentEnergy = energySystem.GetCurrentEnergy();
                 int maxEnergy = energySystem.GetMaxEnergy();
-                
-                // DEBUG: Detectar específicamente el valor 49
-                if (currentEnergy == 49)
-                {
-                    Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR 49 DETECTADO EN Update ⚠️⚠️⚠️");
-                    Debug.LogError($"[ENERGY DEBUG] currentEnergy leído: {currentEnergy}");
-                    PlayerProfileData profileDebug = gameDataManager?.GetPlayerProfile();
-                    if (profileDebug != null)
-                    {
-                        Debug.LogError($"[ENERGY DEBUG] profile.currentEnergy directo: {profileDebug.currentEnergy}");
-                        Debug.LogError($"[ENERGY DEBUG] profile.lastSleepTimeString: '{profileDebug.lastSleepTimeString}'");
-                    }
-                    Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
-                }
-                
-                Debug.Log($"[ENERGY DEBUG] Update (cada segundo) - Leyendo energía: {currentEnergy} / {maxEnergy}");
+                bool isSleeping = energySystem.IsSleeping();
                 
                 if (energySlider != null)
                 {
-                    int sliderValueBefore = Mathf.RoundToInt(energySlider.value);
                     energySlider.value = currentEnergy;
-                    if (sliderValueBefore != currentEnergy)
-                    {
-                        Debug.LogWarning($"[ENERGY DEBUG] Update - Slider cambió: {sliderValueBefore} -> {currentEnergy} (¡VALOR CAMBIÓ!)");
-                    }
                 }
                 if (energyText != null)
                 {
-                    string textBefore = energyText.text;
                     energyText.text = $"{currentEnergy}% / {maxEnergy}%";
-                    if (textBefore != energyText.text)
-                    {
-                        Debug.LogWarning($"[ENERGY DEBUG] Update - Texto cambió: '{textBefore}' -> '{energyText.text}' (¡VALOR CAMBIÓ!)");
-                    }
                 }
+                
+                // SOLUCIÓN: Si la energía llegó al 100% O si dejó de estar durmiendo, actualizar el botón de dormir
+                // Esto asegura que el botón se desactive automáticamente cuando la energía se recupera completamente
+                bool shouldUpdateButton = false;
+                if (currentEnergy >= maxEnergy)
+                {
+                    shouldUpdateButton = true;
+                }
+                if (previousIsSleeping && !isSleeping)
+                {
+                    shouldUpdateButton = true;
+                }
+                
+                if (shouldUpdateButton)
+                {
+                    UpdateActionButtonsState();
+                }
+                
+                // Guardar el estado actual para la próxima verificación
+                previousIsSleeping = isSleeping;
             }
             
             // Actualizar estado de botones de acción periódicamente
