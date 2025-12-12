@@ -199,6 +199,24 @@ public class GameDataManager : MonoBehaviour
             string json = PlayerPrefs.GetString(PLAYER_PROFILE_KEY);
             playerProfile = JsonUtility.FromJson<PlayerProfileData>(json);
             
+            // SOLUCIÓN: Validar y corregir energía si tiene un valor inválido
+            // Esto corrige valores como 49 que pueden haber sido guardados por bugs anteriores
+            if (playerProfile.currentEnergy < 0 || playerProfile.currentEnergy > 100)
+            {
+                Debug.LogWarning($"[ENERGY DEBUG] EnergySystem: Valor de energía inválido detectado ({playerProfile.currentEnergy}). Corrigiendo a 100.");
+                playerProfile.currentEnergy = 100;
+                playerProfile.isSleeping = false;
+                SavePlayerProfile(); // Guardar el valor corregido inmediatamente
+            }
+            else if (playerProfile.currentEnergy == 49 && !playerProfile.isSleeping)
+            {
+                // Caso específico: valor 49 sin estar durmiendo (posible bug anterior)
+                Debug.LogWarning($"[ENERGY DEBUG] EnergySystem: Detectado valor 49 (posible bug anterior). Corrigiendo a 100.");
+                playerProfile.currentEnergy = 100;
+                playerProfile.isSleeping = false;
+                SavePlayerProfile(); // Guardar el valor corregido inmediatamente
+            }
+            
             // SOLUCIÓN: Cargar también el inventario completo desde el perfil guardado
             // Usar modo silencioso en la carga inicial para evitar eventos prematuros
             if (inventoryManager != null)

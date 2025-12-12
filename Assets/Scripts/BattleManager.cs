@@ -34,6 +34,16 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Texto que muestra las monedas de recompensa")]
     [SerializeField] private TextMeshProUGUI rewardText;
     
+    [Header("Energía")]
+    [Tooltip("Texto para mostrar la energía actual del héroe")]
+    [SerializeField] private TextMeshProUGUI heroEnergyText;
+    
+    [Tooltip("Texto para mostrar el coste de energía de la batalla")]
+    [SerializeField] private TextMeshProUGUI battleEnergyCostText;
+    
+    [Tooltip("Coste de energía para iniciar una batalla")]
+    [SerializeField] private int battleEnergyCost = 10;
+    
     [Header("Botones")]
     [Tooltip("Botón para iniciar el combate")]
     [SerializeField] private Button battleButton;
@@ -54,11 +64,20 @@ public class BattleManager : MonoBehaviour
     
     // Enemigo actualmente seleccionado
     private EnemyData selectedEnemy = null;
+    
+    // Referencia al sistema de energía
+    private EnergySystem energySystem;
 
     private void Start()
     {
         InitializeButtons();
         RefreshEnemyButtons();
+        
+        // Obtener referencia al sistema de energía
+        energySystem = FindFirstObjectByType<EnergySystem>();
+        
+        // Actualizar UI de energía inicial
+        RefreshEnergyUI();
     }
 
     /// <summary>
@@ -237,11 +256,11 @@ public class BattleManager : MonoBehaviour
             rewardText.text = $"Recompensa: {enemy.rewardCoins} monedas";
         }
 
-        // Habilitar botón de batalla
-        if (battleButton != null)
-        {
-            battleButton.interactable = true;
-        }
+        // Actualizar UI de energía cuando se selecciona un enemigo
+        RefreshEnergyUI();
+        
+        // Actualizar estado del botón de batalla (verifica energía)
+        UpdateBattleButtonState();
     }
 
     /// <summary>
@@ -253,6 +272,26 @@ public class BattleManager : MonoBehaviour
         {
             Debug.LogWarning("BattleManager: No hay enemigo seleccionado.");
             return;
+        }
+
+        // Verificar y gastar energía ANTES de iniciar el combate
+        if (energySystem != null)
+        {
+            if (!energySystem.CanAfford(battleEnergyCost))
+            {
+                Debug.LogWarning($"BattleManager: No hay suficiente energía. Requerida: {battleEnergyCost}");
+                return;
+            }
+            
+            // Gastar energía
+            if (!energySystem.SpendEnergy(battleEnergyCost))
+            {
+                Debug.LogWarning("BattleManager: No se pudo gastar energía.");
+                return;
+            }
+            
+            // Actualizar UI de energía
+            RefreshEnergyUI();
         }
 
         if (combatPanel == null)
@@ -290,11 +329,64 @@ public class BattleManager : MonoBehaviour
         // Limpiar selección
         selectedEnemy = null;
         
-        // Deshabilitar botón de batalla hasta que se seleccione un enemigo
-        if (battleButton != null)
+        // Actualizar UI de energía
+        RefreshEnergyUI();
+        
+        // Actualizar estado del botón de batalla
+        UpdateBattleButtonState();
+    }
+    
+    /// <summary>
+    /// Actualiza los textos de energía del héroe.
+    /// </summary>
+    private void RefreshEnergyUI()
+    {
+        if (energySystem == null)
+            return;
+        
+        int currentEnergy = energySystem.GetCurrentEnergy();
+        int maxEnergy = energySystem.GetMaxEnergy();
+        
+        Debug.Log($"[ENERGY DEBUG] BattleManager.RefreshEnergyUI - Leyendo energía: {currentEnergy} / {maxEnergy}");
+        
+        if (heroEnergyText != null)
         {
-            battleButton.interactable = false;
+            string textBefore = heroEnergyText.text;
+            heroEnergyText.text = $"Energía: {currentEnergy} / {maxEnergy}";
+            if (textBefore != heroEnergyText.text)
+            {
+                Debug.Log($"[ENERGY DEBUG] BattleManager - Texto actualizado: '{textBefore}' -> '{heroEnergyText.text}'");
+            }
         }
+        
+        if (battleEnergyCostText != null)
+        {
+            battleEnergyCostText.text = $"Coste: {battleEnergyCost}";
+        }
+        
+        // Actualizar estado del botón de batalla según energía disponible
+        UpdateBattleButtonState();
+    }
+    
+    /// <summary>
+    /// Actualiza el estado del botón de batalla según si hay suficiente energía.
+    /// </summary>
+    private void UpdateBattleButtonState()
+    {
+        if (battleButton == null)
+            return;
+        
+        // El botón solo se habilita si:
+        // 1. Hay un enemigo seleccionado
+        // 2. Hay suficiente energía
+        bool canBattle = selectedEnemy != null;
+        
+        if (canBattle && energySystem != null)
+        {
+            canBattle = energySystem.CanAfford(battleEnergyCost);
+        }
+        
+        battleButton.interactable = canBattle;
     }
 
     private void OnDestroy()

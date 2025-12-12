@@ -52,6 +52,115 @@ public class PlayerProfileData
     [Tooltip("Nivel actual del héroe")]
     public int heroLevel = 1;
 
+    // ===== SISTEMA DE CRIANZA/BREED =====
+    
+    // Stats de crianza (0-100)
+    // NOTA: breedEnergy NO decae automáticamente, solo se descarga manualmente
+    [Tooltip("Trabajo (0-100)")]
+    public int breedWork = 0;
+    
+    [Tooltip("Hambre (0-100)")]
+    public int breedHunger = 0;
+    
+    [Tooltip("Felicidad (0-100)")]
+    public int breedHappiness = 0;
+    
+    [Tooltip("Energía (0-100) - NO decae automáticamente, solo se descarga manualmente")]
+    public int breedEnergy = 0;
+    
+    [Tooltip("Higiene (0-100)")]
+    public int breedHygiene = 0;
+    
+    [Tooltip("Disciplina (0-100)")]
+    public int breedDiscipline = 0;
+
+    // Sistema de energía
+    [Tooltip("Energía actual del héroe (0-100)")]
+    public int currentEnergy = 100;
+    
+    [Tooltip("Energía máxima del héroe")]
+    public int maxEnergy = 100;
+    
+    [Tooltip("Si el héroe está durmiendo (recuperando energía)")]
+    public bool isSleeping = false;
+    
+    [Tooltip("Última vez que se durmió (para calcular recuperación offline - DESACTIVADO POR AHORA)")]
+    public string lastSleepTimeString = ""; // Serializado como string porque DateTime no es serializable directamente
+
+    // Sistema de evolución
+    [Tooltip("Clase de evolución (0 = Primera, 1 = Segunda, etc.)")]
+    public int evolutionClass = 0;
+    
+    [Tooltip("Última vez que evolucionó (para cooldown)")]
+    public string lastEvolutionTimeString = ""; // Serializado como string
+    
+    [Tooltip("Tiempo total de vida en segundos (solo cuenta cuando se juega)")]
+    public float totalLifeTime = 0f;
+
+    // Mejoras de gimnasio (niveles de cada stat)
+    [Tooltip("Nivel de mejora de HP (máximo 999)")]
+    public int gymHPLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Mana (máximo 999)")]
+    public int gymManaLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Ataque (máximo 999)")]
+    public int gymAttackLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Defensa (máximo 999)")]
+    public int gymDefenseLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Skill (máximo 999)")]
+    public int gymSkillLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Critical Attack (máximo 100)")]
+    public int gymCriticalAttackLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Critical Damage (máximo 100)")]
+    public int gymCriticalDamageLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Attack Speed (máximo 100)")]
+    public int gymAttackSpeedLevel = 0;
+    
+    [Tooltip("Nivel de mejora de Luck (máximo 100)")]
+    public int gymLuckLevel = 0;
+
+    // Título actual
+    [Tooltip("Título actual del héroe")]
+    public string currentTitle = "Viajero Digital";
+    
+    [Tooltip("Tipo de título (balanced, happy, worker, disciplined, athlete, scholar, neutral, neglected, abandoned, critical)")]
+    public string titleType = "neutral";
+    
+    // Bonus total acumulado de cada stat (para mostrar en Upgrade)
+    // Se calcula sumando todas las mejoras desde nivel 1 hasta nivel actual
+    [Tooltip("Bonus total acumulado de HP")]
+    public int gymHPTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Mana")]
+    public int gymManaTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Ataque")]
+    public int gymAttackTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Defensa")]
+    public int gymDefenseTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Skill")]
+    public int gymSkillTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Critical Attack")]
+    public int gymCriticalAttackTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Critical Damage")]
+    public int gymCriticalDamageTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Attack Speed")]
+    public int gymAttackSpeedTotalBonus = 0;
+    
+    [Tooltip("Bonus total acumulado de Luck")]
+    public int gymLuckTotalBonus = 0;
+
     /// <summary>
     /// Guarda el estado actual del equipo en el perfil.
     /// </summary>
@@ -319,6 +428,108 @@ public class PlayerProfileData
             heroLevel++;
             Debug.Log($"¡El héroe subió al nivel {heroLevel}!");
         }
+    }
+
+    // ===== MÉTODOS DE SERIALIZACIÓN DE DATETIME =====
+    
+    /// <summary>
+    /// Guarda la fecha/hora actual como string serializable.
+    /// </summary>
+    public void SaveLastSleepTime()
+    {
+        lastSleepTimeString = DateTime.Now.ToString("O"); // ISO 8601 format
+    }
+    
+    /// <summary>
+    /// Obtiene la última vez que durmió como DateTime.
+    /// </summary>
+    public DateTime GetLastSleepTime()
+    {
+        if (string.IsNullOrEmpty(lastSleepTimeString))
+            return DateTime.MinValue; // Si no hay fecha guardada, nunca durmió
+        
+        if (DateTime.TryParse(lastSleepTimeString, out DateTime result))
+            return result;
+        
+        return DateTime.MinValue; // Fallback: nunca durmió
+    }
+    
+    /// <summary>
+    /// Guarda la fecha/hora de la última evolución como string serializable.
+    /// </summary>
+    public void SaveLastEvolutionTime()
+    {
+        lastEvolutionTimeString = DateTime.Now.ToString("O"); // ISO 8601 format
+    }
+    
+    /// <summary>
+    /// Obtiene la última vez que evolucionó como DateTime.
+    /// </summary>
+    public DateTime GetLastEvolutionTime()
+    {
+        if (string.IsNullOrEmpty(lastEvolutionTimeString))
+            return DateTime.MinValue; // Si no hay fecha guardada, nunca evolucionó
+        
+        if (DateTime.TryParse(lastEvolutionTimeString, out DateTime result))
+            return result;
+        
+        return DateTime.MinValue; // Fallback
+    }
+
+    // ===== MÉTODOS DE RESET =====
+    
+    /// <summary>
+    /// Resetea todos los datos de crianza (stats, tiempo de vida, clase, mejoras de gimnasio).
+    /// NO resetea: tiempo total jugado, inventario, nivel del héroe.
+    /// </summary>
+    public void ResetBreedData()
+    {
+        // Resetear stats de crianza
+        breedWork = 0;
+        breedHunger = 0;
+        breedHappiness = 0;
+        breedEnergy = 0;
+        breedHygiene = 0;
+        breedDiscipline = 0;
+        
+        // Resetear energía
+        currentEnergy = 100;
+        isSleeping = false; // Despertar al resetear
+        
+        // Resetear tiempo de vida
+        totalLifeTime = 0f;
+        
+        // Resetear clase de evolución
+        evolutionClass = 0;
+        lastEvolutionTimeString = "";
+        
+        // Resetear mejoras de gimnasio
+        gymHPLevel = 0;
+        gymManaLevel = 0;
+        gymAttackLevel = 0;
+        gymDefenseLevel = 0;
+        gymSkillLevel = 0;
+        gymCriticalAttackLevel = 0;
+        gymCriticalDamageLevel = 0;
+        gymAttackSpeedLevel = 0;
+        gymLuckLevel = 0;
+        
+        // Resetear bonus totales
+        gymHPTotalBonus = 0;
+        gymManaTotalBonus = 0;
+        gymAttackTotalBonus = 0;
+        gymDefenseTotalBonus = 0;
+        gymSkillTotalBonus = 0;
+        gymCriticalAttackTotalBonus = 0;
+        gymCriticalDamageTotalBonus = 0;
+        gymAttackSpeedTotalBonus = 0;
+        gymLuckTotalBonus = 0;
+        
+        // Resetear título
+        currentTitle = "Viajero Digital";
+        titleType = "neutral";
+        
+        Debug.Log("Datos de crianza reseteados completamente.");
     }
 }
 

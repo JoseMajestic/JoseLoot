@@ -1135,44 +1135,72 @@ public class HeroProfileManager : MonoBehaviour
         // Obtener stats del equipo
         EquipmentStats equipmentStats = equipmentManager.GetTotalEquipmentStats();
 
-        // Calcular stats totales (base del héroe + equipo)
-        int totalHP = baseHP + equipmentStats.hp;
-        int totalMana = baseMana + equipmentStats.mana;
-        int totalAtaque = baseAtaque + equipmentStats.ataque;
-        int totalDefensa = baseDefensa + equipmentStats.defensa;
-        int totalVelocidadAtaque = baseVelocidadAtaque + equipmentStats.velocidadAtaque;
-        int totalAtaqueCritico = baseAtaqueCritico + equipmentStats.ataqueCritico;
-        int totalDanoCritico = baseDanoCritico + equipmentStats.danoCritico;
-        int totalSuerte = baseSuerte + equipmentStats.suerte;
-        int totalDestreza = baseDestreza + equipmentStats.destreza;
+        // Obtener mejoras de gimnasio desde PlayerProfileData
+        int gymHPBonus = 0;
+        int gymManaBonus = 0;
+        int gymAttackBonus = 0;
+        int gymDefenseBonus = 0;
+        int gymSkillBonus = 0;
+        int gymCriticalAttackBonus = 0;
+        int gymCriticalDamageBonus = 0;
+        int gymAttackSpeedBonus = 0;
+        int gymLuckBonus = 0;
+        
+        if (GameDataManager.Instance != null)
+        {
+            PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+            if (profile != null)
+            {
+                gymHPBonus = profile.gymHPTotalBonus;
+                gymManaBonus = profile.gymManaTotalBonus;
+                gymAttackBonus = profile.gymAttackTotalBonus;
+                gymDefenseBonus = profile.gymDefenseTotalBonus;
+                gymSkillBonus = profile.gymSkillTotalBonus;
+                gymCriticalAttackBonus = profile.gymCriticalAttackTotalBonus;
+                gymCriticalDamageBonus = profile.gymCriticalDamageTotalBonus;
+                gymAttackSpeedBonus = profile.gymAttackSpeedTotalBonus;
+                gymLuckBonus = profile.gymLuckTotalBonus;
+            }
+        }
 
-        // Actualizar textos
+        // Calcular stats totales (base del héroe + equipo + mejoras de gimnasio)
+        int totalHP = baseHP + equipmentStats.hp + gymHPBonus;
+        int totalMana = baseMana + equipmentStats.mana + gymManaBonus;
+        int totalAtaque = baseAtaque + equipmentStats.ataque + gymAttackBonus;
+        int totalDefensa = baseDefensa + equipmentStats.defensa + gymDefenseBonus;
+        int totalVelocidadAtaque = baseVelocidadAtaque + equipmentStats.velocidadAtaque + gymAttackSpeedBonus;
+        int totalAtaqueCritico = baseAtaqueCritico + equipmentStats.ataqueCritico + gymCriticalAttackBonus;
+        int totalDanoCritico = baseDanoCritico + equipmentStats.danoCritico + gymCriticalDamageBonus;
+        int totalSuerte = baseSuerte + equipmentStats.suerte + gymLuckBonus;
+        int totalDestreza = baseDestreza + equipmentStats.destreza + gymSkillBonus;
+
+        // Actualizar textos usando NumberFormatter para números grandes
         if (hpText != null)
-            hpText.text = totalHP.ToString();
+            hpText.text = NumberFormatter.FormatNumber(totalHP);
         
         if (manaText != null)
-            manaText.text = totalMana.ToString();
+            manaText.text = NumberFormatter.FormatNumber(totalMana);
         
         if (ataqueText != null)
-            ataqueText.text = totalAtaque.ToString();
+            ataqueText.text = NumberFormatter.FormatNumber(totalAtaque);
         
         if (defensaText != null)
-            defensaText.text = totalDefensa.ToString();
+            defensaText.text = NumberFormatter.FormatNumber(totalDefensa);
         
         if (velocidadAtaqueText != null)
-            velocidadAtaqueText.text = totalVelocidadAtaque.ToString();
+            velocidadAtaqueText.text = NumberFormatter.FormatNumber(totalVelocidadAtaque);
         
         if (ataqueCriticoText != null)
-            ataqueCriticoText.text = totalAtaqueCritico.ToString();
+            ataqueCriticoText.text = NumberFormatter.FormatNumber(totalAtaqueCritico);
         
         if (danoCriticoText != null)
-            danoCriticoText.text = totalDanoCritico.ToString();
+            danoCriticoText.text = NumberFormatter.FormatNumber(totalDanoCritico);
         
         if (suerteText != null)
-            suerteText.text = totalSuerte.ToString();
+            suerteText.text = NumberFormatter.FormatNumber(totalSuerte);
         
         if (destrezaText != null)
-            destrezaText.text = totalDestreza.ToString();
+            destrezaText.text = NumberFormatter.FormatNumber(totalDestreza);
     }
 
     /// <summary>
