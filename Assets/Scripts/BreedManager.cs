@@ -437,7 +437,7 @@ public class BreedManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Resetea todos los datos de crianza.
+    /// Resetea todos los datos de crianza y las monedas (reset completo).
     /// </summary>
     public void OnResetAcceptButtonClicked()
     {
@@ -446,6 +446,23 @@ public class BreedManager : MonoBehaviour
             return;
         
         profile.ResetBreedData();
+        
+        // SOLUCIÓN: Resetear las monedas a las monedas iniciales del Inspector cuando se confirma el reset completo
+        if (gameDataManager.PlayerMoney != null)
+        {
+            // Obtener las monedas iniciales desde PlayerMoney
+            // Necesitamos acceder al campo initialMoney, pero es privado
+            // Usaremos un método público para obtenerlo o establecerlo directamente
+            // Por ahora, usaremos SetMoney con el valor que debería estar en el Inspector
+            // Necesitamos agregar un método en PlayerMoney para obtener initialMoney
+            PlayerMoney playerMoney = gameDataManager.PlayerMoney;
+            if (playerMoney != null)
+            {
+                // Resetear a las monedas iniciales (se obtendrá desde el Inspector)
+                playerMoney.ResetToInitialMoney();
+            }
+        }
+        
         gameDataManager.SavePlayerProfile();
         
         if (resetConfirmPanel != null)

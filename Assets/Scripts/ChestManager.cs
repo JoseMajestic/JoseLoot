@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using TMPro;
 
 /// <summary>
@@ -58,6 +59,13 @@ public class ChestManager : MonoBehaviour
     [Tooltip("Slot UI donde se muestra el item obtenido (opcional, para compatibilidad)")]
     [SerializeField] private GameObject itemSlotUI;
 
+    [Header("Panel de Video")]
+    [Tooltip("Panel adicional que se abre al presionar 'open chest' para mostrar el video")]
+    [SerializeField] private GameObject videoPanel;
+
+    [Tooltip("Componente VideoPlayer que reproducirá el video del cofre")]
+    [SerializeField] private VideoPlayer chestVideoPlayer;
+
     // Estado interno
     private List<ItemData> availableItems = new List<ItemData>();
     private int currentItemIndex = 0;
@@ -90,6 +98,18 @@ public class ChestManager : MonoBehaviour
         if (itemDisplayPanel != null)
         {
             itemDisplayPanel.SetActive(false);
+        }
+
+        // Ocultar panel de video inicialmente
+        if (videoPanel != null)
+        {
+            videoPanel.SetActive(false);
+        }
+
+        // Configurar VideoPlayer para cerrar el panel cuando termine el video
+        if (chestVideoPlayer != null)
+        {
+            chestVideoPlayer.loopPointReached += OnVideoFinished;
         }
 
         // Actualizar precio inicial
@@ -204,6 +224,26 @@ public class ChestManager : MonoBehaviour
 
         // Mostrar el item obtenido en el panel
         ShowObtainedItem(currentObtainedItem);
+
+        // Abrir panel de video y reproducir video si está configurado
+        if (videoPanel != null && chestVideoPlayer != null)
+        {
+            videoPanel.SetActive(true);
+            
+            // Reproducir el video
+            if (chestVideoPlayer.clip != null)
+            {
+                // SOLUCIÓN: Preparar el video y esperar un frame antes de reproducir
+                // Esto asegura que el panel esté completamente activo y el VideoPlayer esté listo
+                StartCoroutine(PlayVideoAfterPanelActivated());
+            }
+            else
+            {
+                Debug.LogWarning("ChestManager: VideoPlayer no tiene clip asignado. El panel se cerrará inmediatamente.");
+                // Si no hay video, cerrar el panel inmediatamente
+                StartCoroutine(CloseVideoPanelAfterDelay(0.1f));
+            }
+        }
 
         OnChestOpened?.Invoke();
         Debug.Log($"Cofre abierto. Item obtenido: {currentObtainedItem.GetItemName()} (nivel {currentObtainedItem.currentLevel}). Esperando confirmación...");
@@ -497,6 +537,65 @@ public class ChestManager : MonoBehaviour
         Debug.Log("Índice de items del cofre reiniciado.");
     }
 
+    /// <summary>
+    /// Se llama cuando el video termina de reproducirse.
+    /// Cierra el panel de video automáticamente.
+    /// </summary>
+    private void OnVideoFinished(VideoPlayer source)
+    {
+        if (videoPanel != null)
+        {
+            videoPanel.SetActive(false);
+        }
+        
+        // Detener el video
+        if (chestVideoPlayer != null)
+        {
+            chestVideoPlayer.Stop();
+        }
+    }
+
+    /// <summary>
+    /// Corrutina que prepara y reproduce el video después de que el panel se active.
+    /// Espera un frame para asegurar que el panel esté completamente activo.
+    /// </summary>
+    private IEnumerator PlayVideoAfterPanelActivated()
+    {
+        // Esperar un frame para que el panel se active completamente
+        yield return null;
+        
+        if (chestVideoPlayer == null || chestVideoPlayer.clip == null)
+        {
+            yield break;
+        }
+        
+        // Preparar el video (carga el clip en memoria)
+        chestVideoPlayer.Prepare();
+        
+        // Esperar hasta que el video esté preparado
+        while (!chestVideoPlayer.isPrepared)
+        {
+            yield return null;
+        }
+        
+        // Reproducir el video
+        chestVideoPlayer.Play();
+    }
+
+    /// <summary>
+    /// Corrutina para cerrar el panel de video después de un delay.
+    /// Útil cuando no hay video asignado.
+    /// </summary>
+    private IEnumerator CloseVideoPanelAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        if (videoPanel != null)
+        {
+            videoPanel.SetActive(false);
+        }
+    }
+
     private void OnDestroy()
     {
         // Desuscribirse de los botones
@@ -508,6 +607,12 @@ public class ChestManager : MonoBehaviour
         if (acceptButton != null)
         {
             acceptButton.onClick.RemoveListener(OnAcceptButtonClicked);
+        }
+
+        // Desuscribirse del VideoPlayer
+        if (chestVideoPlayer != null)
+        {
+            chestVideoPlayer.loopPointReached -= OnVideoFinished;
         }
     }
 }

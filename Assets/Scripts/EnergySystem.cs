@@ -58,7 +58,6 @@ public class EnergySystem : MonoBehaviour
                 profile.currentEnergy = MAX_ENERGY;
                 profile.isSleeping = false;
                 gameDataManager.SavePlayerProfile();
-                Debug.Log("[ENERGY DEBUG] EnergySystem - Energía recuperada al 100%, héroe despertó automáticamente.");
             }
             else
             {
@@ -95,11 +94,6 @@ public class EnergySystem : MonoBehaviour
             // Si no está durmiendo, estos valores son definitivamente corruptos
             if (!profile.isSleeping)
             {
-                Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR SOSPECHOSO {energy} DETECTADO EN GetCurrentEnergy ⚠️⚠️⚠️");
-                Debug.LogError($"[ENERGY DEBUG] profile.currentEnergy = {energy}, isSleeping = {profile.isSleeping}");
-                Debug.LogError($"[ENERGY DEBUG] Corrigiendo a 0 (valor por defecto cuando no está durmiendo y hay corrupción)");
-                Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
-                
                 // Corregir el valor corrupto a 0 (no a 100)
                 profile.currentEnergy = 0;
                 profile.isSleeping = false;
@@ -113,14 +107,12 @@ public class EnergySystem : MonoBehaviour
             // Pero es sospechoso, así que lo registramos
             else
             {
-                Debug.LogWarning($"[ENERGY DEBUG] Valor sospechoso {energy} detectado mientras duerme. Podría ser válido o corrupto.");
             }
         }
         
         // Validar rango (0-100 es válido, no corregir valores válidos)
         if (energy < 0 || energy > MAX_ENERGY)
         {
-            Debug.LogError($"[ENERGY DEBUG] Valor de energía fuera de rango: {energy}. Corrigiendo a 0.");
             profile.currentEnergy = 0; // Cambiar de MAX_ENERGY a 0
             gameDataManager.SavePlayerProfile();
             return 0;
@@ -162,7 +154,6 @@ public class EnergySystem : MonoBehaviour
         if (profile.isSleeping)
         {
             profile.isSleeping = false;
-            Debug.Log("[ENERGY DEBUG] EnergySystem.SpendEnergy - Héroe despertó porque se gastó energía.");
         }
         
         if (profile.currentEnergy < amount)
@@ -171,17 +162,11 @@ public class EnergySystem : MonoBehaviour
             return false;
         }
         
-        int energyBefore = profile.currentEnergy;
         profile.currentEnergy -= amount;
         profile.currentEnergy = Mathf.Clamp(profile.currentEnergy, 0, MAX_ENERGY);
-        int energyAfter = profile.currentEnergy;
-        
-        Debug.Log($"[ENERGY DEBUG] SpendEnergy - ANTES: {energyBefore}, gastando: {amount}, DESPUÉS: {energyAfter}");
         
         // Guardar cambios
         gameDataManager.SavePlayerProfile();
-        
-        Debug.Log($"[ENERGY DEBUG] SpendEnergy - FINAL guardado: {profile.currentEnergy}");
         
         return true;
     }
@@ -207,8 +192,6 @@ public class EnergySystem : MonoBehaviour
         
         // Guardar cambios
         gameDataManager.SavePlayerProfile();
-        
-        Debug.Log($"[ENERGY DEBUG] EnergySystem.StartSleeping - Héroe comenzó a dormir. Energía actual: {profile.currentEnergy}%, se recuperará al 100% en 4 horas.");
     }
     
     /// <summary>
@@ -227,7 +210,6 @@ public class EnergySystem : MonoBehaviour
         {
             profile.isSleeping = false;
             gameDataManager.SavePlayerProfile();
-            Debug.Log($"[ENERGY DEBUG] EnergySystem.WakeUp - Héroe despertó manualmente. Energía actual: {profile.currentEnergy}%");
         }
     }
     

@@ -52,6 +52,10 @@ public class PlayerProfileData
     [Tooltip("Nivel actual del héroe")]
     public int heroLevel = 1;
 
+    // Sistema de monedas
+    [Tooltip("Monedas actuales del jugador")]
+    public int playerMoney = 0;
+
     // ===== SISTEMA DE CRIANZA/BREED =====
     
     // Stats de crianza (0-100)
@@ -528,6 +532,9 @@ public class PlayerProfileData
         // Resetear título
         currentTitle = "Viajero Digital";
         titleType = "neutral";
+        
+        // NOTA: Las monedas se resetean desde GameDataManager cuando se confirma el reset completo
+        // para usar el valor initialMoney del Inspector
         
         Debug.Log("Datos de crianza reseteados completamente.");
     }

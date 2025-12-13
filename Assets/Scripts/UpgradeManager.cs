@@ -671,16 +671,7 @@ public class UpgradeManager : MonoBehaviour
         int currentEnergy = energySystem.GetCurrentEnergy();
         int maxEnergy = energySystem.GetMaxEnergy();
         
-        string textBefore = energyText.text;
         energyText.text = $"{currentEnergy} / {maxEnergy}";
-        
-        Debug.Log($"[ENERGY DEBUG] UpgradeManager.RefreshEnergyUI - Leyendo energía: {currentEnergy} / {maxEnergy}, texto: '{textBefore}' -> '{energyText.text}'");
-        
-        if (textBefore != energyText.text && textBefore.Contains("49"))
-        {
-            Debug.LogError($"[ENERGY DEBUG] ⚠️ VALOR 49 DETECTADO EN UpgradeManager - ANTES: '{textBefore}', DESPUÉS: '{energyText.text}'");
-            Debug.LogError($"[ENERGY DEBUG] StackTrace: {System.Environment.StackTrace}");
-        }
     }
     
     /// <summary>

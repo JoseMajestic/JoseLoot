@@ -170,14 +170,6 @@ public class GameDataManager : MonoBehaviour
     /// </summary>
     public void SavePlayerProfile()
     {
-        // LOGGING EXTENSIVO: Registrar TODAS las llamadas a SavePlayerProfile
-        string stackTrace = System.Environment.StackTrace;
-        Debug.Log($"[ENERGY DEBUG] ========== SavePlayerProfile LLAMADO ==========");
-        Debug.Log($"[ENERGY DEBUG] Frame: {Time.frameCount}, Time: {Time.time}");
-        Debug.Log($"[ENERGY DEBUG] currentEnergy ANTES de guardar: {playerProfile.currentEnergy}");
-        Debug.Log($"[ENERGY DEBUG] isSleeping: {playerProfile.isSleeping}");
-        Debug.Log($"[ENERGY DEBUG] StackTrace completo:\n{stackTrace}");
-        
         // Guardar equipo
         if (equipmentManager != null)
         {
@@ -190,14 +182,17 @@ public class GameDataManager : MonoBehaviour
             playerProfile.SaveInventoryState(inventoryManager);
         }
         
+        // SOLUCIÓN: Guardar las monedas del jugador
+        if (playerMoney != null)
+        {
+            playerProfile.playerMoney = playerMoney.GetMoney();
+        }
+        
         // SOLUCIÓN CRÍTICA: Validar que currentEnergy no tenga un valor corrupto antes de guardar
         // Si tiene un valor sospechoso (48, 49) y no está durmiendo, obtener el valor correcto desde EnergySystem
         int energyBeforeValidation = playerProfile.currentEnergy;
         if (playerProfile.currentEnergy == 48 || playerProfile.currentEnergy == 49)
         {
-            Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR SOSPECHOSO {playerProfile.currentEnergy} DETECTADO EN SavePlayerProfile ⚠️⚠️⚠️");
-            Debug.LogError($"[ENERGY DEBUG] isSleeping: {playerProfile.isSleeping}");
-            
             if (!playerProfile.isSleeping)
             {
                 // Si no está durmiendo y tiene un valor sospechoso, intentar obtener el valor correcto
@@ -205,49 +200,29 @@ public class GameDataManager : MonoBehaviour
                 if (energySystem != null)
                 {
                     int correctEnergy = energySystem.GetCurrentEnergy();
-                    Debug.LogError($"[ENERGY DEBUG] EnergySystem.GetCurrentEnergy() devolvió: {correctEnergy}");
                     
                     if (correctEnergy != 48 && correctEnergy != 49)
                     {
-                        Debug.LogWarning($"[ENERGY DEBUG] SavePlayerProfile - Detectado valor sospechoso {playerProfile.currentEnergy}, corrigiendo a {correctEnergy} antes de guardar.");
                         playerProfile.currentEnergy = correctEnergy;
                     }
                     else
                     {
-                        Debug.LogError($"[ENERGY DEBUG] ⚠️ EnergySystem también devuelve valor sospechoso {correctEnergy}. Forzando corrección a 0.");
                         playerProfile.currentEnergy = 0; // Cambiar de 100 a 0
                         playerProfile.isSleeping = false;
                     }
                 }
                 else
                 {
-                    Debug.LogError($"[ENERGY DEBUG] ⚠️ EnergySystem no encontrado. Forzando corrección a 0.");
                     playerProfile.currentEnergy = 0; // Cambiar de 100 a 0
                     playerProfile.isSleeping = false;
                 }
             }
         }
         
-        int energyAfterValidation = playerProfile.currentEnergy;
-        if (energyBeforeValidation != energyAfterValidation)
-        {
-            Debug.LogWarning($"[ENERGY DEBUG] SavePlayerProfile - Energía corregida: {energyBeforeValidation} -> {energyAfterValidation}");
-        }
-        
         string json = JsonUtility.ToJson(playerProfile);
-        
-        // Verificar si el JSON contiene el valor 48 o 49
-        if (json.Contains("\"currentEnergy\":48") || json.Contains("\"currentEnergy\":49"))
-        {
-            Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ JSON CONTIENE VALOR SOSPECHOSO ⚠️⚠️⚠️");
-            Debug.LogError($"[ENERGY DEBUG] JSON fragmento: {json.Substring(Mathf.Max(0, json.IndexOf("currentEnergy") - 50), Mathf.Min(200, json.Length - Mathf.Max(0, json.IndexOf("currentEnergy") - 50)))}");
-        }
         
         PlayerPrefs.SetString(PLAYER_PROFILE_KEY, json);
         PlayerPrefs.Save();
-        
-        Debug.Log($"[ENERGY DEBUG] SavePlayerProfile - FINAL: Energía guardada: {playerProfile.currentEnergy}, isSleeping: {playerProfile.isSleeping}");
-        Debug.Log($"[ENERGY DEBUG] ========== FIN SavePlayerProfile ==========");
     }
 
     /// <summary>
@@ -256,40 +231,17 @@ public class GameDataManager : MonoBehaviour
     /// <param name="silent">Si es true, no dispara eventos de inventario (útil para carga inicial)</param>
     public void LoadPlayerProfile(bool silent = false)
     {
-        // LOGGING EXTENSIVO: Registrar TODAS las llamadas a LoadPlayerProfile
-        string stackTrace = System.Environment.StackTrace;
-        Debug.Log($"[ENERGY DEBUG] ========== LoadPlayerProfile LLAMADO ==========");
-        Debug.Log($"[ENERGY DEBUG] Frame: {Time.frameCount}, Time: {Time.time}, Silent: {silent}");
-        Debug.Log($"[ENERGY DEBUG] StackTrace completo:\n{stackTrace}");
-        
         if (PlayerPrefs.HasKey(PLAYER_PROFILE_KEY))
         {
             string json = PlayerPrefs.GetString(PLAYER_PROFILE_KEY);
             
-            // Verificar si el JSON guardado contiene el valor 48 o 49
-            if (json.Contains("\"currentEnergy\":48") || json.Contains("\"currentEnergy\":49"))
-            {
-                Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ JSON GUARDADO CONTIENE VALOR SOSPECHOSO ⚠️⚠️⚠️");
-                int energyIndex = json.IndexOf("currentEnergy");
-                if (energyIndex >= 0)
-                {
-                    string energyFragment = json.Substring(Mathf.Max(0, energyIndex - 50), Mathf.Min(200, json.Length - Mathf.Max(0, energyIndex - 50)));
-                    Debug.LogError($"[ENERGY DEBUG] Fragmento JSON con currentEnergy: {energyFragment}");
-                }
-            }
-            
             playerProfile = JsonUtility.FromJson<PlayerProfileData>(json);
-            
-            int energyLoaded = playerProfile.currentEnergy;
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - Energía cargada desde JSON: {energyLoaded}");
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - isSleeping cargado: {playerProfile.isSleeping}");
             
             // SOLUCIÓN: Validar y corregir energía si tiene un valor inválido
             // Esto corrige valores como 48, 49 que pueden haber sido guardados por bugs anteriores
             // NO corregir valores válidos como 0 (después de reset)
             if (playerProfile.currentEnergy < 0 || playerProfile.currentEnergy > 100)
             {
-                Debug.LogWarning($"[ENERGY DEBUG] EnergySystem: Valor de energía inválido detectado ({playerProfile.currentEnergy}). Corrigiendo a 0.");
                 playerProfile.currentEnergy = 0; // Cambiar de 100 a 0
                 playerProfile.isSleeping = false;
                 SavePlayerProfile(); // Guardar el valor corregido inmediatamente
@@ -297,19 +249,10 @@ public class GameDataManager : MonoBehaviour
             else if ((playerProfile.currentEnergy == 48 || playerProfile.currentEnergy == 49) && !playerProfile.isSleeping)
             {
                 // Caso específico: valor 48 o 49 sin estar durmiendo (posible bug anterior)
-                Debug.LogError($"[ENERGY DEBUG] ⚠️⚠️⚠️ VALOR SOSPECHOSO {playerProfile.currentEnergy} DETECTADO AL CARGAR ⚠️⚠️⚠️");
-                Debug.LogError($"[ENERGY DEBUG] isSleeping: {playerProfile.isSleeping}");
-                Debug.LogWarning($"[ENERGY DEBUG] EnergySystem: Detectado valor {playerProfile.currentEnergy} (posible bug anterior). Corrigiendo a 0.");
                 playerProfile.currentEnergy = 0; // Cambiar de 100 a 0
                 playerProfile.isSleeping = false;
                 SavePlayerProfile(); // Guardar el valor corregido inmediatamente
             }
-            else if (playerProfile.currentEnergy == 48 || playerProfile.currentEnergy == 49)
-            {
-                Debug.LogWarning($"[ENERGY DEBUG] LoadPlayerProfile - Valor sospechoso {playerProfile.currentEnergy} detectado pero está durmiendo. Podría ser válido.");
-            }
-            
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - Energía DESPUÉS de validación: {playerProfile.currentEnergy}");
             
             // SOLUCIÓN: Cargar también el inventario completo desde el perfil guardado
             // Usar modo silencioso en la carga inicial para evitar eventos prematuros
@@ -329,15 +272,21 @@ public class GameDataManager : MonoBehaviour
                 playerProfile.LoadEquipmentState(equipmentManager, inventoryManager, itemDatabase, silent: silent);
             }
             
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - Perfil del jugador cargado (equipo + inventario){(silent ? " [silencioso]" : "")}.");
-            Debug.Log($"[ENERGY DEBUG] ========== FIN LoadPlayerProfile ==========");
+            // SOLUCIÓN: Cargar las monedas guardadas del jugador
+            if (playerMoney != null)
+            {
+                playerMoney.SetMoney(playerProfile.playerMoney);
+                playerMoney.MarkMoneyLoadedFromProfile();
+            }
         }
         else
         {
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - No hay perfil guardado, creando nuevo perfil.");
             playerProfile = new PlayerProfileData();
-            Debug.Log($"[ENERGY DEBUG] LoadPlayerProfile - Nuevo perfil creado con energía: {playerProfile.currentEnergy}");
-            Debug.Log($"[ENERGY DEBUG] ========== FIN LoadPlayerProfile ==========");
+            // Si es un perfil nuevo, usar las monedas iniciales del Inspector
+            if (playerMoney != null)
+            {
+                // Las monedas iniciales se establecerán en PlayerMoney.Start()
+            }
         }
     }
 

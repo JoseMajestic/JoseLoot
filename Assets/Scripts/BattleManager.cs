@@ -347,16 +347,9 @@ public class BattleManager : MonoBehaviour
         int currentEnergy = energySystem.GetCurrentEnergy();
         int maxEnergy = energySystem.GetMaxEnergy();
         
-        Debug.Log($"[ENERGY DEBUG] BattleManager.RefreshEnergyUI - Leyendo energía: {currentEnergy} / {maxEnergy}");
-        
         if (heroEnergyText != null)
         {
-            string textBefore = heroEnergyText.text;
             heroEnergyText.text = $"Energía: {currentEnergy} / {maxEnergy}";
-            if (textBefore != heroEnergyText.text)
-            {
-                Debug.Log($"[ENERGY DEBUG] BattleManager - Texto actualizado: '{textBefore}' -> '{heroEnergyText.text}'");
-            }
         }
         
         if (battleEnergyCostText != null)
