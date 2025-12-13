@@ -62,6 +62,46 @@ public class CombatManager : MonoBehaviour
     
     [Tooltip("Botón que cierra el panel de combate")]
     [SerializeField] private Button closeCombatButton;
+
+    [System.Serializable]
+    public class PanelButtonData
+    {
+        [Tooltip("Botón que abre este panel o ejecuta un ataque")]
+        public Button button;
+        
+        [Tooltip("Panel que se abre al presionar el botón (null si es un ataque directo)")]
+        public GameObject panel;
+        
+        [Tooltip("Si es true, este botón ejecuta un ataque directamente (no abre panel)")]
+        public bool isDirectAttack = false;
+        
+        [Tooltip("Índice del ataque en attackButtons si es un ataque directo (-1 si no es ataque)")]
+        public int attackButtonIndex = -1;
+    }
+
+    [Header("Navegación de Paneles de Ataques")]
+    [Tooltip("Botón de Ataque Básico (ataque directo, no abre panel)")]
+    [SerializeField] private Button basicAttackButton;
+    
+    [Tooltip("Botón de Especiales (abre panel de especiales)")]
+    [SerializeField] private Button specialsButton;
+    
+    [Tooltip("Botón de Magia (abre panel de magia)")]
+    [SerializeField] private Button magicButton;
+
+    [Header("Panel de Especiales")]
+    [Tooltip("Panel que contiene los botones de especiales")]
+    [SerializeField] private GameObject specialsPanel;
+    
+    [Tooltip("Botones dentro del panel de especiales y sus sub-paneles")]
+    [SerializeField] private PanelButtonData[] specialsButtons;
+
+    [Header("Panel de Magia")]
+    [Tooltip("Panel que contiene los botones de magia")]
+    [SerializeField] private GameObject magicPanel;
+    
+    [Tooltip("Botones dentro del panel de magia y sus sub-paneles")]
+    [SerializeField] private PanelButtonData[] magicButtons;
     
     [Header("Panel de Victoria")]
     [Tooltip("Panel de victoria")]
@@ -164,6 +204,7 @@ public class CombatManager : MonoBehaviour
     {
         InitializeButtons();
         InitializePanels();
+        InitializePanelNavigation();
     }
 
     /// <summary>
@@ -181,6 +222,9 @@ public class CombatManager : MonoBehaviour
         {
             defeatPanel.SetActive(false);
         }
+        
+        // Resetear navegación de paneles al estado inicial
+        ResetPanelNavigation();
     }
 
     /// <summary>
@@ -220,6 +264,198 @@ public class CombatManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Inicializa la navegación de paneles jerárquicos.
+    /// </summary>
+    private void InitializePanelNavigation()
+    {
+        // Botón de ataque básico (ataque directo)
+        if (basicAttackButton != null)
+        {
+            basicAttackButton.onClick.AddListener(() => OnBasicAttackButtonClicked());
+        }
+
+        // Botón de especiales
+        if (specialsButton != null)
+        {
+            specialsButton.onClick.AddListener(() => OnCategoryButtonClicked(specialsPanel, specialsButtons));
+        }
+
+        // Botón de magia
+        if (magicButton != null)
+        {
+            magicButton.onClick.AddListener(() => OnCategoryButtonClicked(magicPanel, magicButtons));
+        }
+
+        // Inicializar botones de especiales
+        if (specialsButtons != null)
+        {
+            foreach (var buttonData in specialsButtons)
+            {
+                if (buttonData.button != null)
+                {
+                    if (buttonData.isDirectAttack && buttonData.attackButtonIndex >= 0)
+                    {
+                        // Es un ataque directo
+                        int attackIndex = buttonData.attackButtonIndex;
+                        buttonData.button.onClick.AddListener(() => OnDirectAttackButtonClicked(attackIndex));
+                    }
+                    else if (buttonData.panel != null)
+                    {
+                        // Abre un sub-panel
+                        buttonData.button.onClick.AddListener(() => OnSubPanelButtonClicked(buttonData.panel, buttonData, specialsButtons));
+                    }
+                }
+            }
+        }
+
+        // Inicializar botones de magia
+        if (magicButtons != null)
+        {
+            foreach (var buttonData in magicButtons)
+            {
+                if (buttonData.button != null)
+                {
+                    if (buttonData.isDirectAttack && buttonData.attackButtonIndex >= 0)
+                    {
+                        // Es un ataque directo
+                        int attackIndex = buttonData.attackButtonIndex;
+                        buttonData.button.onClick.AddListener(() => OnDirectAttackButtonClicked(attackIndex));
+                    }
+                    else if (buttonData.panel != null)
+                    {
+                        // Abre un sub-panel
+                        buttonData.button.onClick.AddListener(() => OnSubPanelButtonClicked(buttonData.panel, buttonData, magicButtons));
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando se presiona el botón de ataque básico.
+    /// </summary>
+    private void OnBasicAttackButtonClicked()
+    {
+        // El ataque básico es null (se procesa como ataque básico)
+        selectedAttack = null;
+        
+        // Mostrar detalles del ataque básico
+        if (selectedAttackDetailsText != null && combatTexts != null)
+        {
+            selectedAttackDetailsText.text = "Ataque básico: Un golpe simple sin efectos especiales.";
+        }
+        else if (selectedAttackDetailsText != null)
+        {
+            selectedAttackDetailsText.text = "Ataque básico";
+        }
+
+        // Habilitar botón de combate
+        if (combatButton != null)
+        {
+            combatButton.interactable = true;
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando se presiona un botón de categoría (Especiales o Magia).
+    /// </summary>
+    private void OnCategoryButtonClicked(GameObject categoryPanel, PanelButtonData[] categoryButtons)
+    {
+        // Cerrar todos los paneles abiertos excepto los principales
+        CloseAllSubPanels();
+        
+        // Abrir el panel de categoría
+        if (categoryPanel != null)
+        {
+            categoryPanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando se presiona un botón que abre un sub-panel.
+    /// </summary>
+    private void OnSubPanelButtonClicked(GameObject subPanel, PanelButtonData clickedButton, PanelButtonData[] categoryButtons)
+    {
+        // Cerrar otros sub-paneles del mismo nivel
+        if (categoryButtons != null)
+        {
+            foreach (var buttonData in categoryButtons)
+            {
+                if (buttonData.panel != null && buttonData.panel != subPanel)
+                {
+                    buttonData.panel.SetActive(false);
+                }
+            }
+        }
+        
+        // Abrir el sub-panel
+        if (subPanel != null)
+        {
+            subPanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando se presiona un botón de ataque directo desde un sub-panel.
+    /// </summary>
+    private void OnDirectAttackButtonClicked(int attackButtonIndex)
+    {
+        // Seleccionar el ataque usando el índice
+        OnAttackButtonClicked(attackButtonIndex);
+    }
+
+    /// <summary>
+    /// Cierra todos los sub-paneles (excepto los botones principales).
+    /// </summary>
+    private void CloseAllSubPanels()
+    {
+        // Cerrar panel de especiales
+        if (specialsPanel != null)
+        {
+            specialsPanel.SetActive(false);
+        }
+
+        // Cerrar panel de magia
+        if (magicPanel != null)
+        {
+            magicPanel.SetActive(false);
+        }
+
+        // Cerrar todos los sub-paneles de especiales
+        if (specialsButtons != null)
+        {
+            foreach (var buttonData in specialsButtons)
+            {
+                if (buttonData.panel != null)
+                {
+                    buttonData.panel.SetActive(false);
+                }
+            }
+        }
+
+        // Cerrar todos los sub-paneles de magia
+        if (magicButtons != null)
+        {
+            foreach (var buttonData in magicButtons)
+            {
+                if (buttonData.panel != null)
+                {
+                    buttonData.panel.SetActive(false);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Resetea la navegación al estado inicial (solo botones principales visibles).
+    /// Se llama cuando se ejecuta un ataque o al iniciar el combate.
+    /// </summary>
+    private void ResetPanelNavigation()
+    {
+        CloseAllSubPanels();
     }
 
     /// <summary>
@@ -323,11 +559,20 @@ public class CombatManager : MonoBehaviour
         // Actualizar disponibilidad de botones de ataque según nivel del héroe
         UpdateAttackButtonsAvailability();
         
+        // SOLUCIÓN: Asegurar explícitamente que el botón básico esté habilitado
+        if (basicAttackButton != null)
+        {
+            basicAttackButton.interactable = true;
+        }
+        
         // Deshabilitar botón de combate hasta que se seleccione un ataque
         if (combatButton != null)
         {
             combatButton.interactable = false;
         }
+        
+        // Resetear navegación de paneles al estado inicial
+        ResetPanelNavigation();
     }
 
     /// <summary>
@@ -780,11 +1025,8 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private void OnCombatButtonClicked()
     {
-        if (selectedAttack == null)
-        {
-            Debug.LogWarning("CombatManager: No hay ataque seleccionado.");
-            return;
-        }
+        // NOTA: No verificamos si selectedAttack es null porque null es válido para el ataque básico.
+        // El botón solo se habilita cuando hay un ataque seleccionado (básico o especial).
 
         if (!combatInProgress)
         {
@@ -803,6 +1045,9 @@ public class CombatManager : MonoBehaviour
         {
             selectedAttackDetailsText.text = "";
         }
+        
+        // Cerrar todos los paneles de navegación cuando se ejecuta el ataque
+        ResetPanelNavigation();
 
         // Actualizar texto de ronda
         if (roundText != null)
@@ -1869,29 +2114,64 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actualiza el estado de los botones de ataque según el nivel del héroe.
+    /// Actualiza el estado de los botones de ataque según el nivel del héroe y si están desbloqueados.
     /// </summary>
     private void UpdateAttackButtonsAvailability()
     {
+        // SOLUCIÓN: El botón de ataque básico siempre está habilitado (no requiere desbloqueo)
+        // Asegurar que se habilite al inicio y al final del método para evitar que se deshabilite después
+        if (basicAttackButton != null)
+        {
+            basicAttackButton.interactable = true;
+        }
+
         if (attackButtons == null || GameDataManager.Instance == null)
+        {
+            // Asegurar que el botón básico esté habilitado incluso si hay errores
+            if (basicAttackButton != null)
+            {
+                basicAttackButton.interactable = true;
+            }
             return;
+        }
 
         PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
         if (profile == null)
+        {
+            // Asegurar que el botón básico esté habilitado incluso si no hay perfil
+            if (basicAttackButton != null)
+            {
+                basicAttackButton.interactable = true;
+            }
             return;
+        }
 
         int heroLevel = profile.heroLevel;
+        GameDataManager gameDataManager = GameDataManager.Instance;
 
         foreach (var attackButton in attackButtons)
         {
             if (attackButton.button != null && attackButton.attackData != null)
             {
-                // Deshabilitar si el nivel requerido es mayor al nivel del héroe
-                bool isUnlocked = attackButton.attackData.requiredHeroLevel == 0 || 
-                                 heroLevel >= attackButton.attackData.requiredHeroLevel;
+                // Verificar nivel requerido
+                bool hasRequiredLevel = attackButton.attackData.requiredHeroLevel == 0 || 
+                                       heroLevel >= attackButton.attackData.requiredHeroLevel;
                 
-                attackButton.button.interactable = isUnlocked;
+                // Verificar si el ataque está desbloqueado en la biblioteca
+                // NOTA: El ataque básico (null) siempre está disponible
+                bool isUnlocked = attackButton.attackData == null || 
+                                 gameDataManager.IsAttackUnlocked(attackButton.attackData.attackName);
+                
+                // El botón está habilitado solo si cumple ambos requisitos
+                attackButton.button.interactable = hasRequiredLevel && isUnlocked;
             }
+        }
+        
+        // SOLUCIÓN: Asegurar que el botón básico esté habilitado al final del método
+        // Esto previene que cualquier lógica adicional lo deshabilite
+        if (basicAttackButton != null)
+        {
+            basicAttackButton.interactable = true;
         }
     }
 

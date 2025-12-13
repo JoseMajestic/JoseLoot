@@ -181,6 +181,10 @@ public class HeroProfileManager : MonoBehaviour
 
     // Diccionario para guardar los sprites por defecto de cada slot
     private Dictionary<Image, Sprite> defaultSlotSprites = new Dictionary<Image, Sprite>();
+    
+    // Colores para slots vacíos y ocupados
+    private static readonly Color EMPTY_SLOT_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f); // Gris
+    private static readonly Color OCCUPIED_SLOT_COLOR = Color.white; // Blanco FFFFFF
 
     private void Start()
     {
@@ -863,6 +867,9 @@ public class HeroProfileManager : MonoBehaviour
             
             if (itemInstance != null && itemInstance.IsValid())
             {
+                // Aplicar color blanco para slot ocupado
+                slotImage.color = OCCUPIED_SLOT_COLOR;
+                
                 // SOLUCIÓN ESTRUCTURAL: Siempre obtener el sprite fresco desde ItemData (como una "instancia/clon" fresca)
                 // Esto asegura que el sprite se recargue incluso si Unity lo limpió al desactivar el panel
                 Sprite itemSprite = itemInstance.GetItemSprite();
@@ -912,11 +919,13 @@ public class HeroProfileManager : MonoBehaviour
                     // Si el item no tiene sprite, limpiar para mostrar el sprite por defecto
                     slotImage.sprite = null;
                     slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
+                    // Mantener color blanco para slot ocupado (aunque no tenga sprite)
+                    slotImage.color = OCCUPIED_SLOT_COLOR;
                 }
             }
             else
             {
-                // Slot vacío: restaurar el sprite por defecto del Image en lugar de poner null
+                // Slot vacío: restaurar el sprite por defecto del Image y aplicar color gris
                 if (defaultSlotSprites.ContainsKey(slotImage))
                 {
                     // Restaurar el sprite por defecto que tenía el Image al inicio
@@ -929,6 +938,9 @@ public class HeroProfileManager : MonoBehaviour
                     // No poner null para evitar que se borre el sprite del Image
                 }
                 slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
+                
+                // Aplicar color gris para slot vacío
+                slotImage.color = EMPTY_SLOT_COLOR;
             }
         }
 

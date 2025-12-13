@@ -31,6 +31,10 @@ public class PlayerProfileData
     // Sistema de enemigos derrotados (para desbloqueo secuencial)
     [Tooltip("Lista de nombres de enemigos derrotados (para desbloqueo secuencial)")]
     public List<string> defeatedEnemies = new List<string>();
+    
+    // Sistema de ataques desbloqueados
+    [Tooltip("Lista de nombres de ataques desbloqueados (comprados en la biblioteca)")]
+    public List<string> unlockedAttacks = new List<string>();
 
     // Estadísticas del jugador
     [Tooltip("Total de enfrentamientos realizados")]
@@ -407,6 +411,37 @@ public class PlayerProfileData
             return false;
         
         return defeatedEnemies.Contains(enemyName);
+    }
+
+    /// <summary>
+    /// Desbloquea un ataque (comprado en la biblioteca).
+    /// </summary>
+    /// <param name="attackName">Nombre del ataque a desbloquear</param>
+    public void UnlockAttack(string attackName)
+    {
+        if (unlockedAttacks == null)
+        {
+            unlockedAttacks = new List<string>();
+        }
+        
+        if (!string.IsNullOrEmpty(attackName) && !unlockedAttacks.Contains(attackName))
+        {
+            unlockedAttacks.Add(attackName);
+            Debug.Log($"Ataque '{attackName}' desbloqueado.");
+        }
+    }
+
+    /// <summary>
+    /// Verifica si un ataque está desbloqueado.
+    /// </summary>
+    /// <param name="attackName">Nombre del ataque a verificar</param>
+    /// <returns>True si el ataque está desbloqueado, false en caso contrario</returns>
+    public bool IsAttackUnlocked(string attackName)
+    {
+        if (unlockedAttacks == null || string.IsNullOrEmpty(attackName))
+            return false;
+        
+        return unlockedAttacks.Contains(attackName);
     }
 
     /// <summary>

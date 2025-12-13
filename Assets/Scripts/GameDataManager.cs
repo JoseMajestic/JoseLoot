@@ -577,5 +577,43 @@ public class GameDataManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Desbloquea un ataque en la biblioteca.
+    /// </summary>
+    /// <param name="attackName">Nombre del ataque a desbloquear</param>
+    public void UnlockAttack(string attackName)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            playerProfile.UnlockAttack(attackName);
+            SavePlayerProfile();
+        }
+    }
+
+    /// <summary>
+    /// Verifica si un ataque está desbloqueado.
+    /// </summary>
+    /// <param name="attackName">Nombre del ataque a verificar</param>
+    /// <returns>True si el ataque está desbloqueado, false en caso contrario</returns>
+    public bool IsAttackUnlocked(string attackName)
+    {
+        if (playerProfile == null)
+        {
+            LoadPlayerProfile();
+        }
+        
+        if (playerProfile != null)
+        {
+            return playerProfile.IsAttackUnlocked(attackName);
+        }
+        
+        return false;
+    }
 }
 

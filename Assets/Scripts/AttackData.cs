@@ -34,6 +34,9 @@ public class AttackData : ScriptableObject
     [Header("=== PROGRESO ===")]
     [Tooltip("Nivel del héroe requerido para desbloquear este ataque (0 = siempre disponible)")]
     public int requiredHeroLevel = 0;
+    
+    [Tooltip("Precio en monedas para comprar/desbloquear este ataque en la biblioteca")]
+    public int unlockPrice = 100;
 }
 
 /// <summary>

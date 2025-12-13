@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Attack Database
   m_EditorClassIdentifier: Assembly-CSharp::AttackDatabase
   attacks:
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
   - {fileID: 11400000, guid: d8903f9c5366eb64388a9946c60b55ab, type: 2}
   - {fileID: 11400000, guid: c493954b91965104880e199a0eaf930a, type: 2}
   - {fileID: 11400000, guid: c15af7a7491048e4180adeb5df4236f5, type: 2}
-  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
   - {fileID: 11400000, guid: 0a4f50fae3246854d996655f244f7323, type: 2}
   - {fileID: 11400000, guid: de519ab4904994e45a49678c23ee3dff, type: 2}
   - {fileID: 11400000, guid: 21e0935aa2e4cdb48b2a59e7b18a5a5a, type: 2}

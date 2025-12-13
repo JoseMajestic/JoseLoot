@@ -19,3 +19,5 @@ MonoBehaviour:
   effectType: 7
   effectValue: 15
   duration: 4
+  requiredHeroLevel: 35
+  unlockPrice: 250000

@@ -20,6 +20,18 @@ public class InventorySlot : MonoBehaviour
     private InventoryManager inventoryManager;
     private bool isSelected = false;
     
+    // SOLUCIÓN: Guardar el sprite por defecto del botón para restaurarlo cuando el slot está vacío
+    private Sprite defaultButtonSprite = null;
+    private bool defaultSpriteSaved = false;
+    
+    // SOLUCIÓN: Guardar el color por defecto del botón para restaurarlo
+    private Color defaultButtonColor = Color.white;
+    private bool defaultColorSaved = false;
+    
+    // Colores para slots vacíos y ocupados
+    private static readonly Color EMPTY_SLOT_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f); // Gris
+    private static readonly Color OCCUPIED_SLOT_COLOR = Color.white; // Blanco FFFFFF
+    
     // SOLUCIÓN: Guardar el nivel y versión del item para detectar cambios
     // Esto permite detectar cuando el ItemInstance en memoria cambió aunque la referencia sea la misma
     private int lastKnownLevel = -1;
@@ -50,12 +62,46 @@ public class InventorySlot : MonoBehaviour
                 buttonImage = slotButton.GetComponentInChildren<Image>();
             }
             slotButton.onClick.AddListener(OnSlotClick);
+            
+            // SOLUCIÓN: Guardar el sprite y color por defecto del botón al inicio
+            if (buttonImage != null)
+            {
+                if (!defaultSpriteSaved)
+                {
+                    defaultButtonSprite = buttonImage.sprite;
+                    defaultSpriteSaved = true;
+                }
+                if (!defaultColorSaved)
+                {
+                    defaultButtonColor = buttonImage.color;
+                    defaultColorSaved = true;
+                }
+            }
         }
 
         // Si no se asignó el levelText en el Inspector, intentar encontrarlo automáticamente
         if (levelText == null)
         {
             levelText = GetComponentInChildren<TextMeshProUGUI>();
+        }
+    }
+    
+    private void Start()
+    {
+        // SOLUCIÓN: Asegurar que el sprite y color por defecto se guarden si no se guardaron en Awake
+        // (por si el Image se inicializa después de Awake)
+        if (buttonImage != null)
+        {
+            if (!defaultSpriteSaved && buttonImage.sprite != null)
+            {
+                defaultButtonSprite = buttonImage.sprite;
+                defaultSpriteSaved = true;
+            }
+            if (!defaultColorSaved)
+            {
+                defaultButtonColor = buttonImage.color;
+                defaultColorSaved = true;
+            }
         }
     }
 
@@ -447,12 +493,30 @@ public class InventorySlot : MonoBehaviour
 
         if (currentItem == null || !currentItem.IsValid())
         {
-            // Slot vacío
+            // Slot vacío: restaurar el sprite por defecto del botón y aplicar color gris
             if (buttonImage != null)
             {
-                // Limpiar el sprite para que vuelva al sprite por defecto del botón
-                buttonImage.sprite = null;
-                // El botón mostrará su sprite por defecto (el que tiene configurado en el componente Image)
+                // SOLUCIÓN: Restaurar el sprite por defecto en lugar de poner null
+                // Esto mantiene la imagen de fondo configurada en Unity
+                if (defaultSpriteSaved && defaultButtonSprite != null)
+                {
+                    buttonImage.sprite = defaultButtonSprite;
+                }
+                else if (!defaultSpriteSaved)
+                {
+                    // Si aún no se guardó el sprite por defecto, guardarlo ahora
+                    defaultButtonSprite = buttonImage.sprite;
+                    defaultSpriteSaved = true;
+                    // No cambiar el sprite, mantener el que tiene configurado
+                }
+                // Si defaultButtonSprite es null pero defaultSpriteSaved es true,
+                // significa que el botón no tenía sprite por defecto, no hacer nada
+                
+                // Aplicar color gris para slot vacío
+                buttonImage.color = EMPTY_SLOT_COLOR;
+                
+                // Asegurar que el Image esté habilitado para mostrar el sprite
+                buttonImage.enabled = true;
             }
 
             if (levelText != null)
@@ -476,6 +540,10 @@ public class InventorySlot : MonoBehaviour
                 // SOLUCIÓN ESTRUCTURAL: Siempre obtener el sprite fresco desde ItemData (como una "instancia/clon" fresca)
                 // Esto asegura que el sprite se recargue incluso si Unity lo limpió al desactivar el panel
                 // IGUAL que hace HeroProfileManager.UpdateEquipmentSlot() que funciona correctamente
+                
+                // Aplicar color blanco para slot ocupado
+                buttonImage.color = OCCUPIED_SLOT_COLOR;
+                
                 if (itemSprite != null)
                 {
                     // SOLUCIÓN ESTRUCTURAL: Si forceRefresh es true, limpiar primero el sprite para forzar actualización completa
@@ -527,6 +595,8 @@ public class InventorySlot : MonoBehaviour
                     // Si el sprite es null pero hay item, limpiar para mostrar sprite por defecto
                     buttonImage.sprite = null;
                     buttonImage.enabled = true;
+                    // Aplicar color blanco para slot ocupado (aunque no tenga sprite)
+                    buttonImage.color = OCCUPIED_SLOT_COLOR;
                     Debug.LogWarning($"Item '{currentItem.GetItemName()}' no tiene sprite asignado en ItemData.");
                 }
             }
