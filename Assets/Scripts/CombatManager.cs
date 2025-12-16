@@ -1082,12 +1082,12 @@ public class CombatManager : MonoBehaviour
         // Verificar si alguien murió por veneno
         if (enemyCurrentHp <= 0)
         {
-            OnPlayerVictory();
+            yield return StartCoroutine(OnPlayerVictory());
             yield break;
         }
         if (playerCurrentHp <= 0)
         {
-            OnPlayerDefeat();
+            yield return StartCoroutine(OnPlayerDefeat());
             yield break;
         }
         
@@ -1132,7 +1132,7 @@ public class CombatManager : MonoBehaviour
             // Verificar si el enemigo murió
             if (enemyCurrentHp <= 0)
             {
-                OnPlayerVictory();
+                yield return StartCoroutine(OnPlayerVictory());
                 yield break;
             }
 
@@ -1142,7 +1142,7 @@ public class CombatManager : MonoBehaviour
             // Verificar si el jugador murió
             if (playerCurrentHp <= 0)
             {
-                OnPlayerDefeat();
+                yield return StartCoroutine(OnPlayerDefeat());
                 yield break;
             }
         }
@@ -1154,7 +1154,7 @@ public class CombatManager : MonoBehaviour
             // Verificar si el jugador murió
             if (playerCurrentHp <= 0)
             {
-                OnPlayerDefeat();
+                yield return StartCoroutine(OnPlayerDefeat());
                 yield break;
             }
 
@@ -1164,7 +1164,7 @@ public class CombatManager : MonoBehaviour
             // Verificar si el enemigo murió
             if (enemyCurrentHp <= 0)
             {
-                OnPlayerVictory();
+                yield return StartCoroutine(OnPlayerVictory());
                 yield break;
             }
         }
@@ -1914,10 +1914,18 @@ public class CombatManager : MonoBehaviour
 
     /// <summary>
     /// Se llama cuando el jugador gana.
+    /// SOLUCIÓN: Ahora es una corrutina que muestra el texto de debilitación antes del panel de victoria.
     /// </summary>
-    private void OnPlayerVictory()
+    private IEnumerator OnPlayerVictory()
     {
         combatInProgress = false;
+
+        // SOLUCIÓN: Mostrar texto de debilitación del enemigo ANTES del panel de victoria
+        if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+        {
+            string defeatText = FormatText(combatTexts.enemyDefeated, currentEnemy.enemyName);
+            yield return StartCoroutine(DisplayTextWithDelay(defeatText));
+        }
 
         // Agregar monedas
         if (playerMoney != null)
@@ -1971,10 +1979,17 @@ public class CombatManager : MonoBehaviour
 
     /// <summary>
     /// Se llama cuando el jugador pierde.
+    /// SOLUCIÓN: Ahora es una corrutina que muestra el texto de debilitación antes del panel de derrota.
     /// </summary>
-    private void OnPlayerDefeat()
+    private IEnumerator OnPlayerDefeat()
     {
         combatInProgress = false;
+
+        // SOLUCIÓN: Mostrar texto de debilitación del jugador ANTES del panel de derrota
+        if (roundDetailsText != null && combatTexts != null)
+        {
+            yield return StartCoroutine(DisplayTextWithDelay(combatTexts.playerDefeated));
+        }
 
         // Incrementar estadísticas de pelea perdida y enfrentamiento
         if (GameDataManager.Instance != null)

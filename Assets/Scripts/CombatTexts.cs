@@ -166,6 +166,15 @@ public class CombatTexts : ScriptableObject
     [Tooltip("Texto cuando el buff de defensa del enemigo termina. {0} = nombre del enemigo, {1} = rondas restantes (0 significa que terminó)")]
     public string enemyDefenseBuffRemaining = "Buff de defensa de {0}: {1} rondas restantes.";
     
+    [Header("=== FINAL DE COMBATE ===")]
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo ha sido derrotado. {0} = nombre del enemigo")]
+    public string enemyDefeated = "{0} ha sido debilitado.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador ha sido derrotado")]
+    public string playerDefeated = "El jugador ha sido debilitado.";
+    
     [Header("=== ORDEN DE ATAQUE ===")]
     [TextArea(2, 3)]
     [Tooltip("Texto cuando el jugador ataca primero. {0} = nombre del jugador (ej: 'Héroe' o 'Jugador')")]
