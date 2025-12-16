@@ -53,6 +53,9 @@ public class CombatManager : MonoBehaviour
     [Tooltip("Panel principal de combate (se cierra al aceptar victoria/derrota)")]
     [SerializeField] private GameObject combatPanel;
     
+    [Tooltip("Panel General Gym que se abre cuando se cierra el panel de combate (opcional)")]
+    [SerializeField] private GameObject panelGeneralGym;
+    
     [Header("Ataques")]
     [Tooltip("Array de botones de habilidades/ataques (cada posición contiene el botón y la instancia AttackData asociada)")]
     [SerializeField] private AttackButtonData[] attackButtons;
@@ -2063,7 +2066,7 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Cierra el panel de combate.
+    /// Cierra el panel de combate y abre el Panel General Gym si está asignado.
     /// </summary>
     private void CloseCombatPanel()
     {
@@ -2075,6 +2078,13 @@ public class CombatManager : MonoBehaviour
         {
             // Fallback: desactivar el GameObject del CombatManager si no hay panel asignado
             gameObject.SetActive(false);
+        }
+        
+        // SOLUCIÓN: Abrir el Panel General Gym cuando se cierra el combate
+        // Esto permite volver a la selección de enemigos después de cerrar el combate
+        if (panelGeneralGym != null)
+        {
+            panelGeneralGym.SetActive(true);
         }
     }
 

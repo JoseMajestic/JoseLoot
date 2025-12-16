@@ -52,6 +52,10 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Panel donde se abre todo el combate (contiene todos los objetos de la escena de combate)")]
     [SerializeField] private GameObject combatPanel;
     
+    [Header("Panel General Gym")]
+    [Tooltip("Panel General Gym que contiene la selección de enemigos (se cierra cuando se inicia el combate)")]
+    [SerializeField] private GameObject panelGeneralGym;
+    
     [Header("Referencias")]
     [Tooltip("Referencia a la base de datos de enemigos")]
     [SerializeField] private EnemyDatabase enemyDatabase;
@@ -300,8 +304,18 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        // Ocultar panel de selección de enemigos
-        gameObject.SetActive(false);
+        // SOLUCIÓN: Cerrar el Panel General Gym antes de abrir el panel de combate
+        // Esto permite ver la animación de fondo sin que el panel interfiera
+        // Los datos se mantienen porque solo se desactiva el GameObject, no se destruye
+        if (panelGeneralGym != null)
+        {
+            panelGeneralGym.SetActive(false);
+        }
+        else
+        {
+            // Fallback: Si no está asignado, ocultar el panel actual (BattleManager)
+            gameObject.SetActive(false);
+        }
 
         // Mostrar panel de combate
         combatPanel.SetActive(true);
