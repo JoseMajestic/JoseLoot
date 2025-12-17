@@ -18,12 +18,16 @@ public class CombatTexts : ScriptableObject
     
     [Header("=== ATAQUES DEL JUGADOR ===")]
     [TextArea(2, 3)]
-    [Tooltip("Texto del ataque básico del jugador. {0} = daño")]
-    public string playerBasicAttack = "Jugador usa ataque básico y causa {0} de daño.";
+    [Tooltip("Texto del ataque básico del jugador (solo nombre)")]
+    public string playerBasicAttack = "Jugador usa ataque básico.";
     
     [TextArea(2, 3)]
-    [Tooltip("Texto del ataque del jugador. {0} = nombre del ataque, {1} = daño")]
-    public string playerAttack = "Jugador usa {0} y causa {1} de daño.";
+    [Tooltip("Texto del ataque del jugador (solo nombre). {0} = nombre del ataque")]
+    public string playerAttack = "Jugador usa {0}.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto de daño recibido por el enemigo. {0} = nombre del enemigo, {1} = daño")]
+    public string enemyReceivesDamage = "{0} recibe {1} de daño.";
     
     [TextArea(2, 3)]
     [Tooltip("Texto de curación del jugador. {0} = nombre del ataque, {1} = HP curado")]
@@ -39,12 +43,16 @@ public class CombatTexts : ScriptableObject
     
     [Header("=== ATAQUES DEL ENEMIGO ===")]
     [TextArea(2, 3)]
-    [Tooltip("Texto del ataque básico del enemigo. {0} = nombre del enemigo, {1} = daño")]
-    public string enemyBasicAttack = "{0} usa ataque básico y causa {1} de daño.";
+    [Tooltip("Texto del ataque básico del enemigo (solo nombre). {0} = nombre del enemigo")]
+    public string enemyBasicAttack = "{0} usa ataque básico.";
     
     [TextArea(2, 3)]
-    [Tooltip("Texto del ataque del enemigo. {0} = nombre del enemigo, {1} = nombre del ataque, {2} = daño")]
-    public string enemyAttack = "{0} usa {1} y causa {2} de daño.";
+    [Tooltip("Texto del ataque del enemigo (solo nombre). {0} = nombre del enemigo, {1} = nombre del ataque")]
+    public string enemyAttack = "{0} usa {1}.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto de daño recibido por el jugador. {0} = daño")]
+    public string playerReceivesDamage = "El jugador recibe {0} de daño.";
     
     [TextArea(2, 3)]
     [Tooltip("Texto de curación del enemigo. {0} = nombre del enemigo, {1} = nombre del ataque, {2} = HP curado")]

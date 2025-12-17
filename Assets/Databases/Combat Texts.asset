@@ -17,12 +17,14 @@ MonoBehaviour:
 
     {1}'
   playerBasicAttack: "Jugador usa ataque b\xE1sico y causa {0} de da\xF1o."
-  playerAttack: "Jugador usa {0} y causa {1} de da\xF1o."
+  playerAttack: "Jugador  causa {1} de da\xF1o."
+  enemyReceivesDamage: "{0} recibe {1} de da\xF1o."
   playerHeal: Jugador usa {0} y se cura {1} de HP.
   playerLuck: "\xA1Suerte activada! El jugador ataca de nuevo."
   playerLuckAttack: "Jugador ataca de nuevo y causa {0} de da\xF1o."
   enemyBasicAttack: "{0} usa ataque b\xE1sico y causa {1} de da\xF1o."
-  enemyAttack: "{0} usa {1} y causa {2} de da\xF1o."
+  enemyAttack: "Enemigo  causa {2} de da\xF1o."
+  playerReceivesDamage: "El jugador recibe {0} de da\xF1o."
   enemyHeal: '{0} usa {1} y se cura {2} de HP.'
   enemyLuck: "\xA1Suerte activada! {0} ataca de nuevo."
   enemyLuckAttack: "{0} usa {1} de nuevo y causa {2} de da\xF1o."
@@ -40,5 +42,27 @@ MonoBehaviour:
   playerStunned: "El jugador est\xE1 aturdido y no puede atacar."
   enemyStunned: "{0} est\xE1 aturdido y no puede atacar."
   nextRound: Siguiente ronda
+  playerStillPoisoned: "El h\xE9roe todav\xEDa est\xE1 envenenado ({0}% de HP por
+    ronda) durante {1} rondas m\xE1s."
+  enemyStillPoisoned: "{0} todav\xEDa est\xE1 envenenado ({1}% de HP por ronda) durante
+    {2} rondas m\xE1s."
+  playerStillStunned: "El h\xE9roe todav\xEDa est\xE1 aturdido durante esta ronda."
+  enemyStillStunned: "{0} todav\xEDa est\xE1 aturdido durante esta ronda."
+  playerAttackBuffActive: "El h\xE9roe tiene buff de ataque {0}% durante {1} rondas
+    m\xE1s."
+  enemyAttackBuffActive: "{0} tiene buff de ataque {1}% durante {2} rondas m\xE1s."
+  playerDefenseBuffActive: "El h\xE9roe tiene buff de defensa {0}% durante {1} rondas
+    m\xE1s."
+  enemyDefenseBuffActive: "{0} tiene buff de defensa {1}% durante {2} rondas m\xE1s."
+  playerAttackBuffRemaining: "Buff de ataque del h\xE9roe: {0} rondas restantes."
+  enemyAttackBuffRemaining: 'Buff de ataque de {0}: {1} rondas restantes.'
+  playerDefenseBuffRemaining: "Buff de defensa del h\xE9roe: {0} rondas restantes."
+  enemyDefenseBuffRemaining: 'Buff de defensa de {0}: {1} rondas restantes.'
+  enemyDefeated: '{0} ha sido debilitado.'
+  playerDefeated: El jugador ha sido debilitado.
+  playerAttacksFirst: '{0} ataca primero.'
+  enemyAttacksFirst: '{0} ataca primero.'
+  nowPlayerAttacks: Ahora ataca {0}.
+  nowEnemyAttacks: Ahora ataca {0}.
   typewriterSpeed: 30
   delayBetweenMessages: 1.5

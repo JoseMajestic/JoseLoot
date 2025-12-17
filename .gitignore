@@ -35,5 +35,9 @@ Desktop.ini
 *.pdb
 *.mdb
 
+# Large files
+*.exe
+**/TunnelBear*
+
 
 

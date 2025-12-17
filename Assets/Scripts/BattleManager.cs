@@ -71,6 +71,9 @@ public class BattleManager : MonoBehaviour
     
     // Referencia al sistema de energía
     private EnergySystem energySystem;
+    
+    // Referencia estática al panel General Gym para acceso desde otros scripts
+    private static GameObject staticPanelGeneralGym = null;
 
     private void Start()
     {
@@ -79,6 +82,22 @@ public class BattleManager : MonoBehaviour
         
         // Obtener referencia al sistema de energía
         energySystem = FindFirstObjectByType<EnergySystem>();
+        
+        // Guardar referencia estática al panel General Gym
+        if (panelGeneralGym != null)
+        {
+            staticPanelGeneralGym = panelGeneralGym;
+        }
+        else
+        {
+            // Intentar encontrar el panel por el padre
+            GameObject parent = transform.parent != null ? transform.parent.gameObject : null;
+            if (parent != null)
+            {
+                panelGeneralGym = parent;
+                staticPanelGeneralGym = parent;
+            }
+        }
         
         // Actualizar UI de energía inicial
         RefreshEnergyUI();
@@ -307,6 +326,18 @@ public class BattleManager : MonoBehaviour
         // SOLUCIÓN: Cerrar el Panel General Gym antes de abrir el panel de combate
         // Esto permite ver la animación de fondo sin que el panel interfiera
         // Los datos se mantienen porque solo se desactiva el GameObject, no se destruye
+        
+        // Buscar el panel General Gym si la referencia se perdió
+        if (panelGeneralGym == null)
+        {
+            // Intentar encontrar el panel por nombre o por el padre del BattleManager
+            GameObject parent = transform.parent != null ? transform.parent.gameObject : null;
+            if (parent != null)
+            {
+                panelGeneralGym = parent;
+            }
+        }
+        
         if (panelGeneralGym != null)
         {
             panelGeneralGym.SetActive(false);
@@ -320,11 +351,22 @@ public class BattleManager : MonoBehaviour
         // Mostrar panel de combate
         combatPanel.SetActive(true);
 
-        // Pasar el enemigo seleccionado al CombatManager
+        // Encontrar el índice del enemigo seleccionado en el array
+        int enemyIndex = -1;
+        for (int i = 0; i < enemyButtons.Length; i++)
+        {
+            if (enemyButtons[i].enemyData == selectedEnemy)
+            {
+                enemyIndex = i;
+                break;
+            }
+        }
+
+        // Pasar el enemigo seleccionado y su índice al CombatManager
         CombatManager combatManager = combatPanel.GetComponent<CombatManager>();
         if (combatManager != null)
         {
-            combatManager.StartCombat(selectedEnemy);
+            combatManager.StartCombat(selectedEnemy, enemyIndex);
         }
         else
         {
@@ -337,6 +379,30 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Asegurar que la referencia al panel General Gym esté disponible
+        // Si se perdió, intentar encontrarlo por el padre del BattleManager o usar la referencia estática
+        if (panelGeneralGym == null)
+        {
+            if (staticPanelGeneralGym != null)
+            {
+                panelGeneralGym = staticPanelGeneralGym;
+            }
+            else
+            {
+                GameObject parent = transform.parent != null ? transform.parent.gameObject : null;
+                if (parent != null)
+                {
+                    panelGeneralGym = parent;
+                    staticPanelGeneralGym = parent;
+                }
+            }
+        }
+        else
+        {
+            // Actualizar la referencia estática si tenemos una referencia válida
+            staticPanelGeneralGym = panelGeneralGym;
+        }
+        
         // Refrescar botones de enemigos (por si se desbloqueó alguno nuevo)
         RefreshEnemyButtons();
         
