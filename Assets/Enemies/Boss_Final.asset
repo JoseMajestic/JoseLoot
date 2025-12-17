@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Boss Final
   description: "El enemigo definitivo. Combina todas las habilidades y es el m\xE1s
     poderoso de todos."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: 2656462569fc7774995ae83434f722ef, type: 3}
   hp: 600
   ataque: 50
   defensa: 25
@@ -25,6 +25,7 @@ MonoBehaviour:
   suerte: 10
   destreza: 12
   rewardCoins: 300
+  experienceReward: 10
   requiredLevel: 5
   level: 6
   availableAttacks: []

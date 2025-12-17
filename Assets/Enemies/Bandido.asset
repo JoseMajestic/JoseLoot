@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Bandido
   description: "Un bandido humano armado. Conoce algunas t\xE9cnicas de combate b\xE1sicas."
-  enemySprite: {fileID: 21300000, guid: 02e263c114417de4a8b987c001df4b1a, type: 3}
+  enemySprite: {fileID: 21300000, guid: 7fc4d16d251336f4faf63bf7947658df, type: 3}
   hp: 110
   ataque: 14
   defensa: 4
