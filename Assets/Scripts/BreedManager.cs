@@ -128,6 +128,9 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Panel que se abrirá cuando se abra el panel General Breed y se cerrará cuando éste se cierre")]
     [SerializeField] private GameObject animationPanel;
     
+    [Tooltip("Referencia al panel General Breed (el GameObject donde está este script). Si no se asigna, se usa el GameObject actual")]
+    [SerializeField] private GameObject panelGeneralBreed;
+    
     [Tooltip("Sprite que se mostrará en el panel de animaciones")]
     [SerializeField] private Sprite animationSprite;
     
@@ -200,6 +203,19 @@ public class BreedManager : MonoBehaviour
             return;
         }
         
+        // Si no se asignó el panel General Breed, usar el GameObject actual
+        if (panelGeneralBreed == null)
+        {
+            panelGeneralBreed = gameObject;
+        }
+        
+        // Suscribirse a los eventos del PanelNavigationManager
+        if (gameDataManager.PanelNavigationManager != null)
+        {
+            gameDataManager.PanelNavigationManager.OnPanelOpened += OnPanelOpened;
+            gameDataManager.PanelNavigationManager.OnPanelClosed += OnPanelClosed;
+        }
+        
         // Inicializar tiempo de decaimiento
         lastDecayTime = DateTime.Now;
         
@@ -234,6 +250,72 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Abrir el panel de animaciones e iniciar las animaciones
+        OpenAnimationPanel();
+    }
+
+    /// <summary>
+    /// Se llama cuando el GameObject se desactiva (cuando se cierra el panel General Breed).
+    /// </summary>
+    private void OnDisable()
+    {
+        // Cerrar el panel de animaciones y detener las animaciones
+        CloseAnimationPanel();
+    }
+    
+    private void OnDestroy()
+    {
+        // Desuscribirse de los eventos del PanelNavigationManager
+        if (gameDataManager != null && gameDataManager.PanelNavigationManager != null)
+        {
+            gameDataManager.PanelNavigationManager.OnPanelOpened -= OnPanelOpened;
+            gameDataManager.PanelNavigationManager.OnPanelClosed -= OnPanelClosed;
+        }
+        
+        // Detener corrutinas
+        if (decayCoroutine != null)
+            StopCoroutine(decayCoroutine);
+        if (messageCoroutine != null)
+            StopCoroutine(messageCoroutine);
+        if (typewriterCoroutine != null)
+            StopCoroutine(typewriterCoroutine);
+        if (idleAnimationCoroutine != null)
+            StopCoroutine(idleAnimationCoroutine);
+    }
+    
+    /// <summary>
+    /// Se llama cuando el PanelNavigationManager abre un panel.
+    /// Verifica si es el panel General Breed y abre las animaciones si es necesario.
+    /// </summary>
+    private void OnPanelOpened(GameObject openedPanel)
+    {
+        // Verificar si el panel abierto es el panel General Breed
+        if (openedPanel == panelGeneralBreed)
+        {
+            // Abrir el panel de animaciones y iniciar las animaciones
+            OpenAnimationPanel();
+        }
+    }
+    
+    /// <summary>
+    /// Se llama cuando el PanelNavigationManager cierra un panel.
+    /// Verifica si es el panel General Breed y cierra las animaciones si es necesario.
+    /// </summary>
+    private void OnPanelClosed(GameObject closedPanel)
+    {
+        // Verificar si el panel cerrado es el panel General Breed
+        if (closedPanel == panelGeneralBreed)
+        {
+            // Cerrar el panel de animaciones y detener las animaciones
+            CloseAnimationPanel();
+        }
+    }
+    
+    /// <summary>
+    /// Abre el panel de animaciones e inicia las animaciones.
+    /// </summary>
+    private void OpenAnimationPanel()
+    {
         // Abrir el panel de animaciones
         if (animationPanel != null)
         {
@@ -252,11 +334,11 @@ public class BreedManager : MonoBehaviour
             idleAnimationCoroutine = StartCoroutine(PlayRandomIdleAnimations());
         }
     }
-
+    
     /// <summary>
-    /// Se llama cuando el GameObject se desactiva (cuando se cierra el panel General Breed).
+    /// Cierra el panel de animaciones y detiene las animaciones.
     /// </summary>
-    private void OnDisable()
+    private void CloseAnimationPanel()
     {
         // Detener el pool de animaciones
         if (idleAnimationCoroutine != null)
@@ -273,19 +355,6 @@ public class BreedManager : MonoBehaviour
         {
             animationPanel.SetActive(false);
         }
-    }
-    
-    private void OnDestroy()
-    {
-        // Detener corrutinas
-        if (decayCoroutine != null)
-            StopCoroutine(decayCoroutine);
-        if (messageCoroutine != null)
-            StopCoroutine(messageCoroutine);
-        if (typewriterCoroutine != null)
-            StopCoroutine(typewriterCoroutine);
-        if (idleAnimationCoroutine != null)
-            StopCoroutine(idleAnimationCoroutine);
     }
     
     /// <summary>
@@ -1168,6 +1237,15 @@ public class BreedManager : MonoBehaviour
 
         while (true)
         {
+            // Verificar si el panel General Breed está activo antes de continuar
+            // Si no está activo, salir de la corrutina
+            if (panelGeneralBreed != null && !panelGeneralBreed.activeSelf)
+            {
+                // El panel se cerró, salir de la corrutina
+                idleAnimationCoroutine = null;
+                yield break;
+            }
+            
             // Seleccionar una animación aleatoria del pool
             int randomIndex = UnityEngine.Random.Range(0, idleAnimations.Length);
             AnimationConfig selectedAnimation = idleAnimations[randomIndex];
