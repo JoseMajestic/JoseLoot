@@ -124,6 +124,29 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Panel General Upgrade (se abre desde gymButton)")]
     [SerializeField] private GameObject upgradePanel;
     
+    [Header("Panel de Animaciones")]
+    [Tooltip("Panel que se abrirá cuando se abra el panel General Breed y se cerrará cuando éste se cierre")]
+    [SerializeField] private GameObject animationPanel;
+    
+    [Tooltip("Sprite que se mostrará en el panel de animaciones")]
+    [SerializeField] private Sprite animationSprite;
+    
+    [System.Serializable]
+    public class AnimationConfig
+    {
+        [Tooltip("Clip de animación")]
+        public AnimationClip clip;
+        
+        [Tooltip("Controller de animación")]
+        public RuntimeAnimatorController controller;
+    }
+    
+    [Tooltip("Array de animaciones idle que se ejecutarán aleatoriamente una detrás de otra")]
+    [SerializeField] private AnimationConfig[] idleAnimations = new AnimationConfig[0];
+    
+    [Tooltip("GameObject con Animator donde se reproducirán las animaciones")]
+    [SerializeField] private GameObject animationTarget;
+    
     // ===== CONFIGURACIÓN =====
     [Header("Configuración")]
     [Tooltip("Cantidad que llena cada acción (0-100)")]
@@ -148,6 +171,10 @@ public class BreedManager : MonoBehaviour
     private Coroutine decayCoroutine;
     private Coroutine messageCoroutine;
     private Coroutine typewriterCoroutine;
+    private Coroutine idleAnimationCoroutine = null;
+    private Animator animationTargetAnimator = null;
+    private SpriteRenderer animationSpriteRenderer = null;
+    private Image animationImage = null;
     
     // Pool de mensajes del héroe (se pueden expandir)
     private readonly string[] heroMessages = new string[]
@@ -201,6 +228,52 @@ public class BreedManager : MonoBehaviour
         // Actualizar estado de botones de acción inicial
         UpdateActionButtonsState();
     }
+
+    /// <summary>
+    /// Se llama cuando el GameObject se activa (cuando se abre el panel General Breed).
+    /// </summary>
+    private void OnEnable()
+    {
+        // Abrir el panel de animaciones
+        if (animationPanel != null)
+        {
+            animationPanel.SetActive(true);
+        }
+        
+        // Inicializar componentes de animación
+        InitializeAnimationComponents();
+        
+        // Hacer visibles las animaciones (alpha = 1)
+        SetAnimationPanelAlpha(1f);
+        
+        // Iniciar el pool de animaciones idle aleatorias
+        if (idleAnimationCoroutine == null && idleAnimations != null && idleAnimations.Length > 0)
+        {
+            idleAnimationCoroutine = StartCoroutine(PlayRandomIdleAnimations());
+        }
+    }
+
+    /// <summary>
+    /// Se llama cuando el GameObject se desactiva (cuando se cierra el panel General Breed).
+    /// </summary>
+    private void OnDisable()
+    {
+        // Detener el pool de animaciones
+        if (idleAnimationCoroutine != null)
+        {
+            StopCoroutine(idleAnimationCoroutine);
+            idleAnimationCoroutine = null;
+        }
+        
+        // Ocultar las animaciones (alpha = 0)
+        SetAnimationPanelAlpha(0f);
+        
+        // Cerrar el panel de animaciones
+        if (animationPanel != null)
+        {
+            animationPanel.SetActive(false);
+        }
+    }
     
     private void OnDestroy()
     {
@@ -211,6 +284,8 @@ public class BreedManager : MonoBehaviour
             StopCoroutine(messageCoroutine);
         if (typewriterCoroutine != null)
             StopCoroutine(typewriterCoroutine);
+        if (idleAnimationCoroutine != null)
+            StopCoroutine(idleAnimationCoroutine);
     }
     
     /// <summary>
@@ -676,19 +751,28 @@ public class BreedManager : MonoBehaviour
         
         // Trabajo
         if (workSlider != null)
+        {
             workSlider.value = profile.breedWork;
+            UpdateSliderColor(workSlider, profile.breedWork, 100);
+        }
         if (workText != null)
             workText.text = $"{profile.breedWork}% / 100%";
         
         // Hambre
         if (hungerSlider != null)
+        {
             hungerSlider.value = profile.breedHunger;
+            UpdateSliderColor(hungerSlider, profile.breedHunger, 100);
+        }
         if (hungerText != null)
             hungerText.text = $"{profile.breedHunger}% / 100%";
         
         // Felicidad
         if (happinessSlider != null)
+        {
             happinessSlider.value = profile.breedHappiness;
+            UpdateSliderColor(happinessSlider, profile.breedHappiness, 100);
+        }
         if (happinessText != null)
             happinessText.text = $"{profile.breedHappiness}% / 100%";
         
@@ -701,6 +785,7 @@ public class BreedManager : MonoBehaviour
             if (energySlider != null)
             {
                 energySlider.value = currentEnergy;
+                UpdateSliderColor(energySlider, currentEnergy, maxEnergy);
             }
             if (energyText != null)
             {
@@ -711,20 +796,29 @@ public class BreedManager : MonoBehaviour
         {
             // Si no hay EnergySystem, mostrar 0
             if (energySlider != null)
+            {
                 energySlider.value = 0;
+                UpdateSliderColor(energySlider, 0, 100);
+            }
             if (energyText != null)
                 energyText.text = "0% / 100%";
         }
         
         // Higiene
         if (hygieneSlider != null)
+        {
             hygieneSlider.value = profile.breedHygiene;
+            UpdateSliderColor(hygieneSlider, profile.breedHygiene, 100);
+        }
         if (hygieneText != null)
             hygieneText.text = $"{profile.breedHygiene}% / 100%";
         
         // Disciplina
         if (disciplineSlider != null)
+        {
             disciplineSlider.value = profile.breedDiscipline;
+            UpdateSliderColor(disciplineSlider, profile.breedDiscipline, 100);
+        }
         if (disciplineText != null)
             disciplineText.text = $"{profile.breedDiscipline}% / 100%";
     }
@@ -884,6 +978,7 @@ public class BreedManager : MonoBehaviour
                 if (energySlider != null)
                 {
                     energySlider.value = currentEnergy;
+                    UpdateSliderColor(energySlider, currentEnergy, maxEnergy);
                 }
                 if (energyText != null)
                 {
@@ -913,6 +1008,182 @@ public class BreedManager : MonoBehaviour
             
             // Actualizar estado de botones de acción periódicamente
             UpdateActionButtonsState();
+        }
+    }
+
+    /// <summary>
+    /// Actualiza el color del slider según el porcentaje de valor.
+    /// Verde: 100% a 75% (excluido)
+    /// Naranja: 75% a 64% (75% incluido)
+    /// Amarillo: 64% a 35% (excluido)
+    /// Rojo: 35% a 0%
+    /// </summary>
+    private void UpdateSliderColor(Slider slider, int currentValue, int maxValue)
+    {
+        if (slider == null || maxValue <= 0)
+            return;
+
+        float percent = (float)currentValue / maxValue * 100f;
+        
+        // Buscar el componente Image del fill del slider
+        Image fillImage = slider.fillRect?.GetComponent<Image>();
+        if (fillImage == null)
+        {
+            // Intentar buscar en los hijos
+            fillImage = slider.GetComponentInChildren<Image>();
+        }
+
+        if (fillImage != null)
+        {
+            Color targetColor;
+            
+            if (percent > 75f)
+            {
+                // Verde: 100% a 75% (excluido)
+                targetColor = Color.green;
+            }
+            else if (percent > 64f)
+            {
+                // Naranja: 75% a 64% (75% incluido)
+                targetColor = new Color(1f, 0.5f, 0f, 1f); // Naranja (RGB: 255, 128, 0)
+            }
+            else if (percent > 35f)
+            {
+                // Amarillo: 64% a 35% (excluido)
+                targetColor = Color.yellow;
+            }
+            else
+            {
+                // Rojo: 35% a 0%
+                targetColor = Color.red;
+            }
+            
+            fillImage.color = targetColor;
+        }
+    }
+
+    /// <summary>
+    /// Inicializa los componentes necesarios para las animaciones.
+    /// </summary>
+    private void InitializeAnimationComponents()
+    {
+        if (animationTarget == null)
+            return;
+
+        // Buscar o crear Animator
+        if (animationTargetAnimator == null)
+        {
+            animationTargetAnimator = animationTarget.GetComponent<Animator>();
+            if (animationTargetAnimator == null)
+            {
+                animationTargetAnimator = animationTarget.GetComponentInChildren<Animator>();
+            }
+            if (animationTargetAnimator == null)
+            {
+                animationTargetAnimator = animationTarget.AddComponent<Animator>();
+            }
+        }
+
+        // Buscar SpriteRenderer o Image para asignar el sprite
+        if (animationSpriteRenderer == null)
+        {
+            animationSpriteRenderer = animationTarget.GetComponent<SpriteRenderer>();
+            if (animationSpriteRenderer == null)
+            {
+                animationSpriteRenderer = animationTarget.GetComponentInChildren<SpriteRenderer>();
+            }
+        }
+
+        if (animationImage == null)
+        {
+            animationImage = animationTarget.GetComponent<Image>();
+            if (animationImage == null)
+            {
+                animationImage = animationTarget.GetComponentInChildren<Image>();
+            }
+        }
+
+        // Asignar sprite si está configurado
+        if (animationSprite != null)
+        {
+            if (animationSpriteRenderer != null)
+            {
+                animationSpriteRenderer.sprite = animationSprite;
+            }
+            else if (animationImage != null)
+            {
+                animationImage.sprite = animationSprite;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Establece el alpha del panel de animaciones (0 = invisible, 1 = visible).
+    /// </summary>
+    private void SetAnimationPanelAlpha(float alpha)
+    {
+        if (animationPanel == null)
+            return;
+
+        // Buscar todos los componentes Image y SpriteRenderer en el panel y sus hijos
+        Image[] images = animationPanel.GetComponentsInChildren<Image>();
+        foreach (Image img in images)
+        {
+            if (img != null)
+            {
+                Color color = img.color;
+                color.a = alpha;
+                img.color = color;
+            }
+        }
+
+        SpriteRenderer[] spriteRenderers = animationPanel.GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = alpha;
+                sr.color = color;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Corrutina que reproduce animaciones idle aleatoriamente una detrás de otra.
+    /// Usa la duración real de cada animación, no un tiempo fijo.
+    /// </summary>
+    private IEnumerator PlayRandomIdleAnimations()
+    {
+        if (idleAnimations == null || idleAnimations.Length == 0 || animationTargetAnimator == null)
+            yield break;
+
+        while (true)
+        {
+            // Seleccionar una animación aleatoria del pool
+            int randomIndex = UnityEngine.Random.Range(0, idleAnimations.Length);
+            AnimationConfig selectedAnimation = idleAnimations[randomIndex];
+
+            if (selectedAnimation != null && selectedAnimation.clip != null)
+            {
+                // Asignar controller si está configurado
+                if (selectedAnimation.controller != null && animationTargetAnimator != null)
+                {
+                    animationTargetAnimator.runtimeAnimatorController = selectedAnimation.controller;
+                }
+
+                // Reproducir la animación
+                animationTargetAnimator.Play(selectedAnimation.clip.name, 0, 0f);
+
+                // Esperar la duración real de la animación
+                float animationDuration = selectedAnimation.clip.length;
+                yield return new WaitForSeconds(animationDuration);
+            }
+            else
+            {
+                // Si la animación es null, esperar un frame y continuar
+                yield return null;
+            }
         }
     }
 }

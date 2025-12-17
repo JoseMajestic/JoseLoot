@@ -482,10 +482,10 @@ public class CombatManager : MonoBehaviour
         currentEnemyIndex = enemyIndex;
         rewardCoins = enemy.rewardCoins;
         
-        // Inicializar animaciones
+        // Inicializar animaciones (pasar el EnemyData para obtener el sprite)
         if (animationManager != null)
         {
-            animationManager.InitializeForCombat(enemyIndex);
+            animationManager.InitializeForCombat(enemyIndex, enemy);
         }
         
         // Calcular stats del jugador desde el equipo
@@ -1313,12 +1313,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del jugador
+            // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetPlayerIdle();
             }
             
             // 3. Calcular daño
@@ -1326,23 +1324,30 @@ public class CombatManager : MonoBehaviour
                                        GetEnemyEffectiveDefense(), true);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
-            // 4. Mostrar texto de daño recibido por el enemigo (solo mostrar, sin esperar delay completo)
+            // 4. Volver a Idle (loop)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del enemigo (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el enemigo vuelva a Idle explícitamente
-                animationManager.SetEnemyIdle();
             }
             
-            // 6. Reducir HP del enemigo gradualmente (después de que termine la animación de defensa)
+            // 7. Enemigo vuelve a Idle y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
             yield return StartCoroutine(ReduceEnemyHPGradually(targetEnemyHp));
         }
         else
@@ -1354,12 +1359,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del enemigo
+            // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetEnemyIdle();
             }
             
             // 3. Calcular daño
@@ -1367,23 +1370,30 @@ public class CombatManager : MonoBehaviour
                                        GetPlayerEffectiveDefense(), false);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
-            // 4. Mostrar texto de daño recibido por el jugador (solo mostrar, sin esperar delay completo)
+            // 4. Enemigo vuelve a Idle
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del jugador (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el jugador vuelva a Idle explícitamente
-                animationManager.SetPlayerIdle();
             }
             
-            // 6. Reducir HP del jugador gradualmente (después de que termine la animación de defensa)
+            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
             yield return StartCoroutine(ReducePlayerHPGradually(targetPlayerHp));
         }
     }
@@ -1402,12 +1412,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del jugador
+            // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetPlayerIdle();
             }
             
             // 3. Calcular daño
@@ -1415,23 +1423,30 @@ public class CombatManager : MonoBehaviour
                                        GetEnemyEffectiveDefense(), true);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
-            // 4. Mostrar texto de daño recibido por el enemigo (solo mostrar, sin esperar delay completo)
+            // 4. Volver a Idle (loop)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del enemigo (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el enemigo vuelva a Idle explícitamente
-                animationManager.SetEnemyIdle();
             }
             
-            // 6. Reducir HP del enemigo gradualmente (después de que termine la animación de defensa)
+            // 7. Enemigo vuelve a Idle y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
             yield return StartCoroutine(ReduceEnemyHPGradually(targetEnemyHp));
         }
         else
@@ -1443,12 +1458,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del enemigo
+            // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetEnemyIdle();
             }
             
             // 3. Calcular daño
@@ -1456,23 +1469,30 @@ public class CombatManager : MonoBehaviour
                                        GetPlayerEffectiveDefense(), false);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
-            // 4. Mostrar texto de daño recibido por el jugador (solo mostrar, sin esperar delay completo)
+            // 4. Enemigo vuelve a Idle
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del jugador (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el jugador vuelva a Idle explícitamente
-                animationManager.SetPlayerIdle();
             }
             
-            // 6. Reducir HP del jugador gradualmente (después de que termine la animación de defensa)
+            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
             yield return StartCoroutine(ReducePlayerHPGradually(targetPlayerHp));
         }
     }
@@ -1672,12 +1692,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del jugador
+            // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetPlayerIdle();
             }
             
             // 3. Calcular daño
@@ -1686,23 +1704,30 @@ public class CombatManager : MonoBehaviour
             int totalDamage = baseDamage * multiplier;
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - totalDamage);
             
-            // 4. Mostrar texto de daño recibido por el enemigo (solo mostrar, sin esperar delay completo)
+            // 4. Volver a Idle (loop)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, totalDamage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del enemigo (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el enemigo vuelva a Idle explícitamente
-                animationManager.SetEnemyIdle();
             }
             
-            // 6. Reducir HP del enemigo gradualmente (después de que termine la animación de defensa)
+            // 7. Enemigo vuelve a Idle y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
             yield return StartCoroutine(ReduceEnemyHPGradually(targetEnemyHp));
         }
         else
@@ -1714,12 +1739,10 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // 2. Reproducir animación de ataque del enemigo
+            // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
-                // Volver explícitamente a Idle después de que termine la animación de ataque
-                animationManager.SetEnemyIdle();
             }
             
             // 3. Calcular daño
@@ -1728,23 +1751,30 @@ public class CombatManager : MonoBehaviour
             int totalDamage = baseDamage * multiplier;
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - totalDamage);
             
-            // 4. Mostrar texto de daño recibido por el jugador (solo mostrar, sin esperar delay completo)
+            // 4. Enemigo vuelve a Idle
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 5. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, totalDamage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
-                // NO esperar delay aquí, el texto permanecerá visible durante la animación de defensa
             }
             
-            // 5. Reproducir animación de defensa del jugador (mientras el texto de daño está visible)
+            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
-                // Asegurar que el jugador vuelva a Idle explícitamente
-                animationManager.SetPlayerIdle();
             }
             
-            // 6. Reducir HP del jugador gradualmente (después de que termine la animación de defensa)
+            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
             yield return StartCoroutine(ReducePlayerHPGradually(targetPlayerHp));
         }
     }
@@ -2069,6 +2099,9 @@ public class CombatManager : MonoBehaviour
         {
             playerHpSlider.maxValue = playerMaxHp;
             playerHpSlider.value = playerCurrentHp;
+            
+            // Actualizar color del slider según porcentaje
+            UpdateSliderColor(playerHpSlider, playerCurrentHp, playerMaxHp);
         }
 
         if (playerHpText != null)
@@ -2130,6 +2163,9 @@ public class CombatManager : MonoBehaviour
         {
             enemyHpSlider.maxValue = enemyMaxHp;
             enemyHpSlider.value = enemyCurrentHp;
+            
+            // Actualizar color del slider según porcentaje
+            UpdateSliderColor(enemyHpSlider, enemyCurrentHp, enemyMaxHp);
         }
 
         if (enemyHpText != null)
@@ -2157,6 +2193,52 @@ public class CombatManager : MonoBehaviour
             roundText.text = $"Ronda {currentRound}";
         }
     }
+
+    /// <summary>
+    /// Actualiza el color del slider según el porcentaje de HP.
+    /// Verde: 100% a 65%
+    /// Amarillo: 65% a 35%
+    /// Rojo: 35% a 0%
+    /// </summary>
+    private void UpdateSliderColor(Slider slider, int currentHp, int maxHp)
+    {
+        if (slider == null || maxHp <= 0)
+            return;
+
+        float percent = (float)currentHp / maxHp * 100f;
+        
+        // Buscar el componente Image del fill del slider
+        Image fillImage = slider.fillRect?.GetComponent<Image>();
+        if (fillImage == null)
+        {
+            // Intentar buscar en los hijos
+            fillImage = slider.GetComponentInChildren<Image>();
+        }
+
+        if (fillImage != null)
+        {
+            Color targetColor;
+            
+            if (percent > 65f)
+            {
+                // Verde: 100% a 65%
+                targetColor = Color.green;
+            }
+            else if (percent > 35f)
+            {
+                // Amarillo: 65% a 35%
+                targetColor = Color.yellow;
+            }
+            else
+            {
+                // Rojo: 35% a 0%
+                targetColor = Color.red;
+            }
+            
+            fillImage.color = targetColor;
+        }
+    }
+
 
     /// <summary>
     /// Se llama cuando el jugador gana.

@@ -36,8 +36,8 @@ public class AnimationManager : MonoBehaviour
         [Tooltip("Configuración de animación KO")]
         public AnimationStateConfig ko;
         
-        [Tooltip("Sprite único para este enemigo (usado en todos los estados)")]
-        public Sprite enemySprite;
+        // NOTA: El sprite del enemigo ahora se toma directamente de EnemyData.enemySprite
+        // Ya no es necesario configurarlo aquí
     }
 
     public enum AnimationState
@@ -74,6 +74,7 @@ public class AnimationManager : MonoBehaviour
 
     // Estado actual
     private int currentEnemyIndex = -1;
+    private EnemyData currentEnemyData = null; // Referencia al EnemyData actual para obtener el sprite
     private Animator playerAnimator;
     private Animator enemyAnimator;
     private SpriteRenderer playerSpriteRenderer;
@@ -93,9 +94,11 @@ public class AnimationManager : MonoBehaviour
     /// Inicializa las animaciones para un combate específico.
     /// </summary>
     /// <param name="enemyIndex">Índice del enemigo en el array de enemyAnimationSets</param>
-    public void InitializeForCombat(int enemyIndex)
+    /// <param name="enemyData">Referencia al EnemyData para obtener el sprite del enemigo</param>
+    public void InitializeForCombat(int enemyIndex, EnemyData enemyData)
     {
         currentEnemyIndex = enemyIndex;
+        currentEnemyData = enemyData;
 
         // Inicializar jugador
         InitializePlayer();
@@ -177,10 +180,10 @@ public class AnimationManager : MonoBehaviour
                 enemySpriteRenderer = enemySet.idle.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
             }
 
-            // Asignar sprite del enemigo si está configurado
-            if (enemySet.enemySprite != null && enemySpriteRenderer != null)
+            // Asignar sprite del enemigo desde EnemyData
+            if (currentEnemyData != null && currentEnemyData.enemySprite != null && enemySpriteRenderer != null)
             {
-                enemySpriteRenderer.sprite = enemySet.enemySprite;
+                enemySpriteRenderer.sprite = currentEnemyData.enemySprite;
             }
         }
     }
@@ -335,8 +338,9 @@ public class AnimationManager : MonoBehaviour
         if (config == null || config.spriteRendererObject == null)
             return;
 
-        // Ocultar todos los paneles del jugador
-        HideAllPlayerPanels();
+        // Ocultar todos los paneles del jugador EXCEPTO el actual
+        // Esto evita ocultar el panel activo durante la transición
+        HideAllPlayerPanelsExcept(config.spriteRendererObject);
 
         // Mostrar el panel del estado actual
         ShowPanel(config.spriteRendererObject);
@@ -351,19 +355,14 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        // Asignar controller si está configurado
-        if (config.controller != null && playerAnimator != null)
+        // Asegurar que el Animator esté habilitado
+        if (playerAnimator != null)
         {
-            playerAnimator.runtimeAnimatorController = config.controller;
+            playerAnimator.enabled = true;
         }
 
-        // Reproducir clip si está configurado
-        if (config.clip != null && playerAnimator != null)
-        {
-            playerAnimator.Play(config.clip.name);
-        }
-
-        // Asignar sprite si está configurado
+        // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
+        // para evitar que sobrescriba los cambios de la animación
         if (playerSprite != null)
         {
             if (playerSpriteRenderer == null)
@@ -379,6 +378,22 @@ public class AnimationManager : MonoBehaviour
             {
                 playerSpriteRenderer.sprite = playerSprite;
             }
+        }
+
+        // Asignar controller si está configurado
+        if (config.controller != null && playerAnimator != null)
+        {
+            playerAnimator.runtimeAnimatorController = config.controller;
+        }
+
+        // Reproducir clip si está configurado
+        if (config.clip != null && playerAnimator != null)
+        {
+            // Si hay controller, intentar usar el nombre del clip como nombre de estado
+            // Si no hay controller, el Play() funcionará directamente con el clip
+            // Usar el nombre del clip como nombre de estado (debe coincidir con el estado en el controller)
+            // Parámetros: (nombre del estado/clip, capa, tiempo normalizado para reiniciar desde el inicio)
+            playerAnimator.Play(config.clip.name, 0, 0f);
         }
     }
 
@@ -397,8 +412,9 @@ public class AnimationManager : MonoBehaviour
         if (enemySet == null)
             return;
 
-        // Ocultar todos los paneles del enemigo
-        HideAllEnemyPanels(enemySet);
+        // Ocultar todos los paneles del enemigo EXCEPTO el actual
+        // Esto evita ocultar el panel activo durante la transición
+        HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
 
         // Mostrar el panel del estado actual
         ShowPanel(config.spriteRendererObject);
@@ -413,6 +429,31 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
+        // Asegurar que el Animator esté habilitado
+        if (enemyAnimator != null)
+        {
+            enemyAnimator.enabled = true;
+        }
+
+        // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
+        // para evitar que sobrescriba los cambios de la animación
+        // El sprite se toma directamente de EnemyData
+        // CRÍTICO: Buscar el SpriteRenderer específico del spriteRendererObject actual
+        // NO reutilizar enemySpriteRenderer global, cada estado tiene su propio SpriteRenderer
+        if (currentEnemyData != null && currentEnemyData.enemySprite != null)
+        {
+            SpriteRenderer currentStateSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
+            if (currentStateSpriteRenderer == null)
+            {
+                currentStateSpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (currentStateSpriteRenderer != null)
+            {
+                currentStateSpriteRenderer.sprite = currentEnemyData.enemySprite;
+            }
+        }
+
         // Asignar controller si está configurado
         if (config.controller != null && enemyAnimator != null)
         {
@@ -422,25 +463,11 @@ public class AnimationManager : MonoBehaviour
         // Reproducir clip si está configurado
         if (config.clip != null && enemyAnimator != null)
         {
-            enemyAnimator.Play(config.clip.name);
-        }
-
-        // Asignar sprite del enemigo si está configurado
-        if (enemySet.enemySprite != null)
-        {
-            if (enemySpriteRenderer == null)
-            {
-                enemySpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
-                if (enemySpriteRenderer == null)
-                {
-                    enemySpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
-                }
-            }
-
-            if (enemySpriteRenderer != null)
-            {
-                enemySpriteRenderer.sprite = enemySet.enemySprite;
-            }
+            // Si hay controller, intentar usar el nombre del clip como nombre de estado
+            // Si no hay controller, el Play() funcionará directamente con el clip
+            // Usar el nombre del clip como nombre de estado (debe coincidir con el estado en el controller)
+            // Parámetros: (nombre del estado/clip, capa, tiempo normalizado para reiniciar desde el inicio)
+            enemyAnimator.Play(config.clip.name, 0, 0f);
         }
     }
 
@@ -463,6 +490,25 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Oculta todos los paneles del jugador EXCEPTO el especificado (Alpha = 0).
+    /// Esto evita ocultar el panel activo durante las transiciones.
+    /// </summary>
+    private void HideAllPlayerPanelsExcept(GameObject exceptPanel)
+    {
+        if (playerIdle != null && playerIdle.spriteRendererObject != null && playerIdle.spriteRendererObject != exceptPanel)
+            HidePanel(playerIdle.spriteRendererObject);
+        
+        if (playerAttack != null && playerAttack.spriteRendererObject != null && playerAttack.spriteRendererObject != exceptPanel)
+            HidePanel(playerAttack.spriteRendererObject);
+        
+        if (playerDefense != null && playerDefense.spriteRendererObject != null && playerDefense.spriteRendererObject != exceptPanel)
+            HidePanel(playerDefense.spriteRendererObject);
+        
+        if (playerKO != null && playerKO.spriteRendererObject != null && playerKO.spriteRendererObject != exceptPanel)
+            HidePanel(playerKO.spriteRendererObject);
+    }
+
+    /// <summary>
     /// Oculta todos los paneles del enemigo (Alpha = 0).
     /// </summary>
     private void HideAllEnemyPanels(EnemyAnimationSet enemySet)
@@ -480,6 +526,28 @@ public class AnimationManager : MonoBehaviour
             HidePanel(enemySet.defense.spriteRendererObject);
         
         if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
+            HidePanel(enemySet.ko.spriteRendererObject);
+    }
+
+    /// <summary>
+    /// Oculta todos los paneles del enemigo EXCEPTO el especificado (Alpha = 0).
+    /// Esto evita ocultar el panel activo durante las transiciones.
+    /// </summary>
+    private void HideAllEnemyPanelsExcept(EnemyAnimationSet enemySet, GameObject exceptPanel)
+    {
+        if (enemySet == null)
+            return;
+
+        if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null && enemySet.idle.spriteRendererObject != exceptPanel)
+            HidePanel(enemySet.idle.spriteRendererObject);
+        
+        if (enemySet.attack != null && enemySet.attack.spriteRendererObject != null && enemySet.attack.spriteRendererObject != exceptPanel)
+            HidePanel(enemySet.attack.spriteRendererObject);
+        
+        if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null && enemySet.defense.spriteRendererObject != exceptPanel)
+            HidePanel(enemySet.defense.spriteRendererObject);
+        
+        if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null && enemySet.ko.spriteRendererObject != exceptPanel)
             HidePanel(enemySet.ko.spriteRendererObject);
     }
 
@@ -508,11 +576,18 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Muestra un panel (Alpha = 255/1).
     /// Funciona tanto con SpriteRenderer como con Image (UI).
+    /// Asegura que el GameObject esté activo para que las animaciones se reproduzcan.
     /// </summary>
     private void ShowPanel(GameObject panelObject)
     {
         if (panelObject == null)
             return;
+
+        // Asegurar que el GameObject esté activo
+        if (!panelObject.activeSelf)
+        {
+            panelObject.SetActive(true);
+        }
 
         SetPanelAlpha(panelObject, 1f);
     }
