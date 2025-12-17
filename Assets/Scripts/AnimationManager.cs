@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Gestiona las animaciones del jugador y enemigo durante el combate.
-/// Maneja los estados: Idle, Attack, Defense, KO.
+/// Maneja los estados: Idle, Attack, Defense, Damage, KO.
 /// </summary>
 public class AnimationManager : MonoBehaviour
 {
@@ -33,6 +33,9 @@ public class AnimationManager : MonoBehaviour
         [Tooltip("Configuración de animación Defense")]
         public AnimationStateConfig defense;
         
+        [Tooltip("Configuración de animación Damage (para visualizar daño recibido)")]
+        public AnimationStateConfig damage;
+        
         [Tooltip("Configuración de animación KO")]
         public AnimationStateConfig ko;
         
@@ -45,6 +48,7 @@ public class AnimationManager : MonoBehaviour
         Idle,
         Attack,
         Defense,
+        Damage,
         KO
     }
 
@@ -57,6 +61,9 @@ public class AnimationManager : MonoBehaviour
     
     [Tooltip("Configuración de animación Defense del jugador")]
     [SerializeField] private AnimationStateConfig playerDefense;
+    
+    [Tooltip("Configuración de animación Damage del jugador (para visualizar daño recibido)")]
+    [SerializeField] private AnimationStateConfig playerDamage;
     
     [Tooltip("Configuración de animación KO del jugador")]
     [SerializeField] private AnimationStateConfig playerKO;
@@ -83,11 +90,67 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Se ejecuta al inicializar el componente.
     /// Oculta todas las animaciones por defecto hasta que el panel de combate se abra.
+    /// CRÍTICO: Deshabilita Animators problemáticos ANTES de ocultar paneles para evitar reproducción automática.
     /// </summary>
     private void Awake()
     {
-        // Ocultar todas las animaciones al inicio
+        // PASO 1: Deshabilitar TODOS los Animators problemáticos PRIMERO
+        // Esto previene que se reproduzcan automáticamente y muestren los paneles
+        DisableAllProblematicAnimators();
+        
+        // PASO 2: Ocultar todas las animaciones (Alpha = 0)
+        // Esto sobrescribe cualquier valor del Inspector
         HideAllAnimations();
+    }
+
+    /// <summary>
+    /// Deshabilita TODOS los Animators de Defense, Damage y KO (jugador y todos los enemigos).
+    /// Se usa en Awake() para prevenir reproducción automática al inicio del juego.
+    /// </summary>
+    private void DisableAllProblematicAnimators()
+    {
+        // Jugador: Defense, Damage, KO
+        if (playerDefense != null && playerDefense.spriteRendererObject != null)
+        {
+            Animator animator = playerDefense.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+        if (playerDamage != null && playerDamage.spriteRendererObject != null)
+        {
+            Animator animator = playerDamage.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+        if (playerKO != null && playerKO.spriteRendererObject != null)
+        {
+            Animator animator = playerKO.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+
+        // Enemigos: Defense, Damage, KO (para TODOS los enemigos, no solo el actual)
+        if (enemyAnimationSets != null)
+        {
+            foreach (EnemyAnimationSet enemySet in enemyAnimationSets)
+            {
+                if (enemySet != null)
+                {
+                    if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
+                    {
+                        Animator animator = enemySet.defense.spriteRendererObject.GetComponent<Animator>();
+                        if (animator != null) animator.enabled = false;
+                    }
+                    if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
+                    {
+                        Animator animator = enemySet.damage.spriteRendererObject.GetComponent<Animator>();
+                        if (animator != null) animator.enabled = false;
+                    }
+                    if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
+                    {
+                        Animator animator = enemySet.ko.spriteRendererObject.GetComponent<Animator>();
+                        if (animator != null) animator.enabled = false;
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -100,25 +163,83 @@ public class AnimationManager : MonoBehaviour
         currentEnemyIndex = enemyIndex;
         currentEnemyData = enemyData;
 
-        // Inicializar jugador
-        InitializePlayer();
+        // PASO 1: Ocultar TODOS los paneles primero (Alpha = 0)
+        HideAllPlayerPanels();
+        if (enemyIndex >= 0 && enemyIndex < enemyAnimationSets.Length)
+        {
+            EnemyAnimationSet enemySet = enemyAnimationSets[enemyIndex];
+            if (enemySet != null)
+            {
+                HideAllEnemyPanels(enemySet);
+            }
+        }
 
-        // Inicializar enemigo
+        // PASO 2: Deshabilitar Animators de Defense, Damage y KO ANTES de cualquier configuración
+        // Esto previene que se reproduzcan automáticamente
+        DisableProblematicAnimators();
+
+        // PASO 3: Inicializar componentes (sprite, animators básicos)
+        InitializePlayer();
         InitializeEnemy(enemyIndex);
 
-        // Establecer estado inicial Idle
+        // PASO 4: Mostrar solo Idle (Alpha = 1)
         SetPlayerIdle();
         SetEnemyIdle();
     }
 
     /// <summary>
-    /// Inicializa los componentes del jugador.
+    /// Deshabilita los Animators de Defense, Damage y KO para evitar reproducción automática.
+    /// </summary>
+    private void DisableProblematicAnimators()
+    {
+        // Jugador: Defense, Damage, KO
+        if (playerDefense != null && playerDefense.spriteRendererObject != null)
+        {
+            Animator animator = playerDefense.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+        if (playerDamage != null && playerDamage.spriteRendererObject != null)
+        {
+            Animator animator = playerDamage.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+        if (playerKO != null && playerKO.spriteRendererObject != null)
+        {
+            Animator animator = playerKO.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
+
+        // Enemigo: Defense, Damage, KO
+        if (currentEnemyIndex >= 0 && currentEnemyIndex < enemyAnimationSets.Length)
+        {
+            EnemyAnimationSet enemySet = enemyAnimationSets[currentEnemyIndex];
+            if (enemySet != null)
+            {
+                if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
+                {
+                    Animator animator = enemySet.defense.spriteRendererObject.GetComponent<Animator>();
+                    if (animator != null) animator.enabled = false;
+                }
+                if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
+                {
+                    Animator animator = enemySet.damage.spriteRendererObject.GetComponent<Animator>();
+                    if (animator != null) animator.enabled = false;
+                }
+                if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
+                {
+                    Animator animator = enemySet.ko.spriteRendererObject.GetComponent<Animator>();
+                    if (animator != null) animator.enabled = false;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Inicializa los componentes del jugador (sprite, animators básicos).
+    /// NOTA: Los paneles ya están ocultos y los Animators problemáticos ya están deshabilitados.
     /// </summary>
     private void InitializePlayer()
     {
-        // Ocultar todos los paneles del jugador primero
-        HideAllPlayerPanels();
-
         // Buscar o crear Animator del jugador
         if (playerIdle != null && playerIdle.spriteRendererObject != null)
         {
@@ -144,7 +265,8 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Inicializa los componentes del enemigo.
+    /// Inicializa los componentes del enemigo (sprite, animators básicos).
+    /// NOTA: Los paneles ya están ocultos y los Animators problemáticos ya están deshabilitados.
     /// </summary>
     private void InitializeEnemy(int enemyIndex)
     {
@@ -160,9 +282,6 @@ public class AnimationManager : MonoBehaviour
             Debug.LogWarning($"AnimationManager: No hay configuración de animación para el enemigo en el índice {enemyIndex}");
             return;
         }
-
-        // Ocultar todos los paneles del enemigo primero
-        HideAllEnemyPanels(enemySet);
 
         // Buscar o crear Animator del enemigo
         if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null)
@@ -190,6 +309,7 @@ public class AnimationManager : MonoBehaviour
 
     /// <summary>
     /// Reproduce una animación del jugador y espera a que termine.
+    /// Verifica que la animación haya terminado realmente antes de continuar.
     /// </summary>
     public IEnumerator PlayPlayerAnimation(AnimationState state)
     {
@@ -201,23 +321,46 @@ public class AnimationManager : MonoBehaviour
             yield break;
         }
 
-        // Aplicar configuración
-        ApplyPlayerConfig(config);
-
-        // Esperar duración fija
-        yield return new WaitForSeconds(animationDuration);
-
-        // NO volver automáticamente a Idle para animaciones de ataque
-        // El CombatManager se encargará de volver a Idle explícitamente después de la animación de ataque
-        // Solo volver a Idle automáticamente para animaciones de defensa
-        if (state != AnimationState.KO && state != AnimationState.Attack)
+        // 1. Ocultar Idle antes de mostrar la animación
+        if (playerIdle != null && playerIdle.spriteRendererObject != null)
         {
+            SetPanelAlpha(playerIdle.spriteRendererObject, 0f);
+        }
+        
+        // 2. Aplicar configuración (esto inicia la animación y la muestra)
+        yield return StartCoroutine(ApplyPlayerConfig(config));
+
+        // 3. Calcular duración a esperar (usando duración real del clip con límites)
+        float durationToWait = GetAnimationDuration(config);
+        
+        // 4. Esperar la duración completa de la animación
+        yield return new WaitForSeconds(durationToWait);
+        
+        // 5. Ocultar la animación actual y volver a Idle (excepto KO que se queda visible)
+        if (state != AnimationState.KO)
+        {
+            // Ocultar la animación actual
+            SetPanelAlpha(config.spriteRendererObject, 0f);
+            
+            // Si era Defense, deshabilitar el Animator para evitar reproducción automática
+            if (state == AnimationState.Defense && playerDefense != null && playerDefense.spriteRendererObject != null)
+            {
+                Animator defenseAnimator = playerDefense.spriteRendererObject.GetComponent<Animator>();
+                if (defenseAnimator != null)
+                {
+                    defenseAnimator.enabled = false;
+                }
+            }
+            
+            // Volver a mostrar Idle
             SetPlayerIdle();
         }
+        // Para KO: el panel se queda visible, no se oculta ni se vuelve a Idle
     }
 
     /// <summary>
     /// Reproduce una animación del enemigo y espera a que termine.
+    /// Verifica que la animación haya terminado realmente antes de continuar.
     /// </summary>
     public IEnumerator PlayEnemyAnimation(AnimationState state)
     {
@@ -244,35 +387,68 @@ public class AnimationManager : MonoBehaviour
             yield break;
         }
 
-        // Aplicar configuración
-        ApplyEnemyConfig(config);
-
-        // Esperar duración fija
-        yield return new WaitForSeconds(animationDuration);
-
-        // NO volver automáticamente a Idle para animaciones de ataque
-        // El CombatManager se encargará de volver a Idle explícitamente después de la animación de ataque
-        // Solo volver a Idle automáticamente para animaciones de defensa
-        if (state != AnimationState.KO && state != AnimationState.Attack)
+        // 1. Ocultar Idle antes de mostrar la animación
+        if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null)
         {
+            SetPanelAlpha(enemySet.idle.spriteRendererObject, 0f);
+        }
+        
+        // 2. Aplicar configuración (esto inicia la animación y la muestra)
+        yield return StartCoroutine(ApplyEnemyConfig(config));
+
+        // 3. Calcular duración a esperar (usando duración real del clip con límites)
+        float durationToWait = GetAnimationDuration(config);
+        
+        // 4. Esperar la duración completa de la animación
+        yield return new WaitForSeconds(durationToWait);
+        
+        // 5. Ocultar la animación actual y volver a Idle (excepto KO que se queda visible)
+        if (state != AnimationState.KO)
+        {
+            // Ocultar la animación actual
+            SetPanelAlpha(config.spriteRendererObject, 0f);
+            
+            // Si era Defense, deshabilitar el Animator para evitar reproducción automática
+            if (state == AnimationState.Defense && enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
+            {
+                Animator defenseAnimator = enemySet.defense.spriteRendererObject.GetComponent<Animator>();
+                if (defenseAnimator != null)
+                {
+                    defenseAnimator.enabled = false;
+                }
+            }
+            
+            // Volver a mostrar Idle
             SetEnemyIdle();
         }
+        // Para KO: el panel se queda visible, no se oculta ni se vuelve a Idle
     }
 
     /// <summary>
     /// Establece el estado Idle del jugador.
+    /// Muestra Idle (Alpha = 1) y oculta todas las demás animaciones (Alpha = 0).
+    /// NO reproduce la animación, solo muestra el panel.
     /// </summary>
     public void SetPlayerIdle()
     {
         AnimationStateConfig config = GetPlayerConfig(AnimationState.Idle);
-        if (config != null)
-        {
-            ApplyPlayerConfig(config);
-        }
+        if (config == null || config.spriteRendererObject == null)
+            return;
+        
+        // Ocultar todas las demás animaciones
+        HideAllPlayerPanelsExcept(config.spriteRendererObject);
+        
+        // Mostrar Idle
+        SetPanelAlpha(config.spriteRendererObject, 1f);
+        
+        // Configurar el Animator para Idle SIN reproducir la animación
+        ShowPlayerPanelWithoutPlaying(config);
     }
 
     /// <summary>
     /// Establece el estado Idle del enemigo.
+    /// Muestra Idle (Alpha = 1) y oculta todas las demás animaciones (Alpha = 0).
+    /// NO reproduce la animación, solo muestra el panel.
     /// </summary>
     public void SetEnemyIdle()
     {
@@ -284,10 +460,47 @@ public class AnimationManager : MonoBehaviour
             return;
 
         AnimationStateConfig config = GetEnemyConfig(enemySet, AnimationState.Idle);
-        if (config != null)
+        if (config == null || config.spriteRendererObject == null)
+            return;
+        
+        // Ocultar todas las demás animaciones
+        HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
+        
+        // Mostrar Idle
+        SetPanelAlpha(config.spriteRendererObject, 1f);
+        
+        // Configurar el Animator para Idle SIN reproducir la animación
+        ShowEnemyPanelWithoutPlaying(config);
+    }
+
+    /// <summary>
+    /// Calcula la duración de una animación basándose en el clip real con límites razonables.
+    /// </summary>
+    /// <param name="config">Configuración de la animación</param>
+    /// <returns>Duración en segundos (limitada entre 0.5s y 3s, o el valor fijo si no hay clip)</returns>
+    private float GetAnimationDuration(AnimationStateConfig config)
+    {
+        if (config == null || config.clip == null)
         {
-            ApplyEnemyConfig(config);
+            return animationDuration; // Fallback al valor fijo si no hay clip configurado
         }
+        
+        float clipLength = config.clip.length;
+        
+        // Si el clip es muy corto (menos de 0.5s), usar mínimo 0.5s para feedback visual adecuado
+        if (clipLength < 0.5f)
+        {
+            return 0.5f;
+        }
+        
+        // Si el clip es muy largo (más de 3s), limitar a 3s para mantener ritmo del combate
+        if (clipLength > 3f)
+        {
+            return 3f;
+        }
+        
+        // Usar duración real del clip
+        return clipLength;
     }
 
     /// <summary>
@@ -303,6 +516,8 @@ public class AnimationManager : MonoBehaviour
                 return playerAttack;
             case AnimationState.Defense:
                 return playerDefense;
+            case AnimationState.Damage:
+                return playerDamage;
             case AnimationState.KO:
                 return playerKO;
             default:
@@ -323,6 +538,8 @@ public class AnimationManager : MonoBehaviour
                 return enemySet.attack;
             case AnimationState.Defense:
                 return enemySet.defense;
+            case AnimationState.Damage:
+                return enemySet.damage;
             case AnimationState.KO:
                 return enemySet.ko;
             default:
@@ -333,32 +550,33 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Aplica la configuración de animación al jugador.
     /// </summary>
-    private void ApplyPlayerConfig(AnimationStateConfig config)
+    private IEnumerator ApplyPlayerConfig(AnimationStateConfig config)
     {
         if (config == null || config.spriteRendererObject == null)
-            return;
+            yield break;
 
         // Ocultar todos los paneles del jugador EXCEPTO el actual
-        // Esto evita ocultar el panel activo durante la transición
         HideAllPlayerPanelsExcept(config.spriteRendererObject);
 
-        // Mostrar el panel del estado actual
-        ShowPanel(config.spriteRendererObject);
-
-        // Asegurar que tenemos el Animator
-        if (playerAnimator == null)
+        // Mostrar el panel del estado actual (Alpha = 1)
+        if (!config.spriteRendererObject.activeSelf)
         {
-            playerAnimator = config.spriteRendererObject.GetComponent<Animator>();
-            if (playerAnimator == null)
-            {
-                playerAnimator = config.spriteRendererObject.AddComponent<Animator>();
-            }
+            config.spriteRendererObject.SetActive(true);
+        }
+        SetPanelAlpha(config.spriteRendererObject, 1f);
+
+        // CRÍTICO: Obtener el Animator del GameObject del estado ACTUAL, no reutilizar uno global
+        // Cada estado puede tener su propio Animator en su propio GameObject
+        Animator currentAnimator = config.spriteRendererObject.GetComponent<Animator>();
+        if (currentAnimator == null)
+        {
+            currentAnimator = config.spriteRendererObject.AddComponent<Animator>();
         }
 
         // Asegurar que el Animator esté habilitado
-        if (playerAnimator != null)
+        if (currentAnimator != null)
         {
-            playerAnimator.enabled = true;
+            currentAnimator.enabled = true;
         }
 
         // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
@@ -380,59 +598,138 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        // Asignar controller si está configurado
-        if (config.controller != null && playerAnimator != null)
-        {
-            playerAnimator.runtimeAnimatorController = config.controller;
-        }
+        // NOTA: El controller se asigna ahora justo antes de Play() para asegurar que esté configurado correctamente
 
         // Reproducir clip si está configurado
-        if (config.clip != null && playerAnimator != null)
+        // CRÍTICO: Siempre forzar la reproducción desde el inicio (0f) para asegurar que se reproduce
+        // No verificar si ya está en el estado porque puede causar que no se reproduzca
+        if (config.clip != null && currentAnimator != null)
         {
-            // Si hay controller, intentar usar el nombre del clip como nombre de estado
-            // Si no hay controller, el Play() funcionará directamente con el clip
-            // Usar el nombre del clip como nombre de estado (debe coincidir con el estado en el controller)
+            // Asegurar que el Animator esté habilitado y listo
+            if (!currentAnimator.enabled)
+            {
+                currentAnimator.enabled = true;
+            }
+            
+            // Asignar controller si está configurado Y es diferente al actual
+            // Esto debe hacerse ANTES de Play() para asegurar que el Animator tenga el controller correcto
+            if (config.controller != null)
+            {
+                if (currentAnimator.runtimeAnimatorController != config.controller)
+                {
+                    // CRÍTICO: Deshabilitar el Animator antes de cambiar el controller para evitar reproducción automática
+                    currentAnimator.enabled = false;
+                    currentAnimator.runtimeAnimatorController = config.controller;
+                    currentAnimator.enabled = true;
+                }
+            }
+            
+            // CRÍTICO: Esperar un frame antes de Play() para asegurar que el controller esté completamente cargado
+            yield return null;
+            
+            // CRÍTICO: Verificar nuevamente que el Animator esté habilitado justo antes de Play()
+            // Esto es especialmente importante para Damage que puede haber sido deshabilitado en la inicialización
+            if (!currentAnimator.enabled)
+            {
+                currentAnimator.enabled = true;
+            }
+            
+            // Forzar la reproducción desde el inicio (0f) para asegurar que se reproduce completamente
             // Parámetros: (nombre del estado/clip, capa, tiempo normalizado para reiniciar desde el inicio)
-            playerAnimator.Play(config.clip.name, 0, 0f);
+            currentAnimator.Play(config.clip.name, 0, 0f);
+            
+            // Forzar actualización inmediata del Animator para asegurar que la animación comience
+            currentAnimator.Update(0f);
         }
+    }
+
+    /// <summary>
+    /// Muestra el panel del jugador y configura el Animator SIN reproducir la animación.
+    /// Usado para Idle cuando solo queremos mostrar el panel sin reproducir.
+    /// </summary>
+    private void ShowPlayerPanelWithoutPlaying(AnimationStateConfig config)
+    {
+        if (config == null || config.spriteRendererObject == null)
+            return;
+
+        // Obtener el Animator del GameObject del estado actual
+        Animator currentAnimator = config.spriteRendererObject.GetComponent<Animator>();
+        if (currentAnimator == null)
+        {
+            currentAnimator = config.spriteRendererObject.AddComponent<Animator>();
+        }
+
+        // Asegurar que el Animator esté habilitado
+        if (currentAnimator != null)
+        {
+            currentAnimator.enabled = true;
+        }
+
+        // Asignar sprite si está configurado
+        if (playerSprite != null)
+        {
+            SpriteRenderer currentSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
+            if (currentSpriteRenderer == null)
+            {
+                currentSpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (currentSpriteRenderer != null)
+            {
+                currentSpriteRenderer.sprite = playerSprite;
+            }
+        }
+
+        // Asignar controller si está configurado (pero NO reproducir la animación)
+        if (config.controller != null && currentAnimator != null)
+        {
+            if (currentAnimator.runtimeAnimatorController != config.controller)
+            {
+                currentAnimator.runtimeAnimatorController = config.controller;
+            }
+        }
+
+        // NO reproducir el clip aquí - solo configurar el Animator
+        // La animación de Idle debe estar en loop en el Animator Controller
     }
 
     /// <summary>
     /// Aplica la configuración de animación al enemigo.
     /// </summary>
-    private void ApplyEnemyConfig(AnimationStateConfig config)
+    private IEnumerator ApplyEnemyConfig(AnimationStateConfig config)
     {
         if (config == null || config.spriteRendererObject == null)
-            return;
+            yield break;
 
         if (currentEnemyIndex < 0 || currentEnemyIndex >= enemyAnimationSets.Length)
-            return;
+            yield break;
 
         EnemyAnimationSet enemySet = enemyAnimationSets[currentEnemyIndex];
         if (enemySet == null)
-            return;
+            yield break;
 
         // Ocultar todos los paneles del enemigo EXCEPTO el actual
-        // Esto evita ocultar el panel activo durante la transición
         HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
 
-        // Mostrar el panel del estado actual
-        ShowPanel(config.spriteRendererObject);
-
-        // Asegurar que tenemos el Animator
-        if (enemyAnimator == null)
+        // Mostrar el panel del estado actual (Alpha = 1)
+        if (!config.spriteRendererObject.activeSelf)
         {
-            enemyAnimator = config.spriteRendererObject.GetComponent<Animator>();
-            if (enemyAnimator == null)
-            {
-                enemyAnimator = config.spriteRendererObject.AddComponent<Animator>();
-            }
+            config.spriteRendererObject.SetActive(true);
+        }
+        SetPanelAlpha(config.spriteRendererObject, 1f);
+
+        // CRÍTICO: Obtener el Animator del GameObject del estado ACTUAL, no reutilizar uno global
+        // Cada estado puede tener su propio Animator en su propio GameObject
+        Animator currentEnemyAnimator = config.spriteRendererObject.GetComponent<Animator>();
+        if (currentEnemyAnimator == null)
+        {
+            currentEnemyAnimator = config.spriteRendererObject.AddComponent<Animator>();
         }
 
         // Asegurar que el Animator esté habilitado
-        if (enemyAnimator != null)
+        if (currentEnemyAnimator != null)
         {
-            enemyAnimator.enabled = true;
+            currentEnemyAnimator.enabled = true;
         }
 
         // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
@@ -454,21 +751,100 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        // Asignar controller si está configurado
-        if (config.controller != null && enemyAnimator != null)
+        // Reproducir clip si está configurado
+        // CRÍTICO: Siempre forzar la reproducción desde el inicio (0f) para asegurar que se reproduce
+        // No verificar si ya está en el estado porque puede causar que no se reproduzca
+        if (config.clip != null && currentEnemyAnimator != null)
         {
-            enemyAnimator.runtimeAnimatorController = config.controller;
+            // Asegurar que el Animator esté habilitado y listo
+            if (!currentEnemyAnimator.enabled)
+            {
+                currentEnemyAnimator.enabled = true;
+            }
+            
+            // Asignar controller si está configurado Y es diferente al actual
+            // Esto debe hacerse ANTES de Play() para asegurar que el Animator tenga el controller correcto
+            if (config.controller != null)
+            {
+                if (currentEnemyAnimator.runtimeAnimatorController != config.controller)
+                {
+                    // CRÍTICO: Deshabilitar el Animator antes de cambiar el controller para evitar reproducción automática
+                    currentEnemyAnimator.enabled = false;
+                    currentEnemyAnimator.runtimeAnimatorController = config.controller;
+                    currentEnemyAnimator.enabled = true;
+                }
+            }
+            
+            // CRÍTICO: Esperar un frame antes de Play() para asegurar que el controller esté completamente cargado
+            yield return null;
+            
+            // CRÍTICO: Verificar nuevamente que el Animator esté habilitado justo antes de Play()
+            // Esto es especialmente importante para Damage que puede haber sido deshabilitado en la inicialización
+            if (!currentEnemyAnimator.enabled)
+            {
+                currentEnemyAnimator.enabled = true;
+            }
+            
+            // Forzar la reproducción desde el inicio (0f) para asegurar que se reproduce completamente
+            // Parámetros: (nombre del estado/clip, capa, tiempo normalizado para reiniciar desde el inicio)
+            currentEnemyAnimator.Play(config.clip.name, 0, 0f);
+            
+            // Forzar actualización inmediata del Animator para asegurar que la animación comience
+            currentEnemyAnimator.Update(0f);
+        }
+    }
+
+    /// <summary>
+    /// Muestra el panel del enemigo y configura el Animator SIN reproducir la animación.
+    /// Usado para Idle cuando solo queremos mostrar el panel sin reproducir.
+    /// </summary>
+    private void ShowEnemyPanelWithoutPlaying(AnimationStateConfig config)
+    {
+        if (config == null || config.spriteRendererObject == null)
+            return;
+
+        if (currentEnemyIndex < 0 || currentEnemyIndex >= enemyAnimationSets.Length)
+            return;
+
+        // Obtener el Animator del GameObject del estado actual
+        Animator currentEnemyAnimator = config.spriteRendererObject.GetComponent<Animator>();
+        if (currentEnemyAnimator == null)
+        {
+            currentEnemyAnimator = config.spriteRendererObject.AddComponent<Animator>();
         }
 
-        // Reproducir clip si está configurado
-        if (config.clip != null && enemyAnimator != null)
+        // Asegurar que el Animator esté habilitado
+        if (currentEnemyAnimator != null)
         {
-            // Si hay controller, intentar usar el nombre del clip como nombre de estado
-            // Si no hay controller, el Play() funcionará directamente con el clip
-            // Usar el nombre del clip como nombre de estado (debe coincidir con el estado en el controller)
-            // Parámetros: (nombre del estado/clip, capa, tiempo normalizado para reiniciar desde el inicio)
-            enemyAnimator.Play(config.clip.name, 0, 0f);
+            currentEnemyAnimator.enabled = true;
         }
+
+        // Asignar sprite del enemigo desde EnemyData
+        if (currentEnemyData != null && currentEnemyData.enemySprite != null)
+        {
+            SpriteRenderer currentStateSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
+            if (currentStateSpriteRenderer == null)
+            {
+                currentStateSpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (currentStateSpriteRenderer != null)
+            {
+                currentStateSpriteRenderer.sprite = currentEnemyData.enemySprite;
+            }
+        }
+
+        // Asignar controller si está configurado (pero NO reproducir la animación)
+        if (config.controller != null && currentEnemyAnimator != null)
+        {
+            if (currentEnemyAnimator.runtimeAnimatorController != config.controller)
+            {
+                currentEnemyAnimator.runtimeAnimatorController = config.controller;
+            }
+        }
+
+        // NO reproducir el clip aquí - solo configurar el Animator
+        // La animación de Idle debe estar en loop en el Animator Controller
     }
 
     /// <summary>
@@ -484,6 +860,9 @@ public class AnimationManager : MonoBehaviour
         
         if (playerDefense != null && playerDefense.spriteRendererObject != null)
             HidePanel(playerDefense.spriteRendererObject);
+        
+        if (playerDamage != null && playerDamage.spriteRendererObject != null)
+            HidePanel(playerDamage.spriteRendererObject);
         
         if (playerKO != null && playerKO.spriteRendererObject != null)
             HidePanel(playerKO.spriteRendererObject);
@@ -503,6 +882,9 @@ public class AnimationManager : MonoBehaviour
         
         if (playerDefense != null && playerDefense.spriteRendererObject != null && playerDefense.spriteRendererObject != exceptPanel)
             HidePanel(playerDefense.spriteRendererObject);
+        
+        if (playerDamage != null && playerDamage.spriteRendererObject != null && playerDamage.spriteRendererObject != exceptPanel)
+            HidePanel(playerDamage.spriteRendererObject);
         
         if (playerKO != null && playerKO.spriteRendererObject != null && playerKO.spriteRendererObject != exceptPanel)
             HidePanel(playerKO.spriteRendererObject);
@@ -524,6 +906,9 @@ public class AnimationManager : MonoBehaviour
         
         if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
             HidePanel(enemySet.defense.spriteRendererObject);
+        
+        if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
+            HidePanel(enemySet.damage.spriteRendererObject);
         
         if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
             HidePanel(enemySet.ko.spriteRendererObject);
@@ -547,18 +932,37 @@ public class AnimationManager : MonoBehaviour
         if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null && enemySet.defense.spriteRendererObject != exceptPanel)
             HidePanel(enemySet.defense.spriteRendererObject);
         
+        if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null && enemySet.damage.spriteRendererObject != exceptPanel)
+            HidePanel(enemySet.damage.spriteRendererObject);
+        
         if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null && enemySet.ko.spriteRendererObject != exceptPanel)
             HidePanel(enemySet.ko.spriteRendererObject);
     }
 
     /// <summary>
     /// Oculta todas las animaciones (jugador y enemigos).
-    /// Se llama cuando se cierra el panel de combate.
+    /// Se llama cuando se cierra el panel de combate o al inicio del juego.
+    /// CRÍTICO: Establece explícitamente Alpha = 0 para todos los paneles, sobrescribiendo valores del Inspector.
     /// </summary>
     public void HideAllAnimations()
     {
         // Ocultar todas las animaciones del jugador
         HideAllPlayerPanels();
+        
+        // CRÍTICO: Asegurar explícitamente que Defense, Damage y KO estén en Alpha = 0
+        // Esto sobrescribe cualquier valor del Inspector
+        if (playerDefense != null && playerDefense.spriteRendererObject != null)
+        {
+            SetPanelAlpha(playerDefense.spriteRendererObject, 0f);
+        }
+        if (playerDamage != null && playerDamage.spriteRendererObject != null)
+        {
+            SetPanelAlpha(playerDamage.spriteRendererObject, 0f);
+        }
+        if (playerKO != null && playerKO.spriteRendererObject != null)
+        {
+            SetPanelAlpha(playerKO.spriteRendererObject, 0f);
+        }
 
         // Ocultar todas las animaciones de todos los enemigos
         if (enemyAnimationSets != null)
@@ -568,13 +972,27 @@ public class AnimationManager : MonoBehaviour
                 if (enemySet != null)
                 {
                     HideAllEnemyPanels(enemySet);
+                    
+                    // CRÍTICO: Asegurar explícitamente que Defense, Damage y KO estén en Alpha = 0
+                    if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
+                    {
+                        SetPanelAlpha(enemySet.defense.spriteRendererObject, 0f);
+                    }
+                    if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
+                    {
+                        SetPanelAlpha(enemySet.damage.spriteRendererObject, 0f);
+                    }
+                    if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
+                    {
+                        SetPanelAlpha(enemySet.ko.spriteRendererObject, 0f);
+                    }
                 }
             }
         }
     }
 
     /// <summary>
-    /// Muestra un panel (Alpha = 255/1).
+    /// Muestra un panel (Alpha = 1).
     /// Funciona tanto con SpriteRenderer como con Image (UI).
     /// Asegura que el GameObject esté activo para que las animaciones se reproduzcan.
     /// </summary>
@@ -589,6 +1007,7 @@ public class AnimationManager : MonoBehaviour
             panelObject.SetActive(true);
         }
 
+        // Establecer alpha = 1
         SetPanelAlpha(panelObject, 1f);
     }
 
@@ -607,57 +1026,35 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Establece el Alpha de un panel (0 = invisible, 1 = visible).
     /// Funciona tanto con SpriteRenderer como con Image (UI).
+    /// CRÍTICO: Actualiza TODOS los componentes SpriteRenderer e Image, no solo el primero.
     /// </summary>
     private void SetPanelAlpha(GameObject panelObject, float alpha)
     {
         if (panelObject == null)
             return;
 
-        // Intentar con SpriteRenderer primero
-        SpriteRenderer spriteRenderer = panelObject.GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = panelObject.GetComponentInChildren<SpriteRenderer>();
-        }
-
-        if (spriteRenderer != null)
-        {
-            Color color = spriteRenderer.color;
-            color.a = alpha;
-            spriteRenderer.color = color;
-            return;
-        }
-
-        // Si no hay SpriteRenderer, intentar con Image (UI)
-        Image image = panelObject.GetComponent<Image>();
-        if (image == null)
-        {
-            image = panelObject.GetComponentInChildren<Image>();
-        }
-
-        if (image != null)
-        {
-            Color color = image.color;
-            color.a = alpha;
-            image.color = color;
-            return;
-        }
-
-        // Si no se encuentra ningún componente, buscar en todos los hijos
-        SpriteRenderer[] spriteRenderers = panelObject.GetComponentsInChildren<SpriteRenderer>();
+        // CRÍTICO: Actualizar TODOS los SpriteRenderer (incluido el del GameObject y todos los hijos)
+        SpriteRenderer[] spriteRenderers = panelObject.GetComponentsInChildren<SpriteRenderer>(true);
         foreach (SpriteRenderer sr in spriteRenderers)
         {
-            Color color = sr.color;
-            color.a = alpha;
-            sr.color = color;
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = alpha;
+                sr.color = color;
+            }
         }
 
-        Image[] images = panelObject.GetComponentsInChildren<Image>();
+        // CRÍTICO: Actualizar TODAS las Image (incluida la del GameObject y todas las hijas)
+        Image[] images = panelObject.GetComponentsInChildren<Image>(true);
         foreach (Image img in images)
         {
-            Color color = img.color;
-            color.a = alpha;
-            img.color = color;
+            if (img != null)
+            {
+                Color color = img.color;
+                color.a = alpha;
+                img.color = color;
+            }
         }
     }
 }

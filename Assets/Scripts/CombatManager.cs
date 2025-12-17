@@ -1324,13 +1324,7 @@ public class CombatManager : MonoBehaviour
                                        GetEnemyEffectiveDefense(), true);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
-            // 4. Volver a Idle (loop)
-            if (animationManager != null)
-            {
-                animationManager.SetPlayerIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el enemigo
+            // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
@@ -1340,6 +1334,7 @@ public class CombatManager : MonoBehaviour
             // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
+                
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
             }
             
@@ -1370,13 +1365,7 @@ public class CombatManager : MonoBehaviour
                                        GetPlayerEffectiveDefense(), false);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
-            // 4. Enemigo vuelve a Idle
-            if (animationManager != null)
-            {
-                animationManager.SetEnemyIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el jugador
+            // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, damage);
@@ -1413,6 +1402,7 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
+            // NOTA: PlayPlayerAnimation ya vuelve a Idle automáticamente al final
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
@@ -1423,13 +1413,7 @@ public class CombatManager : MonoBehaviour
                                        GetEnemyEffectiveDefense(), true);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
-            // 4. Volver a Idle (loop)
-            if (animationManager != null)
-            {
-                animationManager.SetPlayerIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el enemigo
+            // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
@@ -1459,6 +1443,7 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
+            // NOTA: PlayEnemyAnimation ya vuelve a Idle automáticamente al final
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
@@ -1469,13 +1454,7 @@ public class CombatManager : MonoBehaviour
                                        GetPlayerEffectiveDefense(), false);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
-            // 4. Enemigo vuelve a Idle
-            if (animationManager != null)
-            {
-                animationManager.SetEnemyIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el jugador
+            // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, damage);
@@ -1693,6 +1672,7 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
+            // NOTA: PlayPlayerAnimation ya vuelve a Idle automáticamente al final
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
@@ -1704,13 +1684,7 @@ public class CombatManager : MonoBehaviour
             int totalDamage = baseDamage * multiplier;
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - totalDamage);
             
-            // 4. Volver a Idle (loop)
-            if (animationManager != null)
-            {
-                animationManager.SetPlayerIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el enemigo
+            // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
                 string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, totalDamage);
@@ -1740,6 +1714,7 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
+            // NOTA: PlayEnemyAnimation ya vuelve a Idle automáticamente al final
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
@@ -1751,13 +1726,7 @@ public class CombatManager : MonoBehaviour
             int totalDamage = baseDamage * multiplier;
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - totalDamage);
             
-            // 4. Enemigo vuelve a Idle
-            if (animationManager != null)
-            {
-                animationManager.SetEnemyIdle();
-            }
-            
-            // 5. Mostrar texto de daño recibido por el jugador
+            // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.playerReceivesDamage, totalDamage);
@@ -2599,4 +2568,5 @@ public class CombatManager : MonoBehaviour
         UpdateAttackButtonsAvailability();
     }
 }
+
 
