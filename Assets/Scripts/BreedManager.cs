@@ -752,6 +752,7 @@ public class BreedManager : MonoBehaviour
         // Trabajo
         if (workSlider != null)
         {
+            workSlider.maxValue = 100;
             workSlider.value = profile.breedWork;
             UpdateSliderColor(workSlider, profile.breedWork, 100);
         }
@@ -761,6 +762,7 @@ public class BreedManager : MonoBehaviour
         // Hambre
         if (hungerSlider != null)
         {
+            hungerSlider.maxValue = 100;
             hungerSlider.value = profile.breedHunger;
             UpdateSliderColor(hungerSlider, profile.breedHunger, 100);
         }
@@ -770,6 +772,7 @@ public class BreedManager : MonoBehaviour
         // Felicidad
         if (happinessSlider != null)
         {
+            happinessSlider.maxValue = 100;
             happinessSlider.value = profile.breedHappiness;
             UpdateSliderColor(happinessSlider, profile.breedHappiness, 100);
         }
@@ -784,6 +787,7 @@ public class BreedManager : MonoBehaviour
             
             if (energySlider != null)
             {
+                energySlider.maxValue = maxEnergy;
                 energySlider.value = currentEnergy;
                 UpdateSliderColor(energySlider, currentEnergy, maxEnergy);
             }
@@ -797,6 +801,7 @@ public class BreedManager : MonoBehaviour
             // Si no hay EnergySystem, mostrar 0
             if (energySlider != null)
             {
+                energySlider.maxValue = 100;
                 energySlider.value = 0;
                 UpdateSliderColor(energySlider, 0, 100);
             }
@@ -807,6 +812,7 @@ public class BreedManager : MonoBehaviour
         // Higiene
         if (hygieneSlider != null)
         {
+            hygieneSlider.maxValue = 100;
             hygieneSlider.value = profile.breedHygiene;
             UpdateSliderColor(hygieneSlider, profile.breedHygiene, 100);
         }
@@ -816,6 +822,7 @@ public class BreedManager : MonoBehaviour
         // Disciplina
         if (disciplineSlider != null)
         {
+            disciplineSlider.maxValue = 100;
             disciplineSlider.value = profile.breedDiscipline;
             UpdateSliderColor(disciplineSlider, profile.breedDiscipline, 100);
         }
@@ -977,6 +984,7 @@ public class BreedManager : MonoBehaviour
                 
                 if (energySlider != null)
                 {
+                    energySlider.maxValue = maxEnergy;
                     energySlider.value = currentEnergy;
                     UpdateSliderColor(energySlider, currentEnergy, maxEnergy);
                 }
