@@ -37,6 +37,13 @@ public class AttackData : ScriptableObject
     
     [Tooltip("Precio en monedas para comprar/desbloquear este ataque en la biblioteca")]
     public int unlockPrice = 100;
+    
+    [Header("=== SPRITES DE ANIMACIÓN ===")]
+    [Tooltip("Sprite para la fase Damage (sustituye el sprite del SpriteRenderer durante la animación de daño)")]
+    public Sprite damageSprite;
+    
+    [Tooltip("Sprite para la fase Effects (sustituye el sprite del SpriteRenderer durante la animación de efectos)")]
+    public Sprite effectsSprite;
 }
 
 /// <summary>
@@ -53,6 +60,7 @@ public enum AttackEffectType
     AttackBuff,     // Buff de ataque (effectValue = porcentaje, duration = rondas)
     DefenseBuff     // Buff de defensa (effectValue = porcentaje, duration = rondas)
 }
+
 
 
 

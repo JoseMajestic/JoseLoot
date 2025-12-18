@@ -1319,6 +1319,18 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del jugador (después del ataque)
+            if (animationManager != null)
+            {
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage));
+            }
+            
+            // 2.6. Reproducir animación de effects del jugador (después del damage)
+            if (animationManager != null)
+            {
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects));
+            }
+            
             // 3. Calcular daño
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
                                        GetEnemyEffectiveDefense(), true);
@@ -1360,6 +1372,18 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del enemigo (después del ataque)
+            if (animationManager != null)
+            {
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage));
+            }
+            
+            // 2.6. Reproducir animación de effects del enemigo (después del damage)
+            if (animationManager != null)
+            {
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects));
+            }
+            
             // 3. Calcular daño
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
                                        GetPlayerEffectiveDefense(), false);
@@ -1372,13 +1396,13 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
-            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
+            // 5. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
             }
             
-            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            // 6. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
             if (animationManager != null)
             {
                 animationManager.SetPlayerIdle();
@@ -1408,6 +1432,22 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del jugador (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+            }
+            
+            // 2.6. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+            }
+            
             // 3. Calcular daño
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
                                        GetEnemyEffectiveDefense(), true);
@@ -1420,7 +1460,7 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
-            // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
+            // 5. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
@@ -1449,6 +1489,22 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del enemigo (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+            }
+            
+            // 2.6. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+            }
+            
             // 3. Calcular daño
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
                                        GetPlayerEffectiveDefense(), false);
@@ -1461,13 +1517,13 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
-            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
+            // 5. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
             }
             
-            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            // 6. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
             if (animationManager != null)
             {
                 animationManager.SetPlayerIdle();
@@ -1678,6 +1734,22 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del jugador (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+            }
+            
+            // 2.6. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+            }
+            
             // 3. Calcular daño
             int baseDamage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
                                             GetEnemyEffectiveDefense(), true);
@@ -1691,13 +1763,13 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
-            // 6. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
+            // 5. Reproducir animación de defensa del enemigo (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Defense));
             }
             
-            // 7. Enemigo vuelve a Idle y reducir HP gradualmente (mientras está en Idle)
+            // 6. Enemigo vuelve a Idle y reducir HP gradualmente (mientras está en Idle)
             if (animationManager != null)
             {
                 animationManager.SetEnemyIdle();
@@ -1720,6 +1792,22 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
             }
             
+            // 2.5. Reproducir animación de damage del enemigo (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+            }
+            
+            // 2.6. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+            }
+            
             // 3. Calcular daño
             int baseDamage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
                                             GetPlayerEffectiveDefense(), false);
@@ -1733,13 +1821,13 @@ public class CombatManager : MonoBehaviour
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
-            // 6. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
+            // 5. Reproducir animación de defensa del jugador (una vez, 2 segundos) - ANTES de reducir HP
             if (animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Defense));
             }
             
-            // 7. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
+            // 6. Jugador vuelve a Idle (loop) y reducir HP gradualmente (mientras está en Idle)
             if (animationManager != null)
             {
                 animationManager.SetPlayerIdle();

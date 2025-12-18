@@ -36,6 +36,9 @@ public class AnimationManager : MonoBehaviour
         [Tooltip("Configuración de animación Damage (para visualizar daño recibido)")]
         public AnimationStateConfig damage;
         
+        [Tooltip("Configuración de animación Effects (para efectos visuales)")]
+        public AnimationStateConfig effects;
+        
         [Tooltip("Configuración de animación KO")]
         public AnimationStateConfig ko;
         
@@ -49,6 +52,7 @@ public class AnimationManager : MonoBehaviour
         Attack,
         Defense,
         Damage,
+        Effects,
         KO
     }
 
@@ -64,6 +68,9 @@ public class AnimationManager : MonoBehaviour
     
     [Tooltip("Configuración de animación Damage del jugador (para visualizar daño recibido)")]
     [SerializeField] private AnimationStateConfig playerDamage;
+    
+    [Tooltip("Configuración de animación Effects del jugador (para efectos visuales)")]
+    [SerializeField] private AnimationStateConfig playerEffects;
     
     [Tooltip("Configuración de animación KO del jugador")]
     [SerializeField] private AnimationStateConfig playerKO;
@@ -104,12 +111,12 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Deshabilita TODOS los Animators de Defense, Damage y KO (jugador y todos los enemigos).
+    /// Deshabilita TODOS los Animators de Defense, Damage, Effects y KO (jugador y todos los enemigos).
     /// Se usa en Awake() para prevenir reproducción automática al inicio del juego.
     /// </summary>
     private void DisableAllProblematicAnimators()
     {
-        // Jugador: Defense, Damage, KO
+        // Jugador: Defense, Damage, Effects, KO
         if (playerDefense != null && playerDefense.spriteRendererObject != null)
         {
             Animator animator = playerDefense.spriteRendererObject.GetComponent<Animator>();
@@ -120,13 +127,18 @@ public class AnimationManager : MonoBehaviour
             Animator animator = playerDamage.spriteRendererObject.GetComponent<Animator>();
             if (animator != null) animator.enabled = false;
         }
+        if (playerEffects != null && playerEffects.spriteRendererObject != null)
+        {
+            Animator animator = playerEffects.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
         if (playerKO != null && playerKO.spriteRendererObject != null)
         {
             Animator animator = playerKO.spriteRendererObject.GetComponent<Animator>();
             if (animator != null) animator.enabled = false;
         }
 
-        // Enemigos: Defense, Damage, KO (para TODOS los enemigos, no solo el actual)
+        // Enemigos: Defense, Damage, Effects, KO (para TODOS los enemigos, no solo el actual)
         if (enemyAnimationSets != null)
         {
             foreach (EnemyAnimationSet enemySet in enemyAnimationSets)
@@ -141,6 +153,11 @@ public class AnimationManager : MonoBehaviour
                     if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
                     {
                         Animator animator = enemySet.damage.spriteRendererObject.GetComponent<Animator>();
+                        if (animator != null) animator.enabled = false;
+                    }
+                    if (enemySet.effects != null && enemySet.effects.spriteRendererObject != null)
+                    {
+                        Animator animator = enemySet.effects.spriteRendererObject.GetComponent<Animator>();
                         if (animator != null) animator.enabled = false;
                     }
                     if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
@@ -188,11 +205,11 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Deshabilita los Animators de Defense, Damage y KO para evitar reproducción automática.
+    /// Deshabilita los Animators de Defense, Damage, Effects y KO para evitar reproducción automática.
     /// </summary>
     private void DisableProblematicAnimators()
     {
-        // Jugador: Defense, Damage, KO
+        // Jugador: Defense, Damage, Effects, KO
         if (playerDefense != null && playerDefense.spriteRendererObject != null)
         {
             Animator animator = playerDefense.spriteRendererObject.GetComponent<Animator>();
@@ -203,13 +220,18 @@ public class AnimationManager : MonoBehaviour
             Animator animator = playerDamage.spriteRendererObject.GetComponent<Animator>();
             if (animator != null) animator.enabled = false;
         }
+        if (playerEffects != null && playerEffects.spriteRendererObject != null)
+        {
+            Animator animator = playerEffects.spriteRendererObject.GetComponent<Animator>();
+            if (animator != null) animator.enabled = false;
+        }
         if (playerKO != null && playerKO.spriteRendererObject != null)
         {
             Animator animator = playerKO.spriteRendererObject.GetComponent<Animator>();
             if (animator != null) animator.enabled = false;
         }
 
-        // Enemigo: Defense, Damage, KO
+        // Enemigo: Defense, Damage, Effects, KO
         if (currentEnemyIndex >= 0 && currentEnemyIndex < enemyAnimationSets.Length)
         {
             EnemyAnimationSet enemySet = enemyAnimationSets[currentEnemyIndex];
@@ -223,6 +245,11 @@ public class AnimationManager : MonoBehaviour
                 if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
                 {
                     Animator animator = enemySet.damage.spriteRendererObject.GetComponent<Animator>();
+                    if (animator != null) animator.enabled = false;
+                }
+                if (enemySet.effects != null && enemySet.effects.spriteRendererObject != null)
+                {
+                    Animator animator = enemySet.effects.spriteRendererObject.GetComponent<Animator>();
                     if (animator != null) animator.enabled = false;
                 }
                 if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
@@ -311,7 +338,9 @@ public class AnimationManager : MonoBehaviour
     /// Reproduce una animación del jugador y espera a que termine.
     /// Verifica que la animación haya terminado realmente antes de continuar.
     /// </summary>
-    public IEnumerator PlayPlayerAnimation(AnimationState state)
+    /// <param name="state">Estado de animación a reproducir</param>
+    /// <param name="overrideSprite">Sprite opcional para sustituir el sprite por defecto (usado para Damage y Effects desde AttackData)</param>
+    public IEnumerator PlayPlayerAnimation(AnimationState state, Sprite overrideSprite = null)
     {
         AnimationStateConfig config = GetPlayerConfig(state);
         if (config == null)
@@ -328,7 +357,7 @@ public class AnimationManager : MonoBehaviour
         }
         
         // 2. Aplicar configuración (esto inicia la animación y la muestra)
-        yield return StartCoroutine(ApplyPlayerConfig(config));
+        yield return StartCoroutine(ApplyPlayerConfig(config, overrideSprite));
 
         // 3. Calcular duración a esperar (usando duración real del clip con límites)
         float durationToWait = GetAnimationDuration(config);
@@ -362,7 +391,9 @@ public class AnimationManager : MonoBehaviour
     /// Reproduce una animación del enemigo y espera a que termine.
     /// Verifica que la animación haya terminado realmente antes de continuar.
     /// </summary>
-    public IEnumerator PlayEnemyAnimation(AnimationState state)
+    /// <param name="state">Estado de animación a reproducir</param>
+    /// <param name="overrideSprite">Sprite opcional para sustituir el sprite por defecto (usado para Damage y Effects desde AttackData)</param>
+    public IEnumerator PlayEnemyAnimation(AnimationState state, Sprite overrideSprite = null)
     {
         if (currentEnemyIndex < 0 || currentEnemyIndex >= enemyAnimationSets.Length)
         {
@@ -394,7 +425,7 @@ public class AnimationManager : MonoBehaviour
         }
         
         // 2. Aplicar configuración (esto inicia la animación y la muestra)
-        yield return StartCoroutine(ApplyEnemyConfig(config));
+        yield return StartCoroutine(ApplyEnemyConfig(config, overrideSprite));
 
         // 3. Calcular duración a esperar (usando duración real del clip con límites)
         float durationToWait = GetAnimationDuration(config);
@@ -518,6 +549,8 @@ public class AnimationManager : MonoBehaviour
                 return playerDefense;
             case AnimationState.Damage:
                 return playerDamage;
+            case AnimationState.Effects:
+                return playerEffects;
             case AnimationState.KO:
                 return playerKO;
             default:
@@ -540,6 +573,8 @@ public class AnimationManager : MonoBehaviour
                 return enemySet.defense;
             case AnimationState.Damage:
                 return enemySet.damage;
+            case AnimationState.Effects:
+                return enemySet.effects;
             case AnimationState.KO:
                 return enemySet.ko;
             default:
@@ -550,10 +585,31 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Aplica la configuración de animación al jugador.
     /// </summary>
-    private IEnumerator ApplyPlayerConfig(AnimationStateConfig config)
+    /// <param name="config">Configuración de animación</param>
+    /// <param name="overrideSprite">Sprite opcional para sustituir el sprite por defecto (usado para Damage y Effects desde AttackData)</param>
+    private IEnumerator ApplyPlayerConfig(AnimationStateConfig config, Sprite overrideSprite = null)
     {
         if (config == null || config.spriteRendererObject == null)
             yield break;
+
+        // CRÍTICO: Para Damage y Effects, asegurar que el Animator esté habilitado ANTES de cualquier otra operación
+        // Esto es necesario porque Damage y Effects pueden haber sido deshabilitados en la inicialización
+        if (config == playerDamage && playerDamage != null && playerDamage.spriteRendererObject != null)
+        {
+            Animator damageAnimator = playerDamage.spriteRendererObject.GetComponent<Animator>();
+            if (damageAnimator != null)
+            {
+                damageAnimator.enabled = true;
+            }
+        }
+        if (config == playerEffects && playerEffects != null && playerEffects.spriteRendererObject != null)
+        {
+            Animator effectsAnimator = playerEffects.spriteRendererObject.GetComponent<Animator>();
+            if (effectsAnimator != null)
+            {
+                effectsAnimator.enabled = true;
+            }
+        }
 
         // Ocultar todos los paneles del jugador EXCEPTO el actual
         HideAllPlayerPanelsExcept(config.spriteRendererObject);
@@ -573,28 +629,33 @@ public class AnimationManager : MonoBehaviour
             currentAnimator = config.spriteRendererObject.AddComponent<Animator>();
         }
 
-        // Asegurar que el Animator esté habilitado
+        // CRÍTICO: Asegurar que el Animator esté habilitado (especialmente importante para Damage y Effects)
+        // Damage y Effects pueden haber sido deshabilitados en la inicialización, así que forzar activación
         if (currentAnimator != null)
         {
             currentAnimator.enabled = true;
+            // Forzar actualización inmediata para asegurar que el cambio se aplique
+            if (!currentAnimator.enabled)
+            {
+                Debug.LogWarning($"AnimationManager: No se pudo habilitar el Animator para {config.spriteRendererObject.name}");
+            }
         }
 
         // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
         // para evitar que sobrescriba los cambios de la animación
-        if (playerSprite != null)
+        // Si hay overrideSprite (desde AttackData), usarlo; si no, usar playerSprite por defecto
+        Sprite spriteToUse = overrideSprite != null ? overrideSprite : playerSprite;
+        if (spriteToUse != null)
         {
-            if (playerSpriteRenderer == null)
+            SpriteRenderer currentSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
+            if (currentSpriteRenderer == null)
             {
-                playerSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
-                if (playerSpriteRenderer == null)
-                {
-                    playerSpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
-                }
+                currentSpriteRenderer = config.spriteRendererObject.GetComponentInChildren<SpriteRenderer>();
             }
 
-            if (playerSpriteRenderer != null)
+            if (currentSpriteRenderer != null)
             {
-                playerSpriteRenderer.sprite = playerSprite;
+                currentSpriteRenderer.sprite = spriteToUse;
             }
         }
 
@@ -620,6 +681,8 @@ public class AnimationManager : MonoBehaviour
                     // CRÍTICO: Deshabilitar el Animator antes de cambiar el controller para evitar reproducción automática
                     currentAnimator.enabled = false;
                     currentAnimator.runtimeAnimatorController = config.controller;
+                    // CRÍTICO: Reactivar el Animator inmediatamente después de asignar el controller
+                    // Esto es especialmente importante para Damage y Effects
                     currentAnimator.enabled = true;
                 }
             }
@@ -628,8 +691,17 @@ public class AnimationManager : MonoBehaviour
             yield return null;
             
             // CRÍTICO: Verificar nuevamente que el Animator esté habilitado justo antes de Play()
-            // Esto es especialmente importante para Damage que puede haber sido deshabilitado en la inicialización
+            // Esto es especialmente importante para Damage y Effects que pueden haber sido deshabilitados en la inicialización
+            // Forzar activación explícita para Damage y Effects
             if (!currentAnimator.enabled)
+            {
+                currentAnimator.enabled = true;
+            }
+            
+            // CRÍTICO ADICIONAL: Verificar una vez más que el Animator esté habilitado
+            // Esto asegura que incluso si algo lo desactivó, se reactive antes de Play()
+            // Especialmente importante para Damage y Effects
+            if (currentAnimator != null && !currentAnimator.enabled)
             {
                 currentAnimator.enabled = true;
             }
@@ -696,7 +768,9 @@ public class AnimationManager : MonoBehaviour
     /// <summary>
     /// Aplica la configuración de animación al enemigo.
     /// </summary>
-    private IEnumerator ApplyEnemyConfig(AnimationStateConfig config)
+    /// <param name="config">Configuración de animación</param>
+    /// <param name="overrideSprite">Sprite opcional para sustituir el sprite por defecto (usado para Damage y Effects desde AttackData)</param>
+    private IEnumerator ApplyEnemyConfig(AnimationStateConfig config, Sprite overrideSprite = null)
     {
         if (config == null || config.spriteRendererObject == null)
             yield break;
@@ -707,6 +781,25 @@ public class AnimationManager : MonoBehaviour
         EnemyAnimationSet enemySet = enemyAnimationSets[currentEnemyIndex];
         if (enemySet == null)
             yield break;
+
+        // CRÍTICO: Para Damage y Effects, asegurar que el Animator esté habilitado ANTES de cualquier otra operación
+        // Esto es necesario porque Damage y Effects pueden haber sido deshabilitados en la inicialización
+        if (config == enemySet.damage && enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
+        {
+            Animator damageAnimator = enemySet.damage.spriteRendererObject.GetComponent<Animator>();
+            if (damageAnimator != null)
+            {
+                damageAnimator.enabled = true;
+            }
+        }
+        if (config == enemySet.effects && enemySet.effects != null && enemySet.effects.spriteRendererObject != null)
+        {
+            Animator effectsAnimator = enemySet.effects.spriteRendererObject.GetComponent<Animator>();
+            if (effectsAnimator != null)
+            {
+                effectsAnimator.enabled = true;
+            }
+        }
 
         // Ocultar todos los paneles del enemigo EXCEPTO el actual
         HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
@@ -726,18 +819,25 @@ public class AnimationManager : MonoBehaviour
             currentEnemyAnimator = config.spriteRendererObject.AddComponent<Animator>();
         }
 
-        // Asegurar que el Animator esté habilitado
+        // CRÍTICO: Asegurar que el Animator esté habilitado (especialmente importante para Damage y Effects)
+        // Damage y Effects pueden haber sido deshabilitados en la inicialización, así que forzar activación
         if (currentEnemyAnimator != null)
         {
             currentEnemyAnimator.enabled = true;
+            // Forzar actualización inmediata para asegurar que el cambio se aplique
+            if (!currentEnemyAnimator.enabled)
+            {
+                Debug.LogWarning($"AnimationManager: No se pudo habilitar el Animator del enemigo para {config.spriteRendererObject.name}");
+            }
         }
 
         // IMPORTANTE: Asignar sprite ANTES de reproducir la animación
         // para evitar que sobrescriba los cambios de la animación
-        // El sprite se toma directamente de EnemyData
+        // Si hay overrideSprite (desde AttackData), usarlo; si no, usar enemySprite de EnemyData por defecto
         // CRÍTICO: Buscar el SpriteRenderer específico del spriteRendererObject actual
         // NO reutilizar enemySpriteRenderer global, cada estado tiene su propio SpriteRenderer
-        if (currentEnemyData != null && currentEnemyData.enemySprite != null)
+        Sprite spriteToUse = overrideSprite != null ? overrideSprite : (currentEnemyData != null ? currentEnemyData.enemySprite : null);
+        if (spriteToUse != null)
         {
             SpriteRenderer currentStateSpriteRenderer = config.spriteRendererObject.GetComponent<SpriteRenderer>();
             if (currentStateSpriteRenderer == null)
@@ -747,7 +847,7 @@ public class AnimationManager : MonoBehaviour
 
             if (currentStateSpriteRenderer != null)
             {
-                currentStateSpriteRenderer.sprite = currentEnemyData.enemySprite;
+                currentStateSpriteRenderer.sprite = spriteToUse;
             }
         }
 
@@ -771,6 +871,8 @@ public class AnimationManager : MonoBehaviour
                     // CRÍTICO: Deshabilitar el Animator antes de cambiar el controller para evitar reproducción automática
                     currentEnemyAnimator.enabled = false;
                     currentEnemyAnimator.runtimeAnimatorController = config.controller;
+                    // CRÍTICO: Reactivar el Animator inmediatamente después de asignar el controller
+                    // Esto es especialmente importante para Damage y Effects
                     currentEnemyAnimator.enabled = true;
                 }
             }
@@ -779,8 +881,17 @@ public class AnimationManager : MonoBehaviour
             yield return null;
             
             // CRÍTICO: Verificar nuevamente que el Animator esté habilitado justo antes de Play()
-            // Esto es especialmente importante para Damage que puede haber sido deshabilitado en la inicialización
+            // Esto es especialmente importante para Damage y Effects que pueden haber sido deshabilitados en la inicialización
+            // Forzar activación explícita para Damage y Effects
             if (!currentEnemyAnimator.enabled)
+            {
+                currentEnemyAnimator.enabled = true;
+            }
+            
+            // CRÍTICO ADICIONAL: Verificar una vez más que el Animator esté habilitado
+            // Esto asegura que incluso si algo lo desactivó, se reactive antes de Play()
+            // Especialmente importante para Damage y Effects
+            if (currentEnemyAnimator != null && !currentEnemyAnimator.enabled)
             {
                 currentEnemyAnimator.enabled = true;
             }
@@ -864,6 +975,9 @@ public class AnimationManager : MonoBehaviour
         if (playerDamage != null && playerDamage.spriteRendererObject != null)
             HidePanel(playerDamage.spriteRendererObject);
         
+        if (playerEffects != null && playerEffects.spriteRendererObject != null)
+            HidePanel(playerEffects.spriteRendererObject);
+        
         if (playerKO != null && playerKO.spriteRendererObject != null)
             HidePanel(playerKO.spriteRendererObject);
     }
@@ -885,6 +999,9 @@ public class AnimationManager : MonoBehaviour
         
         if (playerDamage != null && playerDamage.spriteRendererObject != null && playerDamage.spriteRendererObject != exceptPanel)
             HidePanel(playerDamage.spriteRendererObject);
+        
+        if (playerEffects != null && playerEffects.spriteRendererObject != null && playerEffects.spriteRendererObject != exceptPanel)
+            HidePanel(playerEffects.spriteRendererObject);
         
         if (playerKO != null && playerKO.spriteRendererObject != null && playerKO.spriteRendererObject != exceptPanel)
             HidePanel(playerKO.spriteRendererObject);
@@ -909,6 +1026,9 @@ public class AnimationManager : MonoBehaviour
         
         if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
             HidePanel(enemySet.damage.spriteRendererObject);
+        
+        if (enemySet.effects != null && enemySet.effects.spriteRendererObject != null)
+            HidePanel(enemySet.effects.spriteRendererObject);
         
         if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
             HidePanel(enemySet.ko.spriteRendererObject);
@@ -935,6 +1055,9 @@ public class AnimationManager : MonoBehaviour
         if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null && enemySet.damage.spriteRendererObject != exceptPanel)
             HidePanel(enemySet.damage.spriteRendererObject);
         
+        if (enemySet.effects != null && enemySet.effects.spriteRendererObject != null && enemySet.effects.spriteRendererObject != exceptPanel)
+            HidePanel(enemySet.effects.spriteRendererObject);
+        
         if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null && enemySet.ko.spriteRendererObject != exceptPanel)
             HidePanel(enemySet.ko.spriteRendererObject);
     }
@@ -949,7 +1072,7 @@ public class AnimationManager : MonoBehaviour
         // Ocultar todas las animaciones del jugador
         HideAllPlayerPanels();
         
-        // CRÍTICO: Asegurar explícitamente que Defense, Damage y KO estén en Alpha = 0
+        // CRÍTICO: Asegurar explícitamente que Defense, Damage, Effects y KO estén en Alpha = 0
         // Esto sobrescribe cualquier valor del Inspector
         if (playerDefense != null && playerDefense.spriteRendererObject != null)
         {
@@ -958,6 +1081,10 @@ public class AnimationManager : MonoBehaviour
         if (playerDamage != null && playerDamage.spriteRendererObject != null)
         {
             SetPanelAlpha(playerDamage.spriteRendererObject, 0f);
+        }
+        if (playerEffects != null && playerEffects.spriteRendererObject != null)
+        {
+            SetPanelAlpha(playerEffects.spriteRendererObject, 0f);
         }
         if (playerKO != null && playerKO.spriteRendererObject != null)
         {
@@ -973,7 +1100,7 @@ public class AnimationManager : MonoBehaviour
                 {
                     HideAllEnemyPanels(enemySet);
                     
-                    // CRÍTICO: Asegurar explícitamente que Defense, Damage y KO estén en Alpha = 0
+                    // CRÍTICO: Asegurar explícitamente que Defense, Damage, Effects y KO estén en Alpha = 0
                     if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null)
                     {
                         SetPanelAlpha(enemySet.defense.spriteRendererObject, 0f);
@@ -981,6 +1108,10 @@ public class AnimationManager : MonoBehaviour
                     if (enemySet.damage != null && enemySet.damage.spriteRendererObject != null)
                     {
                         SetPanelAlpha(enemySet.damage.spriteRendererObject, 0f);
+                    }
+                    if (enemySet.effects != null && enemySet.effects.spriteRendererObject != null)
+                    {
+                        SetPanelAlpha(enemySet.effects.spriteRendererObject, 0f);
                     }
                     if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null)
                     {
