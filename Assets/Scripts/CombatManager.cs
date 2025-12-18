@@ -60,6 +60,9 @@ public class CombatManager : MonoBehaviour
     [Tooltip("Array de botones de habilidades/ataques (cada posición contiene el botón y la instancia AttackData asociada)")]
     [SerializeField] private AttackButtonData[] attackButtons;
     
+    [Tooltip("AttackData del ataque básico (opcional, para usar sprites de Damage y Effects). Si no está asignado, el ataque básico no usará sprites personalizados.")]
+    [SerializeField] private AttackData basicAttackData;
+    
     [Tooltip("Botón para ejecutar el ataque")]
     [SerializeField] private Button combatButton;
     
@@ -1250,8 +1253,8 @@ public class CombatManager : MonoBehaviour
     {
         if (attack == null)
         {
-            // Ataque básico
-            yield return StartCoroutine(ProcessBasicAttack(isPlayer));
+            // Ataque básico: usar basicAttackData si está disponible para los sprites
+            yield return StartCoroutine(ProcessBasicAttack(isPlayer, basicAttackData));
             yield break;
         }
 
@@ -1300,9 +1303,9 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Procesa un ataque básico (sin AttackData).
+    /// Procesa un ataque básico (con AttackData opcional para sprites).
     /// </summary>
-    private IEnumerator ProcessBasicAttack(bool isPlayer)
+    private IEnumerator ProcessBasicAttack(bool isPlayer, AttackData attack = null)
     {
         if (isPlayer)
         {
@@ -1320,15 +1323,19 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2.5. Reproducir animación de damage del jugador (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
             if (animationManager != null)
             {
-                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage));
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
             }
             
             // 2.6. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
             if (animationManager != null)
             {
-                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects));
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
             }
             
             // 3. Calcular daño
@@ -1373,15 +1380,19 @@ public class CombatManager : MonoBehaviour
             }
             
             // 2.5. Reproducir animación de damage del enemigo (después del ataque)
+            // Usar sprite de damage del AttackData si está disponible
             if (animationManager != null)
             {
-                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage));
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
             }
             
             // 2.6. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
             if (animationManager != null)
             {
-                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects));
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
             }
             
             // 3. Calcular daño
@@ -1690,7 +1701,8 @@ public class CombatManager : MonoBehaviour
         
         for (int i = 0; i < numHits; i++)
         {
-            yield return StartCoroutine(ProcessBasicAttack(isPlayer));
+            // Pasar el AttackData para usar sus sprites en cada golpe
+            yield return StartCoroutine(ProcessBasicAttack(isPlayer, attack));
             
             // Verificar si el objetivo murió
             if (isPlayer && enemyCurrentHp <= 0)
@@ -1981,8 +1993,8 @@ public class CombatManager : MonoBehaviour
                         animationManager.SetEnemyIdle();
                     }
 
-                    // Atacar de nuevo (ataque básico)
-                    yield return StartCoroutine(ProcessBasicAttack(true));
+                    // Atacar de nuevo (ataque básico): usar basicAttackData si está disponible
+                    yield return StartCoroutine(ProcessBasicAttack(true, basicAttackData));
 
                     // Verificar si el enemigo murió
                     if (enemyCurrentHp <= 0)
@@ -2098,8 +2110,8 @@ public class CombatManager : MonoBehaviour
                         animationManager.SetEnemyIdle();
                     }
 
-                    // Atacar de nuevo (ataque básico)
-                    yield return StartCoroutine(ProcessBasicAttack(false));
+                    // Atacar de nuevo (ataque básico): usar basicAttackData si está disponible
+                    yield return StartCoroutine(ProcessBasicAttack(false, basicAttackData));
 
                     // Verificar si el jugador murió
                     if (playerCurrentHp <= 0)

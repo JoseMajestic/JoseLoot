@@ -351,9 +351,20 @@ public class AnimationManager : MonoBehaviour
         }
 
         // 1. Ocultar Idle antes de mostrar la animación
-        if (playerIdle != null && playerIdle.spriteRendererObject != null)
+        // EXCEPCIÓN: Para Damage y Effects, mantener Idle visible para que no se vea vacío
+        if (state != AnimationState.Damage && state != AnimationState.Effects)
         {
-            SetPanelAlpha(playerIdle.spriteRendererObject, 0f);
+            if (playerIdle != null && playerIdle.spriteRendererObject != null)
+            {
+                SetPanelAlpha(playerIdle.spriteRendererObject, 0f);
+            }
+        }
+        // Para Damage y Effects, mantener Idle visible (Alpha = 1)
+        else if (playerIdle != null && playerIdle.spriteRendererObject != null)
+        {
+            SetPanelAlpha(playerIdle.spriteRendererObject, 1f);
+            // Asegurar que el Animator de Idle esté configurado (sin reproducir)
+            ShowPlayerPanelWithoutPlaying(playerIdle);
         }
         
         // 2. Aplicar configuración (esto inicia la animación y la muestra)
@@ -419,9 +430,20 @@ public class AnimationManager : MonoBehaviour
         }
 
         // 1. Ocultar Idle antes de mostrar la animación
-        if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null)
+        // EXCEPCIÓN: Para Damage y Effects, mantener Idle visible para que no se vea vacío
+        if (state != AnimationState.Damage && state != AnimationState.Effects)
         {
-            SetPanelAlpha(enemySet.idle.spriteRendererObject, 0f);
+            if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null)
+            {
+                SetPanelAlpha(enemySet.idle.spriteRendererObject, 0f);
+            }
+        }
+        // Para Damage y Effects, mantener Idle visible (Alpha = 1)
+        else if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null)
+        {
+            SetPanelAlpha(enemySet.idle.spriteRendererObject, 1f);
+            // Asegurar que el Animator de Idle esté configurado (sin reproducir)
+            ShowEnemyPanelWithoutPlaying(enemySet.idle);
         }
         
         // 2. Aplicar configuración (esto inicia la animación y la muestra)
@@ -612,7 +634,28 @@ public class AnimationManager : MonoBehaviour
         }
 
         // Ocultar todos los paneles del jugador EXCEPTO el actual
-        HideAllPlayerPanelsExcept(config.spriteRendererObject);
+        // EXCEPCIÓN: Para Damage y Effects, también mantener Idle visible
+        if (config == playerDamage || config == playerEffects)
+        {
+            // Para Damage y Effects, ocultar todos EXCEPTO el actual Y Idle
+            if (playerIdle != null && playerIdle.spriteRendererObject != null && playerIdle.spriteRendererObject != config.spriteRendererObject)
+            {
+                // Mantener Idle visible, no ocultarlo
+                SetPanelAlpha(playerIdle.spriteRendererObject, 1f);
+            }
+            // Ocultar los demás paneles (Attack, Defense, KO)
+            if (playerAttack != null && playerAttack.spriteRendererObject != null && playerAttack.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(playerAttack.spriteRendererObject);
+            if (playerDefense != null && playerDefense.spriteRendererObject != null && playerDefense.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(playerDefense.spriteRendererObject);
+            if (playerKO != null && playerKO.spriteRendererObject != null && playerKO.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(playerKO.spriteRendererObject);
+        }
+        else
+        {
+            // Para otros estados, ocultar todos EXCEPTO el actual (comportamiento normal)
+            HideAllPlayerPanelsExcept(config.spriteRendererObject);
+        }
 
         // Mostrar el panel del estado actual (Alpha = 1)
         if (!config.spriteRendererObject.activeSelf)
@@ -802,7 +845,28 @@ public class AnimationManager : MonoBehaviour
         }
 
         // Ocultar todos los paneles del enemigo EXCEPTO el actual
-        HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
+        // EXCEPCIÓN: Para Damage y Effects, también mantener Idle visible
+        if (config == enemySet.damage || config == enemySet.effects)
+        {
+            // Para Damage y Effects, ocultar todos EXCEPTO el actual Y Idle
+            if (enemySet.idle != null && enemySet.idle.spriteRendererObject != null && enemySet.idle.spriteRendererObject != config.spriteRendererObject)
+            {
+                // Mantener Idle visible, no ocultarlo
+                SetPanelAlpha(enemySet.idle.spriteRendererObject, 1f);
+            }
+            // Ocultar los demás paneles (Attack, Defense, KO)
+            if (enemySet.attack != null && enemySet.attack.spriteRendererObject != null && enemySet.attack.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(enemySet.attack.spriteRendererObject);
+            if (enemySet.defense != null && enemySet.defense.spriteRendererObject != null && enemySet.defense.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(enemySet.defense.spriteRendererObject);
+            if (enemySet.ko != null && enemySet.ko.spriteRendererObject != null && enemySet.ko.spriteRendererObject != config.spriteRendererObject)
+                HidePanel(enemySet.ko.spriteRendererObject);
+        }
+        else
+        {
+            // Para otros estados, ocultar todos EXCEPTO el actual (comportamiento normal)
+            HideAllEnemyPanelsExcept(enemySet, config.spriteRendererObject);
+        }
 
         // Mostrar el panel del estado actual (Alpha = 1)
         if (!config.spriteRendererObject.activeSelf)
