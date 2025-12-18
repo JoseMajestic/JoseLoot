@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Rota un cilindro continuamente en el eje Y para crear un efecto de paisaje giratorio.
+/// También cambia aleatoriamente la textura del cilindro entre un array de sprites.
 /// </summary>
 public class Noria : MonoBehaviour
 {
@@ -14,6 +16,54 @@ public class Noria : MonoBehaviour
     
     [Tooltip("Si está activado, la rotación se pausa")]
     [SerializeField] private bool pauseRotation = false;
+
+    [Header("Configuración de Textura")]
+    [Tooltip("Material del cilindro que contiene la textura a cambiar")]
+    [SerializeField] private Material cylinderMaterial;
+    
+    [Tooltip("Array de sprites que se aplicarán aleatoriamente a la textura del cilindro")]
+    [SerializeField] private Sprite[] backgroundSprites;
+    
+    [Tooltip("Tiempo en milisegundos para cambiar aleatoriamente entre los sprites")]
+    [SerializeField] private float changeIntervalMs = 5000f;
+
+    private Renderer cylinderRenderer;
+    private Coroutine textureChangeCoroutine;
+    private float timer = 0f;
+
+    private void Awake()
+    {
+        // Intentar obtener el Renderer si no se asignó el Material directamente
+        if (cylinderMaterial == null)
+        {
+            cylinderRenderer = GetComponent<Renderer>();
+            if (cylinderRenderer != null)
+            {
+                cylinderMaterial = cylinderRenderer.material;
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        // Reiniciar el cambio de texturas cuando se activa el objeto
+        if (textureChangeCoroutine != null)
+        {
+            StopCoroutine(textureChangeCoroutine);
+        }
+        timer = 0f;
+        textureChangeCoroutine = StartCoroutine(ChangeTextureCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        // Detener la corrutina cuando se desactiva el objeto
+        if (textureChangeCoroutine != null)
+        {
+            StopCoroutine(textureChangeCoroutine);
+            textureChangeCoroutine = null;
+        }
+    }
 
     private void Update()
     {
@@ -29,6 +79,77 @@ public class Noria : MonoBehaviour
         
         // Rotar en el eje Y (vertical)
         transform.Rotate(0f, rotationAmount, 0f, Space.Self);
+    }
+
+    /// <summary>
+    /// Corrutina que cambia aleatoriamente la textura del cilindro.
+    /// </summary>
+    private IEnumerator ChangeTextureCoroutine()
+    {
+        while (true)
+        {
+            // Convertir milisegundos a segundos
+            float intervalSeconds = changeIntervalMs / 1000f;
+            
+            yield return new WaitForSeconds(intervalSeconds);
+            
+            // Cambiar la textura si hay sprites disponibles
+            if (backgroundSprites != null && backgroundSprites.Length > 0 && cylinderMaterial != null)
+            {
+                ChangeToRandomSprite();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Cambia la textura del cilindro a un sprite aleatorio del array.
+    /// </summary>
+    private void ChangeToRandomSprite()
+    {
+        if (backgroundSprites == null || backgroundSprites.Length == 0 || cylinderMaterial == null)
+            return;
+
+        // Seleccionar un sprite aleatorio
+        int randomIndex = Random.Range(0, backgroundSprites.Length);
+        Sprite selectedSprite = backgroundSprites[randomIndex];
+
+        if (selectedSprite != null)
+        {
+            // Convertir el sprite a Texture2D
+            Texture2D texture = SpriteToTexture2D(selectedSprite);
+            
+            if (texture != null)
+            {
+                // Aplicar la textura al material
+                cylinderMaterial.mainTexture = texture;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Convierte un Sprite a Texture2D.
+    /// </summary>
+    private Texture2D SpriteToTexture2D(Sprite sprite)
+    {
+        if (sprite == null)
+            return null;
+
+        // Crear una nueva textura con las dimensiones del sprite
+        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        
+        // Obtener los píxeles del sprite
+        Color[] pixels = sprite.texture.GetPixels(
+            (int)sprite.textureRect.x,
+            (int)sprite.textureRect.y,
+            (int)sprite.textureRect.width,
+            (int)sprite.textureRect.height
+        );
+        
+        // Aplicar los píxeles a la nueva textura
+        texture.SetPixels(pixels);
+        texture.Apply();
+        
+        return texture;
     }
 
     /// <summary>

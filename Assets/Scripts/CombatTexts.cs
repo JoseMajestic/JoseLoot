@@ -183,6 +183,14 @@ public class CombatTexts : ScriptableObject
     [Tooltip("Texto cuando el jugador ha sido derrotado")]
     public string playerDefeated = "El jugador ha sido debilitado.";
     
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el jugador gana el combate")]
+    public string playerWins = "El jugador gana.";
+    
+    [TextArea(2, 3)]
+    [Tooltip("Texto cuando el enemigo gana el combate. {0} = nombre del enemigo")]
+    public string enemyWins = "{0} gana.";
+    
     [Header("=== ORDEN DE ATAQUE ===")]
     [TextArea(2, 3)]
     [Tooltip("Texto cuando el jugador ataca primero. {0} = nombre del jugador (ej: 'Héroe' o 'Jugador')")]

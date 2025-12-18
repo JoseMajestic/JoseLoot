@@ -123,3 +123,4 @@ Necesitarás agregar estos textos (o modificar los existentes):
 - `enemyAttack` - Solo nombre del ataque del enemigo  
 - `playerReceivesDamage` - Daño recibido por el jugador
 
+

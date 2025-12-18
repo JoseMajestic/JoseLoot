@@ -708,6 +708,47 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Obtiene el nombre del ataque con color según su tipo de efecto.
+    /// Verde para curación, morado para veneno, rojo para buff de ataque, azul para buff de defensa.
+    /// </summary>
+    private string GetColoredAttackName(AttackData attack)
+    {
+        if (attack == null || string.IsNullOrEmpty(attack.attackName))
+            return "";
+
+        string colorTag = "";
+        
+        switch (attack.effectType)
+        {
+            case AttackEffectType.Heal:
+                // Verde para curación
+                colorTag = "<color=#00FF00>"; // Verde
+                break;
+                
+            case AttackEffectType.Poison:
+                // Morado para veneno
+                colorTag = "<color=#800080>"; // Morado
+                break;
+                
+            case AttackEffectType.AttackBuff:
+                // Rojo para buff de ataque
+                colorTag = "<color=red>"; // Rojo
+                break;
+                
+            case AttackEffectType.DefenseBuff:
+                // Azul para buff de defensa
+                colorTag = "<color=blue>"; // Azul
+                break;
+                
+            default:
+                // Sin color para otros tipos
+                return attack.attackName;
+        }
+        
+        return $"{colorTag}{attack.attackName}</color>";
+    }
+
+    /// <summary>
     /// SOLUCIÓN: Muestra los estados activos al inicio de la ronda (ANTES de aplicar efectos y actualizar buffs).
     /// Muestra veneno, stun y buffs con sus rondas restantes.
     /// </summary>
@@ -852,74 +893,170 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Aplica efectos de veneno al inicio de la ronda.
-    /// SOLUCIÓN: Decrementa las rondas de veneno después de aplicar el daño.
+    /// Muestra los mensajes de estado de veneno al inicio de la ronda (sin aplicar daño).
     /// </summary>
-    private IEnumerator ApplyPoisonEffects()
+    private IEnumerator DisplayPoisonStatusMessages()
     {
         // Veneno del enemigo (aplicado por el jugador)
         if (enemyPoisonPercent > 0 && enemyPoisonRounds > 0)
         {
-            int poisonDamage = Mathf.RoundToInt(enemyMaxHp * enemyPoisonPercent / 100f);
-            int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - poisonDamage);
-            
-            if (roundDetailsText != null && combatTexts != null)
+            // Verificar si el enemigo ya está muerto
+            if (enemyCurrentHp <= 0)
             {
-                string text = FormatText(combatTexts.poisonEnemy, currentEnemy.enemyName, poisonDamage);
-                yield return StartCoroutine(DisplayTextWithDelay(text));
-            }
-            
-            // Reducir HP del enemigo gradualmente
-            yield return StartCoroutine(ReduceEnemyHPGradually(targetEnemyHp));
-            
-            // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
-            enemyPoisonRounds--;
-            if (enemyPoisonRounds <= 0)
-            {
-                // El veneno terminó, limpiar
+                // El enemigo ya está muerto, limpiar el veneno y salir
                 enemyPoisonPercent = 0;
                 enemyPoisonRounds = 0;
             }
-            
-            yield return new WaitForSeconds(1f);
-            
-            // Verificar si el enemigo murió
-            if (enemyCurrentHp <= 0)
+            else if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                yield break;
+                string text = FormatText(combatTexts.enemyStillPoisoned, currentEnemy.enemyName, enemyPoisonPercent, enemyPoisonRounds);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
             }
         }
         
         // Veneno del jugador (aplicado por el enemigo)
         if (playerPoisonPercent > 0 && playerPoisonRounds > 0)
         {
-            int poisonDamage = Mathf.RoundToInt(playerMaxHp * playerPoisonPercent / 100f);
-            int targetPlayerHp = Mathf.Max(0, playerCurrentHp - poisonDamage);
-            
-            if (roundDetailsText != null && combatTexts != null)
+            // Verificar si el jugador ya está muerto
+            if (playerCurrentHp <= 0)
             {
-                string text = FormatText(combatTexts.poisonPlayer, poisonDamage);
-                yield return StartCoroutine(DisplayTextWithDelay(text));
-            }
-            
-            // Reducir HP del jugador gradualmente
-            yield return StartCoroutine(ReducePlayerHPGradually(targetPlayerHp));
-            
-            // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
-            playerPoisonRounds--;
-            if (playerPoisonRounds <= 0)
-            {
-                // El veneno terminó, limpiar
+                // El jugador ya está muerto, limpiar el veneno y salir
                 playerPoisonPercent = 0;
                 playerPoisonRounds = 0;
             }
+            else if (roundDetailsText != null && combatTexts != null)
+            {
+                string text = FormatText(combatTexts.playerStillPoisoned, playerPoisonPercent, playerPoisonRounds);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Calcula el daño básico promedio (sin crítico) para un atacante.
+    /// </summary>
+    private int CalculateBasicAttackDamage(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            // Calcular daño básico del jugador (sin crítico)
+            int ataque = GetPlayerEffectiveAttack();
+            int destreza = playerDestreza;
+            int defensaOponente = GetEnemyEffectiveDefense();
             
-            yield return new WaitForSeconds(1f);
+            // Calcular daño total: (ataque + destreza / 2) * 1 (sin crítico)
+            float totalDamage = ataque + destreza / 2f;
             
-            // Verificar si el jugador murió
+            // Calcular daño efectivo: daño_total - defensa_oponente + destreza_atacante / 2
+            float effectiveDamage = totalDamage - defensaOponente + (destreza / 2f);
+            
+            // Mínimo 1 de daño
+            return Mathf.Max(1, Mathf.RoundToInt(effectiveDamage));
+        }
+        else
+        {
+            // Calcular daño básico del enemigo (sin crítico)
+            int ataque = GetEnemyEffectiveAttack();
+            int destreza = enemyDestreza;
+            int defensaOponente = GetPlayerEffectiveDefense();
+            
+            // Calcular daño total: (ataque + destreza / 2) * 1 (sin crítico)
+            float totalDamage = ataque + destreza / 2f;
+            
+            // Calcular daño efectivo: daño_total - defensa_oponente + destreza_atacante / 2
+            float effectiveDamage = totalDamage - defensaOponente + (destreza / 2f);
+            
+            // Mínimo 1 de daño
+            return Mathf.Max(1, Mathf.RoundToInt(effectiveDamage));
+        }
+    }
+
+    /// <summary>
+    /// Aplica el daño de veneno al final de la ronda.
+    /// SOLUCIÓN: El veneno quita un 35% del daño de un ataque básico.
+    /// SOLUCIÓN: Verifica si el objetivo está muerto ANTES de aplicar el veneno.
+    /// </summary>
+    private IEnumerator ApplyPoisonDamage()
+    {
+        // Veneno del enemigo (aplicado por el jugador)
+        if (enemyPoisonPercent > 0 && enemyPoisonRounds > 0)
+        {
+            // SOLUCIÓN: Verificar si el enemigo ya está muerto ANTES de aplicar el veneno
+            if (enemyCurrentHp <= 0)
+            {
+                // El enemigo ya está muerto, limpiar el veneno y salir
+                enemyPoisonPercent = 0;
+                enemyPoisonRounds = 0;
+            }
+            else
+            {
+                // Calcular daño básico del jugador (quien aplicó el veneno)
+                int basicDamage = CalculateBasicAttackDamage(true);
+                
+                // El veneno quita un 35% del daño básico
+                int poisonDamage = Mathf.RoundToInt(basicDamage * 0.35f);
+                int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - poisonDamage);
+                
+                if (roundDetailsText != null && combatTexts != null)
+                {
+                    string text = FormatText(combatTexts.poisonEnemy, currentEnemy.enemyName, poisonDamage);
+                    yield return StartCoroutine(DisplayTextWithDelay(text));
+                }
+                
+                // Reducir HP del enemigo gradualmente
+                yield return StartCoroutine(ReduceEnemyHPGradually(targetEnemyHp));
+                
+                // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
+                enemyPoisonRounds--;
+                if (enemyPoisonRounds <= 0)
+                {
+                    // El veneno terminó, limpiar
+                    enemyPoisonPercent = 0;
+                    enemyPoisonRounds = 0;
+                }
+                
+                yield return new WaitForSeconds(1f);
+            }
+        }
+        
+        // Veneno del jugador (aplicado por el enemigo)
+        if (playerPoisonPercent > 0 && playerPoisonRounds > 0)
+        {
+            // SOLUCIÓN: Verificar si el jugador ya está muerto ANTES de aplicar el veneno
             if (playerCurrentHp <= 0)
             {
-                yield break;
+                // El jugador ya está muerto, limpiar el veneno y salir
+                playerPoisonPercent = 0;
+                playerPoisonRounds = 0;
+            }
+            else
+            {
+                // Calcular daño básico del enemigo (quien aplicó el veneno)
+                int basicDamage = CalculateBasicAttackDamage(false);
+                
+                // El veneno quita un 35% del daño básico
+                int poisonDamage = Mathf.RoundToInt(basicDamage * 0.35f);
+                int targetPlayerHp = Mathf.Max(0, playerCurrentHp - poisonDamage);
+                
+                if (roundDetailsText != null && combatTexts != null)
+                {
+                    string text = FormatText(combatTexts.poisonPlayer, poisonDamage);
+                    yield return StartCoroutine(DisplayTextWithDelay(text));
+                }
+                
+                // Reducir HP del jugador gradualmente
+                yield return StartCoroutine(ReducePlayerHPGradually(targetPlayerHp));
+                
+                // SOLUCIÓN: Decrementar rondas de veneno después de aplicar el daño
+                playerPoisonRounds--;
+                if (playerPoisonRounds <= 0)
+                {
+                    // El veneno terminó, limpiar
+                    playerPoisonPercent = 0;
+                    playerPoisonRounds = 0;
+                }
+                
+                yield return new WaitForSeconds(1f);
             }
         }
     }
@@ -1117,20 +1254,8 @@ public class CombatManager : MonoBehaviour
         // SOLUCIÓN: Mostrar estados activos al inicio de la ronda (ANTES de aplicar efectos y actualizar buffs)
         yield return StartCoroutine(DisplayActiveStatesAtRoundStart());
         
-        // Aplicar efectos de veneno al inicio de la ronda
-        yield return StartCoroutine(ApplyPoisonEffects());
-        
-        // Verificar si alguien murió por veneno
-        if (enemyCurrentHp <= 0)
-        {
-            yield return StartCoroutine(OnPlayerVictory());
-            yield break;
-        }
-        if (playerCurrentHp <= 0)
-        {
-            yield return StartCoroutine(OnPlayerDefeat());
-            yield break;
-        }
+        // SOLUCIÓN: Mostrar mensajes de estado de veneno al inicio (sin aplicar daño)
+        yield return StartCoroutine(DisplayPoisonStatusMessages());
         
         // SOLUCIÓN: Guardar estado de buffs antes de actualizar para detectar cuáles terminaron
         bool hadPlayerAttackBuff = playerAttackBuffRounds > 0;
@@ -1212,6 +1337,21 @@ public class CombatManager : MonoBehaviour
 
         // SOLUCIÓN: Mostrar estados restantes al final de la ronda (DESPUÉS de UpdateBuffs)
         yield return StartCoroutine(DisplayActiveStatesAtRoundEnd(hadPlayerAttackBuff, hadPlayerDefenseBuff, hadEnemyAttackBuff, hadEnemyDefenseBuff));
+        
+        // SOLUCIÓN: Aplicar daño de veneno al final de la ronda (después de todos los ataques)
+        yield return StartCoroutine(ApplyPoisonDamage());
+        
+        // Verificar si alguien murió por veneno
+        if (enemyCurrentHp <= 0)
+        {
+            yield return StartCoroutine(OnPlayerVictory());
+            yield break;
+        }
+        if (playerCurrentHp <= 0)
+        {
+            yield return StartCoroutine(OnPlayerDefeat());
+            yield break;
+        }
         
         // Si ambos siguen vivos, habilitar botón para siguiente ronda
         if (combatButton != null)
@@ -1432,7 +1572,8 @@ public class CombatManager : MonoBehaviour
             // 1. Mostrar texto del ataque (solo nombre)
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerAttack, attack.attackName);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerAttack, coloredName);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
@@ -1489,7 +1630,8 @@ public class CombatManager : MonoBehaviour
             // 1. Mostrar texto del ataque (solo nombre)
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, attack.attackName);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
@@ -1545,6 +1687,7 @@ public class CombatManager : MonoBehaviour
 
     /// <summary>
     /// Procesa un ataque de curación.
+    /// SOLUCIÓN: Aumenta el HP gradualmente en lugar de actualizarlo directamente.
     /// </summary>
     private IEnumerator ProcessHealAttack(AttackData attack, bool isPlayer)
     {
@@ -1558,47 +1701,50 @@ public class CombatManager : MonoBehaviour
         
         if (isPlayer)
         {
-            playerCurrentHp = newHp;
-            UpdatePlayerHP();
-            
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerHeal, attack.attackName, actualHeal);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerHeal, coloredName, actualHeal);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
             {
                 yield return new WaitForSeconds(1f);
             }
+            
+            // Aumentar HP gradualmente
+            yield return StartCoroutine(IncreasePlayerHPGradually(newHp));
         }
         else
         {
-            enemyCurrentHp = newHp;
-            UpdateEnemyHP();
-            
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.enemyHeal, currentEnemy.enemyName, attack.attackName, actualHeal);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyHeal, currentEnemy.enemyName, coloredName, actualHeal);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
             {
                 yield return new WaitForSeconds(1f);
             }
+            
+            // Aumentar HP gradualmente
+            yield return StartCoroutine(IncreaseEnemyHPGradually(newHp));
         }
     }
 
     /// <summary>
     /// Procesa un ataque de veneno.
     /// SOLUCIÓN: Establece las rondas de veneno cuando se aplica (usa duration del AttackData o 3 rondas por defecto).
+    /// NOTA: El veneno se aplica al final de cada ronda, no al inicio. El daño es 35% del daño de un ataque básico.
     /// </summary>
     private IEnumerator ProcessPoisonAttack(AttackData attack, bool isPlayer)
     {
         // Primero aplica el daño normal
         yield return StartCoroutine(ProcessNormalAttack(attack, isPlayer));
         
-        // Luego aplica el veneno (se aplicará al inicio de la siguiente ronda)
-        int poisonPercent = attack.effectValue; // 10, 15, 20
+        // Luego aplica el veneno (se aplicará al final de cada ronda)
+        int poisonPercent = attack.effectValue; // 10, 15, 20 (este valor ya no se usa para el daño, solo para el mensaje)
         
         // SOLUCIÓN: Determinar duración del veneno (usar duration del AttackData si está disponible, o 3 rondas por defecto)
         int poisonDuration = attack.duration > 0 ? attack.duration : 3; // Por defecto 3 rondas
@@ -1682,7 +1828,8 @@ public class CombatManager : MonoBehaviour
             if (roundDetailsText != null && combatTexts != null)
             {
                 string target = isPlayer ? currentEnemy.enemyName : "el jugador";
-                string text = FormatText(combatTexts.stunFailed, attack.attackName, target);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.stunFailed, coloredName, target);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
@@ -1694,6 +1841,7 @@ public class CombatManager : MonoBehaviour
 
     /// <summary>
     /// Procesa un ataque múltiple.
+    /// SOLUCIÓN: Verifica si el objetivo está muerto antes de cada golpe para evitar ataques innecesarios.
     /// </summary>
     private IEnumerator ProcessMultipleAttack(AttackData attack, bool isPlayer)
     {
@@ -1701,10 +1849,16 @@ public class CombatManager : MonoBehaviour
         
         for (int i = 0; i < numHits; i++)
         {
+            // SOLUCIÓN: Verificar si el objetivo ya está muerto ANTES de ejecutar el golpe
+            if (isPlayer && enemyCurrentHp <= 0)
+                yield break;
+            if (!isPlayer && playerCurrentHp <= 0)
+                yield break;
+            
             // Pasar el AttackData para usar sus sprites en cada golpe
             yield return StartCoroutine(ProcessBasicAttack(isPlayer, attack));
             
-            // Verificar si el objetivo murió
+            // Verificar si el objetivo murió después del golpe
             if (isPlayer && enemyCurrentHp <= 0)
                 yield break;
             if (!isPlayer && playerCurrentHp <= 0)
@@ -1714,7 +1868,8 @@ public class CombatManager : MonoBehaviour
         if (roundDetailsText != null && combatTexts != null)
         {
             string attacker = isPlayer ? "Jugador" : currentEnemy.enemyName;
-            string text = FormatText(combatTexts.multipleAttack, attacker, numHits, attack.attackName);
+            string coloredName = GetColoredAttackName(attack);
+            string text = FormatText(combatTexts.multipleAttack, attacker, numHits, coloredName);
             yield return StartCoroutine(DisplayTextWithDelay(text));
         }
         else
@@ -1735,7 +1890,8 @@ public class CombatManager : MonoBehaviour
             // 1. Mostrar texto del ataque (solo nombre)
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerAttack, attack.attackName);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerAttack, coloredName);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
@@ -1793,7 +1949,8 @@ public class CombatManager : MonoBehaviour
             // 1. Mostrar texto del ataque (solo nombre)
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, attack.attackName);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
@@ -1862,7 +2019,8 @@ public class CombatManager : MonoBehaviour
             playerAttackBuffRounds = duration;
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.attackBuff, "Jugador", attack.attackName, buffPercent, duration);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.attackBuff, "Jugador", coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
@@ -1876,7 +2034,8 @@ public class CombatManager : MonoBehaviour
             enemyAttackBuffRounds = duration;
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.attackBuff, currentEnemy.enemyName, attack.attackName, buffPercent, duration);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.attackBuff, currentEnemy.enemyName, coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
@@ -1900,7 +2059,8 @@ public class CombatManager : MonoBehaviour
             playerDefenseBuffRounds = duration;
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.defenseBuff, "Jugador", attack.attackName, buffPercent, duration);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.defenseBuff, "Jugador", coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
@@ -1914,7 +2074,8 @@ public class CombatManager : MonoBehaviour
             enemyDefenseBuffRounds = duration;
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.defenseBuff, currentEnemy.enemyName, attack.attackName, buffPercent, duration);
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.defenseBuff, currentEnemy.enemyName, coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             else
@@ -2224,6 +2385,44 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Aumenta el HP del jugador gradualmente de uno en uno hasta llegar al HP objetivo.
+    /// </summary>
+    private IEnumerator IncreasePlayerHPGradually(int targetHp)
+    {
+        targetHp = Mathf.Min(playerMaxHp, targetHp);
+        
+        while (playerCurrentHp < targetHp)
+        {
+            playerCurrentHp++;
+            UpdatePlayerHP();
+            yield return null; // Esperar un frame antes de aumentar el siguiente punto
+        }
+        
+        // Asegurar que llegamos exactamente al target
+        playerCurrentHp = targetHp;
+        UpdatePlayerHP();
+    }
+
+    /// <summary>
+    /// Aumenta el HP del enemigo gradualmente de uno en uno hasta llegar al HP objetivo.
+    /// </summary>
+    private IEnumerator IncreaseEnemyHPGradually(int targetHp)
+    {
+        targetHp = Mathf.Min(enemyMaxHp, targetHp);
+        
+        while (enemyCurrentHp < targetHp)
+        {
+            enemyCurrentHp++;
+            UpdateEnemyHP();
+            yield return null; // Esperar un frame antes de aumentar el siguiente punto
+        }
+        
+        // Asegurar que llegamos exactamente al target
+        enemyCurrentHp = targetHp;
+        UpdateEnemyHP();
+    }
+
+    /// <summary>
     /// Actualiza la UI del HP del enemigo.
     /// </summary>
     private void UpdateEnemyHP()
@@ -2331,6 +2530,12 @@ public class CombatManager : MonoBehaviour
             yield return StartCoroutine(DisplayTextWithDelay(defeatText));
         }
 
+        // Mostrar texto de victoria del jugador
+        if (roundDetailsText != null && combatTexts != null)
+        {
+            yield return StartCoroutine(DisplayTextWithDelay(combatTexts.playerWins));
+        }
+
         // Agregar monedas
         if (playerMoney != null)
         {
@@ -2400,6 +2605,13 @@ public class CombatManager : MonoBehaviour
         if (roundDetailsText != null && combatTexts != null)
         {
             yield return StartCoroutine(DisplayTextWithDelay(combatTexts.playerDefeated));
+        }
+
+        // Mostrar texto de victoria del enemigo
+        if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+        {
+            string winText = FormatText(combatTexts.enemyWins, currentEnemy.enemyName);
+            yield return StartCoroutine(DisplayTextWithDelay(winText));
         }
 
         // Incrementar estadísticas de pelea perdida y enfrentamiento

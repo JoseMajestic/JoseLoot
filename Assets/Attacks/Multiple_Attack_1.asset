@@ -19,5 +19,7 @@ MonoBehaviour:
   effectType: 4
   effectValue: 2
   duration: 0
-  requiredHeroLevel: 3
-  unlockPrice: 500
+  requiredHeroLevel: 1
+  unlockPrice: 100
+  damageSprite: {fileID: 1995510723, guid: 6b24b59b2acc21b4080074f14ad321a2, type: 3}
+  effectsSprite: {fileID: 21300000, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}

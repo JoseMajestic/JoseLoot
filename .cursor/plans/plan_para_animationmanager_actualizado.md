@@ -98,3 +98,4 @@ Crear un `AnimationManager` que gestione las animaciones de jugador y enemigo po
 - Asegurar que Idle sea el estado por defecto cuando no hay animación activa
 - Verificar que el array de enemyAnimationSets tenga la misma longitud que enemyButtons del BattleManager
 
+

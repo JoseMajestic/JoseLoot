@@ -16,14 +16,14 @@ MonoBehaviour:
   attackSelected: 'Ataque seleccionado: {0}
 
     {1}'
-  playerBasicAttack: "Jugador usa ataque b\xE1sico y causa {0} de da\xF1o."
-  playerAttack: "Jugador  causa {1} de da\xF1o."
+  playerBasicAttack: "Jugador usa ataque b\xE1sico."
+  playerAttack: "Jugador usa {0}."
   enemyReceivesDamage: "{0} recibe {1} de da\xF1o."
   playerHeal: Jugador usa {0} y se cura {1} de HP.
   playerLuck: "\xA1Suerte activada! El jugador ataca de nuevo."
   playerLuckAttack: "Jugador ataca de nuevo y causa {0} de da\xF1o."
-  enemyBasicAttack: "{0} usa ataque b\xE1sico y causa {1} de da\xF1o."
-  enemyAttack: "Enemigo  causa {2} de da\xF1o."
+  enemyBasicAttack: "{0} usa ataque b\xE1sico."
+  enemyAttack: "{0} usa {1}."
   playerReceivesDamage: "El jugador recibe {0} de da\xF1o."
   enemyHeal: '{0} usa {1} y se cura {2} de HP.'
   enemyLuck: "\xA1Suerte activada! {0} ataca de nuevo."
@@ -60,6 +60,8 @@ MonoBehaviour:
   enemyDefenseBuffRemaining: 'Buff de defensa de {0}: {1} rondas restantes.'
   enemyDefeated: '{0} ha sido debilitado.'
   playerDefeated: El jugador ha sido debilitado.
+  playerWins: El jugador gana.
+  enemyWins: '{0} gana.'
   playerAttacksFirst: '{0} ataca primero.'
   enemyAttacksFirst: '{0} ataca primero.'
   nowPlayerAttacks: Ahora ataca {0}.
