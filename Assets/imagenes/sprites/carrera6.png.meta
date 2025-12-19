@@ -147,7 +147,7 @@ TextureImporter:
     - name: bone_3
       guid: 2055969877649084d966cb8c7de8cfcf
       position: {x: 113.59739, y: -0.000019534933, z: 0}
-      rotation: {x: 0, y: 0, z: 0.54497266, w: 0.8384538}
+      rotation: {x: 0, y: 0, z: 0.54497266, w: 0.8384539}
       length: 132.38324
       parentId: 1
       color:
@@ -156,7 +156,7 @@ TextureImporter:
     - name: bone_4
       guid: d92f53df086313f4292c100c4d365480
       position: {x: 224.62636, y: -149.23128, z: 0}
-      rotation: {x: 0, y: -0, z: -0.99971527, w: 0.023862675}
+      rotation: {x: 0, y: -0, z: -0.99971527, w: 0.023862677}
       length: 162.44064
       parentId: 1
       color:
@@ -183,25 +183,25 @@ TextureImporter:
     - name: bone_7
       guid: 3ffe7ccda70016b43986e2f579cdcba7
       position: {x: 29.554228, y: 244.49973, z: 0}
-      rotation: {x: 0, y: -0, z: 0.86916846, w: 0.49451613}
-      length: 164.75731
+      rotation: {x: 0, y: -0, z: 0.8691685, w: 0.49451613}
+      length: 164.75725
       parentId: 2
       color:
         serializedVersion: 2
         rgba: 4278223103
     - name: bone_8
       guid: 5bb7541077859bc4db32e34bfa8133c4
-      position: {x: 164.75728, y: -0.000018444543, z: 0}
+      position: {x: 164.75731, y: -0.0000449764, z: 0}
       rotation: {x: 0, y: 0, z: 0.5553827, w: 0.8315949}
-      length: 177.16731
+      length: 177.16736
       parentId: 6
       color:
         serializedVersion: 2
         rgba: 4278255488
     - name: bone_9
       guid: f03343f4664cdf146a07cf1e4f6dae80
-      position: {x: 177.16736, y: -0.000011477698, z: 0}
-      rotation: {x: 0, y: 0, z: 0.44789222, w: 0.8940876}
+      position: {x: 177.1674, y: -0.000011934999, z: 0}
+      rotation: {x: 0, y: 0, z: 0.44789216, w: 0.8940877}
       length: 48.44538
       parentId: 7
       color:
@@ -210,24 +210,24 @@ TextureImporter:
     - name: bone_10
       guid: cc7208bee3953044cbc5887734ca1db7
       position: {x: -135.77039, y: -49.041485, z: 0}
-      rotation: {x: 0, y: -0, z: -0.99972814, w: 0.02331685}
-      length: 178.30316
+      rotation: {x: 0, y: -0, z: -0.99972814, w: 0.023316849}
+      length: 178.30318
       parentId: 0
       color:
         serializedVersion: 2
         rgba: 4294934528
     - name: bone_11
       guid: bde8ff64306123b4cb3860373187f5f8
-      position: {x: 178.30318, y: 0.000007875104, z: 0}
+      position: {x: 178.30319, y: 0.0000013835524, z: 0}
       rotation: {x: 0, y: 0, z: -0.22710428, w: 0.97387046}
-      length: 180.12712
+      length: 180.12715
       parentId: 9
       color:
         serializedVersion: 2
         rgba: 4294901888
     - name: bone_12
       guid: 34fc0ce28750d284b994821ac1a35dc1
-      position: {x: 180.12712, y: -0.0000033397273, z: 0}
+      position: {x: 180.12715, y: -0.0000052683595, z: 0}
       rotation: {x: 0, y: 0, z: 0.66582334, w: 0.7461095}
       length: 91.08454
       parentId: 10
@@ -238,14 +238,14 @@ TextureImporter:
       guid: af36bc849c9578048b57bb09b7acd473
       position: {x: -49.50654, y: -155.71141, z: 0}
       rotation: {x: 0, y: -0, z: -0.842059, w: 0.53938544}
-      length: 179.5552
+      length: 179.55522
       parentId: 0
       color:
         serializedVersion: 2
         rgba: 4278255615
     - name: bone_14
       guid: 502083415428e6b4d87c3215e63f2bfc
-      position: {x: 179.55524, y: 0.000021281077, z: 0}
+      position: {x: 179.55528, y: 0.000028687453, z: 0}
       rotation: {x: 0, y: 0, z: -0.5796967, w: 0.8148323}
       length: 212.75995
       parentId: 12
@@ -254,8 +254,8 @@ TextureImporter:
         rgba: 4278255360
     - name: bone_15
       guid: e616d4cb650f7d941993bd249ecb4f6d
-      position: {x: 212.75993, y: 0.00004366741, z: 0}
-      rotation: {x: 0, y: 0, z: 0.6194703, w: 0.7850202}
+      position: {x: 212.75993, y: 0.000020771804, z: 0}
+      rotation: {x: 0, y: 0, z: 0.61947036, w: 0.7850201}
       length: 93.83143
       parentId: 13
       color:
@@ -269,7 +269,7 @@ TextureImporter:
       parentId: 8
       color:
         serializedVersion: 2
-        rgba: 4294901760
+        rgba: 4278190080
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 1537655665
     vertices:

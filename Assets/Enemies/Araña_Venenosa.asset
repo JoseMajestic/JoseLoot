@@ -29,4 +29,4 @@ MonoBehaviour:
   requiredLevel: 1
   level: 2
   availableAttacks:
-  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
+  - {fileID: 11400000, guid: d8903f9c5366eb64388a9946c60b55ab, type: 2}

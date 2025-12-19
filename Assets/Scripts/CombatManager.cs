@@ -151,6 +151,32 @@ public class CombatManager : MonoBehaviour
     [Tooltip("Referencia al AnimationManager para gestionar animaciones")]
     [SerializeField] private AnimationManager animationManager;
     
+    [Header("Paneles de Estados Alterados - Jugador")]
+    [Tooltip("Panel que se muestra cuando el jugador tiene buff de ataque activo")]
+    [SerializeField] private GameObject playerAttackBuffPanel;
+    
+    [Tooltip("Panel que se muestra cuando el jugador tiene buff de defensa activo")]
+    [SerializeField] private GameObject playerDefenseBuffPanel;
+    
+    [Tooltip("Panel que se muestra cuando el jugador está envenenado")]
+    [SerializeField] private GameObject playerPoisonPanel;
+    
+    [Tooltip("Panel que se muestra cuando el jugador está aturdido")]
+    [SerializeField] private GameObject playerStunPanel;
+    
+    [Header("Paneles de Estados Alterados - Enemigo")]
+    [Tooltip("Panel que se muestra cuando el enemigo tiene buff de ataque activo")]
+    [SerializeField] private GameObject enemyAttackBuffPanel;
+    
+    [Tooltip("Panel que se muestra cuando el enemigo tiene buff de defensa activo")]
+    [SerializeField] private GameObject enemyDefenseBuffPanel;
+    
+    [Tooltip("Panel que se muestra cuando el enemigo está envenenado")]
+    [SerializeField] private GameObject enemyPoisonPanel;
+    
+    [Tooltip("Panel que se muestra cuando el enemigo está aturdido")]
+    [SerializeField] private GameObject enemyStunPanel;
+    
     // Estado del combate
     private EnemyData currentEnemy = null;
     private int currentEnemyIndex = -1;
@@ -232,6 +258,9 @@ public class CombatManager : MonoBehaviour
         {
             defeatPanel.SetActive(false);
         }
+        
+        // Ocultar todos los paneles de estados alterados al inicio
+        HideAllStatusPanels();
         
         // Resetear navegación de paneles al estado inicial
         ResetPanelNavigation();
@@ -573,6 +602,9 @@ public class CombatManager : MonoBehaviour
         // Resetear efectos activos
         ResetActiveEffects();
         
+        // Ocultar todos los paneles de estados alterados al inicio del combate
+        HideAllStatusPanels();
+        
         UpdateUI();
         
         // Actualizar disponibilidad de botones de ataque según nivel del héroe
@@ -643,6 +675,73 @@ public class CombatManager : MonoBehaviour
         enemyPoisonPercent = 0;
         enemyPoisonRounds = 0; // SOLUCIÓN: Resetear rondas de veneno
         enemyStunned = false;
+        
+        // Ocultar todos los paneles de estados alterados
+        HideAllStatusPanels();
+    }
+    
+    /// <summary>
+    /// Actualiza la visibilidad de todos los paneles de estados alterados según los estados activos.
+    /// </summary>
+    private void UpdateStatusPanels()
+    {
+        // Paneles del jugador
+        if (playerAttackBuffPanel != null)
+        {
+            playerAttackBuffPanel.SetActive(playerAttackBuffRounds > 0);
+        }
+        
+        if (playerDefenseBuffPanel != null)
+        {
+            playerDefenseBuffPanel.SetActive(playerDefenseBuffRounds > 0);
+        }
+        
+        if (playerPoisonPanel != null)
+        {
+            playerPoisonPanel.SetActive(playerPoisonRounds > 0);
+        }
+        
+        if (playerStunPanel != null)
+        {
+            playerStunPanel.SetActive(playerStunned);
+        }
+        
+        // Paneles del enemigo
+        if (enemyAttackBuffPanel != null)
+        {
+            enemyAttackBuffPanel.SetActive(enemyAttackBuffRounds > 0);
+        }
+        
+        if (enemyDefenseBuffPanel != null)
+        {
+            enemyDefenseBuffPanel.SetActive(enemyDefenseBuffRounds > 0);
+        }
+        
+        if (enemyPoisonPanel != null)
+        {
+            enemyPoisonPanel.SetActive(enemyPoisonRounds > 0);
+        }
+        
+        if (enemyStunPanel != null)
+        {
+            enemyStunPanel.SetActive(enemyStunned);
+        }
+    }
+    
+    /// <summary>
+    /// Oculta todos los paneles de estados alterados.
+    /// </summary>
+    private void HideAllStatusPanels()
+    {
+        if (playerAttackBuffPanel != null) playerAttackBuffPanel.SetActive(false);
+        if (playerDefenseBuffPanel != null) playerDefenseBuffPanel.SetActive(false);
+        if (playerPoisonPanel != null) playerPoisonPanel.SetActive(false);
+        if (playerStunPanel != null) playerStunPanel.SetActive(false);
+        
+        if (enemyAttackBuffPanel != null) enemyAttackBuffPanel.SetActive(false);
+        if (enemyDefenseBuffPanel != null) enemyDefenseBuffPanel.SetActive(false);
+        if (enemyPoisonPanel != null) enemyPoisonPanel.SetActive(false);
+        if (enemyStunPanel != null) enemyStunPanel.SetActive(false);
     }
 
     /// <summary>
@@ -1015,6 +1114,9 @@ public class CombatManager : MonoBehaviour
                     enemyPoisonRounds = 0;
                 }
                 
+                // Actualizar paneles de estados alterados después de aplicar veneno
+                UpdateStatusPanels();
+                
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -1028,6 +1130,9 @@ public class CombatManager : MonoBehaviour
                 // El jugador ya está muerto, limpiar el veneno y salir
                 playerPoisonPercent = 0;
                 playerPoisonRounds = 0;
+                
+                // Actualizar paneles de estados alterados
+                UpdateStatusPanels();
             }
             else
             {
@@ -1055,6 +1160,9 @@ public class CombatManager : MonoBehaviour
                     playerPoisonPercent = 0;
                     playerPoisonRounds = 0;
                 }
+                
+                // Actualizar paneles de estados alterados después de aplicar veneno
+                UpdateStatusPanels();
                 
                 yield return new WaitForSeconds(1f);
             }
@@ -1103,6 +1211,9 @@ public class CombatManager : MonoBehaviour
                 enemyDefenseBuffPercent = 0;
             }
         }
+        
+        // Actualizar paneles de estados alterados después de actualizar buffs
+        UpdateStatusPanels();
     }
 
     /// <summary>
@@ -1254,6 +1365,9 @@ public class CombatManager : MonoBehaviour
         // SOLUCIÓN: Mostrar estados activos al inicio de la ronda (ANTES de aplicar efectos y actualizar buffs)
         yield return StartCoroutine(DisplayActiveStatesAtRoundStart());
         
+        // Actualizar paneles de estados alterados al inicio de la ronda
+        UpdateStatusPanels();
+        
         // SOLUCIÓN: Mostrar mensajes de estado de veneno al inicio (sin aplicar daño)
         yield return StartCoroutine(DisplayPoisonStatusMessages());
         
@@ -1266,9 +1380,15 @@ public class CombatManager : MonoBehaviour
         // Actualizar duración de buffs
         UpdateBuffs();
         
+        // Actualizar paneles de estados alterados después de actualizar buffs
+        UpdateStatusPanels();
+        
         // Resetear stun al inicio de la ronda
         playerStunned = false;
         enemyStunned = false;
+        
+        // Actualizar paneles de estados alterados después de resetear stun
+        UpdateStatusPanels();
 
         // Determinar orden de ataque
         bool playerAttacksFirst = DetermineAttackOrder();
@@ -1701,34 +1821,96 @@ public class CombatManager : MonoBehaviour
         
         if (isPlayer)
         {
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerAttack, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
+            }
+            
+            // 2. Asegurar que el jugador esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 3. Reproducir animación de damage del jugador (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+        }
+            
+            // 5. Mostrar texto de curación
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.playerHeal, coloredName, actualHeal);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
+            
+            // 4. Aumentar HP gradualmente
+            yield return StartCoroutine(IncreasePlayerHPGradually(newHp));
+            }
             else
             {
-                yield return new WaitForSeconds(1f);
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
-            // Aumentar HP gradualmente
-            yield return StartCoroutine(IncreasePlayerHPGradually(newHp));
-        }
-        else
-        {
+            // 2. Asegurar que el enemigo esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 3. Reproducir animación de damage del enemigo (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 5. Mostrar texto de curación
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.enemyHeal, currentEnemy.enemyName, coloredName, actualHeal);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
-            else
-            {
-                yield return new WaitForSeconds(1f);
-            }
             
-            // Aumentar HP gradualmente
+            // 4. Aumentar HP gradualmente
             yield return StartCoroutine(IncreaseEnemyHPGradually(newHp));
         }
     }
@@ -1753,6 +1935,10 @@ public class CombatManager : MonoBehaviour
         {
             enemyPoisonPercent = poisonPercent;
             enemyPoisonRounds = poisonDuration; // SOLUCIÓN: Establecer rondas de veneno
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.poisonAppliedEnemy, currentEnemy.enemyName, poisonPercent);
@@ -1767,6 +1953,10 @@ public class CombatManager : MonoBehaviour
         {
             playerPoisonPercent = poisonPercent;
             playerPoisonRounds = poisonDuration; // SOLUCIÓN: Establecer rondas de veneno
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
             if (roundDetailsText != null && combatTexts != null)
             {
                 string text = FormatText(combatTexts.poisonAppliedPlayer, poisonPercent);
@@ -1799,6 +1989,10 @@ public class CombatManager : MonoBehaviour
             if (isPlayer)
             {
                 enemyStunned = true;
+                
+                // Actualizar paneles de estados alterados
+                UpdateStatusPanels();
+                
                 if (roundDetailsText != null && combatTexts != null)
                 {
                     string text = FormatText(combatTexts.stunEnemy, currentEnemy.enemyName);
@@ -1812,6 +2006,10 @@ public class CombatManager : MonoBehaviour
             else
             {
                 playerStunned = true;
+                
+                // Actualizar paneles de estados alterados
+                UpdateStatusPanels();
+                
                 if (roundDetailsText != null && combatTexts != null)
                 {
                     string text = FormatText(combatTexts.stunPlayer);
@@ -2015,32 +2213,104 @@ public class CombatManager : MonoBehaviour
         
         if (isPlayer)
         {
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerAttack, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
+            }
+            
+            // 2. Asegurar que el jugador esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 3. Reproducir animación de damage del jugador (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 5. Aplicar buff
             playerAttackBuffPercent = buffPercent;
             playerAttackBuffRounds = duration;
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
+            // 6. Mostrar texto del buff
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.attackBuff, "Jugador", coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
+            }
             else
             {
-                yield return new WaitForSeconds(1f);
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
             }
-        }
-        else
-        {
+            
+            // 2. Asegurar que el enemigo esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 3. Reproducir animación de damage del enemigo (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 5. Aplicar buff
             enemyAttackBuffPercent = buffPercent;
             enemyAttackBuffRounds = duration;
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
+            // 6. Mostrar texto del buff
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.attackBuff, currentEnemy.enemyName, coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
-            }
-            else
-            {
-                yield return new WaitForSeconds(1f);
             }
         }
     }
@@ -2055,32 +2325,104 @@ public class CombatManager : MonoBehaviour
         
         if (isPlayer)
         {
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.playerAttack, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
+            }
+            
+            // 2. Asegurar que el jugador esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetPlayerIdle();
+            }
+            
+            // 3. Reproducir animación de damage del jugador (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del jugador (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 5. Aplicar buff
             playerDefenseBuffPercent = buffPercent;
             playerDefenseBuffRounds = duration;
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
+            // 6. Mostrar texto del buff
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.defenseBuff, "Jugador", coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
+            }
             else
             {
-                yield return new WaitForSeconds(1f);
+            // 1. Mostrar texto del ataque (solo nombre)
+            if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+            {
+                string coloredName = GetColoredAttackName(attack);
+                string text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
+                yield return StartCoroutine(DisplayTextWithDelay(text));
             }
-        }
-        else
-        {
+            
+            // 2. Asegurar que el enemigo esté en Idle antes de mostrar Damage/Effects
+            if (animationManager != null)
+            {
+                animationManager.SetEnemyIdle();
+            }
+            
+            // 3. Reproducir animación de damage del enemigo (sin animación de ataque, es un efecto de soporte)
+            // Usar sprite de damage del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite damageSprite = attack != null ? attack.damageSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Damage, damageSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 4. Reproducir animación de effects del enemigo (después del damage)
+            // Usar sprite de effects del AttackData si está disponible
+            if (animationManager != null)
+            {
+                Sprite effectsSprite = attack != null ? attack.effectsSprite : null;
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Effects, effectsSprite));
+                // Pequeño delay para asegurar que la animación se complete
+                yield return new WaitForSeconds(0.1f);
+            }
+            
+            // 5. Aplicar buff
             enemyDefenseBuffPercent = buffPercent;
             enemyDefenseBuffRounds = duration;
+            
+            // Actualizar paneles de estados alterados
+            UpdateStatusPanels();
+            
+            // 6. Mostrar texto del buff
             if (roundDetailsText != null && combatTexts != null)
             {
                 string coloredName = GetColoredAttackName(attack);
                 string text = FormatText(combatTexts.defenseBuff, currentEnemy.enemyName, coloredName, buffPercent, duration);
                 yield return StartCoroutine(DisplayTextWithDelay(text));
-            }
-            else
-            {
-                yield return new WaitForSeconds(1f);
             }
         }
     }
@@ -2108,6 +2450,10 @@ public class CombatManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
             }
             playerStunned = false; // Resetear stun después de perder el turno
+            
+            // Actualizar paneles de estados alterados después de resetear stun
+            UpdateStatusPanels();
+            
             yield break;
         }
 
@@ -2221,6 +2567,10 @@ public class CombatManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
             }
             enemyStunned = false; // Resetear stun después de perder el turno
+            
+            // Actualizar paneles de estados alterados después de resetear stun
+            UpdateStatusPanels();
+            
             yield break;
         }
 
@@ -2669,6 +3019,9 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private void OnVictoryAcceptClicked()
     {
+        // Resetear todos los efectos activos (buffs, veneno, stun) al aceptar victoria
+        ResetActiveEffects();
+        
         // Resetear animaciones a Idle
         if (animationManager != null)
         {
@@ -2692,6 +3045,9 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private void OnDefeatAcceptClicked()
     {
+        // Resetear todos los efectos activos (buffs, veneno, stun) al aceptar derrota
+        ResetActiveEffects();
+        
         // Resetear animaciones a Idle
         if (animationManager != null)
         {

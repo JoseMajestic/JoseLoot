@@ -99,3 +99,4 @@ Crear un `AnimationManager` que gestione las animaciones de jugador y enemigo po
 - Verificar que el array de enemyAnimationSets tenga la misma longitud que enemyButtons del BattleManager
 
 
+

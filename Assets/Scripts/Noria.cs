@@ -127,29 +127,16 @@ public class Noria : MonoBehaviour
     }
 
     /// <summary>
-    /// Convierte un Sprite a Texture2D.
+    /// Convierte un Sprite a Texture2D usando la textura directamente.
     /// </summary>
     private Texture2D SpriteToTexture2D(Sprite sprite)
     {
         if (sprite == null)
             return null;
 
-        // Crear una nueva textura con las dimensiones del sprite
-        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
-        
-        // Obtener los píxeles del sprite
-        Color[] pixels = sprite.texture.GetPixels(
-            (int)sprite.textureRect.x,
-            (int)sprite.textureRect.y,
-            (int)sprite.textureRect.width,
-            (int)sprite.textureRect.height
-        );
-        
-        // Aplicar los píxeles a la nueva textura
-        texture.SetPixels(pixels);
-        texture.Apply();
-        
-        return texture;
+        // Usar directamente la textura del sprite (no requiere Read/Write Enabled)
+        // Si el sprite es parte de un atlas, esto devolverá la textura completa del atlas
+        return sprite.texture;
     }
 
     /// <summary>
