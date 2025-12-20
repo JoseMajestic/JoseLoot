@@ -1,0 +1,5 @@
+D:/archivos/project/pixelito/.utmp/RelWithDebInfo/s45p732z/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/archivos/project/pixelito/.utmp/RelWithDebInfo/s45p732z/arm64-v8a/CMakeFiles/rebuild_cache.dir
+D:/archivos/project/pixelito/.utmp/RelWithDebInfo/s45p732z/arm64-v8a/GameActivity/CMakeFiles/game.dir
+D:/archivos/project/pixelito/.utmp/RelWithDebInfo/s45p732z/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+D:/archivos/project/pixelito/.utmp/RelWithDebInfo/s45p732z/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir

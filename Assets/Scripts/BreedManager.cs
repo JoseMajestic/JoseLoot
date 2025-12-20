@@ -132,8 +132,22 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Panel de video para la acción Trabajar")]
     [SerializeField] private GameObject workVideoPanel;
     
+    [Header("Fade para Paneles de Video")]
+    [Tooltip("Image negro que cubre toda la pantalla durante las transiciones de video (debe estar en un Canvas con orden superior)")]
+    [SerializeField] private UnityEngine.UI.Image videoFadeOverlay;
+    
+    [Tooltip("Duración del fade in/out para paneles de video en segundos")]
+    [SerializeField] private float videoFadeDuration = 0.3f;
+    
+    [Tooltip("Si es true, usa fade al activar/desactivar paneles de video. Si es false, cambio directo sin fade")]
+    [SerializeField] private bool useVideoFade = true;
+    
     // Referencia al panel de video actualmente activo (excepto dormir que es especial)
     private GameObject currentActiveVideoPanel = null;
+    
+    [Header("Visualizador de Audio")]
+    [Tooltip("Visualizador de espectro de audio para los mensajes del héroe")]
+    [SerializeField] private AudioSpectrumVisualizer audioVisualizer;
     
     // ===== PANELES =====
     [Header("Paneles")]
@@ -231,6 +245,7 @@ public class BreedManager : MonoBehaviour
     private HashSet<int> usedMessageIndices = new HashSet<int>();
     private GlobalState lastGlobalState = GlobalState.Excelencia;
     private DominantDeficiency lastDeficiency = DominantDeficiency.Trabajo;
+    private string lastDisplayedMessage = ""; // Para detectar cuando cambia el mensaje
     
     // ===== CONFIGURACIÓN =====
     [Header("Configuración")]
@@ -324,6 +339,15 @@ public class BreedManager : MonoBehaviour
         // Actualizar estado de botones de acción inicial
         UpdateActionButtonsState();
         
+        // Si el panel General Breed está activo al inicio, activar el visualizador
+        if (panelGeneralBreed != null && panelGeneralBreed.activeSelf)
+        {
+            if (audioVisualizer != null)
+            {
+                audioVisualizer.EnableVisualizer();
+            }
+        }
+        
         // Asegurar que los paneles de video estén desactivados al inicio
         if (eatVideoPanel != null) eatVideoPanel.SetActive(false);
         if (studyVideoPanel != null) studyVideoPanel.SetActive(false);
@@ -332,6 +356,15 @@ public class BreedManager : MonoBehaviour
         if (evoVideoPanel != null) evoVideoPanel.SetActive(false);
         if (cleanVideoPanel != null) cleanVideoPanel.SetActive(false);
         if (workVideoPanel != null) workVideoPanel.SetActive(false);
+        
+        // Inicializar fade overlay
+        if (videoFadeOverlay != null)
+        {
+            Color color = videoFadeOverlay.color;
+            color.a = 0f;
+            videoFadeOverlay.color = color;
+            videoFadeOverlay.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -391,6 +424,12 @@ public class BreedManager : MonoBehaviour
         {
             // Abrir el panel de animaciones y iniciar las animaciones
             OpenAnimationPanel();
+            
+            // Activar el visualizador de audio
+            if (audioVisualizer != null)
+            {
+                audioVisualizer.EnableVisualizer();
+            }
         }
     }
     
@@ -405,6 +444,12 @@ public class BreedManager : MonoBehaviour
         {
             // Cerrar el panel de animaciones y detener las animaciones
             CloseAnimationPanel();
+            
+            // Desactivar el visualizador de audio
+            if (audioVisualizer != null)
+            {
+                audioVisualizer.DisableVisualizer();
+            }
         }
     }
     
@@ -726,7 +771,7 @@ public class BreedManager : MonoBehaviour
             setValue(currentValue);
             
             // Actualizar UI en cada incremento para ver la animación
-            RefreshBreedStatsUI();
+        RefreshBreedStatsUI();
             
             // Guardar periódicamente (cada 5 puntos para no saturar el disco)
             if (i % 5 == 0 || i == pointsToAdd - 1)
@@ -749,6 +794,52 @@ public class BreedManager : MonoBehaviour
     /// Activa un panel de video y desactiva el anterior (excepto dormir que es especial).
     /// </summary>
     private void ActivateVideoPanel(GameObject videoPanel, bool isSleepPanel = false)
+    {
+        if (videoPanel == null)
+            return;
+        
+        // Si hay fade habilitado, usar corrutina con fade
+        if (useVideoFade && videoFadeOverlay != null)
+        {
+            StartCoroutine(ActivateVideoPanelWithFade(videoPanel, isSleepPanel));
+        }
+        else
+        {
+            // Sin fade, activar directamente
+            ActivateVideoPanelDirect(videoPanel, isSleepPanel);
+        }
+    }
+    
+    /// <summary>
+    /// Activa un panel de video con fade in/out.
+    /// </summary>
+    private IEnumerator ActivateVideoPanelWithFade(GameObject videoPanel, bool isSleepPanel)
+    {
+        // FADE IN: De transparente a negro
+        if (videoFadeOverlay != null)
+        {
+            if (!videoFadeOverlay.gameObject.activeSelf)
+            {
+                videoFadeOverlay.gameObject.SetActive(true);
+            }
+            yield return StartCoroutine(FadeImage(videoFadeOverlay, 0f, 1f, videoFadeDuration));
+        }
+        
+        // Activar panel mientras está en negro
+        ActivateVideoPanelDirect(videoPanel, isSleepPanel);
+        
+        // FADE OUT: De negro a transparente
+        if (videoFadeOverlay != null)
+        {
+            yield return StartCoroutine(FadeImage(videoFadeOverlay, 1f, 0f, videoFadeDuration));
+            videoFadeOverlay.gameObject.SetActive(false);
+        }
+    }
+    
+    /// <summary>
+    /// Activa un panel de video directamente (sin fade).
+    /// </summary>
+    private void ActivateVideoPanelDirect(GameObject videoPanel, bool isSleepPanel)
     {
         if (videoPanel == null)
             return;
@@ -872,7 +963,7 @@ public class BreedManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Espera a que termine el video y luego desactiva el panel.
+    /// Espera a que termine el video y luego desactiva el panel con fade out.
     /// </summary>
     private IEnumerator WaitForVideoEndAndDeactivate(GameObject panel, UnityEngine.Video.VideoPlayer videoPlayer)
     {
@@ -885,17 +976,71 @@ public class BreedManager : MonoBehaviour
             yield return null;
         }
         
-        // Desactivar panel cuando termine
-        if (panel != null)
+        // Si hay fade habilitado, hacer fade out antes de desactivar
+        if (useVideoFade && videoFadeOverlay != null)
         {
-            panel.SetActive(false);
+            // FADE IN: De transparente a negro
+            if (!videoFadeOverlay.gameObject.activeSelf)
+            {
+                videoFadeOverlay.gameObject.SetActive(true);
+            }
+            yield return StartCoroutine(FadeImage(videoFadeOverlay, 0f, 1f, videoFadeDuration));
+            
+            // Desactivar panel mientras está en negro
+            if (panel != null)
+            {
+                panel.SetActive(false);
+            }
+            
+            // Si era el panel actual, limpiar referencia
+            if (currentActiveVideoPanel == panel)
+            {
+                currentActiveVideoPanel = null;
+            }
+            
+            // FADE OUT: De negro a transparente
+            yield return StartCoroutine(FadeImage(videoFadeOverlay, 1f, 0f, videoFadeDuration));
+            videoFadeOverlay.gameObject.SetActive(false);
+        }
+        else
+        {
+            // Sin fade, desactivar directamente
+            if (panel != null)
+            {
+                panel.SetActive(false);
+            }
+            
+            // Si era el panel actual, limpiar referencia
+            if (currentActiveVideoPanel == panel)
+            {
+                currentActiveVideoPanel = null;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Interpola el alpha de una Image entre dos valores.
+    /// </summary>
+    private IEnumerator FadeImage(UnityEngine.UI.Image image, float startAlpha, float endAlpha, float duration)
+    {
+        if (image == null)
+            yield break;
+        
+        float elapsed = 0f;
+        Color color = image.color;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            color.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            image.color = color;
+            yield return null;
         }
         
-        // Si era el panel actual, limpiar referencia
-        if (currentActiveVideoPanel == panel)
-        {
-            currentActiveVideoPanel = null;
-        }
+        // Asegurar valor final
+        color.a = endAlpha;
+        image.color = color;
     }
     
     /// <summary>
@@ -1407,6 +1552,10 @@ public class BreedManager : MonoBehaviour
         {
             yield return new WaitForSeconds(messageInterval);
             
+            // Solo mostrar mensajes si el panel General Breed está activo
+            if (panelGeneralBreed == null || !panelGeneralBreed.activeSelf)
+                continue;
+            
             if (messageText == null)
                 continue;
             
@@ -1443,6 +1592,19 @@ public class BreedManager : MonoBehaviour
                 // Si se agotaron los mensajes, resetear pool y empezar de nuevo
                 usedMessageIndices.Clear();
                 selectedMessage = SelectUnusedMessage(messageBlock.messages);
+            }
+            
+            // Solo reproducir sonido si el mensaje cambió (una vez por cambio de texto)
+            if (selectedMessage != lastDisplayedMessage)
+            {
+                // Reproducir sonido aleatorio solo cuando cambia el texto
+                if (audioVisualizer != null)
+                {
+                    audioVisualizer.PlayRandomSound();
+                }
+                
+                // Guardar el nuevo mensaje como último mostrado
+                lastDisplayedMessage = selectedMessage;
             }
             
             // Mostrar con typewriter
@@ -1520,6 +1682,9 @@ public class BreedManager : MonoBehaviour
             messageText.text += text[i];
             yield return new WaitForSeconds(delayPerChar);
         }
+        
+        // El visualizador se detendrá automáticamente cuando termine el sonido
+        // No necesitamos detenerlo manualmente aquí
         
         typewriterCoroutine = null;
     }
