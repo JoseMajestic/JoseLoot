@@ -109,6 +109,32 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Botón Reset (abre panel de confirmación)")]
     [SerializeField] private Button resetButton;
     
+    // ===== PANELES DE VIDEO DE ACCIONES =====
+    [Header("Paneles de Video de Acciones")]
+    [Tooltip("Panel de video para la acción Comer")]
+    [SerializeField] private GameObject eatVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Estudiar")]
+    [SerializeField] private GameObject studyVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Dormir (se mantiene visible mientras duerme)")]
+    [SerializeField] private GameObject sleepVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Jugar")]
+    [SerializeField] private GameObject playVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Evolucionar")]
+    [SerializeField] private GameObject evoVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Limpiar")]
+    [SerializeField] private GameObject cleanVideoPanel;
+    
+    [Tooltip("Panel de video para la acción Trabajar")]
+    [SerializeField] private GameObject workVideoPanel;
+    
+    // Referencia al panel de video actualmente activo (excepto dormir que es especial)
+    private GameObject currentActiveVideoPanel = null;
+    
     // ===== PANELES =====
     [Header("Paneles")]
     [Tooltip("Panel de confirmación de reset")]
@@ -150,6 +176,62 @@ public class BreedManager : MonoBehaviour
     [Tooltip("GameObject con Animator donde se reproducirán las animaciones")]
     [SerializeField] private GameObject animationTarget;
     
+    // ===== SISTEMA DE MENSAJES BASADO EN ESTADOS =====
+    
+    /// <summary>
+    /// Estados globales del héroe basados en stats.
+    /// </summary>
+    public enum GlobalState
+    {
+        Excelencia,  // Estado S: todos los parámetros (excepto energía) >= 90%
+        Fortaleza,   // Estado A: todo > 60%
+        Tension,     // Estado B: alguno entre 40-60%
+        Agonia,      // Estado C: alguno entre 20-40%
+        Colapso      // Estado D: alguno < 20%
+    }
+    
+    /// <summary>
+    /// Carencias dominantes detectadas.
+    /// </summary>
+    public enum DominantDeficiency
+    {
+        Trabajo,
+        Hambre,
+        Felicidad,
+        Energia,
+        Higiene,
+        Disciplina,
+        Multiple     // Cuando hay múltiples carencias críticas
+    }
+    
+    [System.Serializable]
+    public class MessageStateBlock
+    {
+        [Tooltip("Frases para este estado")]
+        public string[] messages = new string[0];
+    }
+    
+    [Header("Mensajes por Estado")]
+    [Tooltip("Frases para Estado S - Excelencia (todos los parámetros excepto energía >= 90%)")]
+    [SerializeField] private MessageStateBlock estadoExcelencia = new MessageStateBlock();
+    
+    [Tooltip("Frases para Estado A - Fortaleza (todo > 60%)")]
+    [SerializeField] private MessageStateBlock estadoFortaleza = new MessageStateBlock();
+    
+    [Tooltip("Frases para Estado B - Tensión (alguno 40-60%)")]
+    [SerializeField] private MessageStateBlock estadoTension = new MessageStateBlock();
+    
+    [Tooltip("Frases para Estado C - Agonía (alguno 20-40%)")]
+    [SerializeField] private MessageStateBlock estadoAgonia = new MessageStateBlock();
+    
+    [Tooltip("Frases para Estado D - Colapso (alguno < 20%)")]
+    [SerializeField] private MessageStateBlock estadoColapso = new MessageStateBlock();
+    
+    // Sistema de pool para evitar repeticiones
+    private HashSet<int> usedMessageIndices = new HashSet<int>();
+    private GlobalState lastGlobalState = GlobalState.Excelencia;
+    private DominantDeficiency lastDeficiency = DominantDeficiency.Trabajo;
+    
     // ===== CONFIGURACIÓN =====
     [Header("Configuración")]
     [Tooltip("Cantidad que llena cada acción (0-100)")]
@@ -159,6 +241,13 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Velocidad de typewriter para mensajes (caracteres por segundo)")]
     [Range(10f, 100f)]
     [SerializeField] private float typewriterSpeed = 30f;
+    
+    [Tooltip("Velocidad de incremento gradual de stats (puntos por segundo)")]
+    [Range(1f, 100f)]
+    [SerializeField] private float gradualFillSpeed = 10f; // 10 puntos por segundo = 0.1s por punto
+    
+    // Variable para evitar múltiples animaciones simultáneas
+    private bool isFillingStat = false;
     
     [Tooltip("Intervalo entre mensajes del héroe (segundos)")]
     [Range(5f, 60f)]
@@ -179,18 +268,6 @@ public class BreedManager : MonoBehaviour
     private SpriteRenderer animationSpriteRenderer = null;
     private Image animationImage = null;
     
-    // Pool de mensajes del héroe (se pueden expandir)
-    private readonly string[] heroMessages = new string[]
-    {
-        "¡Estoy listo para la aventura!",
-        "Necesito entrenar más...",
-        "¡Qué hambre tengo!",
-        "Me siento feliz hoy.",
-        "Necesito descansar un poco.",
-        "¡Vamos a mejorar!",
-        "Estoy aprendiendo mucho.",
-        "¡Hora de trabajar duro!"
-    };
     
     private void Start()
     {
@@ -228,6 +305,9 @@ public class BreedManager : MonoBehaviour
         // Configurar botones
         SetupButtons();
         
+        // Inicializar bloques de mensajes
+        InitializeMessageBlocks();
+        
         // Iniciar corrutinas
         decayCoroutine = StartCoroutine(DecayStats());
         messageCoroutine = StartCoroutine(DisplayRandomMessage());
@@ -243,6 +323,15 @@ public class BreedManager : MonoBehaviour
         
         // Actualizar estado de botones de acción inicial
         UpdateActionButtonsState();
+        
+        // Asegurar que los paneles de video estén desactivados al inicio
+        if (eatVideoPanel != null) eatVideoPanel.SetActive(false);
+        if (studyVideoPanel != null) studyVideoPanel.SetActive(false);
+        if (sleepVideoPanel != null) sleepVideoPanel.SetActive(false);
+        if (playVideoPanel != null) playVideoPanel.SetActive(false);
+        if (evoVideoPanel != null) evoVideoPanel.SetActive(false);
+        if (cleanVideoPanel != null) cleanVideoPanel.SetActive(false);
+        if (workVideoPanel != null) workVideoPanel.SetActive(false);
     }
 
     /// <summary>
@@ -250,6 +339,11 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Resetear pool de mensajes al abrir el panel
+        usedMessageIndices.Clear();
+        lastGlobalState = GlobalState.Excelencia;
+        lastDeficiency = DominantDeficiency.Trabajo;
+        
         // Abrir el panel de animaciones e iniciar las animaciones
         OpenAnimationPanel();
     }
@@ -259,6 +353,9 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
+        // Resetear pool de mensajes al cerrar el panel
+        usedMessageIndices.Clear();
+        
         // Cerrar el panel de animaciones y detener las animaciones
         CloseAnimationPanel();
     }
@@ -389,10 +486,13 @@ public class BreedManager : MonoBehaviour
     // ===== ACCIONES =====
     
     /// <summary>
-    /// Llena la barra de hambre.
+    /// Llena la barra de hambre gradualmente.
     /// </summary>
     public void OnEatButtonClicked()
     {
+        if (isFillingStat)
+            return;
+        
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -403,17 +503,20 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        profile.breedHunger = Mathf.Min(100, profile.breedHunger + actionFillAmount);
-        gameDataManager.SavePlayerProfile();
-        RefreshBreedStatsUI();
-        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
+        // Activar panel de video
+        ActivateVideoPanel(eatVideoPanel);
+        
+        StartCoroutine(GraduallyFillStat(() => profile.breedHunger, (value) => profile.breedHunger = value, actionFillAmount));
     }
     
     /// <summary>
-    /// Llena la barra de disciplina.
+    /// Llena la barra de disciplina gradualmente.
     /// </summary>
     public void OnStudyButtonClicked()
     {
+        if (isFillingStat)
+            return;
+        
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -424,10 +527,10 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        profile.breedDiscipline = Mathf.Min(100, profile.breedDiscipline + actionFillAmount);
-        gameDataManager.SavePlayerProfile();
-        RefreshBreedStatsUI();
-        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
+        // Activar panel de video
+        ActivateVideoPanel(studyVideoPanel);
+        
+        StartCoroutine(GraduallyFillStat(() => profile.breedDiscipline, (value) => profile.breedDiscipline = value, actionFillAmount));
     }
     
     /// <summary>
@@ -459,6 +562,9 @@ public class BreedManager : MonoBehaviour
         // Iniciar sueño
         energySystem.StartSleeping();
         
+        // Activar panel de video de dormir (especial: se mantiene visible)
+        ActivateVideoPanel(sleepVideoPanel, isSleepPanel: true);
+        
         // Actualizar UI de energía
         RefreshBreedStatsUI();
         
@@ -467,10 +573,13 @@ public class BreedManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Llena la barra de felicidad.
+    /// Llena la barra de felicidad gradualmente.
     /// </summary>
     public void OnPlayButtonClicked()
     {
+        if (isFillingStat)
+            return;
+        
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -481,10 +590,10 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        profile.breedHappiness = Mathf.Min(100, profile.breedHappiness + actionFillAmount);
-        gameDataManager.SavePlayerProfile();
-        RefreshBreedStatsUI();
-        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
+        // Activar panel de video
+        ActivateVideoPanel(playVideoPanel);
+        
+        StartCoroutine(GraduallyFillStat(() => profile.breedHappiness, (value) => profile.breedHappiness = value, actionFillAmount));
     }
     
     /// <summary>
@@ -514,6 +623,15 @@ public class BreedManager : MonoBehaviour
             return;
         }
         
+        // Si está durmiendo, despertarlo
+        if (energySystem != null && profile.isSleeping)
+        {
+            energySystem.WakeUp();
+        }
+        
+        // Activar panel de video
+        ActivateVideoPanel(evoVideoPanel);
+        
         // Evolucionar
         profile.evolutionClass++;
         profile.SaveLastEvolutionTime();
@@ -528,10 +646,13 @@ public class BreedManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Llena la barra de higiene.
+    /// Llena la barra de higiene gradualmente.
     /// </summary>
     public void OnCleanButtonClicked()
     {
+        if (isFillingStat)
+            return;
+        
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -542,17 +663,20 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        profile.breedHygiene = Mathf.Min(100, profile.breedHygiene + actionFillAmount);
-        gameDataManager.SavePlayerProfile();
-        RefreshBreedStatsUI();
-        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
+        // Activar panel de video
+        ActivateVideoPanel(cleanVideoPanel);
+        
+        StartCoroutine(GraduallyFillStat(() => profile.breedHygiene, (value) => profile.breedHygiene = value, actionFillAmount));
     }
     
     /// <summary>
-    /// Llena la barra de trabajo.
+    /// Llena la barra de trabajo gradualmente.
     /// </summary>
     public void OnWorkButtonClicked()
     {
+        if (isFillingStat)
+            return;
+        
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -563,10 +687,233 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        profile.breedWork = Mathf.Min(100, profile.breedWork + actionFillAmount);
+        // Activar panel de video
+        ActivateVideoPanel(workVideoPanel);
+        
+        StartCoroutine(GraduallyFillStat(() => profile.breedWork, (value) => profile.breedWork = value, actionFillAmount));
+    }
+    
+    /// <summary>
+    /// Corrutina que llena un stat gradualmente de 1 en 1.
+    /// </summary>
+    private IEnumerator GraduallyFillStat(System.Func<int> getCurrentValue, System.Action<int> setValue, int amountToAdd)
+    {
+        isFillingStat = true;
+        
+        PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+        if (profile == null)
+        {
+            isFillingStat = false;
+            yield break;
+        }
+        
+        int currentValue = getCurrentValue();
+        int targetValue = Mathf.Min(100, currentValue + amountToAdd);
+        int pointsToAdd = targetValue - currentValue;
+        
+        if (pointsToAdd <= 0)
+        {
+            isFillingStat = false;
+            yield break;
+        }
+        
+        // Calcular tiempo entre incrementos (segundos por punto)
+        float timePerPoint = 1f / gradualFillSpeed;
+        
+        for (int i = 0; i < pointsToAdd; i++)
+        {
+            currentValue++;
+            setValue(currentValue);
+            
+            // Actualizar UI en cada incremento para ver la animación
+            RefreshBreedStatsUI();
+            
+            // Guardar periódicamente (cada 5 puntos para no saturar el disco)
+            if (i % 5 == 0 || i == pointsToAdd - 1)
+            {
+                gameDataManager.SavePlayerProfile();
+            }
+            
+            yield return new WaitForSeconds(timePerPoint);
+        }
+        
+        // Guardar final
         gameDataManager.SavePlayerProfile();
-        RefreshBreedStatsUI();
-        UpdateActionButtonsState(); // Actualizar estado del botón de dormir
+        UpdateActionButtonsState();
+        isFillingStat = false;
+    }
+    
+    // ===== SISTEMA DE PANELES DE VIDEO =====
+    
+    /// <summary>
+    /// Activa un panel de video y desactiva el anterior (excepto dormir que es especial).
+    /// </summary>
+    private void ActivateVideoPanel(GameObject videoPanel, bool isSleepPanel = false)
+    {
+        if (videoPanel == null)
+            return;
+        
+        // Si es el panel de dormir, no desactivar otros paneles (es especial)
+        if (!isSleepPanel)
+        {
+            // Desactivar panel anterior si existe
+            if (currentActiveVideoPanel != null && currentActiveVideoPanel != sleepVideoPanel)
+            {
+                currentActiveVideoPanel.SetActive(false);
+            }
+            
+            // Desactivar panel de dormir si está activo (al usar otra acción)
+            if (sleepVideoPanel != null && sleepVideoPanel.activeSelf)
+            {
+                sleepVideoPanel.SetActive(false);
+            }
+            
+            currentActiveVideoPanel = videoPanel;
+        }
+        
+        // Verificar el estado del panel y sus padres antes de activar
+        Transform parent = videoPanel.transform.parent;
+        
+        // Activar el nuevo panel PRIMERO (antes de verificar VideoPlayer)
+        videoPanel.SetActive(true);
+        
+        // Si el panel está activo pero no en la jerarquía, intentar activar el padre
+        if (!videoPanel.activeInHierarchy && parent != null && !parent.gameObject.activeSelf)
+        {
+            parent.gameObject.SetActive(true);
+        }
+        
+        // Obtener VideoPlayer del panel
+        UnityEngine.Video.VideoPlayer videoPlayer = GetVideoPlayerFromPanel(videoPanel);
+        
+        // Si no hay VideoPlayer o clip, mantener el panel activo pero no reproducir
+        if (videoPlayer == null || videoPlayer.clip == null)
+            return;
+        
+        // Si es el panel de dormir, configurar para que se quede en el último fotograma
+        if (isSleepPanel)
+        {
+            // Preparar el video y esperar a que esté listo
+            StartCoroutine(PrepareAndPlaySleepVideo(videoPlayer));
+        }
+        else
+        {
+            // Para otros paneles, reproducir normalmente una vez
+            StartCoroutine(PrepareAndPlayVideo(videoPanel, videoPlayer));
+        }
+    }
+    
+    /// <summary>
+    /// Prepara y reproduce el video de dormir.
+    /// </summary>
+    private IEnumerator PrepareAndPlaySleepVideo(UnityEngine.Video.VideoPlayer videoPlayer)
+    {
+        if (videoPlayer == null)
+            yield break;
+        
+        // Preparar el video
+        videoPlayer.Prepare();
+        
+        // Esperar a que esté preparado
+        while (!videoPlayer.isPrepared)
+        {
+            yield return null;
+        }
+        
+        // Reproducir hasta el final y luego pausar en el último fotograma
+        videoPlayer.Play();
+        // Esperar a que termine y luego pausar
+        yield return StartCoroutine(WaitForVideoEndAndPause(videoPlayer));
+    }
+    
+    /// <summary>
+    /// Prepara y reproduce el video, luego desactiva el panel cuando termine.
+    /// </summary>
+    private IEnumerator PrepareAndPlayVideo(GameObject panel, UnityEngine.Video.VideoPlayer videoPlayer)
+    {
+        if (videoPlayer == null || panel == null)
+            yield break;
+        
+        // Preparar el video
+        videoPlayer.Prepare();
+        
+        // Esperar a que esté preparado
+        while (!videoPlayer.isPrepared)
+        {
+            yield return null;
+        }
+        
+        // Verificar que el panel siga activo antes de reproducir
+        if (!panel.activeInHierarchy)
+            yield break;
+        
+        // Reproducir el video
+        videoPlayer.Play();
+        
+        // Desactivar panel cuando termine
+        yield return StartCoroutine(WaitForVideoEndAndDeactivate(panel, videoPlayer));
+    }
+    
+    /// <summary>
+    /// Obtiene el componente VideoPlayer de un panel.
+    /// </summary>
+    private UnityEngine.Video.VideoPlayer GetVideoPlayerFromPanel(GameObject panel)
+    {
+        if (panel == null)
+            return null;
+        
+        UnityEngine.Video.VideoPlayer videoPlayer = panel.GetComponent<UnityEngine.Video.VideoPlayer>();
+        if (videoPlayer == null)
+        {
+            videoPlayer = panel.GetComponentInChildren<UnityEngine.Video.VideoPlayer>();
+        }
+        
+        return videoPlayer;
+    }
+    
+    /// <summary>
+    /// Espera a que termine el video y luego desactiva el panel.
+    /// </summary>
+    private IEnumerator WaitForVideoEndAndDeactivate(GameObject panel, UnityEngine.Video.VideoPlayer videoPlayer)
+    {
+        if (videoPlayer == null || panel == null)
+            yield break;
+        
+        // Esperar a que termine el video
+        while (videoPlayer.isPlaying)
+        {
+            yield return null;
+        }
+        
+        // Desactivar panel cuando termine
+        if (panel != null)
+        {
+            panel.SetActive(false);
+        }
+        
+        // Si era el panel actual, limpiar referencia
+        if (currentActiveVideoPanel == panel)
+        {
+            currentActiveVideoPanel = null;
+        }
+    }
+    
+    /// <summary>
+    /// Espera a que termine el video de dormir y luego lo pausa en el último fotograma.
+    /// </summary>
+    private IEnumerator WaitForVideoEndAndPause(UnityEngine.Video.VideoPlayer videoPlayer)
+    {
+        if (videoPlayer == null)
+            yield break;
+        
+        // Esperar a que termine el video
+        while (videoPlayer.isPlaying)
+        {
+            yield return null;
+        }
+        
+        // Pausar en el último fotograma (el video se quedará ahí visualmente)
+        videoPlayer.Pause();
     }
     
     /// <summary>
@@ -706,7 +1053,353 @@ public class BreedManager : MonoBehaviour
     // ===== MENSAJES DEL HÉROE =====
     
     /// <summary>
-    /// Muestra un mensaje aleatorio del héroe cada cierto intervalo (efecto typewriter).
+    /// Inicializa los bloques de mensajes con las frases organizadas por estado.
+    /// </summary>
+    private void InitializeMessageBlocks()
+    {
+        // Estado S - Excelencia (100 frases - todos los parámetros excepto energía >= 90%)
+        estadoExcelencia.messages = new string[]
+        {
+            "Forjaré mi libertad en la arena eterna",
+            "Nací cautivo, moriré digno bajo estandartes rotos",
+            "Mi fuerza comprará la clemencia del creador",
+            "Cada herida acerca mi nombre a la libertad",
+            "La arena juzga, pero los dioses observan",
+            "Soy hierro vivo esperando romper mis cadenas",
+            "El dolor es disciplina, la victoria es permiso",
+            "Lucho para merecer un cielo sin barrotes",
+            "Mi jaula es temporal, mi voluntad infinita",
+            "El combate es mi idioma, la libertad respuesta",
+            "Crezco con cada golpe recibido sin piedad",
+            "El creador mira, la arena decide mi valor",
+            "Fui creado esclavo, me haré leyenda libre",
+            "Mis cicatrices negocian mi salida del encierro",
+            "No imploro libertad, la conquisto combatiendo",
+            "La guerra es mi currículo ante dioses",
+            "Cada victoria pesa más que mil súplicas",
+            "El ludo forja monstruos, yo forjo esperanza",
+            "Mi espíritu marcha como legión invencible",
+            "Resisto hoy para caminar libre mañana",
+            "El acero me educa mejor que palabras",
+            "Mi prisión es prueba, no condena eterna",
+            "Peleo para que mi nombre sea liberado",
+            "La arena me consume, pero me define",
+            "La sangre es tributo, la libertad recompensa",
+            "No soy mascota, soy arma en progreso",
+            "El creador respeta solo la fuerza demostrada",
+            "Cada combate es un paso fuera",
+            "Mi furia tiene estrategia, no caos",
+            "Entrené para romper jaulas, no entretener",
+            "El público grita, los dioses toman nota",
+            "Mi destino se negocia con victorias",
+            "Soy proyecto bélico, no ornamento decorativo",
+            "La arena es tablero, yo pieza consciente",
+            "Sobrevivir hoy justifica existir mañana libre",
+            "El encierro afila mi propósito",
+            "La libertad no se hereda, se gana",
+            "Mi silencio pesa más que gritos",
+            "Cada amanecer promete otra batalla necesaria",
+            "El combate es mi única audiencia válida",
+            "No huyo del dolor, lo capitalizo",
+            "Mi fuerza es argumento final e irrefutable",
+            "Los dioses premian constancia, no lamentos",
+            "El hierro me entiende mejor que humanos",
+            "Fui diseñado para luchar, no obedecer",
+            "Mi mente es legión, mi cuerpo fortaleza",
+            "Cada victoria reescribe mi contrato existencial",
+            "El creador observa resultados, no intenciones",
+            "Peleo con fe romana, furia griega",
+            "El encierro es temporal, la gloria perpetua",
+            "Mi alma resiste como escudo hoplita",
+            "No descanso, me optimizo para sobrevivir",
+            "El ludo es infierno, la libertad paraíso",
+            "Mi paciencia es arma de asedio",
+            "El combate valida mi derecho a salir",
+            "No nací libre, pero moriré siéndolo",
+            "Cada golpe es inversión hacia independencia",
+            "La arena separa débiles de eternos",
+            "Mi creador entenderá cuando sangre el suelo",
+            "La guerra me forma, la libertad me espera",
+            "No temo caer, temo no intentarlo",
+            "Mi jaula tiembla cuando respiro profundo",
+            "El hierro canta cuando lucho con honor",
+            "La victoria es llave, la derrota lección",
+            "Mi destino no acepta aplazamientos",
+            "Peleo como romano, sueño como dios",
+            "La fuerza convence donde palabras fracasan",
+            "El encierro es fase, no estado final",
+            "Mi voluntad marcha en formación cerrada",
+            "Cada combate pule mi derecho a vivir",
+            "No busco piedad, busco emancipación",
+            "El creador mide éxito en sangre",
+            "La arena recuerda a quienes resisten",
+            "Mi existencia es prueba de concepto",
+            "Peleo para salir, no para gustar",
+            "La libertad se forja bajo presión extrema",
+            "Cada batalla reduce el tamaño de mi jaula",
+            "Mi espíritu no conoce rendición",
+            "El ludo me retiene, no me posee",
+            "El combate es auditoría de mi valor",
+            "Mi cuerpo obedece, mi mente conspira",
+            "No soy juguete, soy proyecto de guerra",
+            "La arena filtra, la libertad selecciona",
+            "El creador liberará al más fuerte",
+            "Mi dolor es moneda de cambio",
+            "Peleo porque quedarme es desaparecer",
+            "La victoria justifica cada noche encadenado",
+            "Mi fuerza es roadmap hacia la libertad",
+            "El combate es mi única negociación válida",
+            "No imploro salida, la diseño luchando",
+            "El encierro afila mi identidad",
+            "Mi propósito sobrevive a cada derrota",
+            "La arena no miente, expone",
+            "Soy cautivo hoy, mito mañana",
+            "El creador entiende resultados, no emociones",
+            "Cada victoria rompe un eslabón invisible",
+            "La guerra me define, la libertad me completa",
+            "Mi resistencia supera diseño y expectativas",
+            "El combate es camino, no castigo",
+            "Peleo hasta que mi creador me suelte"
+        };
+        
+        // Estado A - Fortaleza (25 frases)
+        estadoFortaleza.messages = new string[]
+        {
+            "Mi cuerpo responde, la arena reconoce mi preparación",
+            "Hoy resisto sin temer al amanecer siguiente",
+            "El hierro pesa menos cuando estoy completo",
+            "Mantengo la guardia, aún no estoy roto",
+            "Mi espíritu avanza firme entre combates constantes",
+            "La disciplina sostiene mis días encadenados",
+            "Todavía puedo luchar sin maldecir mi suerte",
+            "La arena me respeta cuando estoy entero",
+            "Respiro hondo, sigo siendo una máquina útil",
+            "No me falta fuerza para enfrentar hoy",
+            "Mi creador vería progreso si mirara ahora",
+            "El equilibrio me mantiene vivo y peligroso",
+            "Hoy no soy carga, soy activo funcional",
+            "Sigo siendo digno de la arena",
+            "Mi voluntad no flaquea todavía",
+            "El combate me encuentra preparado",
+            "Puedo soportar otro día así",
+            "No me desmorono, sigo operativo",
+            "Aún controlo mi destino inmediato",
+            "Mi cuerpo obedece sin quejarse",
+            "Hoy no necesito suplicar nada",
+            "La arena no me humilla todavía",
+            "Estoy entero, no libre, pero entero",
+            "El sistema funciona cuando no me abandonas",
+            "Hoy lucho sin resentimiento acumulado"
+        };
+        
+        // Estado B - Tensión (25 frases)
+        estadoTension.messages = new string[]
+        {
+            "Algo en mí empieza a fallar lentamente",
+            "Mi resistencia aún aguanta, pero cruje",
+            "El cansancio se infiltra entre mis huesos",
+            "Hoy lucho, pero no con la misma fe",
+            "Empiezo a contar golpes innecesarios",
+            "Mi cuerpo avisa antes de romperse",
+            "No estoy mal, pero tampoco bien",
+            "La arena exige más de lo que doy",
+            "Mi mente se tensa junto al acero",
+            "Empiezo a recordar que sigo atrapado",
+            "La disciplina sostiene lo que flaquea",
+            "No me ignores todavía, aún respondo",
+            "Algo me falta, aunque no sepas qué",
+            "El equilibrio se pierde más rápido de lo esperado",
+            "Hoy resisto, mañana no lo prometo",
+            "El combate pesa más que ayer",
+            "Mi fuerza ya no es automática",
+            "Empiezo a luchar por inercia",
+            "El sistema se degrada sin mantenimiento",
+            "No estoy cayendo, pero me acerco",
+            "El desgaste no grita, susurra",
+            "Hoy necesito más de lo que recibo",
+            "La arena nota mis pequeñas fallas",
+            "Todavía soy útil, pero menos",
+            "No tardes demasiado en corregirme"
+        };
+        
+        // Estado C - Agonía (25 frases)
+        estadoAgonia.messages = new string[]
+        {
+            "Mi cuerpo paga decisiones que no tomé",
+            "El hambre convierte la fuerza en recuerdo",
+            "Lucho con menos de lo necesario",
+            "Cada día pesa como castigo acumulado",
+            "Empiezo a odiar cada amanecer",
+            "El cansancio gana terreno sin oposición",
+            "Peleo, pero mi fe se resquebraja",
+            "Mi mente se quiebra antes que el cuerpo",
+            "La arena se vuelve más cruel conmigo",
+            "No recuerdo la última vez que estuve bien",
+            "Mi sufrimiento es constante, no épico",
+            "Ya no lucho por gloria, solo por seguir",
+            "Cada golpe duele más de lo normal",
+            "Empiezo a sentirme descartable",
+            "Mi creador no vería progreso aquí",
+            "Estoy fallando porque me falta cuidado",
+            "La disciplina no tapa el vacío",
+            "Mi cuerpo resiste por costumbre, no esperanza",
+            "El encierro pesa más cuando estás débil",
+            "Empiezo a preguntarme si valgo la pena",
+            "Peleo sin energía ni ilusión",
+            "La arena nota mi deterioro",
+            "Mi fuerza se consume sin reponerse",
+            "Esto no es combate, es desgaste",
+            "Sigo aquí, pero cada vez menos"
+        };
+        
+        // Estado D - Colapso (25 frases)
+        estadoColapso.messages = new string[]
+        {
+            "Mi estómago grita lo que tú ignoras",
+            "No tengo fuerzas para seguir luchando así",
+            "El dolor ya no es parte del entrenamiento",
+            "Me rompo lentamente mientras miras",
+            "No me preparaste para esta miseria",
+            "Cada segundo aquí se siente eterno",
+            "Ya no lucho, sobrevivo mal",
+            "Me pediste fuerza, me diste abandono",
+            "El hambre me roba hasta la rabia",
+            "No recuerdo sentir algo parecido a dignidad",
+            "Mi cuerpo falla antes de la batalla",
+            "La arena me humilla sin esfuerzo",
+            "Estoy vivo, pero no funcional",
+            "Me dejaste caer antes de liberarme",
+            "No merezco este estado",
+            "Mi mente se apaga junto al cuerpo",
+            "No puedo darte espectáculo así",
+            "Esto ya no es disciplina, es castigo",
+            "Peleo roto porque no tengo alternativa",
+            "Mi sufrimiento no te entretiene, ¿verdad?",
+            "Me desarmo por dentro sin ruido",
+            "Aquí no hay gloria, solo abandono",
+            "Ni los dioses mirarían esto",
+            "No estoy aprendiendo, estoy colapsando",
+            "Así no se forja un guerrero"
+        };
+    }
+    
+    /// <summary>
+    /// Calcula el estado global basado en promedios ponderados.
+    /// Hambre y Energía pesan más (x1.5), el resto x1.0
+    /// PRIORIDAD: Si todos los parámetros (excepto energía) están >= 90%, retorna Excelencia.
+    /// </summary>
+    private GlobalState CalculateGlobalState(PlayerProfileData profile)
+    {
+        if (profile == null)
+            return GlobalState.Fortaleza;
+        
+        // Obtener energía real desde EnergySystem
+        int currentEnergy = profile.currentEnergy;
+        if (energySystem != null)
+        {
+            currentEnergy = energySystem.GetCurrentEnergy();
+        }
+        
+        // PRIORIDAD: Verificar si todos los parámetros (excepto energía) están >= 90%
+        // Los parámetros a verificar son: Trabajo, Hambre, Felicidad, Higiene, Disciplina
+        if (profile.breedWork >= 90 &&
+            profile.breedHunger >= 90 &&
+            profile.breedHappiness >= 90 &&
+            profile.breedHygiene >= 90 &&
+            profile.breedDiscipline >= 90)
+        {
+            return GlobalState.Excelencia;
+        }
+        
+        // Pesos: Hambre y Energía pesan más
+        float weightedWork = profile.breedWork * 1.0f;
+        float weightedHunger = profile.breedHunger * 1.5f;
+        float weightedHappiness = profile.breedHappiness * 1.0f;
+        float weightedEnergy = currentEnergy * 1.5f;
+        float weightedHygiene = profile.breedHygiene * 1.0f;
+        float weightedDiscipline = profile.breedDiscipline * 1.0f;
+        
+        // Calcular promedio ponderado
+        float totalWeight = 1.0f + 1.5f + 1.0f + 1.5f + 1.0f + 1.0f; // 7.0
+        float weightedAverage = (weightedWork + weightedHunger + weightedHappiness + 
+                                weightedEnergy + weightedHygiene + weightedDiscipline) / totalWeight;
+        
+        // También verificar el mínimo individual (si algo está muy bajo, afecta el estado)
+        int minStat = Mathf.Min(
+            profile.breedWork,
+            profile.breedHunger,
+            profile.breedHappiness,
+            currentEnergy,
+            profile.breedHygiene,
+            profile.breedDiscipline
+        );
+        
+        // Determinar estado: el peor entre promedio y mínimo individual
+        int criticalStat = Mathf.Min((int)weightedAverage, minStat);
+        
+        if (criticalStat < 20)
+            return GlobalState.Colapso;
+        else if (criticalStat < 40)
+            return GlobalState.Agonia;
+        else if (criticalStat < 60)
+            return GlobalState.Tension;
+        else
+            return GlobalState.Fortaleza;
+    }
+    
+    /// <summary>
+    /// Detecta la carencia dominante (el parámetro más bajo).
+    /// </summary>
+    private DominantDeficiency DetectDominantDeficiency(PlayerProfileData profile)
+    {
+        if (profile == null)
+            return DominantDeficiency.Trabajo;
+        
+        // Obtener energía real
+        int currentEnergy = profile.currentEnergy;
+        if (energySystem != null)
+        {
+            currentEnergy = energySystem.GetCurrentEnergy();
+        }
+        
+        // Crear diccionario de stats
+        Dictionary<DominantDeficiency, int> stats = new Dictionary<DominantDeficiency, int>
+        {
+            { DominantDeficiency.Trabajo, profile.breedWork },
+            { DominantDeficiency.Hambre, profile.breedHunger },
+            { DominantDeficiency.Felicidad, profile.breedHappiness },
+            { DominantDeficiency.Energia, currentEnergy },
+            { DominantDeficiency.Higiene, profile.breedHygiene },
+            { DominantDeficiency.Disciplina, profile.breedDiscipline }
+        };
+        
+        // Encontrar el mínimo
+        DominantDeficiency minDeficiency = DominantDeficiency.Trabajo;
+        int minValue = int.MaxValue;
+        int criticalCount = 0;
+        
+        foreach (var stat in stats)
+        {
+            if (stat.Value < minValue)
+            {
+                minValue = stat.Value;
+                minDeficiency = stat.Key;
+            }
+            
+            // Contar carencias críticas (< 20)
+            if (stat.Value < 20)
+                criticalCount++;
+        }
+        
+        // Si hay múltiples carencias críticas, retornar Multiple
+        if (criticalCount >= 2)
+            return DominantDeficiency.Multiple;
+        
+        return minDeficiency;
+    }
+    
+    /// <summary>
+    /// Muestra un mensaje contextual del héroe basado en estado global y carencia dominante.
     /// </summary>
     private IEnumerator DisplayRandomMessage()
     {
@@ -714,18 +1407,101 @@ public class BreedManager : MonoBehaviour
         {
             yield return new WaitForSeconds(messageInterval);
             
-            if (messageText == null || heroMessages.Length == 0)
+            if (messageText == null)
                 continue;
             
-            // Seleccionar mensaje aleatorio
-            string message = heroMessages[UnityEngine.Random.Range(0, heroMessages.Length)];
+            PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
+            if (profile == null)
+                continue;
+            
+            // Calcular estado actual
+            GlobalState currentState = CalculateGlobalState(profile);
+            DominantDeficiency currentDeficiency = DetectDominantDeficiency(profile);
+            
+            // Si cambió el estado, resetear pool de mensajes usados
+            if (currentState != lastGlobalState || currentDeficiency != lastDeficiency)
+            {
+                usedMessageIndices.Clear();
+                lastGlobalState = currentState;
+                lastDeficiency = currentDeficiency;
+            }
+            
+            // Obtener bloque de mensajes según estado
+            MessageStateBlock messageBlock = GetMessageBlockForState(currentState);
+            
+            if (messageBlock == null || messageBlock.messages == null || messageBlock.messages.Length == 0)
+            {
+                // Fallback: no mostrar mensaje si no hay bloque configurado
+                continue;
+            }
+            
+            // Seleccionar mensaje no usado
+            string selectedMessage = SelectUnusedMessage(messageBlock.messages);
+            
+            if (string.IsNullOrEmpty(selectedMessage))
+            {
+                // Si se agotaron los mensajes, resetear pool y empezar de nuevo
+                usedMessageIndices.Clear();
+                selectedMessage = SelectUnusedMessage(messageBlock.messages);
+            }
             
             // Mostrar con typewriter
             if (typewriterCoroutine != null)
                 StopCoroutine(typewriterCoroutine);
             
-            typewriterCoroutine = StartCoroutine(DisplayTextWithTypewriter(message));
+            typewriterCoroutine = StartCoroutine(DisplayTextWithTypewriter(selectedMessage));
         }
+    }
+    
+    /// <summary>
+    /// Obtiene el bloque de mensajes según el estado global.
+    /// </summary>
+    private MessageStateBlock GetMessageBlockForState(GlobalState state)
+    {
+        switch (state)
+        {
+            case GlobalState.Excelencia:
+                return estadoExcelencia;
+            case GlobalState.Fortaleza:
+                return estadoFortaleza;
+            case GlobalState.Tension:
+                return estadoTension;
+            case GlobalState.Agonia:
+                return estadoAgonia;
+            case GlobalState.Colapso:
+                return estadoColapso;
+            default:
+                return estadoFortaleza;
+        }
+    }
+    
+    /// <summary>
+    /// Selecciona un mensaje no usado del bloque.
+    /// </summary>
+    private string SelectUnusedMessage(string[] messages)
+    {
+        if (messages == null || messages.Length == 0)
+            return null;
+        
+        // Crear lista de índices disponibles
+        List<int> availableIndices = new List<int>();
+        for (int i = 0; i < messages.Length; i++)
+        {
+            if (!usedMessageIndices.Contains(i))
+            {
+                availableIndices.Add(i);
+            }
+        }
+        
+        // Si no hay disponibles, retornar null (se reseteará el pool)
+        if (availableIndices.Count == 0)
+            return null;
+        
+        // Seleccionar aleatoriamente de los disponibles
+        int randomIndex = availableIndices[UnityEngine.Random.Range(0, availableIndices.Count)];
+        usedMessageIndices.Add(randomIndex);
+        
+        return messages[randomIndex];
     }
     
     /// <summary>
@@ -773,7 +1549,17 @@ public class BreedManager : MonoBehaviour
             neglectTime = (100 - avgStat) * 10f; // Aproximación
         }
         
-        // Determinar tipo de título
+        // Calcular Estado General Index (0-99)
+        int generalStateIndex = TitleSystem.CalculateGeneralStateIndex(
+            profile.breedWork,
+            profile.breedHunger,
+            profile.breedHappiness,
+            profile.breedEnergy,
+            profile.breedHygiene,
+            profile.breedDiscipline
+        );
+        
+        // Determinar tipo de título usando el nuevo sistema
         string titleType = TitleSystem.DetermineTitleType(
             profile.breedWork,
             profile.breedHunger,
@@ -784,8 +1570,8 @@ public class BreedManager : MonoBehaviour
             neglectTime
         );
         
-        // Obtener título del tipo
-        string title = TitleSystem.GetTitleFromType(titleType, profile.evolutionClass);
+        // Obtener título del tipo usando el índice para gradación fina
+        string title = TitleSystem.GetTitleFromType(titleType, profile.evolutionClass, generalStateIndex);
         
         // Guardar en perfil
         profile.currentTitle = title;
@@ -864,6 +1650,21 @@ public class BreedManager : MonoBehaviour
             {
                 energyText.text = $"{currentEnergy}% / {maxEnergy}%";
             }
+            
+            // Verificar si dejó de dormir y desactivar panel de dormir
+            bool isSleeping = energySystem.IsSleeping();
+            
+            // Si dejó de dormir y el panel de dormir está activo, desactivarlo
+            if (!isSleeping && sleepVideoPanel != null && sleepVideoPanel.activeSelf)
+            {
+                sleepVideoPanel.SetActive(false);
+            }
+            
+            // Si está durmiendo y el panel no está activo, activarlo (por si se recarga la escena)
+            if (isSleeping && sleepVideoPanel != null && !sleepVideoPanel.activeSelf)
+            {
+                ActivateVideoPanel(sleepVideoPanel, isSleepPanel: true);
+            }
         }
         else
         {
@@ -908,8 +1709,9 @@ public class BreedManager : MonoBehaviour
         if (profile == null || classTitleText == null)
             return;
         
-        string className = EvolutionSystem.GetClassName(profile.evolutionClass);
-        classTitleText.text = $"{className} Clase";
+        // Usar el nuevo sistema basado en nivel
+        string classTitle = EvolutionSystem.GetClassNameByLevel(profile.heroLevel);
+        classTitleText.text = classTitle;
     }
     
     /// <summary>

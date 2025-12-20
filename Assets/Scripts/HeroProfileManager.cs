@@ -43,6 +43,9 @@ public class HeroProfileManager : MonoBehaviour
     [Tooltip("Texto que muestra el total de peleas perdidas")]
     [SerializeField] private TextMeshProUGUI totalLostFightsText;
 
+    [Tooltip("Texto que muestra el título de clase del héroe (Primera Clase, Segunda Clase, etc.)")]
+    [SerializeField] private TextMeshProUGUI classTitleText;
+
     [Header("UI de Experiencia del Héroe")]
     [Tooltip("Slider que muestra la experiencia del héroe")]
     [SerializeField] private Slider heroExperienceSlider;
@@ -181,10 +184,6 @@ public class HeroProfileManager : MonoBehaviour
 
     // Diccionario para guardar los sprites por defecto de cada slot
     private Dictionary<Image, Sprite> defaultSlotSprites = new Dictionary<Image, Sprite>();
-    
-    // Colores para slots vacíos y ocupados
-    private static readonly Color EMPTY_SLOT_COLOR = new Color(0.5f, 0.5f, 0.5f, 1f); // Gris
-    private static readonly Color OCCUPIED_SLOT_COLOR = Color.white; // Blanco FFFFFF
 
     private void Start()
     {
@@ -867,9 +866,6 @@ public class HeroProfileManager : MonoBehaviour
             
             if (itemInstance != null && itemInstance.IsValid())
             {
-                // Aplicar color blanco para slot ocupado
-                slotImage.color = OCCUPIED_SLOT_COLOR;
-                
                 // SOLUCIÓN ESTRUCTURAL: Siempre obtener el sprite fresco desde ItemData (como una "instancia/clon" fresca)
                 // Esto asegura que el sprite se recargue incluso si Unity lo limpió al desactivar el panel
                 Sprite itemSprite = itemInstance.GetItemSprite();
@@ -919,13 +915,11 @@ public class HeroProfileManager : MonoBehaviour
                     // Si el item no tiene sprite, limpiar para mostrar el sprite por defecto
                     slotImage.sprite = null;
                     slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
-                    // Mantener color blanco para slot ocupado (aunque no tenga sprite)
-                    slotImage.color = OCCUPIED_SLOT_COLOR;
                 }
             }
             else
             {
-                // Slot vacío: restaurar el sprite por defecto del Image y aplicar color gris
+                // Slot vacío: restaurar el sprite por defecto del Image en lugar de poner null
                 if (defaultSlotSprites.ContainsKey(slotImage))
                 {
                     // Restaurar el sprite por defecto que tenía el Image al inicio
@@ -938,9 +932,6 @@ public class HeroProfileManager : MonoBehaviour
                     // No poner null para evitar que se borre el sprite del Image
                 }
                 slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
-                
-                // Aplicar color gris para slot vacío
-                slotImage.color = EMPTY_SLOT_COLOR;
             }
         }
 
@@ -1268,6 +1259,26 @@ public class HeroProfileManager : MonoBehaviour
         {
             totalLostFightsText.text = profile.totalLostFights.ToString();
         }
+
+        // Actualizar título de clase
+        RefreshClassTitle();
+    }
+
+    /// <summary>
+    /// Actualiza el título de clase del héroe.
+    /// </summary>
+    private void RefreshClassTitle()
+    {
+        if (GameDataManager.Instance == null || classTitleText == null)
+            return;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        if (profile == null)
+            return;
+
+        // Usar el nuevo sistema basado en nivel
+        string classTitle = EvolutionSystem.GetClassNameByLevel(profile.heroLevel);
+        classTitleText.text = classTitle;
     }
 
     /// <summary>
@@ -1305,6 +1316,9 @@ public class HeroProfileManager : MonoBehaviour
         {
             heroLevelText.text = $"Nivel {level}";
         }
+
+        // Actualizar título de clase (por si evolucionó)
+        RefreshClassTitle();
     }
 
     /// <summary>
