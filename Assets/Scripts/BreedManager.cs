@@ -282,6 +282,7 @@ public class BreedManager : MonoBehaviour
     private Animator animationTargetAnimator = null;
     private SpriteRenderer animationSpriteRenderer = null;
     private Image animationImage = null;
+    private bool isVoiceEnabled = true; // Estado del audio (activado/desactivado)
     
     
     private void Start()
@@ -342,7 +343,7 @@ public class BreedManager : MonoBehaviour
         // Si el panel General Breed está activo al inicio, activar el visualizador
         if (panelGeneralBreed != null && panelGeneralBreed.activeSelf)
         {
-            if (audioVisualizer != null)
+            if (audioVisualizer != null && isVoiceEnabled)
             {
                 audioVisualizer.EnableVisualizer();
             }
@@ -384,6 +385,36 @@ public class BreedManager : MonoBehaviour
     /// <summary>
     /// Se llama cuando el GameObject se desactiva (cuando se cierra el panel General Breed).
     /// </summary>
+    /// <summary>
+    /// Alterna el estado de la voz (activado/desactivado)
+    /// </summary>
+    private void ToggleVoice()
+    {
+        isVoiceEnabled = !isVoiceEnabled;
+        
+        if (audioVisualizer != null)
+        {
+            if (isVoiceEnabled)
+            {
+                audioVisualizer.EnableVisualizer();
+                // Opcional: Cambiar el color o icono del botón para indicar que está activado
+                if (voiceToggleButton != null && voiceToggleButton.image != null)
+                {
+                    voiceToggleButton.image.color = Color.white;
+                }
+            }
+            else
+            {
+                audioVisualizer.DisableVisualizer();
+                // Opcional: Cambiar el color o icono del botón para indicar que está desactivado
+                if (voiceToggleButton != null && voiceToggleButton.image != null)
+                {
+                    voiceToggleButton.image.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+                }
+            }
+        }
+    }
+
     private void OnDisable()
     {
         // Resetear pool de mensajes al cerrar el panel
@@ -425,8 +456,8 @@ public class BreedManager : MonoBehaviour
             // Abrir el panel de animaciones y iniciar las animaciones
             OpenAnimationPanel();
             
-            // Activar el visualizador de audio
-            if (audioVisualizer != null)
+            // Activar el visualizador de audio si está habilitado
+            if (audioVisualizer != null && isVoiceEnabled)
             {
                 audioVisualizer.EnableVisualizer();
             }
@@ -504,6 +535,10 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private void SetupButtons()
     {
+        // Configurar botón de voz
+        if (voiceToggleButton != null)
+            voiceToggleButton.onClick.AddListener(ToggleVoice);
+            
         if (eatButton != null)
             eatButton.onClick.AddListener(OnEatButtonClicked);
         if (studyButton != null)
@@ -1597,8 +1632,8 @@ public class BreedManager : MonoBehaviour
             // Solo reproducir sonido si el mensaje cambió (una vez por cambio de texto)
             if (selectedMessage != lastDisplayedMessage)
             {
-                // Reproducir sonido aleatorio solo cuando cambia el texto
-                if (audioVisualizer != null)
+                // Reproducir sonido aleatorio solo cuando cambia el texto y el audio está habilitado
+                if (audioVisualizer != null && isVoiceEnabled)
                 {
                     audioVisualizer.PlayRandomSound();
                 }
