@@ -240,6 +240,9 @@ public class HeroProfileManager : MonoBehaviour
             SubscribeToEquippedItemsLevelChanges();
         }
 
+        // Guardar los sprites por defecto de todos los slots antes de cualquier modificación
+        SaveDefaultSlotSprites();
+
         // Refrescar toda la UI al inicio (después de un frame para asegurar orden)
         StartCoroutine(RefreshAfterFrame());
 
@@ -259,9 +262,6 @@ public class HeroProfileManager : MonoBehaviour
         
         // Actualizar experiencia al inicio
         RefreshHeroExperience();
-
-        // Guardar los sprites por defecto de todos los slots antes de cualquier modificación
-        SaveDefaultSlotSprites();
     }
 
     /// <summary>
@@ -748,6 +748,7 @@ public class HeroProfileManager : MonoBehaviour
     /// </summary>
     private void OnEquipmentChanged()
     {
+        RefreshAllEquipmentSlots();
         RefreshHeroStats(); // Actualizar características cuando cambia el equipo
     }
 
@@ -930,6 +931,7 @@ public class HeroProfileManager : MonoBehaviour
                     // Si no se guardó un sprite por defecto, no modificar el sprite actual
                     // Esto permite que el sprite configurado en Unity se mantenga
                     // No poner null para evitar que se borre el sprite del Image
+                    slotImage.sprite = null;
                 }
                 slotImage.enabled = true; // Mantener habilitado para mostrar sprite por defecto
             }

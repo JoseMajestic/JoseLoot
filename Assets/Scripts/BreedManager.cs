@@ -246,6 +246,8 @@ public class BreedManager : MonoBehaviour
     private GlobalState lastGlobalState = GlobalState.Excelencia;
     private DominantDeficiency lastDeficiency = DominantDeficiency.Trabajo;
     private string lastDisplayedMessage = ""; // Para detectar cuando cambia el mensaje
+
+    private const string SleepingMessage = "El Cazador está durmiendo...";
     
     // ===== CONFIGURACIÓN =====
     [Header("Configuración")]
@@ -641,6 +643,8 @@ public class BreedManager : MonoBehaviour
         
         // Iniciar sueño
         energySystem.StartSleeping();
+
+        ShowSleepingMessageImmediate();
         
         // Activar panel de video de dormir (especial: se mantiene visible)
         ActivateVideoPanel(sleepVideoPanel, isSleepPanel: true);
@@ -650,6 +654,18 @@ public class BreedManager : MonoBehaviour
         
         // Actualizar estado de botones (el botón de dormir se deshabilitará)
         UpdateActionButtonsState();
+    }
+
+    private void ShowSleepingMessageImmediate()
+    {
+        if (messageText == null)
+            return;
+
+        if (typewriterCoroutine != null)
+            StopCoroutine(typewriterCoroutine);
+
+        lastDisplayedMessage = SleepingMessage;
+        typewriterCoroutine = StartCoroutine(DisplayTextWithTypewriter(SleepingMessage));
     }
     
     /// <summary>
@@ -1593,6 +1609,22 @@ public class BreedManager : MonoBehaviour
             
             if (messageText == null)
                 continue;
+
+            // Mientras está durmiendo, mantener un mensaje fijo y no rotar frases ni reproducir voces
+            if (energySystem != null && energySystem.IsSleeping())
+            {
+                if (SleepingMessage != lastDisplayedMessage)
+                {
+                    lastDisplayedMessage = SleepingMessage;
+
+                    if (typewriterCoroutine != null)
+                        StopCoroutine(typewriterCoroutine);
+
+                    typewriterCoroutine = StartCoroutine(DisplayTextWithTypewriter(SleepingMessage));
+                }
+
+                continue;
+            }
             
             PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
             if (profile == null)
@@ -2074,6 +2106,9 @@ public class BreedManager : MonoBehaviour
                 if (previousIsSleeping && !isSleeping)
                 {
                     shouldUpdateButton = true;
+
+                    usedMessageIndices.Clear();
+                    lastDisplayedMessage = "";
                 }
                 
                 if (shouldUpdateButton)

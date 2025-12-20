@@ -13,6 +13,9 @@ public class OptionsManager : MonoBehaviour
     [Header("Configuración de Audio")]
     [Tooltip("Fuente de audio para la música")]
     [SerializeField] private AudioSource musicSource;
+
+    [Tooltip("Mixer Group de salida para la música (opcional)")]
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
     
     [Tooltip("Lista de pistas de música para reproducir aleatoriamente")]
     [SerializeField] private List<AudioClip> musicTracks = new List<AudioClip>();
@@ -67,6 +70,16 @@ public class OptionsManager : MonoBehaviour
                 musicSource = gameObject.AddComponent<AudioSource>();
                 musicSource.loop = false;
                 musicSource.playOnAwake = false;
+            }
+
+            // Asegurar que la música tenga prioridad alta para que no sea “culled” por límite de voces
+            // (en Unity, menor número = más prioridad)
+            musicSource.priority = 0;
+            musicSource.spatialBlend = 0f;
+
+            if (musicMixerGroup != null)
+            {
+                musicSource.outputAudioMixerGroup = musicMixerGroup;
             }
             
             // Cargar preferencias guardadas
@@ -332,6 +345,24 @@ public class OptionsManager : MonoBehaviour
             if (GameDataManager.Instance != null)
             {
                 GameDataManager.Instance.LoadPlayerProfile(silent: false);
+
+                // Reset completo de objetos: inventario + equipo.
+                // La forja se alimenta del inventario/equipo, así que quedará vacía al refrescar.
+                InventoryManager inventoryManager = GameDataManager.Instance.InventoryManager;
+                if (inventoryManager != null)
+                {
+                    inventoryManager.ClearInventory();
+                    inventoryManager.NotifyInventoryChanged();
+                }
+
+                EquipmentManager equipmentManager = GameDataManager.Instance.EquipmentManager;
+                if (equipmentManager != null)
+                {
+                    equipmentManager.ClearAllEquippedItems();
+                }
+
+                // Persistir el estado vacío.
+                GameDataManager.Instance.SavePlayerProfile();
             }
         }
         finally

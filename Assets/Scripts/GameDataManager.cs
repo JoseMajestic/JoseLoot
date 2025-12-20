@@ -282,6 +282,19 @@ public class GameDataManager : MonoBehaviour
         else
         {
             playerProfile = new PlayerProfileData();
+
+            // Perfil nuevo: limpiar el estado en memoria para evitar equipo/objetos fantasma.
+            if (equipmentManager != null)
+            {
+                equipmentManager.ClearAllEquippedItems();
+            }
+
+            if (inventoryManager != null)
+            {
+                inventoryManager.ClearInventory();
+                inventoryManager.NotifyInventoryChanged();
+            }
+
             // Si es un perfil nuevo, usar las monedas iniciales del Inspector
             if (playerMoney != null)
             {

@@ -11,6 +11,9 @@ public class AudioSpectrumVisualizer : MonoBehaviour
     [Header("Configuración de Audio")]
     [Tooltip("AudioSource que reproducirá los sonidos")]
     [SerializeField] private AudioSource audioSource;
+
+    [Tooltip("Mixer Group de salida para las voces (opcional)")]
+    [SerializeField] private UnityEngine.Audio.AudioMixerGroup voiceMixerGroup;
     
     [Tooltip("Pool de sonidos que se pueden reproducir")]
     [SerializeField] private AudioClip[] audioClips;
@@ -82,6 +85,16 @@ public class AudioSpectrumVisualizer : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
+        }
+
+        // Configuración recomendada para que las voces no corten la música por límite de voces
+        // (en Unity, menor número = más prioridad)
+        audioSource.priority = 200;
+        audioSource.spatialBlend = 0f;
+
+        if (voiceMixerGroup != null)
+        {
+            audioSource.outputAudioMixerGroup = voiceMixerGroup;
         }
         
         // Inicializar barras

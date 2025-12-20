@@ -177,6 +177,26 @@ public class EquipmentManager : MonoBehaviour
         return item;
     }
 
+    public void ClearAllEquippedItems()
+    {
+        foreach (EquipmentSlotType slot in System.Enum.GetValues(typeof(EquipmentSlotType)))
+        {
+            ItemInstance item = GetEquippedItem(slot);
+            if (item != null && item.IsValid())
+            {
+                SetEquippedItem(slot, null);
+                OnItemUnequipped?.Invoke(slot, item);
+            }
+            else
+            {
+                SetEquippedItem(slot, null);
+            }
+        }
+
+        selectedItemForEquip = null;
+        OnEquipmentChanged?.Invoke();
+    }
+
     /// <summary>
     /// Obtiene el ItemInstance equipado en el slot especificado.
     /// </summary>
