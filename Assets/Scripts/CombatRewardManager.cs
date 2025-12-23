@@ -33,10 +33,18 @@ public class CombatRewardManager : MonoBehaviour
     
     [Tooltip("Tiempo que se muestra el panel de recompensas (segundos)")]
     [SerializeField] private float rewardPanelDisplayTime = 3f;
+
+    private bool waitingForAccept = false;
+    private List<ItemInstance> pendingRewards = null;
     
     // Eventos
     public System.Action<List<ItemInstance>> OnRewardsGenerated;
     public System.Action OnRewardsClaimed;
+
+    public void AcceptRewards()
+    {
+        waitingForAccept = false;
+    }
     
     /// <summary>
     /// Procesa las recompensas de combate para un enemigo vencido.
@@ -127,6 +135,9 @@ public class CombatRewardManager : MonoBehaviour
     /// </summary>
     private System.Collections.IEnumerator ShowRewardPanelCoroutine(List<ItemInstance> rewards)
     {
+        pendingRewards = rewards;
+        waitingForAccept = true;
+
         if (rewardPanel != null)
         {
             rewardPanel.SetActive(true);
@@ -141,9 +152,6 @@ public class CombatRewardManager : MonoBehaviour
                     Destroy(child.gameObject);
                 }
                 
-                // Esperar un frame para asegurar que el panel esté estable
-                yield return null;
-                
                 // Crear slots para los nuevos objetos
                 foreach (var reward in rewards)
                 {
@@ -153,8 +161,8 @@ public class CombatRewardManager : MonoBehaviour
                     {
                         GameObject slotObj = Instantiate(rewardSlotPrefab, rewardSlotsContainer);
                         
-                        // Esperar un frame antes de configurar
-                        yield return null;
+                        // Pequeño delay para permitir inicialización de componentes UI
+                        yield return new WaitForSeconds(0.1f);
                         
                         // Configurar el slot (necesitarías un RewardSlot component)
                         RewardSlot slot = slotObj.GetComponent<RewardSlot>();
@@ -178,16 +186,24 @@ public class CombatRewardManager : MonoBehaviour
             {
                 Debug.LogError("CombatRewardManager: rewardSlotsContainer es null");
             }
-            
-            // Esperar el tiempo configurado
-            yield return new WaitForSeconds(rewardPanelDisplayTime);
-            
-            // Ocultar panel
+        }
+
+        while (waitingForAccept)
+        {
+            yield return null;
+        }
+
+        if (rewardPanel != null)
+        {
             rewardPanel.SetActive(false);
         }
-        
-        // Añadir objetos al inventario
-        AddRewardsToInventory(rewards);
+
+        if (pendingRewards != null)
+        {
+            AddRewardsToInventory(pendingRewards);
+        }
+
+        pendingRewards = null;
     }
     
     /// <summary>

@@ -16,16 +16,21 @@ MonoBehaviour:
   description: "Una ara\xF1a gigante con veneno letal. Sus mordeduras pueden ser
     peligrosas."
   enemySprite: {fileID: 21300000, guid: 5a539b07380513c43a3c400c3a057985, type: 3}
-  hp: 100
+  hp: 1
   ataque: 12
   defensa: 5
-  velocidadAtaque: 11
+  velocidadAtaque: 1
   ataqueCritico: 4
   danoCritico: 5
   suerte: 2
   destreza: 3
   rewardCoins: 55
   experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 1
+    allowedTiers: 00000000
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 1
   level: 2
   availableAttacks:

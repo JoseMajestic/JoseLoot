@@ -52,6 +52,9 @@ public class CombatManager : MonoBehaviour
     [Header("Panel de Combate")]
     [Tooltip("Panel principal de combate (se cierra al aceptar victoria/derrota)")]
     [SerializeField] private GameObject combatPanel;
+
+    [Tooltip("Panel overlay para bloquear input durante la ronda y al finalizar el combate (opcional)")]
+    [SerializeField] private GameObject combatInputBlockerPanel;
     
     [Tooltip("Panel General Gym que se abre cuando se cierra el panel de combate (opcional)")]
     [SerializeField] private GameObject panelGeneralGym;
@@ -268,6 +271,16 @@ public class CombatManager : MonoBehaviour
         
         // Resetear navegación de paneles al estado inicial
         ResetPanelNavigation();
+
+        SetCombatInputBlocked(false);
+    }
+
+    private void SetCombatInputBlocked(bool isBlocked)
+    {
+        if (combatInputBlockerPanel != null)
+        {
+            combatInputBlockerPanel.SetActive(isBlocked);
+        }
     }
 
     /// <summary>
@@ -1335,6 +1348,8 @@ public class CombatManager : MonoBehaviour
         playerLuckUsedThisRound = false;
         enemyLuckUsedThisRound = false;
 
+        SetCombatInputBlocked(true);
+
         // SOLUCIÓN: Limpiar texto del ataque seleccionado al iniciar la ronda
         // Los detalles del ataque ya no son relevantes, ahora se mostrará información de la ronda
         if (selectedAttackDetailsText != null)
@@ -1482,6 +1497,8 @@ public class CombatManager : MonoBehaviour
         {
             combatButton.interactable = true;
         }
+
+        SetCombatInputBlocked(false);
         
         // Mostrar texto de siguiente ronda
         if (roundDetailsText != null && combatTexts != null)
@@ -2870,6 +2887,8 @@ public class CombatManager : MonoBehaviour
     {
         combatInProgress = false;
 
+        SetCombatInputBlocked(true);
+
         // Reproducir animación KO del enemigo
         if (animationManager != null)
         {
@@ -2934,6 +2953,12 @@ public class CombatManager : MonoBehaviour
         // Guardar progreso
         SaveProgress();
 
+        // Desactivar botón de combate durante victoria/recompensas
+        if (combatButton != null)
+        {
+            combatButton.interactable = false;
+        }
+
         // Mostrar panel de victoria
         if (victoryPanel != null)
         {
@@ -2953,6 +2978,8 @@ public class CombatManager : MonoBehaviour
     private IEnumerator OnPlayerDefeat()
     {
         combatInProgress = false;
+
+        SetCombatInputBlocked(true);
 
         // Reproducir animación KO del jugador
         if (animationManager != null)
@@ -2979,6 +3006,12 @@ public class CombatManager : MonoBehaviour
         {
             GameDataManager.Instance.IncrementTotalClashes();
             GameDataManager.Instance.IncrementTotalLostFights();
+        }
+
+        // Desactivar botón de combate durante derrota
+        if (combatButton != null)
+        {
+            combatButton.interactable = false;
         }
 
         // Mostrar panel de derrota
@@ -3039,6 +3072,13 @@ public class CombatManager : MonoBehaviour
             animationManager.SetEnemyIdle();
         }
 
+        if (combatRewardManager != null)
+        {
+            combatRewardManager.AcceptRewards();
+        }
+
+        SetCombatInputBlocked(false);
+
         // Cerrar panel de victoria
         if (victoryPanel != null)
         {
@@ -3071,6 +3111,8 @@ public class CombatManager : MonoBehaviour
             defeatPanel.SetActive(false);
         }
 
+        SetCombatInputBlocked(false);
+
         // Cerrar panel de combate
         CloseCombatPanel();
     }
@@ -3088,6 +3130,8 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private void CloseCombatPanel()
     {
+        SetCombatInputBlocked(false);
+
         // Ocultar todas las animaciones antes de cerrar el panel
         if (animationManager != null)
         {

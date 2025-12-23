@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Reward Tier Database
   m_EditorClassIdentifier: Assembly-CSharp::RewardTierDatabase
   tierCount: 5
-  tier1Items: []
+  tier1Items:
+  - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
   tier2Items: []
   tier3Items: []
   tier4Items: []
