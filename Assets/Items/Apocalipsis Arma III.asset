@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Arma III
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Arma III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 2045339469, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos.
   price: 2562
   hp: 0

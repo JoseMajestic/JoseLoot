@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Armadura I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Armadura I
-  itemSprite: {fileID: 21300000, guid: cc74045d457f07c4a9fc148349596bad, type: 3}
+  itemSprite: {fileID: 663641111, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: La destruccion total es el unico lenguaje que este equipo conoce bien.
   price: 1464
   hp: 305

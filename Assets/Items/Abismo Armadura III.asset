@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Armadura III
   m_EditorClassIdentifier: 
   itemName: Abismo Armadura III
-  itemSprite: {fileID: 21300000, guid: bfbf8683b0ace1649bd2a739577f8b94, type: 3}
+  itemSprite: {fileID: -935863778, guid: 789a7e15e4c69a649b3d98baf6c45953, type: 3}
   description: El precio de este poder es alto pero la recompensa es absoluta.
   price: 2285
   hp: 340

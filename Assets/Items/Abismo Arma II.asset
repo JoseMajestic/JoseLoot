@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Arma II
   m_EditorClassIdentifier: 
   itemName: Abismo Arma II
-  itemSprite: {fileID: 21300000, guid: f710fb2c940b8744b92951d2f1fad80c, type: 3}
+  itemSprite: {fileID: -87354133, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Las llamas del infierno arden eternamente dentro de cada pieza de
     este set.
   price: 2448

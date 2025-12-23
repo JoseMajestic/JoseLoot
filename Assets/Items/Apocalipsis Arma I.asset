@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Arma I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Arma I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -187596327, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Creado para sobrevivir cuando los cuatro jinetes cabalguen sobre la
     tierra.
   price: 1830

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Cinturon I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1223201103, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: Los profetas temblaron al ver las visiones de quien portaria este
     equipo.
   price: 1464

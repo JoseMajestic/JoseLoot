@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Botas I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 716059922, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
   description: Forjado para el guerrero que permanecera de pie cuando todo haya caido.
   price: 1464
   hp: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Guantes III
   m_EditorClassIdentifier: 
   itemName: Abismo Guantes III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1734604687, guid: b75acc8c8b92227498206e3c621d665d, type: 3}
   description: Quien lo porte sentira el susurro de mil demonios guiando cada golpe.
   price: 2285
   hp: 0

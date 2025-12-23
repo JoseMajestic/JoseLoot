@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Abismo Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 866176007, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: El anillo del abismo, que corrompe todo lo que toca con su poder demoniaco.
   price: 1600
   hp: 75

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Escudo III
   m_EditorClassIdentifier: 
   itemName: Abismo Escudo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 921334409, guid: 289dd331f5faee84c9ba7a3d5312d6c5, type: 3}
   description: Solo los mas oscuros y poderosos pueden dominar este equipo del abismo.
   price: 2285
   hp: 204

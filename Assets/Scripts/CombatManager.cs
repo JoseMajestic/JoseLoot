@@ -151,6 +151,10 @@ public class CombatManager : MonoBehaviour
     [Tooltip("Referencia al AnimationManager para gestionar animaciones")]
     [SerializeField] private AnimationManager animationManager;
     
+    [Header("Recompensas de Combate")]
+    [Tooltip("Gestor de recompensas de combate (añade objetos además de monedas)")]
+    [SerializeField] private CombatRewardManager combatRewardManager;
+    
     [Header("Paneles de Estados Alterados - Jugador")]
     [Tooltip("Panel que se muestra cuando el jugador tiene buff de ataque activo")]
     [SerializeField] private GameObject playerAttackBuffPanel;
@@ -2890,6 +2894,12 @@ public class CombatManager : MonoBehaviour
         if (playerMoney != null)
         {
             playerMoney.AddMoney(rewardCoins);
+        }
+
+        // Procesar recompensas de objetos
+        if (combatRewardManager != null && currentEnemy != null)
+        {
+            combatRewardManager.ProcessCombatRewards(currentEnemy, rewardCoins);
         }
 
         // Marcar enemigo como derrotado (para desbloqueo secuencial)

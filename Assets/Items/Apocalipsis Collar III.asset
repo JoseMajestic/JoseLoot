@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1274223644, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: "El collar del portador del apocalipsis, s\xEDmbolo del fin y el principio."
   price: 2160
   hp: 168

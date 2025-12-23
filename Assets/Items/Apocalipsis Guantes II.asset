@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Guantes II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Forjado en los fuegos del fin del mundo donde todo sera cenizas.
   price: 1757
   hp: 0

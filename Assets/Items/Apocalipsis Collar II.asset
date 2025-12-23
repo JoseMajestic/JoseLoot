@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Collar II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Collar II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 542248357, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Cada medallon representa una era que termino y otra que comenzo.
   price: 1080
   hp: 112

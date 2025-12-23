@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Botas II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1207809943, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
   description: Los profetas temblaron al ver las visiones de quien portaria este
     equipo.
   price: 1757

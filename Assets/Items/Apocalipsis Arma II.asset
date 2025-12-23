@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Arma II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1476414750, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Forjado para el guerrero que permanecera de pie cuando todo haya caido.
   price: 2196
   hp: 0

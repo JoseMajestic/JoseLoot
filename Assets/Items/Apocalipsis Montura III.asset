@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Montura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1905674394, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: El corcel del apocalipsis, heraldo de la destruccion y el renacimiento.
   price: 2700
   hp: 252

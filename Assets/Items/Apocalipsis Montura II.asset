@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Montura II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Montura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -734584478, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: La montura apocaliptica que cabalga sobre las cenizas del mundo.
   price: 1350
   hp: 168

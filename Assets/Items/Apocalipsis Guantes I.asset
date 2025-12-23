@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Guantes I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Guantes I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 213528807, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos.
   price: 1464
   hp: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Guantes III
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Guantes III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1912166920, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Los profetas temblaron al ver las visiones de quien portaria este
     equipo.
   price: 2050

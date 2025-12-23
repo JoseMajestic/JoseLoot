@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Escudo III
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Escudo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -426882158, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos.
   price: 2050
   hp: 183

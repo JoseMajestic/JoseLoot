@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Cinturon III
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1425903809, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos.
   price: 2050
   hp: 220

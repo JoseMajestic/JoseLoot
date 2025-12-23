@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: cd5c18880146ed3418fa7045eaa97183, type: 3}
   description: Un anillo que contiene el poder destructivo del apocalipsis.
   price: 900
   hp: 28

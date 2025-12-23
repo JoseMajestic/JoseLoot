@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Escudo I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Escudo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1739323113, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: La destruccion total es el unico lenguaje que este equipo conoce bien.
   price: 1464
   hp: 183

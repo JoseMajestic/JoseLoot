@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Arma III
   m_EditorClassIdentifier: 
   itemName: Abismo Arma III
-  itemSprite: {fileID: 21300000, guid: 85ffb4752a220124c8029678515eff7a, type: 3}
+  itemSprite: {fileID: -1765631073, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad.
   price: 2856
   hp: 0

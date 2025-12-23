@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -182863653, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Un collar forjado en el fuego del apocalipsis que arraso con todo.
   price: 1080
   hp: 56

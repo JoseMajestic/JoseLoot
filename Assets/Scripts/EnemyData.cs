@@ -50,6 +50,10 @@ public class EnemyData : ScriptableObject
     [Tooltip("Experiencia que otorga al vencer")]
     public int experienceReward = 10;
     
+    [Header("=== RECOMPENSAS DE OBJETOS ===")]
+    [Tooltip("Configuración de recompensas de objetos para este enemigo")]
+    public EnemyRewardConfig rewardConfig = new EnemyRewardConfig();
+    
     [Header("=== PROGRESO ===")]
     [Tooltip("Nivel requerido para desbloquear (0 = siempre disponible)")]
     public int requiredLevel = 0;

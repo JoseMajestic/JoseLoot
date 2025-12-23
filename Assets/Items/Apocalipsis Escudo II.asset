@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Escudo II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1661214789, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Forjado en los fuegos del fin del mundo donde todo sera cenizas.
   price: 1757
   hp: 183

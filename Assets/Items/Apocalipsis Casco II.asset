@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Casco II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Casco II
-  itemSprite: {fileID: 21300000, guid: fee02de0d599f1948b19486d6cee6036, type: 3}
+  itemSprite: {fileID: 835018598, guid: 53b5b3be4e9eb204eb6abc84b90e37ab, type: 3}
   description: Forjado para el guerrero que permanecera de pie cuando todo haya caido.
   price: 1757
   hp: 146

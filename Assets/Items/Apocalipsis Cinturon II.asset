@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Cinturon II
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Cinturon II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1321232343, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: El fin de todas las cosas comienza cuando este equipo despierta su
     poder.
   price: 1757

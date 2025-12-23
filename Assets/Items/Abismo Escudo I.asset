@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Escudo I
   m_EditorClassIdentifier: 
   itemName: Abismo Escudo I
-  itemSprite: {fileID: 21300000, guid: 26b8fbfa30e3f65498f1f5ac198eba68, type: 3}
+  itemSprite: {fileID: 1433497771, guid: 27d5a619bb10d8d4885c32fad32835a4, type: 3}
   description: Forjado en las profundidades del infierno con las almas de los condenados.
   price: 1632
   hp: 204

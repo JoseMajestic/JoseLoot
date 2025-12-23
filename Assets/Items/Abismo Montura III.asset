@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Abismo Montura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1724744423, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: El corcel del abismo, que lleva a su jinete a las mas oscuras profundidades.
   price: 2400
   hp: 225

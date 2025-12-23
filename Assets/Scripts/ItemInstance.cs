@@ -342,6 +342,14 @@ public class ItemInstance
     {
         return baseItem != null ? baseItem.itemSprite : null;
     }
+
+    /// <summary>
+    /// Obtiene la rareza del objeto (del ItemData base).
+    /// </summary>
+    public string GetRarity()
+    {
+        return baseItem != null ? baseItem.rareza : "";
+    }
 }
 
 /// <summary>

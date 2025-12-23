@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Botas III
   m_EditorClassIdentifier: 
   itemName: Abismo Botas III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 887172386, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: El precio de este poder es alto pero la recompensa es absoluta.
   price: 2285
   hp: 0

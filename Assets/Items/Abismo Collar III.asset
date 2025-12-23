@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Abismo Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1457985799, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: "El collar del se\xF1or del abismo, que otorga poder sobre las tinieblas."
   price: 1920
   hp: 150

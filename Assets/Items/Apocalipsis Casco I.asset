@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Casco I
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Casco I
-  itemSprite: {fileID: 21300000, guid: 117c10b1320a5e9489e1e51930d96ca0, type: 3}
+  itemSprite: {fileID: 21300000, guid: 87670185a7d512c449763f66ce9ffb24, type: 3}
   description: Creado para sobrevivir cuando los cuatro jinetes cabalguen sobre la
     tierra.
   price: 1464

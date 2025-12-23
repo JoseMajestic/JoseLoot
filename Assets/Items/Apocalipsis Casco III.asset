@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Casco III
   m_EditorClassIdentifier: 
   itemName: Apocalipsis Casco III
-  itemSprite: {fileID: 21300000, guid: 157bbd6e94da35542be16fe838200f9d, type: 3}
+  itemSprite: {fileID: 335060545, guid: a7c3221122991b74bbb44055684984a7, type: 3}
   description: La destruccion total es el unico lenguaje que este equipo conoce bien.
   price: 2050
   hp: 146

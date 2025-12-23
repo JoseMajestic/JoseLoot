@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apocalipsis Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Apocalipsis Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1029935866, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: El corcel del fin de los tiempos, que presencio la caida de civilizaciones.
   price: 1350
   hp: 84
