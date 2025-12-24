@@ -276,7 +276,7 @@ public class BattleManager : MonoBehaviour
         // Mostrar recompensa
         if (rewardText != null)
         {
-            rewardText.text = $"Recompensa: {enemy.rewardCoins} monedas";
+            rewardText.text = $"Recompensa: {enemy.rewardCoins} monedas\n+5% Trabajo por victoria";
         }
 
         // Actualizar UI de energía cuando se selecciona un enemigo

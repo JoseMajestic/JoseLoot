@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e33b09a512d9ad0469e2a1f982aae868, type: 3}
+  m_Name: New Story Panel Transition Node 1
+  m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
+  image: {fileID: 21300000, guid: ca3b6c27caad8124d82ed478e8b72c94, type: 3}
+  text: 'trans b '
+  optionAText: Continuar
+  optionANode: {fileID: 11400000, guid: 8478c3ddd1ad9a447b600df76385a2f7, type: 2}
+  hasOptionB: 0
+  optionBText: "Opci\xF3n B"
+  optionBNode: {fileID: 0}

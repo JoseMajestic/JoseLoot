@@ -2944,6 +2944,18 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        // Añadir 5% de trabajo por victoria
+        if (GameDataManager.Instance != null)
+        {
+            PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+            if (profile != null)
+            {
+                int workIncrease = Mathf.Max(1, Mathf.RoundToInt(profile.breedWork * 0.05f));
+                profile.breedWork = Mathf.Min(100, profile.breedWork + workIncrease);
+                GameDataManager.Instance.SavePlayerProfile();
+            }
+        }
+
         // Incrementar estadísticas de pelea ganada y enfrentamiento
         if (GameDataManager.Instance != null)
         {
@@ -2974,7 +2986,16 @@ public class CombatManager : MonoBehaviour
 
         if (victoryText != null)
         {
-            victoryText.text = $"¡Victoria!\nHas ganado {rewardCoins} monedas.";
+            int workIncrease = 0;
+            if (GameDataManager.Instance != null)
+            {
+                PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+                if (profile != null)
+                {
+                    workIncrease = Mathf.Max(1, Mathf.RoundToInt(profile.breedWork * 0.05f));
+                }
+            }
+            victoryText.text = $"¡Victoria!\nHas ganado {rewardCoins} monedas.\n+{workIncrease}% Trabajo";
         }
         
         // Llamar al callback de victoria si existe (para StoryManager)

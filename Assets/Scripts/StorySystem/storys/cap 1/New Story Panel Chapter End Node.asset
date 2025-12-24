@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eeb0c04e9dbee241856473ad8db08f8, type: 3}
+  m_Name: New Story Panel Chapter End Node
+  m_EditorClassIdentifier: Assembly-CSharp::StoryPanelChapterEndNode
+  image: {fileID: 21300000, guid: 6c2f3f59b78fbd247bd1f0865a43eb65, type: 3}
+  text: final
+  acceptText: Aceptar
