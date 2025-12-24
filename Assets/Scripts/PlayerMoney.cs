@@ -65,6 +65,11 @@ public class PlayerMoney : MonoBehaviour
         money += amount;
         OnMoneyAdded?.Invoke(amount);
         OnMoneyChanged?.Invoke(money);
+
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
     }
 
     public void SubtractMoney(int amount)
@@ -78,6 +83,11 @@ public class PlayerMoney : MonoBehaviour
         money = Mathf.Max(0, money - amount);
         OnMoneySubtracted?.Invoke(amount);
         OnMoneyChanged?.Invoke(money);
+
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
     }
 
     public void SetMoney(int amount)
@@ -96,6 +106,11 @@ public class PlayerMoney : MonoBehaviour
         }
         
         OnMoneyChanged?.Invoke(money);
+
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerProfile();
+        }
     }
     
     /// <summary>

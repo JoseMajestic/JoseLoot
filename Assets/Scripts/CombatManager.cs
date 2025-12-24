@@ -191,6 +191,10 @@ public class CombatManager : MonoBehaviour
     private AttackData enemySelectedAttack = null;  // Ataque del enemigo (seleccionado aleatoriamente)
     private int currentRound = 0;
     
+    // Callbacks para el sistema de historia
+    private System.Action onVictory;
+    private System.Action onDefeat;
+    
     // Stats del jugador
     private int playerMaxHp = 0;
     private int playerCurrentHp = 0;
@@ -2909,16 +2913,19 @@ public class CombatManager : MonoBehaviour
             yield return StartCoroutine(DisplayTextWithDelay(combatTexts.playerWins));
         }
 
-        // Agregar monedas
-        if (playerMoney != null)
-        {
-            playerMoney.AddMoney(rewardCoins);
-        }
-
-        // Procesar recompensas de objetos
+        // Procesar recompensas (monedas y objetos)
         if (combatRewardManager != null && currentEnemy != null)
         {
             combatRewardManager.ProcessCombatRewards(currentEnemy, rewardCoins);
+        }
+        else
+        {
+            // Fallback: añadir monedas directamente si no hay CombatRewardManager
+            if (playerMoney != null)
+            {
+                playerMoney.AddMoney(rewardCoins);
+                Debug.Log($"CombatManager: Añadidas {rewardCoins} monedas (sin CombatRewardManager)");
+            }
         }
 
         // Marcar enemigo como derrotado (para desbloqueo secuencial)
@@ -2969,6 +2976,9 @@ public class CombatManager : MonoBehaviour
         {
             victoryText.text = $"¡Victoria!\nHas ganado {rewardCoins} monedas.";
         }
+        
+        // Llamar al callback de victoria si existe (para StoryManager)
+        onVictory?.Invoke();
     }
 
     /// <summary>
@@ -3024,6 +3034,9 @@ public class CombatManager : MonoBehaviour
         {
             defeatText.text = "Has sido derrotado...";
         }
+        
+        // Llamar al callback de derrota si existe (para StoryManager)
+        onDefeat?.Invoke();
     }
 
     /// <summary>
@@ -3280,6 +3293,20 @@ public class CombatManager : MonoBehaviour
         {
             basicAttackButton.interactable = true;
         }
+    }
+
+    /// <summary>
+    /// Versión sobrecargada para compatibilidad con StoryManager
+    /// Permite callbacks personalizados para victoria/derrota
+    /// </summary>
+    public void StartCombat(EnemyData enemy, System.Action onVictory = null, System.Action onDefeat = null, int enemyIndex = -1)
+    {
+        // Guardar callbacks personalizados si existen
+        if (onVictory != null) this.onVictory = onVictory;
+        if (onDefeat != null) this.onDefeat = onDefeat;
+        
+        // Usar el método existente
+        StartCombat(enemy, enemyIndex);
     }
 
     /// <summary>

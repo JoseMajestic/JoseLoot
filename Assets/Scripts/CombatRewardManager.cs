@@ -59,6 +59,20 @@ public class CombatRewardManager : MonoBehaviour
             return;
         }
         
+        // AÑADIR MONEDAS - ¡Esto faltaba!
+        if (coinsToAward > 0)
+        {
+            if (gameDataManager != null && gameDataManager.PlayerMoney != null)
+            {
+                gameDataManager.PlayerMoney.AddMoney(coinsToAward);
+                Debug.Log($"CombatRewardManager: Añadidas {coinsToAward} monedas de recompensa");
+            }
+            else
+            {
+                Debug.LogError("CombatRewardManager: No se pueden añadir monedas - GameDataManager o PlayerMoney no asignados");
+            }
+        }
+        
         // Generar recompensas de objetos
         List<ItemData> itemRewards = GenerateItemRewards(enemy);
         
