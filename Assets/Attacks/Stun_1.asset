@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Stun_1
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Stun 1
-  description: Aturde al oponente con 50% de probabilidad + 1% por cada punto de
-    suerte.
+  attackName: Mazazo de Hastatus
+  description: Golpe contundente que puede aturdir al enemigo 50%, duante 3 rondas.
   baseDamage: 10
   skillBonus: 0
   effectType: 3
@@ -22,5 +21,5 @@ MonoBehaviour:
   duration: 0
   requiredHeroLevel: 1
   unlockPrice: 100
-  damageSprite: {fileID: 0}
-  effectsSprite: {fileID: 0}
+  damageSprite: {fileID: 126839328, guid: 70e4d5a29735e5d4e860cc691b35f4a2, type: 3}
+  effectsSprite: {fileID: 1513196604, guid: 0d4da808315e11b47ad31a609881f587, type: 3}

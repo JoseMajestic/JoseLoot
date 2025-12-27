@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Armadura III
   m_EditorClassIdentifier: 
   itemName: Heroe Armadura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 540259155, guid: af590c37908c55a43a21f1d536bd0d5d, type: 3}
   description: Los bardos cantan sobre los heroes que portaron este equipo en batallas
     epicas.
   price: 974
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 4

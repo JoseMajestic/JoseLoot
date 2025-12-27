@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Cinturon I
   m_EditorClassIdentifier: 
   itemName: Titan Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 796415614, guid: 2c578533ade366845ad770d7106d2149, type: 3}
   description: Solo los guerreros mas poderosos pueden soportar el peso de esta leyenda.
   price: 600
   hp: 90
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 7

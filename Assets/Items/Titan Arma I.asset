@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Arma I
   m_EditorClassIdentifier: 
   itemName: Titan Arma I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -187596327, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Creado en la era cuando los gigantes caminaban sobre el mundo mortal.
   price: 750
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 0
+  itemType: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Poison_1
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Poison 1
-  description: "Aplica veneno que causa 10% del HP m\xE1ximo al final de cada ronda."
+  attackName: Toxina de Auxiliar
+  description: Veneno persistente que consume 10% del HP  durante 2 rondas.
   baseDamage: 10
   skillBonus: 0
   effectType: 2
@@ -21,5 +21,5 @@ MonoBehaviour:
   duration: 0
   requiredHeroLevel: 1
   unlockPrice: 100
-  damageSprite: {fileID: 0}
-  effectsSprite: {fileID: 0}
+  damageSprite: {fileID: 1285831896, guid: faf8ee92b59fa01408e0e7f1227d75c7, type: 3}
+  effectsSprite: {fileID: 1285831896, guid: faf8ee92b59fa01408e0e7f1227d75c7, type: 3}

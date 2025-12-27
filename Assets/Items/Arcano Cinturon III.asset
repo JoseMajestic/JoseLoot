@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Cinturon III
   m_EditorClassIdentifier: 
   itemName: Arcano Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1964288216, guid: 0da61d433cbd297459a2484e319648a2, type: 3}
   description: Forjado en los hornos arcanos donde la magia y el metal se fusionan.
   price: 437
   hp: 47
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 7

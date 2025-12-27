@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Collar II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Collar II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -502221691, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: Cada medallon contiene el recuerdo de un espiritu que otorga su bendicion.
   price: 660
   hp: 80
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

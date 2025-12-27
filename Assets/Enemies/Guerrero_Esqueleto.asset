@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Guerrero Esqueleto
   description: "Un esqueleto con armadura y experiencia en combate. M\xE1s peligroso
     que sus parientes novatos."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: 2834ad4796baf6d42a3d1b947e64f981, type: 3}
   hp: 160
   ataque: 22
   defensa: 8
@@ -25,6 +25,12 @@ MonoBehaviour:
   suerte: 1
   destreza: 2
   rewardCoins: 85
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 2
   level: 3
   availableAttacks: []

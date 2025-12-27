@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Guantes II
   m_EditorClassIdentifier: 
   itemName: Heroe Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1275809394, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
   description: Cada heroe legendario de la historia ha dejado su marca en estas piezas.
   price: 835
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 12
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 6

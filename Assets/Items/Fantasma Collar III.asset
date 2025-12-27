@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 860470734, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: El collar del medium, que permite comunicarse con los espiritus del
     pasado.
   price: 1320
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

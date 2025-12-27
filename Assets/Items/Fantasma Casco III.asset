@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Casco III
   m_EditorClassIdentifier: 
   itemName: Fantasma Casco III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 835018598, guid: 53b5b3be4e9eb204eb6abc84b90e37ab, type: 3}
   description: Los espiritus errantes susurran secretos a quien porte este equipo
     sagrado.
   price: 571

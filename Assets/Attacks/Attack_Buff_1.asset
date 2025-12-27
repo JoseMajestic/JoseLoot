@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Attack_Buff_1
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Attack Buff 1
-  description: Aumenta el ataque 10% por 3 rondas.
+  attackName: Arenga de Optio
+  description: "Discurso t\xE1ctico que incrementa 10% la fuerza ofensiva del guerrero
+    durante 3 rondas."
   baseDamage: 10
   skillBonus: 0
   effectType: 6
@@ -21,5 +22,5 @@ MonoBehaviour:
   duration: 3
   requiredHeroLevel: 1
   unlockPrice: 100
-  damageSprite: {fileID: 876253839, guid: 3d293e99432ab9d4cac41306fa964365, type: 3}
-  effectsSprite: {fileID: 876253839, guid: 3d293e99432ab9d4cac41306fa964365, type: 3}
+  damageSprite: {fileID: 1519566498, guid: a731512fb679b3549a084150e396f6ee, type: 3}
+  effectsSprite: {fileID: 1519566498, guid: a731512fb679b3549a084150e396f6ee, type: 3}

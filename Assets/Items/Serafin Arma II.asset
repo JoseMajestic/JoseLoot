@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Arma II
   m_EditorClassIdentifier: 
   itemName: Serafin Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1734981230, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Forjado en los talleres del cielo donde los angeles crean armas divinas.
   price: 1944
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Celestial
-  itemType: 0
+  itemType: 3

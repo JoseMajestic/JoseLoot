@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Arma I
   m_EditorClassIdentifier: 
   itemName: Aprendiz Arma I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Todo gran heroe empezo con equipo modesto como este en sus manos.
   price: 150
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 0
+  itemType: 3

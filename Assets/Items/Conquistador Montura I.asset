@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1063693134, guid: a3d3d79b97c00ca4bb7b110b9cd4be24, type: 3}
   description: Un corcel de guerra que ha visto innumerables batallas y conquistas.
   price: 375
   hp: 30
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Raro
-  itemType: 6
+  itemType: 0

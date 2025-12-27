@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Healing_3
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Healing 3
-  description: "Cura 75% del HP m\xE1ximo."
+  attackName: "Gracia de Pont\xEDfex"
+  description: "Intervenci\xF3n divina que sana 75% HP  al guerrero en plena batalla."
   baseDamage: 10
   skillBonus: 0
   effectType: 1
@@ -21,5 +21,5 @@ MonoBehaviour:
   duration: 0
   requiredHeroLevel: 1
   unlockPrice: 100
-  damageSprite: {fileID: 21300000, guid: 6c2f3f59b78fbd247bd1f0865a43eb65, type: 3}
+  damageSprite: {fileID: 21300000, guid: 6200508219ca35042a1bb4f4cc48b45f, type: 3}
   effectsSprite: {fileID: -810795520, guid: c24a1b5a2bbb2fb47b2cab949cad4a0f, type: 3}

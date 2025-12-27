@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Armadura II
   m_EditorClassIdentifier: 
   itemName: Heroe Armadura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1363807512, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: El destino de reinos enteros ha cambiado gracias a este equipo sagrado.
   price: 835
   hp: 145
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 4

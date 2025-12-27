@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Botas I
   m_EditorClassIdentifier: 
   itemName: Fantasma Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1856840275, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Los fantasmas del pasado otorgan su bendicion a este equipo antiguo.
   price: 408
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 9

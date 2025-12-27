@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Casco III
   m_EditorClassIdentifier: 
   itemName: Titan Casco III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -284508767, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: El trueno y la montania obedecen a quien porte este equipo titanico.
   price: 840
   hp: 60

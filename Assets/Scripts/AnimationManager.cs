@@ -94,6 +94,32 @@ public class AnimationManager : MonoBehaviour
     private SpriteRenderer playerSpriteRenderer;
     private SpriteRenderer enemySpriteRenderer;
 
+    private IEnumerator ForceSpriteDuringDuration(GameObject targetObject, Sprite sprite, float duration)
+    {
+        if (targetObject == null || sprite == null)
+        {
+            yield return new WaitForSeconds(duration);
+            yield break;
+        }
+
+        SpriteRenderer sr = targetObject.GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            sr = targetObject.GetComponentInChildren<SpriteRenderer>();
+        }
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (sr != null)
+            {
+                sr.sprite = sprite;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     /// <summary>
     /// Se ejecuta al inicializar el componente.
     /// Oculta todas las animaciones por defecto hasta que el panel de combate se abra.
@@ -374,7 +400,14 @@ public class AnimationManager : MonoBehaviour
         float durationToWait = GetAnimationDuration(config);
         
         // 4. Esperar la duración completa de la animación
-        yield return new WaitForSeconds(durationToWait);
+        if ((state == AnimationState.Damage || state == AnimationState.Effects) && overrideSprite != null)
+        {
+            yield return StartCoroutine(ForceSpriteDuringDuration(config.spriteRendererObject, overrideSprite, durationToWait));
+        }
+        else
+        {
+            yield return new WaitForSeconds(durationToWait);
+        }
         
         // 5. Ocultar la animación actual y volver a Idle (excepto KO que se queda visible)
         if (state != AnimationState.KO)
@@ -453,7 +486,14 @@ public class AnimationManager : MonoBehaviour
         float durationToWait = GetAnimationDuration(config);
         
         // 4. Esperar la duración completa de la animación
-        yield return new WaitForSeconds(durationToWait);
+        if ((state == AnimationState.Damage || state == AnimationState.Effects) && overrideSprite != null)
+        {
+            yield return StartCoroutine(ForceSpriteDuringDuration(config.spriteRendererObject, overrideSprite, durationToWait));
+        }
+        else
+        {
+            yield return new WaitForSeconds(durationToWait);
+        }
         
         // 5. Ocultar la animación actual y volver a Idle (excepto KO que se queda visible)
         if (state != AnimationState.KO)
@@ -700,6 +740,19 @@ public class AnimationManager : MonoBehaviour
             {
                 currentSpriteRenderer.sprite = spriteToUse;
             }
+            else
+            {
+                Image currentImage = config.spriteRendererObject.GetComponent<Image>();
+                if (currentImage == null)
+                {
+                    currentImage = config.spriteRendererObject.GetComponentInChildren<Image>();
+                }
+
+                if (currentImage != null)
+                {
+                    currentImage.sprite = spriteToUse;
+                }
+            }
         }
 
         // NOTA: El controller se asigna ahora justo antes de Play() para asegurar que esté configurado correctamente
@@ -912,6 +965,19 @@ public class AnimationManager : MonoBehaviour
             if (currentStateSpriteRenderer != null)
             {
                 currentStateSpriteRenderer.sprite = spriteToUse;
+            }
+            else
+            {
+                Image currentImage = config.spriteRendererObject.GetComponent<Image>();
+                if (currentImage == null)
+                {
+                    currentImage = config.spriteRendererObject.GetComponentInChildren<Image>();
+                }
+
+                if (currentImage != null)
+                {
+                    currentImage.sprite = spriteToUse;
+                }
             }
         }
 

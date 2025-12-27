@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Casco II
   m_EditorClassIdentifier: 
   itemName: Conquistador Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1876297099, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
   description: Los conquistadores mas temidos de la historia portaron piezas como
     estas.
   price: 605

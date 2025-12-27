@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Cinturon I
   m_EditorClassIdentifier: 
   itemName: Aprendiz Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 92460610, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: La simplicidad es la madre de la eficacia en el campo de batalla.
   price: 120
   hp: 18
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 7

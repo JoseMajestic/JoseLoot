@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Orco Guerrero
   description: "Un orco entrenado en combate. M\xE1s fuerte que los goblins pero
     a\xFAn manejable."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: f810ab04a84b3414b92d806d34f77be5, type: 3}
   hp: 120
   ataque: 15
   defensa: 6
@@ -25,6 +25,12 @@ MonoBehaviour:
   suerte: 1
   destreza: 2
   rewardCoins: 60
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 1
   level: 2
   availableAttacks: []

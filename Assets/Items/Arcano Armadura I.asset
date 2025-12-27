@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Armadura I
   m_EditorClassIdentifier: 
   itemName: Arcano Armadura I
-  itemSprite: {fileID: 21300000, guid: 704deaac4b2fedc4e93f8a7586df6bcd, type: 3}
+  itemSprite: {fileID: -273518838, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Creado para aquellos que dominan las artes arcanas con maestria absoluta.
   price: 312
   hp: 65
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 4

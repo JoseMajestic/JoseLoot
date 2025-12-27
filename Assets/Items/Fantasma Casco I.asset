@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Casco I
   m_EditorClassIdentifier: 
   itemName: Fantasma Casco I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2016397825, guid: 2fead51a434119b49b14bae94e1cb52c, type: 3}
   description: Entre la vida y la muerte existe poder que pocos pueden comprender.
   price: 408
   hp: 41

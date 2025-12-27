@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Multiple_Attack_3
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Multiple Attack 3
-  description: "Ataca 4 veces en esta ronda (como 4 golpes b\xE1sicos)."
+  attackName: Tempestad de Ballista
+  description: Cuatro ataques encadenados que aplastan al rival como un asedio romano.
   baseDamage: 10
   skillBonus: 0
   effectType: 4
@@ -22,4 +22,4 @@ MonoBehaviour:
   requiredHeroLevel: 1
   unlockPrice: 100
   damageSprite: {fileID: 1995510723, guid: 6b24b59b2acc21b4080074f14ad321a2, type: 3}
-  effectsSprite: {fileID: 21300000, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
+  effectsSprite: {fileID: 21300000, guid: 6200508219ca35042a1bb4f4cc48b45f, type: 3}

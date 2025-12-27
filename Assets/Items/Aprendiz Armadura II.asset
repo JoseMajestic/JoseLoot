@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Armadura II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Armadura II
-  itemSprite: {fileID: 21300000, guid: ad18955d50b9ae947a911374a031d460, type: 3}
+  itemSprite: {fileID: 21300000, guid: b5b859642b8bf4b4385ebd6f26c745cd, type: 3}
   description: La simplicidad es la madre de la eficacia en el campo de batalla.
   price: 144
   hp: 25
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 4

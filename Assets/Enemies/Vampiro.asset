@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Vampiro
   description: "Un vampiro anciano con siglos de experiencia. R\xE1pido, fuerte y
     astuto."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: 60cb7f7ac1943e546897c59ff2a203f5, type: 3}
   hp: 320
   ataque: 38
   defensa: 14
@@ -25,6 +25,12 @@ MonoBehaviour:
   suerte: 6
   destreza: 7
   rewardCoins: 190
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 4
   level: 5
   availableAttacks: []

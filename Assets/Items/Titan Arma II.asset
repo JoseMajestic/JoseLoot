@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Arma II
   m_EditorClassIdentifier: 
   itemName: Titan Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 2045339469, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Los titanes antiguos bendijeron este equipo con fuerza primordial
     ilimitada.
   price: 900
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 0
+  itemType: 3

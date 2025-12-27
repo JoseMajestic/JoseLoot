@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Serafin Anillo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 11281392, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: "La gracia celestial fluye a trav\xE9s de este anillo sagrado."
   price: 1500
   hp: 80
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Legendario
-  itemType: 9
+  itemType: 8

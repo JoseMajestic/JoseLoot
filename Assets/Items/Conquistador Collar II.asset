@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Collar II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Collar II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -641407675, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: "Cada medallon representa una nueva tierra a\xF1adida al imperio."
   price: 300
   hp: 40
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Raro
-  itemType: 7
+  itemType: 2

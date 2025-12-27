@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Heroe Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1854110239, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: "Un collar que guarda las memorias de las haza\xF1as heroicas realizadas."
   price: 480
   hp: 30
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

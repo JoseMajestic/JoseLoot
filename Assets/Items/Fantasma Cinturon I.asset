@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Cinturon I
   m_EditorClassIdentifier: 
   itemName: Fantasma Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2141897012, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: Permite a su portador caminar entre las sombras del mundo espectral.
   price: 408
   hp: 61
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 7

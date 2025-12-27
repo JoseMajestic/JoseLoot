@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Escudo II
   m_EditorClassIdentifier: 
   itemName: Titan Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1420194690, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: El trueno y la montania obedecen a quien porte este equipo titanico.
   price: 720
   hp: 75
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 5

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Armadura I
   m_EditorClassIdentifier: 
   itemName: Heroe Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 356871380, guid: a3d3d79b97c00ca4bb7b110b9cd4be24, type: 3}
   description: Creado para protagonizar las historias que los ninos escucharan antes
     de dormir.
   price: 696
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 4

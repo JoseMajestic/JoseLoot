@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Cinturon II
   m_EditorClassIdentifier: 
   itemName: Abismo Cinturon II
-  itemSprite: {fileID: -1586038686, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
+  itemSprite: {fileID: -2141897012, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad.
   price: 1958
   hp: 245

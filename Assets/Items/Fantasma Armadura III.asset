@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Armadura III
   m_EditorClassIdentifier: 
   itemName: Fantasma Armadura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 2031465268, guid: 9ce346908e96b09429122e80d0ef74c0, type: 3}
   description: Forjado entre los velos del mundo de los vivos y los muertos.
   price: 571
   hp: 85
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 4

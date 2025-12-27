@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Anillo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 225467922, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
   description: El poder de liderazgo se concentra en este anillo de mando.
   price: 250
   hp: 20
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Raro
-  itemType: 9
+  itemType: 8

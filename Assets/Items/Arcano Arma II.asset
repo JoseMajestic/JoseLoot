@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Arma II
   m_EditorClassIdentifier: 
   itemName: Arcano Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -331872970, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Runas brillantes recorren su superficie canalizando energia mistica
     pura.
   price: 468
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 0
+  itemType: 3

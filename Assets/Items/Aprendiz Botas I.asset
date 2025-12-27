@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Botas I
   m_EditorClassIdentifier: 
   itemName: Aprendiz Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1609960186, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Resistente y practico, perfecto para enfrentar los primeros desafios
     del destino.
   price: 120
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 9

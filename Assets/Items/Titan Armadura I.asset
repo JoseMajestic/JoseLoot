@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Armadura I
   m_EditorClassIdentifier: 
   itemName: Titan Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 150693071, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra.
   price: 600
   hp: 125
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 4

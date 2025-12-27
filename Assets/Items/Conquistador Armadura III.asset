@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Armadura III
   m_EditorClassIdentifier: 
   itemName: Conquistador Armadura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1613386637, guid: 5eb7f395b2cac1841a7ec6bf03f0dc85, type: 3}
   description: Imperios enteros han caido ante guerreros equipados con estas armas
     legendarias.
   price: 706
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 4

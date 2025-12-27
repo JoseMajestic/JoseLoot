@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc03bf074ec3a4faf1d75fcbd4b033, type: 3}
   m_Name: Defense_Buff_3
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackName: Defense Buff 3
-  description: Aumenta la defensa 20% por 5 rondas.
+  attackName: Aegis de Imperator
+  description: "Protecci\xF3n imperial que reduce el da\xF1o recibido 20% por 5 rondas."
   baseDamage: 10
   skillBonus: 0
   effectType: 7
@@ -21,5 +21,5 @@ MonoBehaviour:
   duration: 5
   requiredHeroLevel: 1
   unlockPrice: 100
-  damageSprite: {fileID: 21300000, guid: 6c2f3f59b78fbd247bd1f0865a43eb65, type: 3}
-  effectsSprite: {fileID: 0}
+  damageSprite: {fileID: 21300000, guid: 6200508219ca35042a1bb4f4cc48b45f, type: 3}
+  effectsSprite: {fileID: -758308586, guid: 70e4d5a29735e5d4e860cc691b35f4a2, type: 3}

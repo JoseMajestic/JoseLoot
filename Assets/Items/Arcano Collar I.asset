@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1226054322, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: Un collar que pulsa con la energia arcana del universo.
   price: 600
   hp: 36
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

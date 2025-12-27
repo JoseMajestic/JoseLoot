@@ -15,12 +15,14 @@ MonoBehaviour:
   tierCount: 5
   tier1Items:
   - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
-  tier2Items: []
+  - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
+  tier2Items:
+  - {fileID: 11400000, guid: f56b13e5379021e4aaf4e22959fdd887, type: 2}
   tier3Items: []
   tier4Items: []
   tier5Items: []
-  tier1Probability: 40
-  tier2Probability: 30
-  tier3Probability: 20
-  tier4Probability: 8
-  tier5Probability: 2
+  tier1Probability: 100
+  tier2Probability: 0
+  tier3Probability: 0
+  tier4Probability: 0
+  tier5Probability: 0

@@ -1,43 +1,13 @@
-# Unity generated files
+*.apk
+/JoseLoot .apk
+/JoseLoot V1.apk
+Assets/imagenes/back imgs ups items/TVPaintAnimationPro_11_7_0.zip
+
 Library/
 Temp/
-Obj/
-Build/
-Builds/
 Logs/
 UserSettings/
-MemoryCaptures/
 
-# Crash reports
-sysinfo.txt
+*_BackUpThisFolder_ButDontShipItWithYourGame/
 
-# Rider / VS / VS Code
-.idea/
-.vs/
-.vscode/
-
-# OS
-Thumbs.db
-Desktop.ini
-.DS_Store
-
-# Others
-*.csproj
-*.unityproj
-*.sln
-*.suo
-*.tmp
-*.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
 *.pdb
-*.mdb
-
-# Large files
-*.exe
-**/TunnelBear*
-
-
-

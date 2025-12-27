@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Cinturon I
   m_EditorClassIdentifier: 
   itemName: Cazador Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1586038686, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Forjado para aquellos que cazan monstruos bajo la luz de la luna.
   price: 216
   hp: 32
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Raro
-  itemType: 1
+  itemType: 7

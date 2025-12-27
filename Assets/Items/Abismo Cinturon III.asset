@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abismo Cinturon III
   m_EditorClassIdentifier: 
   itemName: Abismo Cinturon III
-  itemSprite: {fileID: -2030652397, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
+  itemSprite: {fileID: -377170109, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: El precio de este poder es alto pero la recompensa es absoluta.
   price: 2285
   hp: 245

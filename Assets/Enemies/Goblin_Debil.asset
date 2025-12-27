@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: "Goblin D\xE9bil"
   description: "Un goblin peque\xF1o y d\xE9bil, f\xE1cil de derrotar. Perfecto para
     principiantes."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: 477453792d3115245aa1fb12fcd09f06, type: 3}
   hp: 80
   ataque: 8
   defensa: 3
@@ -25,6 +25,12 @@ MonoBehaviour:
   suerte: 1
   destreza: 2
   rewardCoins: 30
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 0
   level: 1
   availableAttacks: []

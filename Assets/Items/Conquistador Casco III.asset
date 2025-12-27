@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Casco III
   m_EditorClassIdentifier: 
   itemName: Conquistador Casco III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1876297099, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
   description: La victoria es el unico destino para quien porte este equipo glorioso.
   price: 706
   hp: 50

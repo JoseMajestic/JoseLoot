@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1535641152, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
   description: Un anillo que otorga la autoridad y el carisma de un conquistador.
   price: 250
   hp: 10
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Raro
-  itemType: 9
+  itemType: 8

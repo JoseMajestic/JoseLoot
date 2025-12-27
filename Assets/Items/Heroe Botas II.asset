@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Botas II
   m_EditorClassIdentifier: 
   itemName: Heroe Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 2045412846, guid: 1cc9548bdb64d794eaafa866f1acf2d9, type: 3}
   description: Los bardos cantan sobre los heroes que portaron este equipo en batallas
     epicas.
   price: 835
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 9

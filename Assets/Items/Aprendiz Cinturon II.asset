@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Cinturon II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Cinturon II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1488689197, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Creado con materiales basicos pero con el corazon de un verdadero
     guerrero.
   price: 144
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 7

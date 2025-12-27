@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Arma III
   m_EditorClassIdentifier: 
   itemName: Aprendiz Arma III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2016999836, guid: 99ff6d1bf82b5cf4a85695c78cd1b666, type: 3}
   description: La simplicidad es la madre de la eficacia en el campo de batalla.
   price: 210
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 0
+  itemType: 3

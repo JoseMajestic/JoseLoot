@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Arma I
   m_EditorClassIdentifier: 
   itemName: Heroe Arma I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1434851965, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Forjado para aquellos cuyas hazanias seran recordadas por mil generaciones.
   price: 870
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 0
+  itemType: 3

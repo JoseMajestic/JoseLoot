@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Botas I
   m_EditorClassIdentifier: 
   itemName: Titan Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 474731302, guid: 0448210f4abf5844d91669e6f84f211a, type: 3}
   description: Forjado con fragmentos de armaduras de los titanes que crearon el
     mundo.
   price: 600
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 9

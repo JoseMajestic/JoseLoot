@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Casco I
   m_EditorClassIdentifier: 
   itemName: Serafin Casco I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -184810146, guid: a7c3221122991b74bbb44055684984a7, type: 3}
   description: Creado con la esencia de estrellas caidas y bendiciones de seres divinos.
   price: 1296
   hp: 130

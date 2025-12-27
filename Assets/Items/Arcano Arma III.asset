@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Arma III
   m_EditorClassIdentifier: 
   itemName: Arcano Arma III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1460787291, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
   description: Los hechiceros de la torre alta crearon este equipo con magia ancestral.
   price: 546
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 0
+  itemType: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 286463407, guid: d54ea597a2c96aa4aad218452ef82655, type: 3}
   description: Un corcel infundido con magia arcana que puede atravesar dimensiones.
   price: 750
   hp: 54
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Anillo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 499221349, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: "El poder m\xE1gico fluye a trav\xE9s de este anillo como un rio de
     mana."
   price: 500
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Cinturon I
   m_EditorClassIdentifier: 
   itemName: Heroe Cinturon I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2098611766, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Cada heroe legendario de la historia ha dejado su marca en estas piezas.
   price: 696
   hp: 104
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 7

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Botas I
   m_EditorClassIdentifier: 
   itemName: Conquistador Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 506713485, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Cada batalla ganada ha fortalecido el espiritu que habita en este
     equipo.
   price: 504
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 9

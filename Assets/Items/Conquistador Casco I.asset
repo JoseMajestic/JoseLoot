@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Casco I
   m_EditorClassIdentifier: 
   itemName: Conquistador Casco I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 269315027, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: El poder de cien victorias resuena en cada fibra de este equipo.
   price: 504
   hp: 50

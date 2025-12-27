@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Cinturon II
   m_EditorClassIdentifier: 
   itemName: Fantasma Cinturon II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -36848442, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Los fantasmas del pasado otorgan su bendicion a este equipo antiguo.
   price: 490
   hp: 61
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 7

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Botas II
   m_EditorClassIdentifier: 
   itemName: Fantasma Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -727103961, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Translucido como la niebla del amanecer sobre los campos de batalla.
   price: 490
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 9

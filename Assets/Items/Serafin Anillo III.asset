@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Serafin Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1446573409, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: El anillo de los serafines, que otorga poder sobre las fuerzas divinas.
   price: 3000
   hp: 120
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Legendario
-  itemType: 9
+  itemType: 8

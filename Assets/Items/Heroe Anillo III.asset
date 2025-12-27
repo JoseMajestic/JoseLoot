@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Heroe Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1456065770, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: El anillo del heroe epico, que otorga la fuerza para cambiar el destino.
   price: 800
   hp: 45
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Guantes II
   m_EditorClassIdentifier: 
   itemName: Conquistador Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -882489248, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
   description: Imperios enteros han caido ante guerreros equipados con estas armas
     legendarias.
   price: 605
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 8
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 6

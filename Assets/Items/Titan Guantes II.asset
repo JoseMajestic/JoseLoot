@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Guantes II
   m_EditorClassIdentifier: 
   itemName: Titan Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Los titanes antiguos bendijeron este equipo con fuerza primordial
     ilimitada.
   price: 720
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 10
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 6

@@ -38,6 +38,15 @@ public class BreedManager : MonoBehaviour
     
     [Tooltip("Tiempo de vida total")]
     [SerializeField] private TextMeshProUGUI lifeTimeText;
+
+    [Tooltip("Nivel del héroe")]
+    [SerializeField] private TextMeshProUGUI heroLevelText;
+
+    [Tooltip("Experiencia del héroe")]
+    [SerializeField] private Slider heroExperienceSlider;
+
+    [Tooltip("Texto de experiencia del héroe (formato: actual/needed)")]
+    [SerializeField] private TextMeshProUGUI heroExperienceText;
     
     [Tooltip("Estado General (título)")]
     [SerializeField] private TextMeshProUGUI generalStateText;
@@ -109,41 +118,58 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Botón Reset (abre panel de confirmación)")]
     [SerializeField] private Button resetButton;
     
-    // ===== PANELES DE VIDEO DE ACCIONES =====
-    [Header("Paneles de Video de Acciones")]
-    [Tooltip("Panel de video para la acción Comer")]
-    [SerializeField] private GameObject eatVideoPanel;
+    [Tooltip("Botón Aceptar reset")]
+    [SerializeField] private Button resetAcceptButton;
     
-    [Tooltip("Panel de video para la acción Estudiar")]
-    [SerializeField] private GameObject studyVideoPanel;
+    [Tooltip("Botón Cancelar reset")]
+    [SerializeField] private Button resetCancelButton;
     
-    [Tooltip("Panel de video para la acción Dormir (se mantiene visible mientras duerme)")]
-    [SerializeField] private GameObject sleepVideoPanel;
+    // ===== PANELES DE ANIMACIÓN DE ACCIONES =====
+    [Header("Paneles de Animación de Acciones")]
+    [Tooltip("Panel de animación para la acción Comer")]
+    [SerializeField] private GameObject eatAnimationPanel;
     
-    [Tooltip("Panel de video para la acción Jugar")]
-    [SerializeField] private GameObject playVideoPanel;
+    [Tooltip("Clip que se reproducirá al Comer (se recomienda que el estado del Animator se llame igual que el clip)")]
+    [SerializeField] private AnimationClip eatActionClip;
     
-    [Tooltip("Panel de video para la acción Evolucionar")]
-    [SerializeField] private GameObject evoVideoPanel;
+    [Tooltip("Panel de animación para la acción Estudiar")]
+    [SerializeField] private GameObject studyAnimationPanel;
     
-    [Tooltip("Panel de video para la acción Limpiar")]
-    [SerializeField] private GameObject cleanVideoPanel;
+    [Tooltip("Clip que se reproducirá al Estudiar")]
+    [SerializeField] private AnimationClip studyActionClip;
     
-    [Tooltip("Panel de video para la acción Trabajar")]
-    [SerializeField] private GameObject workVideoPanel;
+    [Tooltip("Panel de animación para la acción Dormir (se mantiene visible mientras duerme)")]
+    [SerializeField] private GameObject sleepAnimationPanel;
     
-    [Header("Fade para Paneles de Video")]
-    [Tooltip("Image negro que cubre toda la pantalla durante las transiciones de video (debe estar en un Canvas con orden superior)")]
-    [SerializeField] private UnityEngine.UI.Image videoFadeOverlay;
+    [Tooltip("Clip que se reproducirá al Dormir (se pausa en el último frame)")]
+    [SerializeField] private AnimationClip sleepActionClip;
     
-    [Tooltip("Duración del fade in/out para paneles de video en segundos")]
-    [SerializeField] private float videoFadeDuration = 0.3f;
+    [Tooltip("Panel de animación para la acción Jugar")]
+    [SerializeField] private GameObject playAnimationPanel;
     
-    [Tooltip("Si es true, usa fade al activar/desactivar paneles de video. Si es false, cambio directo sin fade")]
-    [SerializeField] private bool useVideoFade = true;
+    [Tooltip("Clip que se reproducirá al Jugar")]
+    [SerializeField] private AnimationClip playActionClip;
     
-    // Referencia al panel de video actualmente activo (excepto dormir que es especial)
-    private GameObject currentActiveVideoPanel = null;
+    [Tooltip("Panel de animación para la acción Evolucionar")]
+    [SerializeField] private GameObject evoAnimationPanel;
+    
+    [Tooltip("Clip que se reproducirá al Evolucionar")]
+    [SerializeField] private AnimationClip evolveActionClip;
+    
+    [Tooltip("Panel de animación para la acción Limpiar")]
+    [SerializeField] private GameObject cleanAnimationPanel;
+    
+    [Tooltip("Clip que se reproducirá al Limpiar")]
+    [SerializeField] private AnimationClip cleanActionClip;
+    
+    [Tooltip("Panel de animación para la acción Trabajar (obsoleto - mantenido para compatibilidad)")]
+    [SerializeField] private GameObject workAnimationPanel;
+    
+    [Tooltip("Clip que se reproducirá al Trabajar (obsoleto)")]
+    [SerializeField] private AnimationClip workActionClip;
+    
+    // Referencia al panel de animación actualmente activo (excepto dormir que es especial)
+    private GameObject currentActiveAnimationPanel = null;
     
     [Header("Visualizador de Audio")]
     [Tooltip("Visualizador de espectro de audio para los mensajes del héroe")]
@@ -154,13 +180,6 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Panel de confirmación de reset")]
     [SerializeField] private GameObject resetConfirmPanel;
     
-    [Tooltip("Botón Aceptar reset")]
-    [SerializeField] private Button resetAcceptButton;
-    
-    [Tooltip("Botón Cancelar reset")]
-    [SerializeField] private Button resetCancelButton;
-    
-    [Header("Panel de Gimnasio")]
     [Tooltip("Panel General Upgrade (se abre desde gymButton)")]
     [SerializeField] private GameObject upgradePanel;
     
@@ -186,11 +205,16 @@ public class BreedManager : MonoBehaviour
     
     [Tooltip("Array de animaciones idle que se ejecutarán aleatoriamente una detrás de otra")]
     [SerializeField] private AnimationConfig[] idleAnimations = new AnimationConfig[0];
+
+    [Tooltip("Animación idle por clase de evolución (index = evolutionClass). Si no se asigna el index actual, se usa el pool general idleAnimations")]
+    [SerializeField] private AnimationConfig[] idleAnimationsByEvolutionClass = new AnimationConfig[0];
     
     [Tooltip("GameObject con Animator donde se reproducirán las animaciones")]
     [SerializeField] private GameObject animationTarget;
     
-    // ===== SISTEMA DE MENSAJES BASADO EN ESTADOS =====
+    [Header("Noria Reference")]
+    [Tooltip("Referencia al script Noria para controlar el giro del cilindro")]
+    [SerializeField] private Noria noria;
     
     /// <summary>
     /// Estados globales del héroe basados en stats.
@@ -253,7 +277,7 @@ public class BreedManager : MonoBehaviour
     [Header("Configuración")]
     [Tooltip("Cantidad que llena cada acción (0-100)")]
     [Range(0, 100)]
-    [SerializeField] private int actionFillAmount = 50;
+    [SerializeField] private int actionFillAmount = 10;
     
     [Tooltip("Velocidad de typewriter para mensajes (caracteres por segundo)")]
     [Range(10f, 100f)]
@@ -265,6 +289,7 @@ public class BreedManager : MonoBehaviour
     
     // Variable para evitar múltiples animaciones simultáneas
     private bool isFillingStat = false;
+    private bool isPlayingAnimation = false;
     
     [Tooltip("Intervalo entre mensajes del héroe (segundos)")]
     [Range(5f, 60f)]
@@ -285,13 +310,15 @@ public class BreedManager : MonoBehaviour
     private SpriteRenderer animationSpriteRenderer = null;
     private Image animationImage = null;
     private bool isVoiceEnabled = true; // Estado del audio (activado/desactivado)
-    
+
+    private AnimationConfig[] currentIdleAnimations = null;
     
     private void Start()
     {
         // Obtener referencias
         gameDataManager = GameDataManager.Instance;
         energySystem = FindFirstObjectByType<EnergySystem>();
+        noria = FindFirstObjectByType<Noria>();
         
         if (gameDataManager == null)
         {
@@ -318,6 +345,17 @@ public class BreedManager : MonoBehaviour
         if (energySystem != null)
         {
             energySystem.ApplyRecovery();
+        }
+        
+        // Sincronizar estado de dormir después de ApplyRecovery
+        if (energySystem != null)
+        {
+            PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+            if (profile != null)
+            {
+                profile.isSleeping = energySystem.IsSleeping();
+                gameDataManager.SavePlayerProfile();
+            }
         }
         
         // Configurar botones
@@ -351,23 +389,14 @@ public class BreedManager : MonoBehaviour
             }
         }
         
-        // Asegurar que los paneles de video estén desactivados al inicio
-        if (eatVideoPanel != null) eatVideoPanel.SetActive(false);
-        if (studyVideoPanel != null) studyVideoPanel.SetActive(false);
-        if (sleepVideoPanel != null) sleepVideoPanel.SetActive(false);
-        if (playVideoPanel != null) playVideoPanel.SetActive(false);
-        if (evoVideoPanel != null) evoVideoPanel.SetActive(false);
-        if (cleanVideoPanel != null) cleanVideoPanel.SetActive(false);
-        if (workVideoPanel != null) workVideoPanel.SetActive(false);
-        
-        // Inicializar fade overlay
-        if (videoFadeOverlay != null)
-        {
-            Color color = videoFadeOverlay.color;
-            color.a = 0f;
-            videoFadeOverlay.color = color;
-            videoFadeOverlay.gameObject.SetActive(false);
-        }
+        // Asegurar que los paneles de animación estén desactivados al inicio
+        if (eatAnimationPanel != null) eatAnimationPanel.SetActive(false);
+        if (studyAnimationPanel != null) studyAnimationPanel.SetActive(false);
+        if (sleepAnimationPanel != null) sleepAnimationPanel.SetActive(false);
+        if (playAnimationPanel != null) playAnimationPanel.SetActive(false);
+        if (evoAnimationPanel != null) evoAnimationPanel.SetActive(false);
+        if (cleanAnimationPanel != null) cleanAnimationPanel.SetActive(false);
+        if (workAnimationPanel != null) workAnimationPanel.SetActive(false);
     }
 
     /// <summary>
@@ -502,9 +531,49 @@ public class BreedManager : MonoBehaviour
         
         // Hacer visibles las animaciones (alpha = 1)
         SetAnimationPanelAlpha(1f);
+
+        // Seleccionar el idle según la evolución actual
+        RefreshIdleAnimationSet();
         
         // Iniciar el pool de animaciones idle aleatorias
-        if (idleAnimationCoroutine == null && idleAnimations != null && idleAnimations.Length > 0)
+        if (idleAnimationCoroutine == null && currentIdleAnimations != null && currentIdleAnimations.Length > 0)
+        {
+            idleAnimationCoroutine = StartCoroutine(PlayRandomIdleAnimations());
+        }
+    }
+
+    private void RefreshIdleAnimationSet()
+    {
+        PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
+        int evoClass = profile != null ? profile.evolutionClass : 0;
+
+        AnimationConfig selected = null;
+        if (idleAnimationsByEvolutionClass != null && evoClass >= 0 && evoClass < idleAnimationsByEvolutionClass.Length)
+        {
+            selected = idleAnimationsByEvolutionClass[evoClass];
+        }
+
+        if (selected != null && selected.clip != null)
+        {
+            currentIdleAnimations = new AnimationConfig[] { selected };
+        }
+        else
+        {
+            currentIdleAnimations = idleAnimations;
+        }
+    }
+
+    private void RestartIdleAnimationPool()
+    {
+        if (idleAnimationCoroutine != null)
+        {
+            StopCoroutine(idleAnimationCoroutine);
+            idleAnimationCoroutine = null;
+        }
+
+        RefreshIdleAnimationSet();
+
+        if (panelGeneralBreed != null && panelGeneralBreed.activeSelf && currentIdleAnimations != null && currentIdleAnimations.Length > 0)
         {
             idleAnimationCoroutine = StartCoroutine(PlayRandomIdleAnimations());
         }
@@ -585,8 +654,8 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(eatVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(eatAnimationPanel, eatActionClip);
         
         StartCoroutine(GraduallyFillStat(() => profile.breedHunger, (value) => profile.breedHunger = value, actionFillAmount));
     }
@@ -609,8 +678,8 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(studyVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(studyAnimationPanel, studyActionClip);
         
         StartCoroutine(GraduallyFillStat(() => profile.breedDiscipline, (value) => profile.breedDiscipline = value, actionFillAmount));
     }
@@ -646,8 +715,8 @@ public class BreedManager : MonoBehaviour
 
         ShowSleepingMessageImmediate();
         
-        // Activar panel de video de dormir (especial: se mantiene visible)
-        ActivateVideoPanel(sleepVideoPanel, isSleepPanel: true);
+        // Activar panel de animación de dormir (especial: se mantiene visible)
+        ActivateAnimationPanel(sleepAnimationPanel, sleepActionClip, isSleepPanel: true);
         
         // Actualizar UI de energía
         RefreshBreedStatsUI();
@@ -686,8 +755,8 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(playVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(playAnimationPanel, playActionClip);
         
         StartCoroutine(GraduallyFillStat(() => profile.breedHappiness, (value) => profile.breedHappiness = value, actionFillAmount));
     }
@@ -725,13 +794,16 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(evoVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(evoAnimationPanel, evolveActionClip);
         
         // Evolucionar
         profile.evolutionClass++;
         profile.SaveLastEvolutionTime();
         gameDataManager.SavePlayerProfile();
+
+        // Cambiar el idle según la nueva evolución
+        RestartIdleAnimationPool();
         
         // Actualizar título
         CalculateAndUpdateTitle();
@@ -759,8 +831,8 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(cleanVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(cleanAnimationPanel, cleanActionClip);
         
         StartCoroutine(GraduallyFillStat(() => profile.breedHygiene, (value) => profile.breedHygiene = value, actionFillAmount));
     }
@@ -783,8 +855,8 @@ public class BreedManager : MonoBehaviour
             energySystem.WakeUp();
         }
         
-        // Activar panel de video
-        ActivateVideoPanel(workVideoPanel);
+        // Activar panel de animación
+        ActivateAnimationPanel(workAnimationPanel, workActionClip);
         
         StartCoroutine(GraduallyFillStat(() => profile.breedWork, (value) => profile.breedWork = value, actionFillAmount));
     }
@@ -822,7 +894,7 @@ public class BreedManager : MonoBehaviour
             setValue(currentValue);
             
             // Actualizar UI en cada incremento para ver la animación
-        RefreshBreedStatsUI();
+            RefreshBreedStatsUI();
             
             // Guardar periódicamente (cada 5 puntos para no saturar el disco)
             if (i % 5 == 0 || i == pointsToAdd - 1)
@@ -839,282 +911,181 @@ public class BreedManager : MonoBehaviour
         isFillingStat = false;
     }
     
-    // ===== SISTEMA DE PANELES DE VIDEO =====
+    // ===== SISTEMA DE PANELES DE ANIMACIÓN =====
     
     /// <summary>
-    /// Activa un panel de video y desactiva el anterior (excepto dormir que es especial).
+    /// Activa un panel de animación y desactiva el anterior (excepto dormir que es especial).
+    /// Controla la visibilidad mediante alpha en lugar de activar/desactivar GameObjects.
     /// </summary>
-    private void ActivateVideoPanel(GameObject videoPanel, bool isSleepPanel = false)
+    private void ActivateAnimationPanel(GameObject animationPanel, AnimationClip clip, bool isSleepPanel = false)
     {
-        if (videoPanel == null)
+        if (animationPanel == null)
             return;
         
-        // Si hay fade habilitado, usar corrutina con fade
-        if (useVideoFade && videoFadeOverlay != null)
-        {
-            StartCoroutine(ActivateVideoPanelWithFade(videoPanel, isSleepPanel));
-        }
-        else
-        {
-            // Sin fade, activar directamente
-            ActivateVideoPanelDirect(videoPanel, isSleepPanel);
-        }
-    }
-    
-    /// <summary>
-    /// Activa un panel de video con fade in/out.
-    /// </summary>
-    private IEnumerator ActivateVideoPanelWithFade(GameObject videoPanel, bool isSleepPanel)
-    {
-        // FADE IN: De transparente a negro
-        if (videoFadeOverlay != null)
-        {
-            if (!videoFadeOverlay.gameObject.activeSelf)
-            {
-                videoFadeOverlay.gameObject.SetActive(true);
-            }
-            yield return StartCoroutine(FadeImage(videoFadeOverlay, 0f, 1f, videoFadeDuration));
-        }
+        // Ocultar el idle mientras se muestra una acción (si existe)
+        SetAnimationPanelAlpha(0f);
         
-        // Activar panel mientras está en negro
-        ActivateVideoPanelDirect(videoPanel, isSleepPanel);
-        
-        // FADE OUT: De negro a transparente
-        if (videoFadeOverlay != null)
+        // Bloquear botones durante la animación (solo para acciones, no sleep)
+        if (!isSleepPanel)
         {
-            yield return StartCoroutine(FadeImage(videoFadeOverlay, 1f, 0f, videoFadeDuration));
-            videoFadeOverlay.gameObject.SetActive(false);
+            isPlayingAnimation = true;
+            if (noria != null) noria.SetPauseRotation(true);
         }
-    }
-    
-    /// <summary>
-    /// Activa un panel de video directamente (sin fade).
-    /// </summary>
-    private void ActivateVideoPanelDirect(GameObject videoPanel, bool isSleepPanel)
-    {
-        if (videoPanel == null)
-            return;
         
         // Si es el panel de dormir, no desactivar otros paneles (es especial)
         if (!isSleepPanel)
         {
-            // Desactivar panel anterior si existe
-            if (currentActiveVideoPanel != null && currentActiveVideoPanel != sleepVideoPanel)
+            // Ocultar panel anterior si existe (usando alpha)
+            if (currentActiveAnimationPanel != null && currentActiveAnimationPanel != sleepAnimationPanel)
             {
-                currentActiveVideoPanel.SetActive(false);
+                SetPanelAlpha(currentActiveAnimationPanel, 0f);
             }
             
-            // Desactivar panel de dormir si está activo (al usar otra acción)
-            if (sleepVideoPanel != null && sleepVideoPanel.activeSelf)
+            // Ocultar panel de dormir si está activo (al usar otra acción)
+            if (sleepAnimationPanel != null)
             {
-                sleepVideoPanel.SetActive(false);
+                Animator sleepAnimator = GetAnimatorFromPanel(sleepAnimationPanel);
+                if (sleepAnimator != null)
+                {
+                    sleepAnimator.speed = 1f;
+                }
+                SetPanelAlpha(sleepAnimationPanel, 0f);
             }
             
-            currentActiveVideoPanel = videoPanel;
+            currentActiveAnimationPanel = animationPanel;
         }
         
-        // Verificar el estado del panel y sus padres antes de activar
-        Transform parent = videoPanel.transform.parent;
+        // Activar el panel y hacerlo visible
+        animationPanel.SetActive(true);
+        SetPanelAlpha(animationPanel, 1f);
         
-        // Activar el nuevo panel PRIMERO (antes de verificar VideoPlayer)
-        videoPanel.SetActive(true);
+        // Obtener Animator del panel
+        Animator animator = GetAnimatorFromPanel(animationPanel);
         
-        // Si el panel está activo pero no en la jerarquía, intentar activar el padre
-        if (!videoPanel.activeInHierarchy && parent != null && !parent.gameObject.activeSelf)
-        {
-            parent.gameObject.SetActive(true);
-        }
-        
-        // Obtener VideoPlayer del panel
-        UnityEngine.Video.VideoPlayer videoPlayer = GetVideoPlayerFromPanel(videoPanel);
-        
-        // Si no hay VideoPlayer o clip, mantener el panel activo pero no reproducir
-        if (videoPlayer == null || videoPlayer.clip == null)
+        // Si no hay Animator o clip, mantener el panel activo pero no reproducir
+        if (animator == null)
             return;
         
-        // Si es el panel de dormir, configurar para que se quede en el último fotograma
+        // Asegurar velocidad normal (por si venimos de dormir)
+        animator.speed = 1f;
+        
+        // Si es el panel de dormir, configurar para que se quede en el último frame
         if (isSleepPanel)
         {
-            // Preparar el video y esperar a que esté listo
-            StartCoroutine(PrepareAndPlaySleepVideo(videoPlayer));
+            StartCoroutine(PlaySleepAnimation(animator, clip));
         }
         else
         {
-            // Para otros paneles, reproducir normalmente una vez
-            StartCoroutine(PrepareAndPlayVideo(videoPanel, videoPlayer));
+            // Para otros paneles, reproducir una vez y luego volver a idle
+            StartCoroutine(PlayActionAnimation(animationPanel, animator, clip));
         }
     }
     
     /// <summary>
-    /// Prepara y reproduce el video de dormir.
+    /// Establece el alpha de un panel específico (0 = invisible, 1 = visible).
     /// </summary>
-    private IEnumerator PrepareAndPlaySleepVideo(UnityEngine.Video.VideoPlayer videoPlayer)
+    private void SetPanelAlpha(GameObject panel, float alpha)
     {
-        if (videoPlayer == null)
-            yield break;
-        
-        // Preparar el video
-        videoPlayer.Prepare();
-        
-        // Esperar a que esté preparado
-        while (!videoPlayer.isPrepared)
+        if (panel == null)
+            return;
+
+        // Buscar todos los componentes Image y SpriteRenderer en el panel y sus hijos
+        Image[] images = panel.GetComponentsInChildren<Image>();
+        foreach (Image img in images)
         {
-            yield return null;
+            if (img != null)
+            {
+                Color color = img.color;
+                color.a = alpha;
+                img.color = color;
+            }
         }
-        
-        // Reproducir hasta el final y luego pausar en el último fotograma
-        videoPlayer.Play();
-        // Esperar a que termine y luego pausar
-        yield return StartCoroutine(WaitForVideoEndAndPause(videoPlayer));
+
+        SpriteRenderer[] spriteRenderers = panel.GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = alpha;
+                sr.color = color;
+            }
+        }
     }
     
     /// <summary>
-    /// Prepara y reproduce el video, luego desactiva el panel cuando termine.
+    /// Obtiene el componente Animator de un panel.
     /// </summary>
-    private IEnumerator PrepareAndPlayVideo(GameObject panel, UnityEngine.Video.VideoPlayer videoPlayer)
-    {
-        if (videoPlayer == null || panel == null)
-            yield break;
-        
-        // Preparar el video
-        videoPlayer.Prepare();
-        
-        // Esperar a que esté preparado
-        while (!videoPlayer.isPrepared)
-        {
-            yield return null;
-        }
-        
-        // Verificar que el panel siga activo antes de reproducir
-        if (!panel.activeInHierarchy)
-            yield break;
-        
-        // Reproducir el video
-        videoPlayer.Play();
-        
-        // Desactivar panel cuando termine
-        yield return StartCoroutine(WaitForVideoEndAndDeactivate(panel, videoPlayer));
-    }
-    
-    /// <summary>
-    /// Obtiene el componente VideoPlayer de un panel.
-    /// </summary>
-    private UnityEngine.Video.VideoPlayer GetVideoPlayerFromPanel(GameObject panel)
+    private Animator GetAnimatorFromPanel(GameObject panel)
     {
         if (panel == null)
             return null;
         
-        UnityEngine.Video.VideoPlayer videoPlayer = panel.GetComponent<UnityEngine.Video.VideoPlayer>();
-        if (videoPlayer == null)
+        Animator animator = panel.GetComponent<Animator>();
+        if (animator == null)
         {
-            videoPlayer = panel.GetComponentInChildren<UnityEngine.Video.VideoPlayer>();
+            animator = panel.GetComponentInChildren<Animator>();
         }
         
-        return videoPlayer;
+        return animator;
     }
     
     /// <summary>
-    /// Espera a que termine el video y luego desactiva el panel con fade out.
+    /// Reproduce la animación de dormir y se queda en el último frame.
     /// </summary>
-    private IEnumerator WaitForVideoEndAndDeactivate(GameObject panel, UnityEngine.Video.VideoPlayer videoPlayer)
+    private IEnumerator PlaySleepAnimation(Animator animator, AnimationClip clip)
     {
-        if (videoPlayer == null || panel == null)
+        if (animator == null)
+            yield break;
+        if (clip == null)
             yield break;
         
-        // Esperar a que termine el video
-        while (videoPlayer.isPlaying)
-        {
-            yield return null;
-        }
+        // Reproducir la animación de dormir
+        animator.Play(clip.name, 0, 0f);
         
-        // Si hay fade habilitado, hacer fade out antes de desactivar
-        if (useVideoFade && videoFadeOverlay != null)
-        {
-            // FADE IN: De transparente a negro
-            if (!videoFadeOverlay.gameObject.activeSelf)
-            {
-                videoFadeOverlay.gameObject.SetActive(true);
-            }
-            yield return StartCoroutine(FadeImage(videoFadeOverlay, 0f, 1f, videoFadeDuration));
-            
-            // Desactivar panel mientras está en negro
-            if (panel != null)
-            {
-                panel.SetActive(false);
-            }
-            
-            // Si era el panel actual, limpiar referencia
-            if (currentActiveVideoPanel == panel)
-            {
-                currentActiveVideoPanel = null;
-            }
-            
-            // FADE OUT: De negro a transparente
-            yield return StartCoroutine(FadeImage(videoFadeOverlay, 1f, 0f, videoFadeDuration));
-            videoFadeOverlay.gameObject.SetActive(false);
-        }
-        else
-        {
-            // Sin fade, desactivar directamente
-            if (panel != null)
-            {
-                panel.SetActive(false);
-            }
-            
-            // Si era el panel actual, limpiar referencia
-            if (currentActiveVideoPanel == panel)
-            {
-                currentActiveVideoPanel = null;
-            }
-        }
+        // Esperar a que termine la animación
+        yield return new WaitForSeconds(clip.length);
+        
+        // Pausar en el último frame (la animación se quedará ahí visualmente)
+        animator.speed = 0f;
     }
     
     /// <summary>
-    /// Interpola el alpha de una Image entre dos valores.
+    /// Reproduce una animación de acción y vuelve a idle.
     /// </summary>
-    private IEnumerator FadeImage(UnityEngine.UI.Image image, float startAlpha, float endAlpha, float duration)
+    private IEnumerator PlayActionAnimation(GameObject panel, Animator animator, AnimationClip clip)
     {
-        if (image == null)
+        if (animator == null || panel == null)
+            yield break;
+        if (clip == null)
             yield break;
         
-        float elapsed = 0f;
-        Color color = image.color;
+        // Reproducir la animación de acción
+        animator.Play(clip.name, 0, 0f);
         
-        while (elapsed < duration)
+        // Esperar a que termine la animación
+        yield return new WaitForSeconds(clip.length);
+        
+        // Ocultar el panel de acción cuando termine
+        SetPanelAlpha(panel, 0f);
+        
+        // Si era el panel actual, limpiar referencia
+        if (currentActiveAnimationPanel == panel)
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-            color.a = Mathf.Lerp(startAlpha, endAlpha, t);
-            image.color = color;
-            yield return null;
+            currentActiveAnimationPanel = null;
         }
         
-        // Asegurar valor final
-        color.a = endAlpha;
-        image.color = color;
+        // Desbloquear botones al terminar la animación
+        isPlayingAnimation = false;
+        
+        // Reanudar giro de noria
+        if (noria != null) noria.SetPauseRotation(false);
+        
+        // Volver a mostrar el idle
+        SetAnimationPanelAlpha(1f);
     }
     
-    /// <summary>
-    /// Espera a que termine el video de dormir y luego lo pausa en el último fotograma.
-    /// </summary>
-    private IEnumerator WaitForVideoEndAndPause(UnityEngine.Video.VideoPlayer videoPlayer)
-    {
-        if (videoPlayer == null)
-            yield break;
-        
-        // Esperar a que termine el video
-        while (videoPlayer.isPlaying)
-        {
-            yield return null;
-        }
-        
-        // Pausar en el último fotograma (el video se quedará ahí visualmente)
-        videoPlayer.Pause();
-    }
-    
-    /// <summary>
-    /// Abre el panel de confirmación de reset.
-    /// </summary>
+    // ===== MÉTODOS DE RESET =====
     public void OnResetButtonClicked()
     {
         if (resetConfirmPanel != null)
@@ -1820,11 +1791,44 @@ public class BreedManager : MonoBehaviour
     {
         RefreshBreedStatsUI();
         RefreshClassTitle();
+        RefreshHeroLevelText();
+        RefreshHeroExperienceUI();
         RefreshEvolutionCooldown();
         RefreshLifeTime();
         CalculateAndUpdateTitle();
         RefreshGeneralState();
         UpdateActionButtonsState();
+    }
+
+    private void RefreshHeroLevelText()
+    {
+        PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+        if (profile == null || heroLevelText == null)
+            return;
+
+        heroLevelText.text = $"Nivel {profile.heroLevel}";
+    }
+
+    private void RefreshHeroExperienceUI()
+    {
+        PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+        if (profile == null)
+            return;
+
+        int currentExp = profile.heroExperience;
+        int neededExp = profile.GetExperienceNeededForNextLevel();
+
+        if (heroExperienceSlider != null)
+        {
+            heroExperienceSlider.minValue = 0;
+            heroExperienceSlider.maxValue = neededExp;
+            heroExperienceSlider.value = currentExp;
+        }
+
+        if (heroExperienceText != null)
+        {
+            heroExperienceText.text = $"{currentExp}/{neededExp}";
+        }
     }
     
     /// <summary>
@@ -1887,16 +1891,25 @@ public class BreedManager : MonoBehaviour
             bool isSleeping = energySystem.IsSleeping();
             
             // Si dejó de dormir y el panel de dormir está activo, desactivarlo
-            if (!isSleeping && sleepVideoPanel != null && sleepVideoPanel.activeSelf)
+            if (!isSleeping && sleepAnimationPanel != null)
             {
-                sleepVideoPanel.SetActive(false);
+                // Restaurar velocidad del animator y ocultar panel
+                Animator sleepAnimator = GetAnimatorFromPanel(sleepAnimationPanel);
+                if (sleepAnimator != null)
+                {
+                    sleepAnimator.speed = 1f;
+                }
+                SetPanelAlpha(sleepAnimationPanel, 0f);
             }
             
             // Si está durmiendo y el panel no está activo, activarlo (por si se recarga la escena)
-            if (isSleeping && sleepVideoPanel != null && !sleepVideoPanel.activeSelf)
+            if (isSleeping && sleepAnimationPanel != null)
             {
-                ActivateVideoPanel(sleepVideoPanel, isSleepPanel: true);
+                ActivateAnimationPanel(sleepAnimationPanel, sleepActionClip, isSleepPanel: true);
             }
+            
+            // Pausar noria si está durmiendo, pero no durante animaciones de acciones
+            if (noria != null && !isPlayingAnimation) noria.SetPauseRotation(isSleeping);
         }
         else
         {
@@ -2002,12 +2015,31 @@ public class BreedManager : MonoBehaviour
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null || lifeTimeText == null)
             return;
-        
-        // Formatear tiempo de vida (horas:minutos:segundos)
-        int hours = Mathf.FloorToInt(profile.totalLifeTime / 3600f);
-        int minutes = Mathf.FloorToInt((profile.totalLifeTime % 3600f) / 60f);
-        int seconds = Mathf.FloorToInt(profile.totalLifeTime % 60f);
-        lifeTimeText.text = $"{hours:00}:{minutes:00}:{seconds:00}";
+
+        double totalSeconds = Math.Max(0d, profile.totalLifeTime);
+
+        const int secondsPerMinute = 60;
+        const int secondsPerHour = 60 * secondsPerMinute;
+        const int secondsPerDay = 24 * secondsPerHour;
+        const int secondsPerMonth = 30 * secondsPerDay;
+        const int secondsPerYear = 365 * secondsPerDay;
+
+        int years = (int)(totalSeconds / secondsPerYear);
+        totalSeconds %= secondsPerYear;
+
+        int months = (int)(totalSeconds / secondsPerMonth);
+        totalSeconds %= secondsPerMonth;
+
+        int days = (int)(totalSeconds / secondsPerDay);
+        totalSeconds %= secondsPerDay;
+
+        int hours = (int)(totalSeconds / secondsPerHour);
+        totalSeconds %= secondsPerHour;
+
+        int minutes = (int)(totalSeconds / secondsPerMinute);
+        int seconds = (int)(totalSeconds % secondsPerMinute);
+
+        lifeTimeText.text = $"{years} Años {months} Meses {days} Días {hours:00}:{minutes:00}:{seconds:00}";
     }
     
     /// <summary>
@@ -2023,33 +2055,54 @@ public class BreedManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Actualiza el estado de los botones de acción (dormir y evolucionar).
+    /// Actualiza el estado de los botones de acción.
     /// </summary>
     private void UpdateActionButtonsState()
     {
-        // Actualizar botón de dormir: solo habilitado si la energía NO está al máximo Y no está durmiendo
+        const int DISABLE_AT_OR_ABOVE = 99;
+        
+        PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
+        bool canPressAnyAction = !isFillingStat && !isPlayingAnimation && profile != null;
+        
+        // Comer / Estudio / Jugar / Limpiar / Trabajar:
+        // Solo pulsables cuando el stat asociado esté por debajo de 99.
+        if (eatButton != null)
+        {
+            eatButton.interactable = canPressAnyAction && profile.breedHunger < DISABLE_AT_OR_ABOVE;
+        }
+        if (studyButton != null)
+        {
+            studyButton.interactable = canPressAnyAction && profile.breedDiscipline < DISABLE_AT_OR_ABOVE;
+        }
+        if (playButton != null)
+        {
+            playButton.interactable = canPressAnyAction && profile.breedHappiness < DISABLE_AT_OR_ABOVE;
+        }
+        if (cleanButton != null)
+        {
+            cleanButton.interactable = canPressAnyAction && profile.breedHygiene < DISABLE_AT_OR_ABOVE;
+        }
+        if (workButton != null)
+        {
+            workButton.interactable = canPressAnyAction && profile.breedWork < DISABLE_AT_OR_ABOVE;
+        }
+        
+        // Dormir: solo pulsable cuando energía < 99 y no está durmiendo.
         if (sleepButton != null && energySystem != null)
         {
             int currentEnergy = energySystem.GetCurrentEnergy();
-            int maxEnergy = energySystem.GetMaxEnergy();
             bool isSleeping = energySystem.IsSleeping();
-            
-            // El botón está habilitado si: energía < máximo Y no está durmiendo
-            sleepButton.interactable = (currentEnergy < maxEnergy) && !isSleeping;
-            
-            // Opcional: Cambiar texto del botón si está durmiendo
-            // (puedes agregar un TextMeshProUGUI para el texto del botón si quieres mostrar "Durmiendo..." o similar)
+            sleepButton.interactable = !isFillingStat && !isPlayingAnimation && !isSleeping && currentEnergy < DISABLE_AT_OR_ABOVE;
         }
         
         // Actualizar botón de evolución: solo habilitado si se cumplen todos los requisitos
         if (evoButton != null)
         {
-            PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
             if (profile != null)
             {
                 DateTime lastEvolutionTime = profile.GetLastEvolutionTime();
                 bool canEvolve = EvolutionSystem.CanEvolve(profile.evolutionClass, profile.heroLevel, lastEvolutionTime);
-                evoButton.interactable = canEvolve;
+                evoButton.interactable = !isFillingStat && !isPlayingAnimation && canEvolve;
             }
             else
             {
@@ -2269,7 +2322,11 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private IEnumerator PlayRandomIdleAnimations()
     {
-        if (idleAnimations == null || idleAnimations.Length == 0 || animationTargetAnimator == null)
+        if (animationTargetAnimator == null)
+            yield break;
+
+        AnimationConfig[] idleSet = currentIdleAnimations;
+        if (idleSet == null || idleSet.Length == 0)
             yield break;
 
         while (true)
@@ -2283,9 +2340,17 @@ public class BreedManager : MonoBehaviour
                 yield break;
             }
             
+            // Releer por si cambió la evolución/clase mientras el panel está abierto
+            idleSet = currentIdleAnimations;
+            if (idleSet == null || idleSet.Length == 0)
+            {
+                idleAnimationCoroutine = null;
+                yield break;
+            }
+
             // Seleccionar una animación aleatoria del pool
-            int randomIndex = UnityEngine.Random.Range(0, idleAnimations.Length);
-            AnimationConfig selectedAnimation = idleAnimations[randomIndex];
+            int randomIndex = UnityEngine.Random.Range(0, idleSet.Length);
+            AnimationConfig selectedAnimation = idleSet[randomIndex];
 
             if (selectedAnimation != null && selectedAnimation.clip != null)
             {

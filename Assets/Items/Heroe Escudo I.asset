@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Escudo I
   m_EditorClassIdentifier: 
   itemName: Heroe Escudo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 648745084, guid: 903a1905f15d3ab4fafe7b65ecc3fc79, type: 3}
   description: El destino de reinos enteros ha cambiado gracias a este equipo sagrado.
   price: 696
   hp: 87
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 5

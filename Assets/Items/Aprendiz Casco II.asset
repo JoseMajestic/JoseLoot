@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Casco II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Casco II
-  itemSprite: {fileID: 21300000, guid: 1a493a48d4791ec40bbbd8603fbe82b0, type: 3}
+  itemSprite: {fileID: 569188646, guid: 7131c20c494c87e41a733307a6e7782d, type: 3}
   description: La simplicidad es la madre de la eficacia en el campo de batalla.
   price: 144
   hp: 12

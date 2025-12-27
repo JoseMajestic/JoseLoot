@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Guantes III
   m_EditorClassIdentifier: 
   itemName: Titan Guantes III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1912166920, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: El trueno y la montania obedecen a quien porte este equipo titanico.
   price: 840
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 10
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 6

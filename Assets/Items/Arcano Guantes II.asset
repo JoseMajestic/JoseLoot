@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Guantes II
   m_EditorClassIdentifier: 
   itemName: Arcano Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Los magos mas sabios reconocen el aura que emana de este equipo.
   price: 374
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 5
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 6

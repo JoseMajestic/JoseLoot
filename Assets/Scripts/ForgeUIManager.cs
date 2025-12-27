@@ -29,6 +29,7 @@ public class ForgeUIManager : MonoBehaviour
     [SerializeField] private Image detailViewImage;
     [SerializeField] private TextMeshProUGUI itemTitleTextA;
     [SerializeField] private TextMeshProUGUI itemTitleTextB;
+    [SerializeField] private TextMeshProUGUI selectedItemNameText;
 
     [Header("Stats actuales")]
     [SerializeField] private TextMeshProUGUI hpText;
@@ -579,6 +580,11 @@ public class ForgeUIManager : MonoBehaviour
         // Título y rareza (duplicado para mejor visibilidad)
         Color titleColor = baseItem != null ? GetRarityColor(baseItem.rareza) : Color.white;
         string titleText = baseItem != null ? baseItem.itemName : item.GetItemName();
+
+        if (selectedItemNameText != null)
+        {
+            selectedItemNameText.text = titleText;
+        }
         
         if (itemTitleTextA != null)
         {
@@ -705,6 +711,7 @@ public class ForgeUIManager : MonoBehaviour
         if (detailViewPanel != null) detailViewPanel.SetActive(false);
         if (arrowsPanel != null) arrowsPanel.SetActive(false);
 
+        if (selectedItemNameText != null) selectedItemNameText.text = "";
         if (itemTitleTextA != null) { itemTitleTextA.text = ""; itemTitleTextA.color = Color.white; }
         if (itemTitleTextB != null) { itemTitleTextB.text = ""; itemTitleTextB.color = Color.white; }
         if (rarezaText != null) { rarezaText.text = ""; rarezaText.color = Color.white; }

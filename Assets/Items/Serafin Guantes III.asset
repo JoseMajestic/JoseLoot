@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Guantes III
   m_EditorClassIdentifier: 
   itemName: Serafin Guantes III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Solo aquellos de corazon puro pueden empuniar este equipo celestial
     bendito.
   price: 1814
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 22
   nivel: 1
   rareza: Celestial
-  itemType: 1
+  itemType: 6

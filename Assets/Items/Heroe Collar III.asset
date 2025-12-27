@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Heroe Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -384096966, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: El collar del heroe legendario, cuyas historias inspiraran a generaciones
     futuras.
   price: 960
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

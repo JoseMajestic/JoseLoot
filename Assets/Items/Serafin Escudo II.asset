@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Escudo II
   m_EditorClassIdentifier: 
   itemName: Serafin Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 921334409, guid: 289dd331f5faee84c9ba7a3d5312d6c5, type: 3}
   description: Los coros angelicales cantan cuando este equipo entra en el campo
     de batalla.
   price: 1555
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Celestial
-  itemType: 1
+  itemType: 5

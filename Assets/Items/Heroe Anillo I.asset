@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Heroe Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1672004311, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: Un anillo que canaliza el coraje y la determinacion del heroe.
   price: 400
   hp: 15
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

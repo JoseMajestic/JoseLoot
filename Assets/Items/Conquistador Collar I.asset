@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 562129323, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Un collar forjado con metales de las tierras conquistadas.
   price: 300
   hp: 20
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Raro
-  itemType: 7
+  itemType: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Guantes II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 474310936, guid: 70c51b5cee9113a43b1b525c77862bc3, type: 3}
   description: Resistente y practico, perfecto para enfrentar los primeros desafios
     del destino.
   price: 144
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 6

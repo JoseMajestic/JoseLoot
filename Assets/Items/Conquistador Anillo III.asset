@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1005229158, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
   description: El anillo que marca a quien ha conquistado continentes enteros.
   price: 500
   hp: 30
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Raro
-  itemType: 9
+  itemType: 8

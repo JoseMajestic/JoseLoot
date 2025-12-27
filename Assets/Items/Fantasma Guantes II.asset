@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Guantes II
   m_EditorClassIdentifier: 
   itemName: Fantasma Guantes II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 682451130, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
   description: Forjado entre los velos del mundo de los vivos y los muertos.
   price: 490
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 7
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 6

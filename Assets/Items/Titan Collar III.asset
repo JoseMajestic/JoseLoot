@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1810264046, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: El collar de los titanes, que otorga la fuerza de quienes crearon
     el mundo.
   price: 2880
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 7
+  itemType: 2

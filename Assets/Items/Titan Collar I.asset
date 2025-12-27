@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -324126002, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Un collar creado con fragmentos de las armaduras de los titanes primigenios.
   price: 1440
   hp: 70
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 7
+  itemType: 2

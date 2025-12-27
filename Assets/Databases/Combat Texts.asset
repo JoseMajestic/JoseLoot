@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cac6d597e077074681300e0b9dbe4ef, type: 3}
   m_Name: Combat Texts
   m_EditorClassIdentifier: Assembly-CSharp::CombatTexts
-  selectAttack: Selecciona un ataque
-  attackSelected: 'Ataque seleccionado: {0}
+  selectAttack: Selecciona un ataque y pulsa LUCHAR
+  attackSelected: '{0}:
 
     {1}'
-  playerBasicAttack: "Jugador usa ataque b\xE1sico."
-  playerAttack: "Jugador usa {0}."
+  playerBasicAttack: Jugador usa Estoque.
+  playerAttack: Jugador usa {0}.
   enemyReceivesDamage: "{0} recibe {1} de da\xF1o."
-  playerHeal: Jugador usa {0} y se cura {1} de HP.
-  playerLuck: "\xA1Suerte activada! El jugador ataca de nuevo."
-  playerLuckAttack: "Jugador ataca de nuevo y causa {0} de da\xF1o."
-  enemyBasicAttack: "{0} usa ataque b\xE1sico."
-  enemyAttack: "{0} usa {1}."
+  playerHeal: Jugador usa {0} y restablece  {1} de HP.
+  playerLuck: "Los dioses acommpana al h\xE9reo. El H\xE9roe ataca de nuevo."
+  playerLuckAttack: " El H\xE9roe ataca de nuevo y causa {0} de da\xF1o."
+  enemyBasicAttack: '{0} usa Estoque'
+  enemyAttack: '{0} usa {1}.'
   playerReceivesDamage: "El jugador recibe {0} de da\xF1o."
   enemyHeal: '{0} usa {1} y se cura {2} de HP.'
   enemyLuck: "\xA1Suerte activada! {0} ataca de nuevo."
@@ -54,17 +54,17 @@ MonoBehaviour:
   playerDefenseBuffActive: "El h\xE9roe tiene buff de defensa {0}% durante {1} rondas
     m\xE1s."
   enemyDefenseBuffActive: "{0} tiene buff de defensa {1}% durante {2} rondas m\xE1s."
-  playerAttackBuffRemaining: "Buff de ataque del h\xE9roe: {0} rondas restantes."
-  enemyAttackBuffRemaining: 'Buff de ataque de {0}: {1} rondas restantes.'
-  playerDefenseBuffRemaining: "Buff de defensa del h\xE9roe: {0} rondas restantes."
-  enemyDefenseBuffRemaining: 'Buff de defensa de {0}: {1} rondas restantes.'
+  playerAttackBuffRemaining: "Ataque de H\xE9roe aumentado: {0} rondas restantes."
+  enemyAttackBuffRemaining: 'Ataque aumentado de {0}: {1} rondas restantes.'
+  playerDefenseBuffRemaining: "Defensa del h\xE9roe aumentada: {0} rondas restantes."
+  enemyDefenseBuffRemaining: 'Defensa aumentada de {0} : {1} rondas restantes.'
   enemyDefeated: '{0} ha sido debilitado.'
   playerDefeated: El jugador ha sido debilitado.
-  playerWins: El jugador gana.
+  playerWins: "El h\xE9roe gana y obtiene muchas recomensas."
   enemyWins: '{0} gana.'
-  playerAttacksFirst: '{0} ataca primero.'
-  enemyAttacksFirst: '{0} ataca primero.'
-  nowPlayerAttacks: Ahora ataca {0}.
-  nowEnemyAttacks: Ahora ataca {0}.
-  typewriterSpeed: 30
-  delayBetweenMessages: 1.5
+  playerAttacksFirst: "{0} es muy r\xE1pido y ataca primero."
+  enemyAttacksFirst: "{0} es muy r\xE1pido y ataca primero."
+  nowPlayerAttacks: El {0} observa fijamente al enemigo.
+  nowEnemyAttacks: '{0} amenaza con atacar.'
+  typewriterSpeed: 90
+  delayBetweenMessages: 0.5

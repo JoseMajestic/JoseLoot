@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1553626937, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: Un anillo que canaliza el poder inmenso de los titanes.
   price: 1200
   hp: 35
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Legendario
-  itemType: 9
+  itemType: 8

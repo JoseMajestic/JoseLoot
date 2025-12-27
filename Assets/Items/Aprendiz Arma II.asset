@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Arma II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1542947436, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: Creado con materiales basicos pero con el corazon de un verdadero
     guerrero.
   price: 180
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 0
+  itemType: 3

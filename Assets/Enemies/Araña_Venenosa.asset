@@ -28,7 +28,7 @@ MonoBehaviour:
   experienceReward: 10
   rewardConfig:
     rewardItemCount: 1
-    allowedTiers: 00000000
+    allowedTiers: 01000000
     distributeEvenly: 1
     forcedRewards: []
   requiredLevel: 1

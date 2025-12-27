@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Casco II
   m_EditorClassIdentifier: 
   itemName: Serafin Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1702391838, guid: 42b7277b0c7bf0f4db564dd1f7367689, type: 3}
   description: El cielo mismo protege a quien porte este equipo con fe inquebrantable.
   price: 1555
   hp: 130

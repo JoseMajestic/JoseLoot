@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Casco III
   m_EditorClassIdentifier: 
   itemName: Aprendiz Casco III
-  itemSprite: {fileID: 21300000, guid: 854b2cc6f1f4dab4ead12b23f893b360, type: 3}
+  itemSprite: {fileID: 269315027, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: Forjado por herreros novatos para guerreros que inician su camino.
   price: 168
   hp: 12

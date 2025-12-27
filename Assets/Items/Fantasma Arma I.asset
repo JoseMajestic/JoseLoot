@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Arma I
   m_EditorClassIdentifier: 
   itemName: Fantasma Arma I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1716279706, guid: 3154f9b159fd89043909858e0c22de82, type: 3}
   description: Los espiritus errantes susurran secretos a quien porte este equipo
     sagrado.
   price: 510
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 0
+  itemType: 3

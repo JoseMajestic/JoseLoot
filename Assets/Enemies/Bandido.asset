@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Bandido
   description: "Un bandido humano armado. Conoce algunas t\xE9cnicas de combate b\xE1sicas."
-  enemySprite: {fileID: 21300000, guid: 7fc4d16d251336f4faf63bf7947658df, type: 3}
+  enemySprite: {fileID: 21300000, guid: 0ea4d1dad6bab9b47bcca889b4fb0052, type: 3}
   hp: 110
   ataque: 14
   defensa: 4
@@ -25,6 +25,11 @@ MonoBehaviour:
   destreza: 2
   rewardCoins: 65
   experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 1
   level: 2
   availableAttacks: []

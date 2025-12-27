@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Botas II
   m_EditorClassIdentifier: 
   itemName: Serafin Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1129838787, guid: 9ce346908e96b09429122e80d0ef74c0, type: 3}
   description: Solo aquellos de corazon puro pueden empuniar este equipo celestial
     bendito.
   price: 1555
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Celestial
-  itemType: 1
+  itemType: 9

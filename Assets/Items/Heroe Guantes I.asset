@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Guantes I
   m_EditorClassIdentifier: 
   itemName: Heroe Guantes I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1365672299, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
   description: Los bardos cantan sobre los heroes que portaron este equipo en batallas
     epicas.
   price: 696
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 12
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 6

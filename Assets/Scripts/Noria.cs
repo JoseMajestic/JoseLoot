@@ -165,11 +165,12 @@ public class Noria : MonoBehaviour
     }
 
     /// <summary>
-    /// Pausa o reanuda la rotación.
+    /// Establece el estado de pausa de la rotación.
     /// </summary>
-    public void TogglePause()
+    /// <param name="value">true para pausar, false para reanudar</param>
+    public void SetPauseRotation(bool value)
     {
-        pauseRotation = !pauseRotation;
+        pauseRotation = value;
     }
 }
 

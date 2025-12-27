@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Armadura II
   m_EditorClassIdentifier: 
   itemName: Titan Armadura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1667721009, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: La fuerza de los colosos ancestrales fluye a traves de cada pieza.
   price: 720
   hp: 125
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 4

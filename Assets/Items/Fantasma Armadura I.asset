@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Armadura I
   m_EditorClassIdentifier: 
   itemName: Fantasma Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -896788129, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Translucido como la niebla del amanecer sobre los campos de batalla.
   price: 408
   hp: 85
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 4

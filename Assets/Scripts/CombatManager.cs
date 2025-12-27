@@ -405,11 +405,11 @@ public class CombatManager : MonoBehaviour
         // Mostrar detalles del ataque básico
         if (selectedAttackDetailsText != null && combatTexts != null)
         {
-            selectedAttackDetailsText.text = "Ataque básico: Un golpe simple sin efectos especiales.";
+            selectedAttackDetailsText.text = "Estoque:\nAtaque cuerpo a cuerpo estándar, directo y fiable, base de todo combate legionario";
         }
         else if (selectedAttackDetailsText != null)
         {
-            selectedAttackDetailsText.text = "Ataque básico";
+            selectedAttackDetailsText.text = "Estoque";
         }
 
         // Habilitar botón de combate
@@ -1296,11 +1296,11 @@ public class CombatManager : MonoBehaviour
             // Mostrar detalles del ataque básico
             if (selectedAttackDetailsText != null && combatTexts != null)
             {
-                selectedAttackDetailsText.text = "Ataque básico: Un golpe simple sin efectos especiales.";
+                selectedAttackDetailsText.text = "Ataque cuerpo a cuerpo estándar, directo y fiable, base de todo combate legionario";
             }
             else if (selectedAttackDetailsText != null)
             {
-                selectedAttackDetailsText.text = "Ataque básico";
+                selectedAttackDetailsText.text = "Estoque";
             }
             
             // Habilitar botón de combate
@@ -1590,19 +1590,28 @@ public class CombatManager : MonoBehaviour
     /// <summary>
     /// Procesa un ataque básico (con AttackData opcional para sprites).
     /// </summary>
-    private IEnumerator ProcessBasicAttack(bool isPlayer, AttackData attack = null)
+    private IEnumerator ProcessBasicAttack(bool isPlayer, AttackData attack = null, bool showText = true, bool playAttackAnimation = true)
     {
         if (isPlayer)
         {
             // 1. Mostrar texto del ataque (solo nombre)
-            if (roundDetailsText != null && combatTexts != null)
+            if (showText && roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerBasicAttack);
+                string text;
+                if (attack != null)
+                {
+                    string coloredName = GetColoredAttackName(attack);
+                    text = FormatText(combatTexts.playerAttack, coloredName);
+                }
+                else
+                {
+                    text = FormatText(combatTexts.playerBasicAttack);
+                }
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
             // 2. Reproducir animación de ataque del jugador (una vez, 2 segundos)
-            if (animationManager != null)
+            if (playAttackAnimation && animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
             }
@@ -1624,14 +1633,16 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                       GetEnemyEffectiveDefense(), true);
+                                       GetEnemyEffectiveDefense(), true, out isCritical);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -1652,14 +1663,23 @@ public class CombatManager : MonoBehaviour
         else
         {
             // 1. Mostrar texto del ataque (solo nombre)
-            if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
+            if (showText && roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyBasicAttack, currentEnemy.enemyName);
+                string text;
+                if (attack != null)
+                {
+                    string coloredName = GetColoredAttackName(attack);
+                    text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
+                }
+                else
+                {
+                    text = FormatText(combatTexts.enemyBasicAttack, currentEnemy.enemyName);
+                }
                 yield return StartCoroutine(DisplayTextWithDelay(text));
             }
             
             // 2. Reproducir animación de ataque del enemigo (una vez, 2 segundos)
-            if (animationManager != null)
+            if (playAttackAnimation && animationManager != null)
             {
                 yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
             }
@@ -1681,14 +1701,16 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                       GetPlayerEffectiveDefense(), false);
+                                       GetPlayerEffectiveDefense(), false, out isCritical);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerReceivesDamage, damage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.playerReceivesDamage, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -1746,14 +1768,16 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                       GetEnemyEffectiveDefense(), true);
+                                       GetEnemyEffectiveDefense(), true, out isCritical);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -1804,14 +1828,16 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                       GetPlayerEffectiveDefense(), false);
+                                       GetPlayerEffectiveDefense(), false, out isCritical);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerReceivesDamage, damage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.playerReceivesDamage, damage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -2069,6 +2095,33 @@ public class CombatManager : MonoBehaviour
     private IEnumerator ProcessMultipleAttack(AttackData attack, bool isPlayer)
     {
         int numHits = attack.effectValue; // 2, 3, 4
+
+        if (roundDetailsText != null && combatTexts != null)
+        {
+            string coloredName = GetColoredAttackName(attack);
+            string text;
+            if (isPlayer)
+            {
+                text = FormatText(combatTexts.playerAttack, coloredName);
+            }
+            else
+            {
+                text = FormatText(combatTexts.enemyAttack, currentEnemy.enemyName, coloredName);
+            }
+            yield return StartCoroutine(DisplayTextWithDelay(text));
+        }
+
+        if (animationManager != null)
+        {
+            if (isPlayer)
+            {
+                yield return StartCoroutine(animationManager.PlayPlayerAnimation(AnimationManager.AnimationState.Attack));
+            }
+            else
+            {
+                yield return StartCoroutine(animationManager.PlayEnemyAnimation(AnimationManager.AnimationState.Attack));
+            }
+        }
         
         for (int i = 0; i < numHits; i++)
         {
@@ -2077,9 +2130,15 @@ public class CombatManager : MonoBehaviour
                 yield break;
             if (!isPlayer && playerCurrentHp <= 0)
                 yield break;
+
+            if (roundDetailsText != null)
+            {
+                string hitText = $"Golpe {i + 1} de {numHits}";
+                yield return StartCoroutine(DisplayTextWithDelay(hitText));
+            }
             
             // Pasar el AttackData para usar sus sprites en cada golpe
-            yield return StartCoroutine(ProcessBasicAttack(isPlayer, attack));
+            yield return StartCoroutine(ProcessBasicAttack(isPlayer, attack, false, false));
             
             // Verificar si el objetivo murió después del golpe
             if (isPlayer && enemyCurrentHp <= 0)
@@ -2142,15 +2201,17 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int baseDamage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                            GetEnemyEffectiveDefense(), true);
+                                            GetEnemyEffectiveDefense(), true, out isCritical);
             int totalDamage = baseDamage * multiplier;
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - totalDamage);
             
             // 4. Mostrar texto de daño recibido por el enemigo
             if (roundDetailsText != null && combatTexts != null && currentEnemy != null)
             {
-                string text = FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, totalDamage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.enemyReceivesDamage, currentEnemy.enemyName, totalDamage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -2201,15 +2262,17 @@ public class CombatManager : MonoBehaviour
             }
             
             // 3. Calcular daño
+            bool isCritical;
             int baseDamage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                            GetPlayerEffectiveDefense(), false);
+                                            GetPlayerEffectiveDefense(), false, out isCritical);
             int totalDamage = baseDamage * multiplier;
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - totalDamage);
             
             // 4. Mostrar texto de daño recibido por el jugador
             if (roundDetailsText != null && combatTexts != null)
             {
-                string text = FormatText(combatTexts.playerReceivesDamage, totalDamage);
+                string prefix = isCritical ? "¡CRÍTICO! " : "";
+                string text = prefix + FormatText(combatTexts.playerReceivesDamage, totalDamage);
                 yield return StartCoroutine(DisplayTextWithTypewriter(text));
             }
             
@@ -2665,21 +2728,20 @@ public class CombatManager : MonoBehaviour
     private int CalculateDamage(int ataque, int destreza, int ataqueCritico, int danoCritico, 
                                 int defensaOponente, bool isPlayer)
     {
-        // Determinar si es crítico
-        bool isCritical = Random.Range(0, 100) < ataqueCritico;
-        
-        // Calcular multiplicador de crítico
+        bool unused;
+        return CalculateDamage(ataque, destreza, ataqueCritico, danoCritico, defensaOponente, isPlayer, out unused);
+    }
+
+    private int CalculateDamage(int ataque, int destreza, int ataqueCritico, int danoCritico,
+                                int defensaOponente, bool isPlayer, out bool isCritical)
+    {
+        isCritical = Random.Range(0, 100) < ataqueCritico;
+
         float critMultiplier = isCritical ? (1f + (danoCritico / 10f) + 0.1f) : 1f;
-        
-        // Calcular daño total: (ataque + destreza / 2) * multiplicador_critico
         float totalDamage = (ataque + destreza / 2f) * critMultiplier;
-        
-        // Calcular daño efectivo: daño_total - defensa_oponente + destreza_atacante / 2
         float effectiveDamage = totalDamage - defensaOponente + (destreza / 2f);
-        
-        // Mínimo 1 de daño
+
         int finalDamage = Mathf.Max(1, Mathf.RoundToInt(effectiveDamage));
-        
         return finalDamage;
     }
 
@@ -2907,7 +2969,43 @@ public class CombatManager : MonoBehaviour
             yield return StartCoroutine(DisplayTextWithDelay(defeatText));
         }
 
-        // Mostrar texto de victoria del jugador
+        // Mostrar experiencia ganada ANTES del mensaje de victoria
+        int oldHeroLevel = -1;
+        int newHeroLevel = -1;
+        int experienceReward = 0;
+        if (currentEnemy != null)
+        {
+            experienceReward = currentEnemy.experienceReward;
+        }
+
+        if (experienceReward > 0 && GameDataManager.Instance != null)
+        {
+            PlayerProfileData profileBefore = GameDataManager.Instance.GetPlayerProfile();
+            if (profileBefore != null)
+            {
+                oldHeroLevel = profileBefore.heroLevel;
+            }
+
+            if (roundDetailsText != null)
+            {
+                yield return StartCoroutine(DisplayTextWithDelay($"Has ganado {experienceReward} EXP"));
+            }
+
+            GameDataManager.Instance.AddHeroExperience(experienceReward);
+
+            PlayerProfileData profileAfter = GameDataManager.Instance.GetPlayerProfile();
+            if (profileAfter != null)
+            {
+                newHeroLevel = profileAfter.heroLevel;
+            }
+
+            if (newHeroLevel > oldHeroLevel && newHeroLevel > 0 && roundDetailsText != null)
+            {
+                yield return StartCoroutine(DisplayTextWithDelay($"El jugador ha subido al nivel {newHeroLevel}"));
+            }
+        }
+
+        // Mostrar texto de victoria del jugador DESPUÉS de EXP / level up
         if (roundDetailsText != null && combatTexts != null)
         {
             yield return StartCoroutine(DisplayTextWithDelay(combatTexts.playerWins));
@@ -2932,16 +3030,6 @@ public class CombatManager : MonoBehaviour
         if (currentEnemy != null && GameDataManager.Instance != null)
         {
             GameDataManager.Instance.MarkEnemyDefeated(currentEnemy.enemyName);
-        }
-
-        // Otorgar experiencia al derrotar al enemigo
-        if (currentEnemy != null && GameDataManager.Instance != null)
-        {
-            int experienceReward = currentEnemy.experienceReward;
-            if (experienceReward > 0)
-            {
-                GameDataManager.Instance.AddHeroExperience(experienceReward);
-            }
         }
 
         // Añadir 5% de trabajo por victoria

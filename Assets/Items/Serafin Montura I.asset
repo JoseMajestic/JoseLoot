@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Serafin Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1724744423, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Un corcel divino forjado en los talleres celestiales de los angeles.
   price: 2250
   hp: 120
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 6
+  itemType: 0

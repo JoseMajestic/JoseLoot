@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Heroe Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -734584478, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: "El corcel que ha llevado a heroes a trav\xE9s de las mas grandes
     aventuras."
   price: 600
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

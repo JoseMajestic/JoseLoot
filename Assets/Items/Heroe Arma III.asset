@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Arma III
   m_EditorClassIdentifier: 
   itemName: Heroe Arma III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -241550899, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Creado para protagonizar las historias que los ninos escucharan antes
     de dormir.
   price: 1218
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 0
+  itemType: 3

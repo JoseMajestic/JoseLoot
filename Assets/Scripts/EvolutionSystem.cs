@@ -35,34 +35,66 @@ public static class EvolutionSystem
     
     /// <summary>
     /// Obtiene el título de clase basado en el nivel del héroe.
-    /// Sistema épico con 12 fases progresivas (120 títulos totales).
+    /// </summary>
+    /// <summary>
+    /// Obtiene el nombre de clase basado en el nivel del héroe.
+    /// Usa los 200 títulos proporcionados por el usuario (cada 5 niveles).
     /// </summary>
     public static string GetClassNameByLevel(int heroLevel)
     {
-        // Determinar fase según nivel
-        int phase = GetPhaseByLevel(heroLevel);
+        // 200 títulos para niveles 0-999 (cada 5 niveles)
+        string[] allTitles = new string[]
+        {
+            "Novato", "Aprendiz", "Recluta", "Miliciano", "Discípulo",
+            "Aspirante", "Auxiliar", "Vigía", "Explorador", "Custodio",
+            "Soldado", "Infante", "Hastatus", "Princeps", "Triarius",
+            "Legionario", "Lancero", "Escudero", "Ballestero", "Veterano",
+            "Decanus", "Optio", "Signifer", "Cornicen", "Tesserarius",
+            "Vexillarius", "Imaginifer", "Aquilifer", "Beneficiarius", "Evocatus",
+            "Centinela", "Guardián", "Protector", "Defensor", "Combatiente",
+            "Gladiador", "Duelista", "Campeador", "Paladín", "Adalid",
+            "Decurión", "Suboficial", "Instructor", "Armero", "Estratega",
+            "Capitán", "Comandante", "Maestre", "Custos", "Praesidium",
+            "Centurión", "Centurión Mayor", "Primus Ordo", "Primus Pilus", "Tribuno Menor",
+            "Tribuno Militar", "Tribuno Mayor", "Prefecto", "Prefecto Castrense", "Legado",
+            "Legatus Legionis", "Dux", "Comes", "Gobernador", "Procónsul",
+            "Magistrado", "Censor", "Edil", "Cuestor", "Senador",
+            "Senador Mayor", "Patricio", "Noble", "Aristócrata", "Estratego",
+            "Gran Capitán", "General", "General Supremo", "Alto Mando", "Comandante Supremo",
+            "Magister Militum", "Magister Peditum", "Magister Equitum", "Vicario", "Corrector",
+            "Consular", "Proconsular", "Regente", "Protector Imperii", "Voz del Senado",
+            "Mano del Imperio", "Heraldo Imperial", "Campeón Imperial", "Custodio Imperial", "Alto Prelado",
+            "Pontífice", "Pontífice Máximo", "Dictator", "Caesar", "Imperator",
+            "Imperator Primus", "Imperator Magnus", "Imperator Invictus", "Dominus", "Dominus Belli",
+            "Dominus Imperii", "Señor de la Guerra", "Señor del Imperio", "Regente Supremo", "Emperador",
+            "Emperador Mayor", "Emperador Supremo", "Emperador Eterno", "Soberano", "Soberano Absoluto",
+            "Padre del Imperio", "Voz de los Dioses", "Mano de Roma", "Trono Viviente", "Ley del Imperio",
+            "Fundador", "Restaurador", "Unificador", "Pacificador", "Conquistador",
+            "Legislador", "Arquitecto", "Estratega Supremo", "Protector del Orden", "Guardián del Imperio",
+            "Custodio del Senado", "Custodio del Pueblo", "Custodio de Roma", "Señor de las Legiones", "Amo del Estandarte",
+            "Amo del Trono", "Regente del Mundo", "Regente de Roma", "Voz del Imperator", "Mano del Trono",
+            "Heredero", "Sucesor", "Primogénito", "Elegido", "Consagrado",
+            "Ascendente", "Magistratus Maximus", "Imperium Viviente", "Pilar del Imperio", "Símbolo de Roma",
+            "Ley Viviente", "Voluntad del Imperio", "Voluntad del Senado", "Voluntad de Roma", "Voluntad Divina",
+            "Campeón de los Dioses", "Elegido de Marte", "Elegido de Júpiter", "Hijo de Roma", "Padre de las Legiones",
+            "Fundamento del Orden", "Guardián del Mundo", "Regente Eterno", "Custodio del Tiempo", "Portador del Imperium",
+            "Portador del Trono", "Portador de la Ley", "Portador de Roma", "Voz del Mundo", "Voz de la Historia",
+            "Eje del Imperio", "Corazón de Roma", "Alma del Imperio", "Destino Viviente", "Destino de Roma",
+            "Destino del Mundo", "Testamento Imperial", "Crónica Viviente", "Legado Supremo", "Legado Eterno",
+            "Mito", "Símbolo", "Pilar del Mundo", "Guardián del Destino", "Custodio de la Eternidad",
+            "Voluntad Absoluta", "Ley Absoluta", "Imperium Absolutum", "Trono Absoluto", "Dominio Total",
+            "Principio", "Autoridad Final", "Último Bastión", "Última Ley", "Último Emperador",
+            "Emperador del Tiempo", "Emperador del Mundo", "Emperador de Roma", "Imperio Viviente", "Roma Aeterna"
+        };
         
-        // Obtener array de títulos de la fase
-        string[] phaseTitles = GetPhaseTitles(phase);
+        // Calcular el índice del título (cada 5 niveles)
+        int titleIndex = heroLevel / 5;
         
-        if (phaseTitles == null || phaseTitles.Length == 0)
-            return "Esclavo de la Arena";
+        // Asegurarse de que no exceda el array
+        if (titleIndex >= allTitles.Length)
+            titleIndex = allTitles.Length - 1;
         
-        // Calcular índice dentro de la fase para progresión determinista
-        // Cada fase tiene 10 títulos, distribuimos según el nivel dentro del rango
-        int minLevel = GetPhaseMinLevel(phase);
-        int maxLevel = GetPhaseMaxLevel(phase);
-        int levelRange = maxLevel - minLevel + 1;
-        int levelInPhase = heroLevel - minLevel;
-        
-        // Calcular índice (0-9) basado en la posición dentro de la fase
-        int titleIndex = Mathf.Clamp(
-            Mathf.FloorToInt((float)levelInPhase / (levelRange / 10f)), 
-            0, 
-            phaseTitles.Length - 1
-        );
-        
-        return phaseTitles[titleIndex];
+        return allTitles[titleIndex];
     }
     
     /// <summary>
@@ -140,181 +172,181 @@ public static class EvolutionSystem
             case 1: // FASE I · INICIACIÓN (1-50)
                 return new string[]
                 {
-                    "Esclavo de la Arena",
-                    "Recluta del Polvo",
-                    "Portador de Cadenas",
-                    "Luchador Anónimo",
-                    "Carne para el Combate",
-                    "Aspirante del Ludo",
-                    "Guerrero Sin Nombre",
-                    "Forjado en Sangre Ajena",
-                    "Superviviente del Primer Día",
-                    "Soldado de Nadie"
+                    "Novato",
+                    "Aprendiz",
+                    "Recluta",
+                    "Miliciano",
+                    "Discípulo",
+                    "Aspirante",
+                    "Auxiliar",
+                    "Vigía",
+                    "Explorador",
+                    "Custodio"
                 };
             
             case 2: // FASE II · FORJA (51-100)
                 return new string[]
                 {
-                    "Combatiente Reconocido",
-                    "Veterano del Ludo",
-                    "Portador del Acero",
-                    "Guerrero Persistente",
-                    "Afilado por la Arena",
-                    "Sangre Consagrada",
-                    "Dominador del Combate",
-                    "Luchador Implacable",
-                    "Azote de Novatos",
-                    "Acero con Voluntad"
+                    "Soldado",
+                    "Infante",
+                    "Hastatus",
+                    "Princeps",
+                    "Triarius",
+                    "Legionario",
+                    "Lancero",
+                    "Escudero",
+                    "Ballestero",
+                    "Veterano"
                 };
             
             case 3: // FASE III · DISCIPLINA (101-150)
                 return new string[]
                 {
-                    "Centinela del Ludo",
-                    "Ejecutor de la Arena",
-                    "Discípulo del Hierro",
-                    "Estratega del Combate",
-                    "Guardián del Orden Sangriento",
-                    "Legionario del Dolor",
-                    "Portador de Disciplina",
-                    "Veterano Indomable",
-                    "Columna de la Arena",
-                    "Guerrero de Hierro Frío"
+                    "Decanus",
+                    "Optio",
+                    "Signifer",
+                    "Cornicen",
+                    "Tesserarius",
+                    "Vexillarius",
+                    "Imaginifer",
+                    "Aquilifer",
+                    "Beneficiarius",
+                    "Evocatus"
                 };
             
             case 4: // FASE IV · AUTORIDAD (151-200)
                 return new string[]
                 {
-                    "Decano del Combate",
-                    "Instructor de Muerte",
-                    "Voz de la Arena",
-                    "Mano Ejecutora",
-                    "Centurión del Ludo",
-                    "Comandante del Polvo",
-                    "Arquitecto de Victorias",
-                    "Supervisor de Masacres",
-                    "Señor del Ritmo Bélico",
-                    "Estratega Consagrado"
+                    "Centinela",
+                    "Guardián",
+                    "Protector",
+                    "Defensor",
+                    "Combatiente",
+                    "Gladiador",
+                    "Duelista",
+                    "Campeador",
+                    "Paladín",
+                    "Adalid"
                 };
             
             case 5: // FASE V · GUERRA ABIERTA (201-300)
                 return new string[]
                 {
-                    "Cazador Infernal",
-                    "Verdugo de Demonios",
-                    "Rompelegiones",
-                    "Destructor del Abismo",
-                    "Azote del Infierno",
-                    "Matador de Engendros",
-                    "Purificador de Carne Negra",
-                    "Guerrero Antiinfernal",
-                    "Ejecutor del Caos",
-                    "Martillo del Averno"
+                    "Decurión",
+                    "Suboficial",
+                    "Instructor",
+                    "Armero",
+                    "Estratega",
+                    "Capitán",
+                    "Comandante",
+                    "Maestre",
+                    "Custos",
+                    "Praesidium"
                 };
             
             case 6: // FASE VI · LEYENDA (301-400)
                 return new string[]
                 {
-                    "Campeón de la Arena",
-                    "Campeón del Fuego",
-                    "Terror del Abismo",
-                    "Espada Viviente",
-                    "Mito en Progreso",
-                    "Leyenda Encadenada",
-                    "Guerrero Irreductible",
-                    "Matalegiones",
-                    "Señor de las Cicatrices",
-                    "Portador de Historias Sangrientas"
+                    "Centurión",
+                    "Centurión Mayor",
+                    "Primus Ordo",
+                    "Primus Pilus",
+                    "Tribuno Menor",
+                    "Tribuno Militar",
+                    "Tribuno Mayor",
+                    "Prefecto",
+                    "Prefecto Castrense",
+                    "Legado"
                 };
             
             case 7: // FASE VII · DOMINIO (401-500)
                 return new string[]
                 {
-                    "Dominador del Combate",
-                    "Maestro de la Guerra",
-                    "General del Ludo",
-                    "Arquitecto de Masacres",
-                    "Soberano de la Arena",
-                    "Señor del Acero",
-                    "Portador del Miedo",
-                    "Voluntad Encarnada",
-                    "Emperador Sin Trono",
-                    "Verdad del Combate"
+                    "Legatus Legionis",
+                    "Dux",
+                    "Comes",
+                    "Gobernador",
+                    "Procónsul",
+                    "Magistrado",
+                    "Censor",
+                    "Edil",
+                    "Cuestor",
+                    "Senador"
                 };
             
             case 8: // FASE VIII · SUPREMACÍA (501-600)
                 return new string[]
                 {
-                    "Flagelo Infernal",
-                    "Destructor de Hordas",
-                    "Azote del Vacío",
-                    "Aniquilador de Legiones",
-                    "Muerte Organizada",
-                    "Criterio del Combate",
-                    "Juicio de Sangre",
-                    "Espada del Fin",
-                    "Castigo Viviente",
-                    "Condena del Averno"
+                    "Senador Mayor",
+                    "Patricio",
+                    "Noble",
+                    "Aristócrata",
+                    "Estratego",
+                    "Gran Capitán",
+                    "General",
+                    "General Supremo",
+                    "Alto Mando",
+                    "Comandante Supremo"
                 };
             
             case 9: // FASE IX · MITO ABSOLUTO (601-700)
                 return new string[]
                 {
-                    "Mito Inmortal",
-                    "Ley Viviente",
-                    "Símbolo de Guerra",
-                    "Apocalipsis Controlado",
-                    "Portador del Final",
-                    "Terror Sistemático",
-                    "Verbo del Combate",
-                    "Último Argumento",
-                    "Ruina Andante",
-                    "Dominio Hecho Carne"
+                    "Magister Militum",
+                    "Magister Peditum",
+                    "Magister Equitum",
+                    "Vicario",
+                    "Corrector",
+                    "Consular",
+                    "Proconsular",
+                    "Regente",
+                    "Protector Imperii",
+                    "Voz del Senado"
                 };
             
             case 10: // FASE X · TRANSCENDENCIA (701-800)
                 return new string[]
                 {
-                    "Voluntad Inhumana",
-                    "Acero Consciente",
-                    "Concepto de Guerra",
-                    "Encarnación del Conflicto",
-                    "Mente Bélica Absoluta",
-                    "Forma Final del Combate",
-                    "Idea de la Muerte",
-                    "Arquetipo del Guerrero",
-                    "Instrumento del Fin",
-                    "Principio de la Destrucción"
+                    "Mano del Imperio",
+                    "Heraldo Imperial",
+                    "Campeón Imperial",
+                    "Custodio Imperial",
+                    "Alto Prelado",
+                    "Pontífice",
+                    "Pontífice Máximo",
+                    "Dictator",
+                    "Caesar",
+                    "Imperator"
                 };
             
             case 11: // FASE XI · APOCALIPSIS (801-900)
                 return new string[]
                 {
-                    "Presagio de Ruina",
-                    "Cataclismo Dirigido",
-                    "Colapso Personificado",
-                    "Destructor de Eras",
-                    "Fin de las Legiones",
-                    "Silencio Tras la Batalla",
-                    "Último General",
-                    "Ancla del Apocalipsis",
-                    "Guerra Permanente",
-                    "Punto Sin Retorno"
+                    "Imperator Primus",
+                    "Imperator Magnus",
+                    "Imperator Invictus",
+                    "Dominus",
+                    "Dominus Belli",
+                    "Dominus Imperii",
+                    "Señor de la Guerra",
+                    "Señor del Imperio",
+                    "Regente Supremo",
+                    "Emperador"
                 };
             
             case 12: // FASE XII · FINAL (901-999)
                 return new string[]
                 {
-                    "Señor del Fin",
-                    "Veredicto Final",
-                    "Muerte Organizada",
-                    "Emperador del Apocalipsis",
-                    "Último Gladiador",
-                    "Final de la Arena",
-                    "Dominio Absoluto",
-                    "Guerra Hecha Voluntad",
-                    "Fin de Todo Conflicto",
-                    "Liberado por la Sangre"
+                    "Emperador Mayor",
+                    "Emperador Supremo",
+                    "Emperador Eterno",
+                    "Soberano",
+                    "Soberano Absoluto",
+                    "Padre del Imperio",
+                    "Voz de los Dioses",
+                    "Mano de Roma",
+                    "Trono Viviente",
+                    "Ley del Imperio"
                 };
             
             default:
@@ -414,7 +446,17 @@ public static class EvolutionSystem
         
         if (heroLevel < requiredLevel)
         {
-            return $"Nivel {requiredLevel} requerido (actual: {heroLevel})";
+            int levelsNeeded = requiredLevel - heroLevel;
+            string nextClassTitle = GetClassNameByLevel(requiredLevel);
+            
+            if (levelsNeeded == 1)
+            {
+                return $"Sube 1 nivel más para evolucionar a {nextClassTitle}";
+            }
+            else
+            {
+                return $"Sube {levelsNeeded} niveles más para evolucionar a {nextClassTitle}";
+            }
         }
         
         float hoursRemaining = GetTimeUntilEvolution(lastEvolutionTime);

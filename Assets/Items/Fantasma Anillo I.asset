@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1493450964, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: Un anillo que conecta al portador con el reino de los espiritus.
   price: 550
   hp: 20
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

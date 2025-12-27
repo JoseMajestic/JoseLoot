@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Montura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 383391093, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: El corcel legendario que los bardos cantan en sus historias de conquista.
   price: 750
   hp: 90
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Raro
-  itemType: 6
+  itemType: 0

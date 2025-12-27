@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Collar I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Collar I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1457985799, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Un collar que guarda los ecos de las almas que han partido.
   price: 660
   hp: 40
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 7
+  itemType: 2

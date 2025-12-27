@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Escudo I
   m_EditorClassIdentifier: 
   itemName: Conquistador Escudo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -834287254, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Portado por generales que han conquistado reinos enteros sin conocer
     derrota.
   price: 504
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 5

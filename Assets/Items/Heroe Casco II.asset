@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Casco II
   m_EditorClassIdentifier: 
   itemName: Heroe Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 179413161, guid: fc56a9ef41ba6cf4a9a5719910034a08, type: 3}
   description: Forjado para aquellos cuyas hazanias seran recordadas por mil generaciones.
   price: 835
   hp: 70

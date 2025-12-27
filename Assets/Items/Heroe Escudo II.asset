@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Escudo II
   m_EditorClassIdentifier: 
   itemName: Heroe Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 649806717, guid: 8cf13876894bd92469693aff6c167068, type: 3}
   description: Cada heroe legendario de la historia ha dejado su marca en estas piezas.
   price: 835
   hp: 87
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 5

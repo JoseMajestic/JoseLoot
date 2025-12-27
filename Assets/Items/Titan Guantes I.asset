@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Guantes I
   m_EditorClassIdentifier: 
   itemName: Titan Guantes I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 213528807, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Forjado con fragmentos de armaduras de los titanes que crearon el
     mundo.
   price: 600
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 10
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 6

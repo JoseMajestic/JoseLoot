@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Botas II
   m_EditorClassIdentifier: 
   itemName: Conquistador Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1856840275, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Los conquistadores mas temidos de la historia portaron piezas como
     estas.
   price: 605
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 9

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Anillo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 866176007, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: "La fuerza de los gigantes fluye a trav\xE9s de este anillo legendario."
   price: 1200
   hp: 70
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Legendario
-  itemType: 9
+  itemType: 8

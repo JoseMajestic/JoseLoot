@@ -30,6 +30,9 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Texto con el nombre del enemigo")]
     [SerializeField] private TextMeshProUGUI enemyNameText;
     
+    [Tooltip("Texto con todas las estadísticas del enemigo")]
+    [SerializeField] private TextMeshProUGUI enemyStatsText;
+    
     [Header("Recompensas")]
     [Tooltip("Texto que muestra las monedas de recompensa")]
     [SerializeField] private TextMeshProUGUI rewardText;
@@ -248,6 +251,19 @@ public class BattleManager : MonoBehaviour
         if (enemyNameText != null)
         {
             enemyNameText.text = enemy.enemyName;
+        }
+
+        // Mostrar todas las estadísticas del enemigo
+        if (enemyStatsText != null)
+        {
+            enemyStatsText.text = $"HP: {enemy.hp}\n" +
+                                  $"Mana: {enemy.velocidadAtaque}\n" +
+                                  $"Ataque: {enemy.ataque}\n" +
+                                  $"Defensa: {enemy.defensa}\n" +
+                                  $"Crítico: {enemy.ataqueCritico}%\n" +
+                                  $"Daño Crítico: {enemy.danoCritico}%\n" +
+                                  $"Suerte: {enemy.suerte}\n" +
+                                  $"Destreza: {enemy.destreza}";
         }
 
         // Mostrar nivel del enemigo (si existe y el texto está asignado)

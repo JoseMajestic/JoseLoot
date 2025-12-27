@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Botas II
   m_EditorClassIdentifier: 
   itemName: Aprendiz Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -794436500, guid: 7131c20c494c87e41a733307a6e7782d, type: 3}
   description: La simplicidad es la madre de la eficacia en el campo de batalla.
   price: 144
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 9

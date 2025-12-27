@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Botas III
   m_EditorClassIdentifier: 
   itemName: Conquistador Botas III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -727103961, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: El poder de cien victorias resuena en cada fibra de este equipo.
   price: 706
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 9

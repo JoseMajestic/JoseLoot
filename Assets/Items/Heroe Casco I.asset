@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Casco I
   m_EditorClassIdentifier: 
   itemName: Heroe Casco I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1658550675, guid: 9ce346908e96b09429122e80d0ef74c0, type: 3}
   description: Los heroes de las leyendas antiguas sonrien desde el mas alla sobre
     este equipo.
   price: 696

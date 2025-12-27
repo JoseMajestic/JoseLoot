@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Casco II
   m_EditorClassIdentifier: 
   itemName: Fantasma Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 267827494, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Forjado entre los velos del mundo de los vivos y los muertos.
   price: 490
   hp: 41

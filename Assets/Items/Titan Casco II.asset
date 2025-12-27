@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Casco II
   m_EditorClassIdentifier: 
   itemName: Titan Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1156165817, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Creado en la era cuando los gigantes caminaban sobre el mundo mortal.
   price: 720
   hp: 60

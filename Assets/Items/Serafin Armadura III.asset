@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Armadura III
   m_EditorClassIdentifier: 
   itemName: Serafin Armadura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -896788129, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Creado con la esencia de estrellas caidas y bendiciones de seres divinos.
   price: 1814
   hp: 270
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Celestial
-  itemType: 1
+  itemType: 4

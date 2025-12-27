@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Casco III
   m_EditorClassIdentifier: 
   itemName: Cazador Casco III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 269315027, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: Los depredadores mas temidos del reino portan este equipo con orgullo.
   price: 302
   hp: 22

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Collar II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Serafin Collar II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1274223644, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: "Cada pluma a\xF1adida otorga una bendicion divina al portador."
   price: 1800
   hp: 160
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 7
+  itemType: 2

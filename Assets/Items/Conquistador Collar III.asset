@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Conquistador Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2136371526, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: "El collar del gran conquistador, s\xEDmbolo de dominio sobre reinos
     enteros."
   price: 600
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Raro
-  itemType: 7
+  itemType: 2

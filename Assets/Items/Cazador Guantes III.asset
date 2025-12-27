@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Guantes III
   m_EditorClassIdentifier: 
   itemName: Cazador Guantes III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -882489248, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
   description: Los depredadores mas temidos del reino portan este equipo con orgullo.
   price: 302
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 4
   nivel: 1
   rareza: Raro
-  itemType: 1
+  itemType: 6

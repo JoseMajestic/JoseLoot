@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Collar III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Serafin Collar III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 542248357, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: "El collar de los serafines, s\xEDmbolo de pureza y poder celestial."
   price: 3600
   hp: 240
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 7
+  itemType: 2

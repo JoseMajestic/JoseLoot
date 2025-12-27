@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Escudo III
   m_EditorClassIdentifier: 
   itemName: Conquistador Escudo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -704999251, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: El poder de cien victorias resuena en cada fibra de este equipo.
   price: 706
   hp: 63
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 5

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Arma II
   m_EditorClassIdentifier: 
   itemName: Conquistador Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1738766951, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: La victoria es el unico destino para quien porte este equipo glorioso.
   price: 756
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 0
+  itemType: 3

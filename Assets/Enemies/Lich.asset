@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Lich
   description: Un hechicero inmortal que domina la magia oscura. Extremadamente peligroso.
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: a6f81f39936bcda4b85810385ef9b5c6, type: 3}
   hp: 350
   ataque: 35
   defensa: 15
@@ -24,6 +24,12 @@ MonoBehaviour:
   suerte: 5
   destreza: 6
   rewardCoins: 180
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 4
   level: 5
   availableAttacks: []

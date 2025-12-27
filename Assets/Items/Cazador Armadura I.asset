@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Armadura I
   m_EditorClassIdentifier: 
   itemName: Cazador Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 7b06f7b4ef5ed3f4bb37f0050b54e878, type: 3}
   description: Cada marca en este equipo cuenta la historia de una presa caida.
   price: 216
   hp: 45
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Raro
-  itemType: 1
+  itemType: 4

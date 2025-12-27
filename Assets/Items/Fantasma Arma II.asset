@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Arma II
   m_EditorClassIdentifier: 
   itemName: Fantasma Arma II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1765631073, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
   description: Permite a su portador caminar entre las sombras del mundo espectral.
   price: 612
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 0
+  itemType: 3

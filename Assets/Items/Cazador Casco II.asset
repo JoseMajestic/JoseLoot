@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Casco II
   m_EditorClassIdentifier: 
   itemName: Cazador Casco II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 128934338, guid: 3058321df368ff649811b1fa8d0cee6a, type: 3}
   description: Cada marca en este equipo cuenta la historia de una presa caida.
   price: 259
   hp: 22

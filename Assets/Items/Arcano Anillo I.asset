@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Anillo I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Anillo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -94241699, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: Un anillo que canaliza las energias arcanas del mundo.
   price: 500
   hp: 18
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

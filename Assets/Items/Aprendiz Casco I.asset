@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Casco I
   m_EditorClassIdentifier: 
   itemName: Aprendiz Casco I
-  itemSprite: {fileID: 21300000, guid: e8f15daffa41fdc4ea7ed9c87bfa050b, type: 3}
+  itemSprite: {fileID: -2114323834, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Sencillo pero efectivo, ideal para quienes buscan comenzar su aventura.
   price: 120
   hp: 12

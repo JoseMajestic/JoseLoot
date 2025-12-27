@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Armadura II
   m_EditorClassIdentifier: 
   itemName: Fantasma Armadura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1846299315, guid: fc56a9ef41ba6cf4a9a5719910034a08, type: 3}
   description: Creado con esencia de almas que buscan redimir sus pecados pasados.
   price: 490
   hp: 85
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 4

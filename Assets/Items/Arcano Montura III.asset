@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Montura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 383391093, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: El corcel arcano que ha viajado entre planos de existencia.
   price: 1500
   hp: 162
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

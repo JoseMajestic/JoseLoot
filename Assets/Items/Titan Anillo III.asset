@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -201549701, guid: d50ac254a4408124f802822395deaa8b, type: 3}
   description: El anillo de los titanes, que otorga poder sobre la creacion misma.
   price: 2400
   hp: 105
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Legendario
-  itemType: 9
+  itemType: 8

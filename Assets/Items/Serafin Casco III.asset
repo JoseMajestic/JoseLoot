@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Casco III
   m_EditorClassIdentifier: 
   itemName: Serafin Casco III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1346341774, guid: 42b7277b0c7bf0f4db564dd1f7367689, type: 3}
   description: La luz divina emana de cada superficie de este equipo sagrado y puro.
   price: 1814
   hp: 130

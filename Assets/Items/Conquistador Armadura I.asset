@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Armadura I
   m_EditorClassIdentifier: 
   itemName: Conquistador Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1300272161, guid: 2b7fa8b83677c844e89bcae416246aab, type: 3}
   description: Cada batalla ganada ha fortalecido el espiritu que habita en este
     equipo.
   price: 504
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 4

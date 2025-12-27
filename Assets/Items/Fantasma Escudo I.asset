@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Escudo I
   m_EditorClassIdentifier: 
   itemName: Fantasma Escudo I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1584915919, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Creado con esencia de almas que buscan redimir sus pecados pasados.
   price: 408
   hp: 51
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Etereo
-  itemType: 1
+  itemType: 5

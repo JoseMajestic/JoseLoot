@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Montura III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 680388622, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: El corcel del mas alla, que lleva a su jinete entre el mundo de los
     vivos y los muertos.
   price: 1650
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

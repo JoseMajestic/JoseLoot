@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conquistador Cinturon III
   m_EditorClassIdentifier: 
   itemName: Conquistador Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -307559693, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Cada batalla ganada ha fortalecido el espiritu que habita en este
     equipo.
   price: 706
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Excelente
-  itemType: 1
+  itemType: 7

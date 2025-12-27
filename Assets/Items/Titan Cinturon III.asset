@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Cinturon III
   m_EditorClassIdentifier: 
   itemName: Titan Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1196702172, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: La fuerza de los colosos ancestrales fluye a traves de cada pieza.
   price: 840
   hp: 90
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 7

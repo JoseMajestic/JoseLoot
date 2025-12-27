@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Escudo II
   m_EditorClassIdentifier: 
   itemName: Arcano Escudo II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1653294197, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Los magos mas sabios reconocen el aura que emana de este equipo.
   price: 374
   hp: 39
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 5

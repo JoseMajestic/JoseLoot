@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Botas III
   m_EditorClassIdentifier: 
   itemName: Heroe Botas III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -892060584, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: Creado para protagonizar las historias que los ninos escucharan antes
     de dormir.
   price: 974
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 9

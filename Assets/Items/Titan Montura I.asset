@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Titan Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 680388622, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Un corcel forjado con la esencia de los titanes que crearon el mundo.
   price: 1800
   hp: 105
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 6
+  itemType: 0

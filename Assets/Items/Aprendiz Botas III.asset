@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aprendiz Botas III
   m_EditorClassIdentifier: 
   itemName: Aprendiz Botas III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 832776092, guid: 99ff6d1bf82b5cf4a85695c78cd1b666, type: 3}
   description: El primer paso de todo heroe comienza con equipo humilde pero confiable.
   price: 168
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Comun
-  itemType: 1
+  itemType: 9

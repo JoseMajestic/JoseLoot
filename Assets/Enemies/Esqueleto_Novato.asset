@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Esqueleto Novato
   description: "Un esqueleto reci\xE9n reanimado. Sus huesos crujen con cada movimiento."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: f332c63b9e68ea24ca28b62f2b646dc7, type: 3}
   hp: 70
   ataque: 10
   defensa: 4
@@ -24,6 +24,12 @@ MonoBehaviour:
   suerte: 0
   destreza: 1
   rewardCoins: 35
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 0
   level: 1
   availableAttacks: []

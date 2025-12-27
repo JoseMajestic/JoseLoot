@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Demonio Menor
   description: "Un demonio del inframundo. Sus ataques est\xE1n imbuidos de energ\xEDa
     oscura."
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 21300000, guid: 84f135a6bf5e9d846a0a2ae256d95167, type: 3}
   hp: 250
   ataque: 28
   defensa: 10
@@ -25,6 +25,12 @@ MonoBehaviour:
   suerte: 3
   destreza: 4
   rewardCoins: 120
+  experienceReward: 10
+  rewardConfig:
+    rewardItemCount: 0
+    allowedTiers: 
+    distributeEvenly: 1
+    forcedRewards: []
   requiredLevel: 3
   level: 4
   availableAttacks: []

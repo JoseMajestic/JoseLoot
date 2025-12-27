@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heroe Cinturon III
   m_EditorClassIdentifier: 
   itemName: Heroe Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1779079948, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Los heroes de las leyendas antiguas sonrien desde el mas alla sobre
     este equipo.
   price: 974
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 1
+  itemType: 7

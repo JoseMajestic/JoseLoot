@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Cinturon II
   m_EditorClassIdentifier: 
   itemName: Arcano Cinturon II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1425903809, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Cada pieza resuena con el poder de mil conjuros antiguos olvidados.
   price: 374
   hp: 47
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 7

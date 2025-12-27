@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Montura II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Montura II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 1951063584, guid: 1d5620e4692811841a88f634c1a782db, type: 3}
   description: "La montura m\xE1gica que responde a los pensamientos de su jinete
     arcano."
   price: 750
@@ -28,4 +28,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fantasma Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Fantasma Montura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 680388622, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Un corcel espectral que se desliza entre las sombras como un susurro.
   price: 825
   hp: 60
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 2
   nivel: 1
   rareza: Epico
-  itemType: 6
+  itemType: 0

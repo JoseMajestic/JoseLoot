@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Serafin Armadura I
   m_EditorClassIdentifier: 
   itemName: Serafin Armadura I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -1521656735, guid: 73f96c842c2bf9140a29322258c1a19a, type: 3}
   description: Bendecido por los serafines que guardan las puertas del reino celestial.
   price: 1296
   hp: 270
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Celestial
-  itemType: 1
+  itemType: 4

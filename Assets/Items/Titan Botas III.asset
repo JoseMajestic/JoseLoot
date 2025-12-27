@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Botas III
   m_EditorClassIdentifier: 
   itemName: Titan Botas III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -892060584, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: Solo los guerreros mas poderosos pueden soportar el peso de esta leyenda.
   price: 840
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 9

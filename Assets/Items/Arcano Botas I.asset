@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Botas I
   m_EditorClassIdentifier: 
   itemName: Arcano Botas I
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 695397930, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
   description: Cada pieza resuena con el poder de mil conjuros antiguos olvidados.
   price: 312
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Magico
-  itemType: 1
+  itemType: 9

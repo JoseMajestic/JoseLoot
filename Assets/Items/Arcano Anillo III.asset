@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcano Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Arcano Anillo III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 11281392, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
   description: "El anillo arcano supremo, que otorga dominio sobre las fuerzas m\xE1gicas."
   price: 1000
   hp: 54
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 6
   nivel: 1
   rareza: Epico
-  itemType: 9
+  itemType: 8

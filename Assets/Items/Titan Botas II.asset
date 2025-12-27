@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titan Botas II
   m_EditorClassIdentifier: 
   itemName: Titan Botas II
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 2045412846, guid: 1cc9548bdb64d794eaafa866f1acf2d9, type: 3}
   description: Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra.
   price: 720
   hp: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Legendario
-  itemType: 1
+  itemType: 9

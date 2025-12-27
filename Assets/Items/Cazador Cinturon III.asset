@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cazador Cinturon III
   m_EditorClassIdentifier: 
   itemName: Cazador Cinturon III
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: -2030652397, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Manchado con la sangre de criaturas que otros no se atreven enfrentar.
   price: 302
   hp: 32
@@ -27,4 +27,4 @@ MonoBehaviour:
   destreza: 0
   nivel: 1
   rareza: Raro
-  itemType: 1
+  itemType: 7
