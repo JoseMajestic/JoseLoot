@@ -126,12 +126,12 @@ TextureImporter:
       name: cascos en llamas_0
       rect:
         serializedVersion: 2
-        x: 421
-        y: 324
-        width: 179
+        x: 438
+        y: 323
+        width: 151
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: cascos en llamas_1
       rect:
         serializedVersion: 2
-        x: 618
-        y: 320
-        width: 179
+        x: 634
+        y: 323
+        width: 151
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: cascos en llamas_2
       rect:
         serializedVersion: 2
-        x: 414
-        y: 710
-        width: 179
+        x: 444
+        y: 711
+        width: 138
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: cascos en llamas_3
       rect:
         serializedVersion: 2
-        x: 814
+        x: 835
         y: 714
-        width: 179
+        width: 151
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: cascos en llamas_4
       rect:
         serializedVersion: 2
-        x: 22
-        y: 100
-        width: 179
+        x: 35
+        y: 101
+        width: 151
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: cascos en llamas_5
       rect:
         serializedVersion: 2
-        x: 618
-        y: 105
-        width: 179
+        x: 635
+        y: 102
+        width: 151
         height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

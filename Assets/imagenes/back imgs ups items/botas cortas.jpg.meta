@@ -126,12 +126,12 @@ TextureImporter:
       name: botas cortas_0
       rect:
         serializedVersion: 2
-        x: 30
-        y: 586
-        width: 142
-        height: 107
+        x: 42
+        y: 583
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: botas cortas_1
       rect:
         serializedVersion: 2
-        x: 216
-        y: 586
-        width: 142
-        height: 107
+        x: 231
+        y: 583
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: botas cortas_2
       rect:
         serializedVersion: 2
-        x: 409
-        y: 586
-        width: 142
-        height: 107
+        x: 424
+        y: 580
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: botas cortas_3
       rect:
         serializedVersion: 2
-        x: 596
-        y: 585
-        width: 142
-        height: 107
+        x: 611
+        y: 579
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: botas cortas_4
       rect:
         serializedVersion: 2
-        x: 787
-        y: 585
-        width: 142
-        height: 107
+        x: 806
+        y: 580
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: botas cortas_5
       rect:
         serializedVersion: 2
-        x: 792
-        y: 455
-        width: 142
-        height: 107
+        x: 803
+        y: 446
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: botas cortas_6
       rect:
         serializedVersion: 2
-        x: 789
-        y: 313
-        width: 142
-        height: 107
+        x: 802
+        y: 308
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -280,12 +280,12 @@ TextureImporter:
       name: botas cortas_7
       rect:
         serializedVersion: 2
-        x: 412
-        y: 453
-        width: 142
-        height: 107
+        x: 420
+        y: 447
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,12 +302,12 @@ TextureImporter:
       name: botas cortas_8
       rect:
         serializedVersion: 2
-        x: 220
-        y: 311
-        width: 142
-        height: 107
+        x: 229
+        y: 308
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -324,12 +324,12 @@ TextureImporter:
       name: botas cortas_9
       rect:
         serializedVersion: 2
-        x: 216
-        y: 453
-        width: 142
-        height: 107
+        x: 233
+        y: 447
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,12 +346,12 @@ TextureImporter:
       name: botas cortas_10
       rect:
         serializedVersion: 2
-        x: 24
-        y: 175
-        width: 142
-        height: 107
+        x: 41
+        y: 167
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -368,12 +368,12 @@ TextureImporter:
       name: botas cortas_11
       rect:
         serializedVersion: 2
-        x: 218
-        y: 35
-        width: 142
-        height: 107
+        x: 235
+        y: 26
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -390,12 +390,12 @@ TextureImporter:
       name: botas cortas_12
       rect:
         serializedVersion: 2
-        x: 216
-        y: 180
-        width: 142
-        height: 107
+        x: 234
+        y: 170
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -412,12 +412,12 @@ TextureImporter:
       name: botas cortas_13
       rect:
         serializedVersion: 2
-        x: 793
-        y: 172
-        width: 142
-        height: 107
+        x: 808
+        y: 171
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -434,12 +434,12 @@ TextureImporter:
       name: botas cortas_14
       rect:
         serializedVersion: 2
-        x: 596
-        y: 175
-        width: 145
-        height: 110
+        x: 612
+        y: 170
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -456,12 +456,12 @@ TextureImporter:
       name: botas cortas_15
       rect:
         serializedVersion: 2
-        x: 591
-        y: 30
-        width: 153
-        height: 122
+        x: 610
+        y: 31
+        width: 118
+        height: 119
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

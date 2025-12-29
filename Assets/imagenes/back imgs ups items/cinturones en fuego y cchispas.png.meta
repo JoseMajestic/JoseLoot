@@ -126,12 +126,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 833
-        width: 356
-        height: 145
+        x: 30
+        y: 782
+        width: 330
+        height: 230
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -149,11 +149,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 393
-        y: 829
+        y: 777
         width: 356
-        height: 145
+        height: 238
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_2
       rect:
         serializedVersion: 2
-        x: 758
-        y: 587
-        width: 356
-        height: 145
+        x: 789
+        y: 530
+        width: 325
+        height: 273
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_3
       rect:
         serializedVersion: 2
-        x: 384
-        y: 348
-        width: 356
-        height: 145
+        x: 415
+        y: 266
+        width: 315
+        height: 278
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_4
       rect:
         serializedVersion: 2
-        x: 1156
-        y: 347
-        width: 356
-        height: 145
+        x: 1178
+        y: 269
+        width: 320
+        height: 281
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_5
       rect:
         serializedVersion: 2
-        x: 380
-        y: 60
-        width: 356
-        height: 145
+        x: 414
+        y: 8
+        width: 322
+        height: 272
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: cinturones en fuego y cchispas_6
       rect:
         serializedVersion: 2
-        x: 778
-        y: 66
-        width: 356
-        height: 145
+        x: 793
+        y: 4
+        width: 341
+        height: 277
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

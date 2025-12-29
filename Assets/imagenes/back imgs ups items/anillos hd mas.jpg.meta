@@ -126,12 +126,12 @@ TextureImporter:
       name: anillos hd mas_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 868
-        width: 276
-        height: 239
+        x: 42
+        y: 847
+        width: 237
+        height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: anillos hd mas_1
       rect:
         serializedVersion: 2
-        x: 313
-        y: 879
-        width: 276
-        height: 239
+        x: 352
+        y: 864
+        width: 230
+        height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: anillos hd mas_2
       rect:
         serializedVersion: 2
-        x: 606
-        y: 873
-        width: 276
-        height: 239
+        x: 646
+        y: 868
+        width: 228
+        height: 286
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: anillos hd mas_3
       rect:
         serializedVersion: 2
-        x: 20
-        y: 594
-        width: 276
-        height: 239
+        x: 49
+        y: 582
+        width: 224
+        height: 255
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: anillos hd mas_4
       rect:
         serializedVersion: 2
-        x: 310
-        y: 595
-        width: 276
-        height: 239
+        x: 352
+        y: 577
+        width: 208
+        height: 266
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: anillos hd mas_5
       rect:
         serializedVersion: 2
-        x: 609
+        x: 660
         y: 588
-        width: 276
+        width: 199
         height: 239
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: anillos hd mas_6
       rect:
         serializedVersion: 2
-        x: 15
-        y: 315
-        width: 276
-        height: 239
+        x: 45
+        y: 293
+        width: 228
+        height: 275
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -280,12 +280,12 @@ TextureImporter:
       name: anillos hd mas_7
       rect:
         serializedVersion: 2
-        x: 316
+        x: 359
         y: 314
-        width: 276
+        width: 204
         height: 239
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,12 +302,12 @@ TextureImporter:
       name: anillos hd mas_8
       rect:
         serializedVersion: 2
-        x: 608
-        y: 320
-        width: 276
-        height: 239
+        x: 648
+        y: 310
+        width: 208
+        height: 249
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -324,12 +324,12 @@ TextureImporter:
       name: anillos hd mas_9
       rect:
         serializedVersion: 2
-        x: 13
-        y: 25
-        width: 276
-        height: 239
+        x: 54
+        y: 2
+        width: 214
+        height: 268
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,12 +346,12 @@ TextureImporter:
       name: anillos hd mas_10
       rect:
         serializedVersion: 2
-        x: 309
-        y: 24
-        width: 276
-        height: 239
+        x: 358
+        y: 12
+        width: 206
+        height: 261
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -368,12 +368,12 @@ TextureImporter:
       name: anillos hd mas_11
       rect:
         serializedVersion: 2
-        x: 627
+        x: 662
         y: 35
-        width: 254
-        height: 237
+        width: 200
+        height: 255
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

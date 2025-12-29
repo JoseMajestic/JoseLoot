@@ -126,12 +126,12 @@ TextureImporter:
       name: armaduras de fuego_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 670
-        width: 331
-        height: 313
+        x: 6
+        y: 665
+        width: 330
+        height: 321
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: armaduras de fuego_1
       rect:
         serializedVersion: 2
-        x: 352
-        y: 675
-        width: 331
-        height: 313
+        x: 353
+        y: 663
+        width: 316
+        height: 354
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: armaduras de fuego_2
       rect:
         serializedVersion: 2
-        x: 693
+        x: 700
         y: 668
-        width: 331
-        height: 313
+        width: 318
+        height: 317
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: armaduras de fuego_3
       rect:
         serializedVersion: 2
-        x: 7
-        y: 329
-        width: 331
-        height: 313
+        x: 11
+        y: 318
+        width: 320
+        height: 324
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: armaduras de fuego_4
       rect:
         serializedVersion: 2
-        x: 354
+        x: 357
         y: 325
-        width: 322
+        width: 310
         height: 313
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: armaduras de fuego_5
       rect:
         serializedVersion: 2
-        x: 690
-        y: 330
-        width: 322
-        height: 290
+        x: 688
+        y: 317
+        width: 323
+        height: 302
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: armaduras de fuego_6
       rect:
         serializedVersion: 2
-        x: 7
+        x: 8
         y: 0
-        width: 322
+        width: 320
         height: 278
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -282,10 +282,10 @@ TextureImporter:
         serializedVersion: 2
         x: 702
         y: 0
-        width: 316
+        width: 307
         height: 273
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

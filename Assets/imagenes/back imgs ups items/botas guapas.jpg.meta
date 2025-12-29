@@ -126,9 +126,9 @@ TextureImporter:
       name: botas guapas_0
       rect:
         serializedVersion: 2
-        x: 46
-        y: 556
-        width: 129
+        x: 52
+        y: 551
+        width: 122
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -148,9 +148,9 @@ TextureImporter:
       name: botas guapas_1
       rect:
         serializedVersion: 2
-        x: 320
-        y: 555
-        width: 129
+        x: 327
+        y: 554
+        width: 119
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -170,9 +170,9 @@ TextureImporter:
       name: botas guapas_2
       rect:
         serializedVersion: 2
-        x: 461
-        y: 556
-        width: 120
+        x: 465
+        y: 552
+        width: 119
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -216,7 +216,7 @@ TextureImporter:
         serializedVersion: 2
         x: 186
         y: 378
-        width: 120
+        width: 119
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -238,7 +238,7 @@ TextureImporter:
         serializedVersion: 2
         x: 603
         y: 377
-        width: 120
+        width: 124
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -281,8 +281,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 324
-        y: 22
-        width: 120
+        y: 23
+        width: 125
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -304,7 +304,7 @@ TextureImporter:
         serializedVersion: 2
         x: 187
         y: 200
-        width: 120
+        width: 119
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -326,7 +326,7 @@ TextureImporter:
         serializedVersion: 2
         x: 466
         y: 23
-        width: 120
+        width: 119
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -346,9 +346,9 @@ TextureImporter:
       name: botas guapas_10
       rect:
         serializedVersion: 2
-        x: 462
+        x: 463
         y: 199
-        width: 120
+        width: 122
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -370,7 +370,7 @@ TextureImporter:
         serializedVersion: 2
         x: 187
         y: 22
-        width: 120
+        width: 124
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -390,9 +390,9 @@ TextureImporter:
       name: botas guapas_12
       rect:
         serializedVersion: 2
-        x: 596
-        y: 21
-        width: 120
+        x: 601
+        y: 19
+        width: 128
         height: 152
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

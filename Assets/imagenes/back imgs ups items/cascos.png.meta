@@ -126,12 +126,12 @@ TextureImporter:
       name: cascos_0
       rect:
         serializedVersion: 2
-        x: 52
+        x: 68
         y: 681
-        width: 151
+        width: 135
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: cascos_1
       rect:
         serializedVersion: 2
-        x: 738
+        x: 754
         y: 683
-        width: 151
+        width: 135
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: cascos_2
       rect:
         serializedVersion: 2
-        x: 396
+        x: 409
         y: 326
-        width: 151
+        width: 135
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: cascos_3
       rect:
         serializedVersion: 2
-        x: 49
+        x: 65
         y: 144
-        width: 151
+        width: 135
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: cascos_4
       rect:
         serializedVersion: 2
-        x: 742
+        x: 751
         y: 147
-        width: 151
+        width: 135
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

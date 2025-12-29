@@ -126,12 +126,12 @@ TextureImporter:
       name: cinturon alt_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 586
-        width: 199
-        height: 87
+        x: 52
+        y: 544
+        width: 159
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: cinturon alt_1
       rect:
         serializedVersion: 2
-        x: 278
-        y: 579
-        width: 199
-        height: 87
+        x: 295
+        y: 543
+        width: 174
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: cinturon alt_2
       rect:
         serializedVersion: 2
-        x: 1016
-        y: 583
-        width: 199
-        height: 87
+        x: 1031
+        y: 539
+        width: 170
+        height: 156
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: cinturon alt_3
       rect:
         serializedVersion: 2
-        x: 525
-        y: 581
-        width: 199
-        height: 87
+        x: 546
+        y: 545
+        width: 158
+        height: 149
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: cinturon alt_4
       rect:
         serializedVersion: 2
-        x: 284
-        y: 412
-        width: 199
-        height: 87
+        x: 297
+        y: 376
+        width: 160
+        height: 150
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -236,12 +236,12 @@ TextureImporter:
       name: cinturon alt_5
       rect:
         serializedVersion: 2
-        x: 524
-        y: 412
-        width: 199
-        height: 87
+        x: 538
+        y: 376
+        width: 172
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: cinturon alt_6
       rect:
         serializedVersion: 2
-        x: 764
-        y: 411
-        width: 199
-        height: 87
+        x: 784
+        y: 376
+        width: 166
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -283,9 +283,9 @@ TextureImporter:
         x: 280
         y: 236
         width: 199
-        height: 87
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,12 +302,12 @@ TextureImporter:
       name: cinturon alt_8
       rect:
         serializedVersion: 2
-        x: 770
-        y: 239
-        width: 199
-        height: 87
+        x: 781
+        y: 200
+        width: 178
+        height: 158
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -324,12 +324,12 @@ TextureImporter:
       name: cinturon alt_9
       rect:
         serializedVersion: 2
-        x: 1021
-        y: 242
-        width: 199
-        height: 87
+        x: 1031
+        y: 200
+        width: 175
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -346,12 +346,12 @@ TextureImporter:
       name: cinturon alt_10
       rect:
         serializedVersion: 2
-        x: 1253
-        y: 243
-        width: 199
-        height: 87
+        x: 1276
+        y: 200
+        width: 174
+        height: 156
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -368,12 +368,12 @@ TextureImporter:
       name: cinturon alt_11
       rect:
         serializedVersion: 2
-        x: 29
-        y: 66
-        width: 199
-        height: 87
+        x: 51
+        y: 26
+        width: 159
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -390,12 +390,12 @@ TextureImporter:
       name: cinturon alt_12
       rect:
         serializedVersion: 2
-        x: 271
-        y: 65
-        width: 199
-        height: 87
+        x: 289
+        y: 26
+        width: 174
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -412,12 +412,12 @@ TextureImporter:
       name: cinturon alt_13
       rect:
         serializedVersion: 2
-        x: 764
-        y: 65
-        width: 199
-        height: 87
+        x: 784
+        y: 29
+        width: 167
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -434,12 +434,12 @@ TextureImporter:
       name: cinturon alt_14
       rect:
         serializedVersion: 2
-        x: 1018
-        y: 63
-        width: 199
-        height: 87
+        x: 1034
+        y: 27
+        width: 169
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

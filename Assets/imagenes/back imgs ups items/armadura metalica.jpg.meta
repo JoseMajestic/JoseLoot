@@ -126,12 +126,12 @@ TextureImporter:
       name: armadura metalica_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 12
         y: 585
-        width: 139
+        width: 122
         height: 174
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: armadura metalica_1
       rect:
         serializedVersion: 2
-        x: 287
+        x: 301
         y: 30
-        width: 139
+        width: 118
         height: 174
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: armadura metalica_2
       rect:
         serializedVersion: 2
-        x: 434
+        x: 442
         y: 30
-        width: 139
+        width: 122
         height: 174
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

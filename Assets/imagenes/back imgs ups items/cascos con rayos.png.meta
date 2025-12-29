@@ -126,12 +126,12 @@ TextureImporter:
       name: cascos con rayos_0
       rect:
         serializedVersion: 2
-        x: 61
+        x: 76
         y: 733
-        width: 225
-        height: 278
+        width: 192
+        height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: cascos con rayos_1
       rect:
         serializedVersion: 2
-        x: 986
+        x: 1008
         y: 739
-        width: 225
+        width: 185
         height: 278
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: cascos con rayos_2
       rect:
         serializedVersion: 2
-        x: 999
+        x: 1013
         y: 360
-        width: 225
+        width: 214
         height: 327
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: cascos con rayos_3
       rect:
         serializedVersion: 2
-        x: 1238
-        y: 355
-        width: 225
-        height: 327
+        x: 1229
+        y: 359
+        width: 221
+        height: 335
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
