@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Titan Collar II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Titan Collar II
+  itemName: Collar de Colossus Titanus
   itemSprite: {fileID: 1213418766, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
-  description: Cada gema contiene el poder de un titan ancestral.
+  description: Collar pesado que simboliza poder acumulado mediante combate persistente.
   price: 1440
-  hp: 140
+  hp: 273375
   mana: 75
   ataque: 0
-  defensa: 35
+  defensa: 43740
   velocidadAtaque: 0
-  ataqueCritico: 70
-  danoCritico: 0
-  suerte: 4
-  destreza: 0
+  ataqueCritico: 2
+  danoCritico: 69
+  suerte: 16
+  destreza: 800
   nivel: 1
   rareza: Legendario
   itemType: 2

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Abismo Montura III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Abismo Montura III
+  itemName: Montura de Infernum Abyssus
   itemSprite: {fileID: -1724744423, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
-  description: El corcel del abismo, que lleva a su jinete a las mas oscuras profundidades.
+  description: Montura abismal ligada al portador por corrupcion irreversible.
   price: 2400
-  hp: 225
+  hp: 4920750
   mana: 0
-  ataque: 0
-  defensa: 75
-  velocidadAtaque: 5
+  ataque: 1574640
+  defensa: 787320
+  velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 9
+  suerte: 11
   destreza: 0
   nivel: 1
   rareza: Demoniaco

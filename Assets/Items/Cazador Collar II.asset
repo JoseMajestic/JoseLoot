@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Cazador Collar II
   m_EditorClassIdentifier: 
-  itemName: Collar de Explorator Intermedio
+  itemName: Collar de Explorator Venator
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
-  description: Collar que protege en la caza.
+  description: Collar funcional que refuerza la concentracion durante rastreos intensivos.
   price: 100
-  hp: 0
+  hp: 3375
   mana: 0
   ataque: 0
-  defensa: 0
+  defensa: 540
   velocidadAtaque: 0
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 0
-  destreza: 0
+  ataqueCritico: 1
+  danoCritico: 33
+  suerte: 7
+  destreza: 50
   nivel: 1
   rareza: Comun
   itemType: 2

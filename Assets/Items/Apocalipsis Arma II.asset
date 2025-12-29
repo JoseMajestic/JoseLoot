@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Apocalipsis Arma II
   m_EditorClassIdentifier: 
-  itemName: Apocalipsis Arma II
+  itemName: Arma de Ultima Roma Cataclysmus
   itemSprite: {fileID: -1476414750, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
-  description: Forjado para el guerrero que permanecera de pie cuando todo haya caido.
+  description: Arma devastadora que arrasa enemigos durante el colapso total del orden establecido.
   price: 2196
   hp: 0
   mana: 0
-  ataque: 122
+  ataque: 7085880
   defensa: 0
-  velocidadAtaque: 0
+  velocidadAtaque: 66
   ataqueCritico: 15
-  danoCritico: 303
+  danoCritico: 192
   suerte: 0
   destreza: 0
   nivel: 1

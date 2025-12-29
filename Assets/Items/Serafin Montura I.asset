@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Serafin Montura I
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Serafin Montura I
+  itemName: Montura de Pontifex Sacrum
   itemSprite: {fileID: -1724744423, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
-  description: Un corcel divino forjado en los talleres celestiales de los angeles.
+  description: Montura entrenada para procesiones y desplazamientos rituales solemnes.
   price: 2250
-  hp: 120
+  hp: 820125
   mana: 0
-  ataque: 0
-  defensa: 40
-  velocidadAtaque: 3
+  ataque: 262440
+  defensa: 131220
+  velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 5
+  suerte: 9
   destreza: 0
   nivel: 1
   rareza: Legendario

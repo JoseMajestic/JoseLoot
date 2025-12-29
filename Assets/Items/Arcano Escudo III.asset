@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Arcano Escudo III
   m_EditorClassIdentifier: 
-  itemName: Arcano Escudo III
+  itemName: Escudo de Augur Oraculum
   itemSprite: {fileID: 1614987427, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
-  description: Runas brillantes recorren su superficie canalizando energia mistica
+  description: Escudo consagrado que protege bajo la vision anticipada del oraculo.
     pura.
   price: 437
-  hp: 39
+  hp: 3000
   mana: 0
   ataque: 0
-  defensa: 39
+  defensa: 480
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

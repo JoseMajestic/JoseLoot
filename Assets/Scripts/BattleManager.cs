@@ -37,6 +37,9 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Texto que muestra las monedas de recompensa")]
     [SerializeField] private TextMeshProUGUI rewardText;
     
+    [Tooltip("Texto para mostrar el nivel recomendado y recompensas detalladas")]
+    [SerializeField] private TextMeshProUGUI enemyRewardsText;
+    
     [Header("Energía")]
     [Tooltip("Texto para mostrar la energía actual del héroe")]
     [SerializeField] private TextMeshProUGUI heroEnergyText;
@@ -293,6 +296,12 @@ public class BattleManager : MonoBehaviour
         if (rewardText != null)
         {
             rewardText.text = $"Recompensa: {enemy.rewardCoins} monedas\n+5% Trabajo por victoria";
+        }
+
+        // Mostrar nivel recomendado y recompensas detalladas
+        if (enemyRewardsText != null)
+        {
+            enemyRewardsText.text = $"Nivel recomendado: {enemy.requiredLevel}\nExperiencia: {enemy.experienceReward} XP\nObjetos a obtener: {enemy.rewardConfig.rewardItemCount}";
         }
 
         // Actualizar UI de energía cuando se selecciona un enemigo

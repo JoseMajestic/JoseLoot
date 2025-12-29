@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Abismo Guantes II
   m_EditorClassIdentifier: 
-  itemName: Abismo Guantes II
+  itemName: Guantes de Infernum Inferus
   itemSprite: {fileID: -68524574, guid: b75acc8c8b92227498206e3c621d665d, type: 3}
-  description: Las llamas del infierno arden eternamente dentro de cada pieza de
+  description: Guantes infernales que amplifican fuerza a costa de desgaste espiritual.
     este set.
   price: 1958
   hp: 0
   mana: 0
-  ataque: 65
+  ataque: 885735
   defensa: 0
-  velocidadAtaque: 0
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 0
-  destreza: 27
+  velocidadAtaque: 150
+  ataqueCritico: 8
+  danoCritico: 87
+  suerte: 5
+  destreza: 6400
   nivel: 1
   rareza: Demoniaco
   itemType: 6

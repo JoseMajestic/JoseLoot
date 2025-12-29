@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Cazador Escudo II
   m_EditorClassIdentifier: 
-  itemName: Cazador Escudo II
+  itemName: Escudo de Explorator Venator
   itemSprite: {fileID: 1653294197, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
-  description: Los depredadores mas temidos del reino portan este equipo con orgullo.
+  description: Escudo equilibrado que permite defenderse eficazmente durante combates prolongados.
   price: 259
-  hp: 27
+  hp: 6750
   mana: 0
   ataque: 0
-  defensa: 22
+  defensa: 1080
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

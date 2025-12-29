@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Apocalipsis Armadura I
   m_EditorClassIdentifier: 
-  itemName: Apocalipsis Armadura I
+  itemName: Armadura de Ultima Roma Exitium
   itemSprite: {fileID: 663641111, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
-  description: La destruccion total es el unico lenguaje que este equipo conoce bien.
+  description: Armadura final que protege durante las ultimas batallas del Imperio agonizante.
   price: 1464
-  hp: 305
+  hp: 14762250
   mana: 0
   ataque: 0
-  defensa: 102
+  defensa: 2361960
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

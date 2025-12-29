@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Fantasma Guantes II
   m_EditorClassIdentifier: 
-  itemName: Fantasma Guantes II
+  itemName: Guantes de Speculator Silentium
   itemSprite: {fileID: 682451130, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
-  description: Forjado entre los velos del mundo de los vivos y los muertos.
+  description: Guantes tacticos que permiten manipulacion precisa sin producir ruido.
   price: 490
   hp: 0
   mana: 0
-  ataque: 16
+  ataque: 32805
   defensa: 0
-  velocidadAtaque: 0
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 0
-  destreza: 7
+  velocidadAtaque: 105
+  ataqueCritico: 5
+  danoCritico: 60
+  suerte: 4
+  destreza: 800
   nivel: 1
   rareza: Etereo
   itemType: 6

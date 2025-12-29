@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Cazador Botas II
   m_EditorClassIdentifier: 
-  itemName: Cazador Botas II
+  itemName: Botas de Explorator Venator
   itemSprite: {fileID: -1296867336, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
-  description: Cada marca en este equipo cuenta la historia de una presa caida.
+  description: Botas reforzadas que mejoran la traccion durante persecuciones prolongadas.
   price: 259
-  hp: 0
+  hp: 3375
   mana: 0
   ataque: 0
-  defensa: 0
-  velocidadAtaque: 2
+  defensa: 540
+  velocidadAtaque: 36
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 3
-  destreza: 0
+  suerte: 0
+  destreza: 100
   nivel: 1
   rareza: Raro
   itemType: 9

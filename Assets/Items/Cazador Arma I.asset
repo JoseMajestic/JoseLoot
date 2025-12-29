@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Cazador Arma I
   m_EditorClassIdentifier: 
-  itemName: Cazador Arma I
+  itemName: Arma de Explorator Peregrinus
   itemSprite: {fileID: 1925304170, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
-  description: Usado por cazadores de bestias que acechan en los bosques oscuros.
+  description: Arma ligera disenada para combates ocasionales durante exploraciones prolongadas en territorio desconocido.
   price: 270
   hp: 0
   mana: 0
-  ataque: 14
+  ataque: 2160
   defensa: 0
-  velocidadAtaque: 1
-  ataqueCritico: 0
-  danoCritico: 0
+  velocidadAtaque: 22
+  ataqueCritico: 4
+  danoCritico: 60
   suerte: 0
   destreza: 0
   nivel: 1

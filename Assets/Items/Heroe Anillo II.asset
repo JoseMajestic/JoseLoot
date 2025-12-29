@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Heroe Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Heroe Anillo II
+  itemName: Anillo de Roma Honor
   itemSprite: {fileID: -347417793, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
-  description: La valentia del portador se refleja en el brillo heroico del anillo.
+  description: Anillo ceremonial que representa integridad y lealtad demostradas en servicio.
   price: 400
-  hp: 30
+  hp: 0
   mana: 68
-  ataque: 0
-  defensa: 10
-  velocidadAtaque: 3
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 7
-  destreza: 4
+  ataque: 10935
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 2
+  danoCritico: 51
+  suerte: 9
+  destreza: 300
   nivel: 1
   rareza: Epico
   itemType: 8

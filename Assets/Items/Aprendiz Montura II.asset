@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Aprendiz Montura II
   m_EditorClassIdentifier: 
-  itemName: Montura de Tiro Intermedio
+  itemName: Montura de Tiro Veteranum
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
-  description: Montura que mejora la movilidad.
+  description: Montura disciplinada que mejora el rendimiento tras entrenamiento conjunto prolongado.
   price: 100
-  hp: 0
+  hp: 562
   mana: 0
-  ataque: 0
-  defensa: 0
+  ataque: 180
+  defensa: 90
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 0
+  suerte: 1
   destreza: 0
   nivel: 1
   rareza: Comun

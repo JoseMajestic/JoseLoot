@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Cazador Guantes II
   m_EditorClassIdentifier: 
-  itemName: Cazador Guantes II
+  itemName: Guantes de Explorator Venator
   itemSprite: {fileID: 436562033, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
-  description: Los cazadores veteranos reconocen al instante el valor de estas piezas.
+  description: Guantes reforzados que aumentan el control manual en cacerias intensas.
   price: 259
   hp: 0
   mana: 0
-  ataque: 9
+  ataque: 1215
   defensa: 0
-  velocidadAtaque: 0
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 0
-  destreza: 4
+  velocidadAtaque: 60
+  ataqueCritico: 3
+  danoCritico: 33
+  suerte: 2
+  destreza: 100
   nivel: 1
   rareza: Raro
   itemType: 6

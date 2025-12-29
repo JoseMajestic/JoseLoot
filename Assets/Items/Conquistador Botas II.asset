@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Conquistador Botas II
   m_EditorClassIdentifier: 
-  itemName: Conquistador Botas II
+  itemName: Botas de Legionarius Centuria
   itemSprite: {fileID: -1856840275, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
-  description: Los conquistadores mas temidos de la historia portaron piezas como
+  description: Botas reforzadas que mantienen estabilidad durante combates intensos.
     estas.
   price: 605
-  hp: 0
+  hp: 10125
   mana: 0
   ataque: 0
-  defensa: 0
-  velocidadAtaque: 2
+  defensa: 1620
+  velocidadAtaque: 45
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 6
-  destreza: 0
+  suerte: 0
+  destreza: 200
   nivel: 1
   rareza: Excelente
   itemType: 9

@@ -104,10 +104,11 @@ function Update-YamlValue {
         [string]$value,
         [switch]$WarnOnly
     )
-    $pattern = "^\s*{0}:\s*" -f [regex]::Escape($field)
+    $pattern = "^(\s*){0}:\s*" -f [regex]::Escape($field)
     for ($i = 0; $i -lt $lines.Length; $i++) {
         if ($lines[$i] -match $pattern) {
-            $lines[$i] = "  ${field}: $value"
+            $indent = $matches[1]
+            $lines[$i] = "${indent}${field}: $value"
             return [pscustomobject]@{Success=$true;Lines=$lines}
         }
     }
@@ -127,12 +128,16 @@ for ($i = 0; $i -lt $enemyPaths.Count; $i++) {
     $stats = $enemyStats[$i]
     Write-Host "Updating enemy $path"
     $lines = Get-Content -LiteralPath $path
-    foreach ($field in @('hp','ataque','defensa','velocidadAtaque','ataqueCritico','danoCritico','destreza','suerte')) {
+    $changed = $false
+    foreach ($field in @('hp','ataque','defensa','velocidadAtaque','ataqueCritico','danoCritico','suerte','destreza')) {
         $value = [int]$stats[$field.Replace('velocidadAtaque','velocidad').Replace('ataqueCritico','crit').Replace('danoCritico','critDmg')]
         $result = Update-YamlValue -lines $lines -field $field -value $value -WarnOnly
+        if ($result.Success) { $changed = $true }
         $lines = $result.Lines
     }
-    Set-Content -LiteralPath $path -Value $lines -Encoding UTF8
+    if ($changed) {
+        Set-Content -LiteralPath $path -Value $lines -Encoding UTF8
+    }
 }
 
 $setNames = @('Aprendiz','Arcano','Cazador','Conquistador','Heroe','Fantasma','Titan','Serafin','Abismo','Apocalipsis')

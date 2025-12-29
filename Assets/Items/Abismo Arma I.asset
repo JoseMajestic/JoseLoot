@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Abismo Arma I
   m_EditorClassIdentifier: 
-  itemName: Abismo Arma I
+  itemName: Arma de Infernum Limbus
   itemSprite: {fileID: -1716279706, guid: 3154f9b159fd89043909858e0c22de82, type: 3}
-  description: Los demonios mas antiguos temen el poder que emana de este equipo
+  description: Arma corrupta inicial que inflige dano mientras consume lentamente la esencia del combate.
     maldito.
   price: 2040
   hp: 0
   mana: 0
-  ataque: 102
+  ataque: 1574640
   defensa: 0
-  velocidadAtaque: 1
-  ataqueCritico: 17
-  danoCritico: 324
+  velocidadAtaque: 58
+  ataqueCritico: 13
+  danoCritico: 168
   suerte: 0
   destreza: 0
   nivel: 1

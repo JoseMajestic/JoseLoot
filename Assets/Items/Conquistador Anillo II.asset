@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Conquistador Anillo II
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Conquistador Anillo II
+  itemName: Anillo de Legionarius Centuria
   itemSprite: {fileID: 225467922, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
-  description: El poder de liderazgo se concentra en este anillo de mando.
+  description: Anillo reforzado que simboliza rango y experiencia en combate.
   price: 250
-  hp: 20
+  hp: 0
   mana: 48
-  ataque: 0
-  defensa: 6
-  velocidadAtaque: 3
-  ataqueCritico: 0
-  danoCritico: 0
+  ataque: 3645
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 1
+  danoCritico: 42
   suerte: 7
-  destreza: 4
+  destreza: 150
   nivel: 1
   rareza: Raro
   itemType: 8

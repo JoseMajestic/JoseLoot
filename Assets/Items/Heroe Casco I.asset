@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Heroe Casco I
   m_EditorClassIdentifier: 
-  itemName: Heroe Casco I
+  itemName: Casco de Roma Virtus
   itemSprite: {fileID: -1658550675, guid: 9ce346908e96b09429122e80d0ef74c0, type: 3}
-  description: Los heroes de las leyendas antiguas sonrien desde el mas alla sobre
+  description: Casco distinguido que identifica a guerreros valientes dentro del ejercito romano.
     este equipo.
   price: 696
-  hp: 70
+  hp: 30375
   mana: 0
   ataque: 0
-  defensa: 31
+  defensa: 4860
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 0
+  destreza: 400
   nivel: 1
   rareza: Epico
   itemType: 1

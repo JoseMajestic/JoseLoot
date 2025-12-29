@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Abismo Escudo I
   m_EditorClassIdentifier: 
-  itemName: Abismo Escudo I
+  itemName: Escudo de Infernum Limbus
   itemSprite: {fileID: 1433497771, guid: 27d5a619bb10d8d4885c32fad32835a4, type: 3}
-  description: Forjado en las profundidades del infierno con las almas de los condenados.
+  description: Escudo corrupto que absorbe impactos mientras filtra energia oscura.
   price: 1632
-  hp: 204
+  hp: 3280500
   mana: 0
   ataque: 0
-  defensa: 122
+  defensa: 524880
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
   m_Name: Conquistador Anillo III
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Conquistador Anillo III
+  itemName: Anillo de Legionarius Legio
   itemSprite: {fileID: -1005229158, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
-  description: El anillo que marca a quien ha conquistado continentes enteros.
+  description: Anillo de guerra que representa lealtad absoluta a la legion.
   price: 500
-  hp: 30
+  hp: 0
   mana: 68
-  ataque: 0
-  defensa: 10
-  velocidadAtaque: 4
-  ataqueCritico: 0
-  danoCritico: 0
-  suerte: 9
-  destreza: 6
+  ataque: 4860
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 1
+  danoCritico: 45
+  suerte: 8
+  destreza: 180
   nivel: 1
   rareza: Raro
   itemType: 8

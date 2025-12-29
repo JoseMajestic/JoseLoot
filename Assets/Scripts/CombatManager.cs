@@ -2796,7 +2796,7 @@ public class CombatManager : MonoBehaviour
         {
             playerCurrentHp--;
             UpdatePlayerHP();
-            yield return null; // Esperar un frame antes de reducir el siguiente punto
+            yield return new WaitForSeconds(0.0001f); // Esperar un tiempo corto antes de reducir el siguiente punto para ir más rápido
         }
         
         // Asegurar que llegamos exactamente al target
@@ -2805,7 +2805,7 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Reduce el HP del enemigo gradualmente de uno en uno hasta llegar al HP objetivo.
+    /// Reduce el HP del enemigo gradualmente de 10 en 10 hasta llegar al HP objetivo.
     /// </summary>
     private IEnumerator ReduceEnemyHPGradually(int targetHp)
     {
@@ -2813,9 +2813,10 @@ public class CombatManager : MonoBehaviour
         
         while (enemyCurrentHp > targetHp)
         {
-            enemyCurrentHp--;
+            int decrement = Mathf.Min(10, enemyCurrentHp - targetHp);
+            enemyCurrentHp -= decrement;
             UpdateEnemyHP();
-            yield return null; // Esperar un frame antes de reducir el siguiente punto
+            yield return new WaitForSeconds(0.01f); // Esperar un tiempo corto antes de reducir el siguiente bloque para ir más rápido
         }
         
         // Asegurar que llegamos exactamente al target
