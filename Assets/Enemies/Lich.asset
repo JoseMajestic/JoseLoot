@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,21 +15,26 @@ MonoBehaviour:
   enemyName: Lich
   description: Un hechicero inmortal que domina la magia oscura. Extremadamente peligroso.
   enemySprite: {fileID: 21300000, guid: a6f81f39936bcda4b85810385ef9b5c6, type: 3}
-  hp: 350
-  ataque: 35
-  defensa: 15
-  velocidadAtaque: 12
-  ataqueCritico: 10
-  danoCritico: 11
-  suerte: 5
-  destreza: 6
-  rewardCoins: 180
-  experienceReward: 10
+  hp: 570000
+  ataque: 50000
+  defensa: 27000
+  velocidadAtaque: 130
+  ataqueCritico: 22
+  danoCritico: 250
+  suerte: 48
+  destreza: 1900
+  rewardCoins: 1800
+  experienceReward: 20000
   rewardConfig:
-    rewardItemCount: 0
-    allowedTiers: 
+    rewardItemCount: 4
+    allowedTiers: 04000000
     distributeEvenly: 1
     forcedRewards: []
   requiredLevel: 4
   level: 5
-  availableAttacks: []
+  availableAttacks:
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
+  - {fileID: 11400000, guid: c493954b91965104880e199a0eaf930a, type: 2}
+  - {fileID: 11400000, guid: fffaece52b70f6640b8a0ee0fb142d92, type: 2}
+  - {fileID: 11400000, guid: e6117e4f11890cd4fb0405fed5069672, type: 2}
+  - {fileID: 11400000, guid: 9d38d5655b64c184ab774998b11074fc, type: 2}

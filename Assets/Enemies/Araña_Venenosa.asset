@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,22 +16,22 @@ MonoBehaviour:
   description: "Una ara\xF1a gigante con veneno letal. Sus mordeduras pueden ser
     peligrosas."
   enemySprite: {fileID: 21300000, guid: 5a539b07380513c43a3c400c3a057985, type: 3}
-  hp: 1
-  ataque: 12
-  defensa: 5
-  velocidadAtaque: 1
-  ataqueCritico: 4
-  danoCritico: 5
-  suerte: 2
-  destreza: 3
-  rewardCoins: 55
-  experienceReward: 10
+  hp: 7200
+  ataque: 880
+  defensa: 720
+  velocidadAtaque: 100
+  ataqueCritico: 5
+  danoCritico: 120
+  suerte: 10
+  destreza: 200
+  rewardCoins: 12
+  experienceReward: 25
   rewardConfig:
-    rewardItemCount: 1
+    rewardItemCount: 2
     allowedTiers: 01000000
     distributeEvenly: 1
     forcedRewards: []
   requiredLevel: 1
   level: 2
   availableAttacks:
-  - {fileID: 11400000, guid: d8903f9c5366eb64388a9946c60b55ab, type: 2}
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}

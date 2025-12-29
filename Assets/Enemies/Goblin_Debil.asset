@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,21 +16,25 @@ MonoBehaviour:
   description: "Un goblin peque\xF1o y d\xE9bil, f\xE1cil de derrotar. Perfecto para
     principiantes."
   enemySprite: {fileID: 21300000, guid: 477453792d3115245aa1fb12fcd09f06, type: 3}
-  hp: 80
-  ataque: 8
-  defensa: 3
-  velocidadAtaque: 8
-  ataqueCritico: 2
-  danoCritico: 3
-  suerte: 1
-  destreza: 2
-  rewardCoins: 30
-  experienceReward: 10
+  hp: 210000
+  ataque: 15500
+  defensa: 10000
+  velocidadAtaque: 120
+  ataqueCritico: 18
+  danoCritico: 200
+  suerte: 38
+  destreza: 1200
+  rewardCoins: 1200
+  experienceReward: 12000
   rewardConfig:
-    rewardItemCount: 0
-    allowedTiers: 
+    rewardItemCount: 4
+    allowedTiers: 03000000
     distributeEvenly: 1
     forcedRewards: []
   requiredLevel: 0
   level: 1
-  availableAttacks: []
+  availableAttacks:
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
+  - {fileID: 11400000, guid: c493954b91965104880e199a0eaf930a, type: 2}
+  - {fileID: 11400000, guid: 936adfd0a8e8b4b46bcc65016e478c74, type: 2}
+  - {fileID: 11400000, guid: 6ce3216d3adc7f64d860ab8ec2591dc8, type: 2}

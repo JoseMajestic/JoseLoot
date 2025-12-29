@@ -1635,7 +1635,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                       GetEnemyEffectiveDefense(), true, out isCritical);
+                                       GetEnemyEffectiveDefense(), enemyDestreza, true, out isCritical);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el enemigo
@@ -1703,7 +1703,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                       GetPlayerEffectiveDefense(), false, out isCritical);
+                                       GetPlayerEffectiveDefense(), playerDestreza, false, out isCritical);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el jugador
@@ -1770,7 +1770,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int damage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                       GetEnemyEffectiveDefense(), true, out isCritical);
+                                       GetEnemyEffectiveDefense(), enemyDestreza, true, out isCritical);
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el enemigo
@@ -1830,7 +1830,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int damage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                       GetPlayerEffectiveDefense(), false, out isCritical);
+                                       GetPlayerEffectiveDefense(), playerDestreza, false, out isCritical);
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - damage);
             
             // 4. Mostrar texto de daño recibido por el jugador
@@ -2203,7 +2203,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int baseDamage = CalculateDamage(GetPlayerEffectiveAttack(), playerDestreza, playerAtaqueCritico, playerDanoCritico, 
-                                            GetEnemyEffectiveDefense(), true, out isCritical);
+                                            GetEnemyEffectiveDefense(), enemyDestreza, true, out isCritical);
             int totalDamage = baseDamage * multiplier;
             int targetEnemyHp = Mathf.Max(0, enemyCurrentHp - totalDamage);
             
@@ -2264,7 +2264,7 @@ public class CombatManager : MonoBehaviour
             // 3. Calcular daño
             bool isCritical;
             int baseDamage = CalculateDamage(GetEnemyEffectiveAttack(), enemyDestreza, enemyAtaqueCritico, enemyDanoCritico, 
-                                            GetPlayerEffectiveDefense(), false, out isCritical);
+                                            GetPlayerEffectiveDefense(), playerDestreza, false, out isCritical);
             int totalDamage = baseDamage * multiplier;
             int targetPlayerHp = Mathf.Max(0, playerCurrentHp - totalDamage);
             
@@ -2726,20 +2726,22 @@ public class CombatManager : MonoBehaviour
     /// Calcula el daño de un ataque.
     /// </summary>
     private int CalculateDamage(int ataque, int destreza, int ataqueCritico, int danoCritico, 
-                                int defensaOponente, bool isPlayer)
+                                int defensaOponente, int destrezaOponente, bool isPlayer)
     {
         bool unused;
-        return CalculateDamage(ataque, destreza, ataqueCritico, danoCritico, defensaOponente, isPlayer, out unused);
+        return CalculateDamage(ataque, destreza, ataqueCritico, danoCritico, defensaOponente, destrezaOponente, isPlayer, out unused);
     }
 
     private int CalculateDamage(int ataque, int destreza, int ataqueCritico, int danoCritico,
-                                int defensaOponente, bool isPlayer, out bool isCritical)
+                                int defensaOponente, int destrezaOponente, bool isPlayer, out bool isCritical)
     {
         isCritical = Random.Range(0, 100) < ataqueCritico;
 
         float critMultiplier = isCritical ? (1f + (danoCritico / 10f) + 0.1f) : 1f;
-        float totalDamage = (ataque + destreza / 2f) * critMultiplier;
-        float effectiveDamage = totalDamage - defensaOponente + (destreza / 2f);
+        float attackerPenetration = destreza / 2f;
+        float defenderBlock = destrezaOponente / 2f;
+        float totalDamage = (ataque + attackerPenetration) * critMultiplier;
+        float effectiveDamage = totalDamage - (defensaOponente + defenderBlock);
 
         int finalDamage = Mathf.Max(1, Mathf.RoundToInt(effectiveDamage));
         return finalDamage;

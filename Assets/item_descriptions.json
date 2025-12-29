@@ -1,0 +1,1502 @@
+﻿[
+    {
+        "File":  "Abismo Anillo I.asset",
+        "ItemName":  "Anillo de Infernum Limbus",
+        "Description":  "Un anillo que canaliza el poder corruptor del abismo."
+    },
+    {
+        "File":  "Abismo Anillo II.asset",
+        "ItemName":  "Anillo de Infernum Inferus",
+        "Description":  "La oscuridad fluye a trav\\xE9s de este anillo como un veneno letal."
+    },
+    {
+        "File":  "Abismo Anillo III.asset",
+        "ItemName":  "Anillo de Infernum Abyssus",
+        "Description":  "El anillo del abismo, que corrompe todo lo que toca con su poder demoniaco."
+    },
+    {
+        "File":  "Abismo Arma I.asset",
+        "ItemName":  "Arma de Infernum Limbus",
+        "Description":  "Los demonios mas antiguos temen el poder que emana de este equipo"
+    },
+    {
+        "File":  "Abismo Arma II.asset",
+        "ItemName":  "Arma de Infernum Inferus",
+        "Description":  "Las llamas del infierno arden eternamente dentro de cada pieza de"
+    },
+    {
+        "File":  "Abismo Arma III.asset",
+        "ItemName":  "Arma de Infernum Abyssus",
+        "Description":  "Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad."
+    },
+    {
+        "File":  "Abismo Armadura I.asset",
+        "ItemName":  "Armadura de Infernum Limbus",
+        "Description":  "Las llamas del infierno arden eternamente dentro de cada pieza de"
+    },
+    {
+        "File":  "Abismo Armadura II.asset",
+        "ItemName":  "Armadura de Infernum Inferus",
+        "Description":  "Las llamas del infierno arden eternamente dentro de cada pieza de"
+    },
+    {
+        "File":  "Abismo Armadura III.asset",
+        "ItemName":  "Armadura de Infernum Abyssus",
+        "Description":  "El precio de este poder es alto pero la recompensa es absoluta."
+    },
+    {
+        "File":  "Abismo Botas I.asset",
+        "ItemName":  "Botas de Infernum Limbus",
+        "Description":  "Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad."
+    },
+    {
+        "File":  "Abismo Botas II.asset",
+        "ItemName":  "Botas de Infernum Inferus",
+        "Description":  "Quien lo porte sentira el susurro de mil demonios guiando cada golpe."
+    },
+    {
+        "File":  "Abismo Botas III.asset",
+        "ItemName":  "Botas de Infernum Abyssus",
+        "Description":  "El precio de este poder es alto pero la recompensa es absoluta."
+    },
+    {
+        "File":  "Abismo Casco I.asset",
+        "ItemName":  "Casco de Infernum Limbus",
+        "Description":  "Quien lo porte sentira el susurro de mil demonios guiando cada golpe."
+    },
+    {
+        "File":  "Abismo Casco II.asset",
+        "ItemName":  "Casco de Infernum Inferus",
+        "Description":  "El precio de este poder es alto pero la recompensa es absoluta."
+    },
+    {
+        "File":  "Abismo Casco III.asset",
+        "ItemName":  "Casco de Infernum Abyssus",
+        "Description":  "Forjado en las profundidades del infierno con las almas de los condenados."
+    },
+    {
+        "File":  "Abismo Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Infernum Limbus",
+        "Description":  "Quien lo porte sentira el susurro de mil demonios guiando cada golpe."
+    },
+    {
+        "File":  "Abismo Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Infernum Inferus",
+        "Description":  "Creado en el abismo eterno donde la luz jamas ha tocado la oscuridad."
+    },
+    {
+        "File":  "Abismo Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Infernum Abyssus",
+        "Description":  "El precio de este poder es alto pero la recompensa es absoluta."
+    },
+    {
+        "File":  "Abismo Collar I.asset",
+        "ItemName":  "Collar de Infernum Limbus",
+        "Description":  "Un collar forjado en las llamas del abismo con metales prohibidos."
+    },
+    {
+        "File":  "Abismo Collar II.asset",
+        "ItemName":  "Collar de Infernum Inferus",
+        "Description":  "Cada gema contiene un fragmento de la oscuridad eterna."
+    },
+    {
+        "File":  "Abismo Collar III.asset",
+        "ItemName":  "Collar de Infernum Abyssus",
+        "Description":  "El collar del se\\xF1or del abismo, que otorga poder sobre las tinieblas."
+    },
+    {
+        "File":  "Abismo Escudo I.asset",
+        "ItemName":  "Escudo de Infernum Limbus",
+        "Description":  "Forjado en las profundidades del infierno con las almas de los condenados."
+    },
+    {
+        "File":  "Abismo Escudo II.asset",
+        "ItemName":  "Escudo de Infernum Inferus",
+        "Description":  "Las llamas del infierno arden eternamente dentro de cada pieza de"
+    },
+    {
+        "File":  "Abismo Escudo III.asset",
+        "ItemName":  "Escudo de Infernum Abyssus",
+        "Description":  "Solo los mas oscuros y poderosos pueden dominar este equipo del abismo."
+    },
+    {
+        "File":  "Abismo Guantes I.asset",
+        "ItemName":  "Guantes de Infernum Limbus",
+        "Description":  "Los demonios mas antiguos temen el poder que emana de este equipo"
+    },
+    {
+        "File":  "Abismo Guantes II.asset",
+        "ItemName":  "Guantes de Infernum Inferus",
+        "Description":  "Las llamas del infierno arden eternamente dentro de cada pieza de"
+    },
+    {
+        "File":  "Abismo Guantes III.asset",
+        "ItemName":  "Guantes de Infernum Abyssus",
+        "Description":  "Quien lo porte sentira el susurro de mil demonios guiando cada golpe."
+    },
+    {
+        "File":  "Abismo Montura I.asset",
+        "ItemName":  "Montura de Infernum Limbus",
+        "Description":  "Un corcel nacido en las profundidades del abismo, donde la luz jamas"
+    },
+    {
+        "File":  "Abismo Montura II.asset",
+        "ItemName":  "Montura de Infernum Inferus",
+        "Description":  "La montura demoniaca que se alimenta de la oscuridad eterna."
+    },
+    {
+        "File":  "Abismo Montura III.asset",
+        "ItemName":  "Montura de Infernum Abyssus",
+        "Description":  "El corcel del abismo, que lleva a su jinete a las mas oscuras profundidades."
+    },
+    {
+        "File":  "Apocalipsis Anillo I.asset",
+        "ItemName":  "Anillo de Ultima Roma Exitium",
+        "Description":  "Un anillo que contiene el poder destructivo del apocalipsis."
+    },
+    {
+        "File":  "Apocalipsis Anillo II.asset",
+        "ItemName":  "Anillo de Ultima Roma Cataclysmus",
+        "Description":  "El anillo que puede desatar la destruccion total o el renacimiento."
+    },
+    {
+        "File":  "Apocalipsis Anillo III.asset",
+        "ItemName":  "Anillo de Ultima Roma Aeternitas",
+        "Description":  "El anillo del apocalipsis, que otorga el poder de cambiar el destino"
+    },
+    {
+        "File":  "Apocalipsis Arma I.asset",
+        "ItemName":  "Arma de Ultima Roma Exitium",
+        "Description":  "Creado para sobrevivir cuando los cuatro jinetes cabalguen sobre la"
+    },
+    {
+        "File":  "Apocalipsis Arma II.asset",
+        "ItemName":  "Arma de Ultima Roma Cataclysmus",
+        "Description":  "Forjado para el guerrero que permanecera de pie cuando todo haya caido."
+    },
+    {
+        "File":  "Apocalipsis Arma III.asset",
+        "ItemName":  "Arma de Ultima Roma Aeternitas",
+        "Description":  "Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos."
+    },
+    {
+        "File":  "Apocalipsis Armadura I.asset",
+        "ItemName":  "Armadura de Ultima Roma Exitium",
+        "Description":  "La destruccion total es el unico lenguaje que este equipo conoce bien."
+    },
+    {
+        "File":  "Apocalipsis Armadura II.asset",
+        "ItemName":  "Armadura de Ultima Roma Cataclysmus",
+        "Description":  "La destruccion total es el unico lenguaje que este equipo conoce bien."
+    },
+    {
+        "File":  "Apocalipsis Armadura III.asset",
+        "ItemName":  "Armadura de Ultima Roma Aeternitas",
+        "Description":  "Creado para sobrevivir cuando los cuatro jinetes cabalguen sobre la"
+    },
+    {
+        "File":  "Apocalipsis Botas I.asset",
+        "ItemName":  "Botas de Ultima Roma Exitium",
+        "Description":  "Forjado para el guerrero que permanecera de pie cuando todo haya caido."
+    },
+    {
+        "File":  "Apocalipsis Botas II.asset",
+        "ItemName":  "Botas de Ultima Roma Cataclysmus",
+        "Description":  "Los profetas temblaron al ver las visiones de quien portaria este"
+    },
+    {
+        "File":  "Apocalipsis Botas III.asset",
+        "ItemName":  "Botas de Ultima Roma Aeternitas",
+        "Description":  "Los profetas temblaron al ver las visiones de quien portaria este"
+    },
+    {
+        "File":  "Apocalipsis Casco I.asset",
+        "ItemName":  "Casco de Ultima Roma Exitium",
+        "Description":  "Creado para sobrevivir cuando los cuatro jinetes cabalguen sobre la"
+    },
+    {
+        "File":  "Apocalipsis Casco II.asset",
+        "ItemName":  "Casco de Ultima Roma Cataclysmus",
+        "Description":  "Forjado para el guerrero que permanecera de pie cuando todo haya caido."
+    },
+    {
+        "File":  "Apocalipsis Casco III.asset",
+        "ItemName":  "Casco de Ultima Roma Aeternitas",
+        "Description":  "La destruccion total es el unico lenguaje que este equipo conoce bien."
+    },
+    {
+        "File":  "Apocalipsis Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Ultima Roma Exitium",
+        "Description":  "Los profetas temblaron al ver las visiones de quien portaria este"
+    },
+    {
+        "File":  "Apocalipsis Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Ultima Roma Cataclysmus",
+        "Description":  "El fin de todas las cosas comienza cuando este equipo despierta su"
+    },
+    {
+        "File":  "Apocalipsis Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Ultima Roma Aeternitas",
+        "Description":  "Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos."
+    },
+    {
+        "File":  "Apocalipsis Collar I.asset",
+        "ItemName":  "Collar de Ultima Roma Exitium",
+        "Description":  "Un collar forjado en el fuego del apocalipsis que arraso con todo."
+    },
+    {
+        "File":  "Apocalipsis Collar II.asset",
+        "ItemName":  "Collar de Ultima Roma Cataclysmus",
+        "Description":  "Cada medallon representa una era que termino y otra que comenzo."
+    },
+    {
+        "File":  "Apocalipsis Collar III.asset",
+        "ItemName":  "Collar de Ultima Roma Aeternitas",
+        "Description":  "El collar del portador del apocalipsis, s\\xEDmbolo del fin y el principio."
+    },
+    {
+        "File":  "Apocalipsis Escudo I.asset",
+        "ItemName":  "Escudo de Ultima Roma Exitium",
+        "Description":  "La destruccion total es el unico lenguaje que este equipo conoce bien."
+    },
+    {
+        "File":  "Apocalipsis Escudo II.asset",
+        "ItemName":  "Escudo de Ultima Roma Cataclysmus",
+        "Description":  "Forjado en los fuegos del fin del mundo donde todo sera cenizas."
+    },
+    {
+        "File":  "Apocalipsis Escudo III.asset",
+        "ItemName":  "Escudo de Ultima Roma Aeternitas",
+        "Description":  "Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos."
+    },
+    {
+        "File":  "Apocalipsis Guantes I.asset",
+        "ItemName":  "Guantes de Ultima Roma Exitium",
+        "Description":  "Quien lo porte tiene el poder de traer el apocalipsis a sus enemigos."
+    },
+    {
+        "File":  "Apocalipsis Guantes II.asset",
+        "ItemName":  "Guantes de Ultima Roma Cataclysmus",
+        "Description":  "Forjado en los fuegos del fin del mundo donde todo sera cenizas."
+    },
+    {
+        "File":  "Apocalipsis Guantes III.asset",
+        "ItemName":  "Guantes de Ultima Roma Aeternitas",
+        "Description":  "Los profetas temblaron al ver las visiones de quien portaria este"
+    },
+    {
+        "File":  "Apocalipsis Montura I.asset",
+        "ItemName":  "Montura de Ultima Roma Exitium",
+        "Description":  "El corcel del fin de los tiempos, que presencio la caida de civilizaciones."
+    },
+    {
+        "File":  "Apocalipsis Montura II.asset",
+        "ItemName":  "Montura de Ultima Roma Cataclysmus",
+        "Description":  "La montura apocaliptica que cabalga sobre las cenizas del mundo."
+    },
+    {
+        "File":  "Apocalipsis Montura III.asset",
+        "ItemName":  "Montura de Ultima Roma Aeternitas",
+        "Description":  "El corcel del apocalipsis, heraldo de la destruccion y el renacimiento."
+    },
+    {
+        "File":  "Aprendiz Anillo I.asset",
+        "ItemName":  "Anillo de Tiro Rudimentum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Anillo II.asset",
+        "ItemName":  "Anillo de Tiro Veteranum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Anillo III.asset",
+        "ItemName":  "Anillo de Tiro Imperium",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Arma I.asset",
+        "ItemName":  "Arma de Tiro Rudimentum",
+        "Description":  "Todo gran heroe empezo con equipo modesto como este en sus manos."
+    },
+    {
+        "File":  "Aprendiz Arma II.asset",
+        "ItemName":  "Arma de Tiro Veteranum",
+        "Description":  "Creado con materiales basicos pero con el corazon de un verdadero"
+    },
+    {
+        "File":  "Aprendiz Arma III.asset",
+        "ItemName":  "Arma de Tiro Imperium",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Armadura I.asset",
+        "ItemName":  "Armadura de Tiro Rudimentum",
+        "Description":  "Sencillo pero efectivo, ideal para quienes buscan comenzar su aventura."
+    },
+    {
+        "File":  "Aprendiz Armadura II.asset",
+        "ItemName":  "Armadura de Tiro Veteranum",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Armadura III.asset",
+        "ItemName":  "Armadura de Tiro Imperium",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Botas I.asset",
+        "ItemName":  "Botas de Tiro Rudimentum",
+        "Description":  "Resistente y practico, perfecto para enfrentar los primeros desafios"
+    },
+    {
+        "File":  "Aprendiz Botas II.asset",
+        "ItemName":  "Botas de Tiro Veteranum",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Botas III.asset",
+        "ItemName":  "Botas de Tiro Imperium",
+        "Description":  "El primer paso de todo heroe comienza con equipo humilde pero confiable."
+    },
+    {
+        "File":  "Aprendiz Casco I.asset",
+        "ItemName":  "Casco de Tiro Rudimentum",
+        "Description":  "Sencillo pero efectivo, ideal para quienes buscan comenzar su aventura."
+    },
+    {
+        "File":  "Aprendiz Casco II.asset",
+        "ItemName":  "Casco de Tiro Veteranum",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Casco III.asset",
+        "ItemName":  "Casco de Tiro Imperium",
+        "Description":  "Forjado por herreros novatos para guerreros que inician su camino."
+    },
+    {
+        "File":  "Aprendiz Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Tiro Rudimentum",
+        "Description":  "La simplicidad es la madre de la eficacia en el campo de batalla."
+    },
+    {
+        "File":  "Aprendiz Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Tiro Veteranum",
+        "Description":  "Creado con materiales basicos pero con el corazon de un verdadero"
+    },
+    {
+        "File":  "Aprendiz Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Tiro Imperium",
+        "Description":  "Sencillo pero efectivo, ideal para quienes buscan comenzar su aventura."
+    },
+    {
+        "File":  "Aprendiz Collar  I.asset",
+        "ItemName":  "Collar de Tiro Rudimentum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Collar II.asset",
+        "ItemName":  "Collar de Tiro Veteranum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Collar III.asset",
+        "ItemName":  "Collar de Tiro Imperium",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Escudo I.asset",
+        "ItemName":  "Escudo de Tiro Rudimentum",
+        "Description":  "El primer paso de todo heroe comienza con equipo humilde pero confiable."
+    },
+    {
+        "File":  "Aprendiz Escudo II.asset",
+        "ItemName":  "Escudo de Tiro Veteranum",
+        "Description":  "Todo gran heroe empezo con equipo modesto como este en sus manos."
+    },
+    {
+        "File":  "Aprendiz Escudo III.asset",
+        "ItemName":  "Escudo de Tiro Imperium",
+        "Description":  "Resistente y practico, perfecto para enfrentar los primeros desafios"
+    },
+    {
+        "File":  "Aprendiz Guantes I.asset",
+        "ItemName":  "Guantes de Tiro Rudimentum",
+        "Description":  "Forjado por herreros novatos para guerreros que inician su camino."
+    },
+    {
+        "File":  "Aprendiz Guantes II.asset",
+        "ItemName":  "Guantes de Tiro Veteranum",
+        "Description":  "Resistente y practico, perfecto para enfrentar los primeros desafios"
+    },
+    {
+        "File":  "Aprendiz Guantes III.asset",
+        "ItemName":  "Guantes de Tiro Imperium",
+        "Description":  "Todo gran heroe empezo con equipo modesto como este en sus manos."
+    },
+    {
+        "File":  "Aprendiz Montura I.asset",
+        "ItemName":  "Montura de Tiro Rudimentum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Montura II.asset",
+        "ItemName":  "Montura de Tiro Veteranum",
+        "Description":  ""
+    },
+    {
+        "File":  "Aprendiz Montura III.asset",
+        "ItemName":  "Montura de Tiro Imperium",
+        "Description":  ""
+    },
+    {
+        "File":  "Arcano Anillo I.asset",
+        "ItemName":  "Anillo de Augur Omen",
+        "Description":  "Un anillo que canaliza las energias arcanas del mundo."
+    },
+    {
+        "File":  "Arcano Anillo II.asset",
+        "ItemName":  "Anillo de Augur Ritus",
+        "Description":  "\"El poder m\\xE1gico fluye a trav\\xE9s de este anillo como un rio de"
+    },
+    {
+        "File":  "Arcano Anillo III.asset",
+        "ItemName":  "Anillo de Augur Oraculum",
+        "Description":  "El anillo arcano supremo, que otorga dominio sobre las fuerzas m\\xE1gicas."
+    },
+    {
+        "File":  "Arcano Arma I.asset",
+        "ItemName":  "Arma de Augur Omen",
+        "Description":  "Imbuido con esencia magica que fluye desde los antiguos cristales"
+    },
+    {
+        "File":  "Arcano Arma II.asset",
+        "ItemName":  "Arma de Augur Ritus",
+        "Description":  "Runas brillantes recorren su superficie canalizando energia mistica"
+    },
+    {
+        "File":  "Arcano Arma III.asset",
+        "ItemName":  "Arma de Augur Oraculum",
+        "Description":  "Los hechiceros de la torre alta crearon este equipo con magia ancestral."
+    },
+    {
+        "File":  "Arcano Armadura I.asset",
+        "ItemName":  "Armadura de Augur Omen",
+        "Description":  "Creado para aquellos que dominan las artes arcanas con maestria absoluta."
+    },
+    {
+        "File":  "Arcano Armadura II.asset",
+        "ItemName":  "Armadura de Augur Ritus",
+        "Description":  "Creado para aquellos que dominan las artes arcanas con maestria absoluta."
+    },
+    {
+        "File":  "Arcano Armadura III.asset",
+        "ItemName":  "Armadura de Augur Oraculum",
+        "Description":  "Cada pieza resuena con el poder de mil conjuros antiguos olvidados."
+    },
+    {
+        "File":  "Arcano Botas I.asset",
+        "ItemName":  "Botas de Augur Omen",
+        "Description":  "Cada pieza resuena con el poder de mil conjuros antiguos olvidados."
+    },
+    {
+        "File":  "Arcano Botas II.asset",
+        "ItemName":  "Botas de Augur Ritus",
+        "Description":  "Creado para aquellos que dominan las artes arcanas con maestria absoluta."
+    },
+    {
+        "File":  "Arcano Botas III.asset",
+        "ItemName":  "Botas de Augur Oraculum",
+        "Description":  "Runas brillantes recorren su superficie canalizando energia mistica"
+    },
+    {
+        "File":  "Arcano Casco I.asset",
+        "ItemName":  "Casco de Augur Omen",
+        "Description":  "Los hechiceros de la torre alta crearon este equipo con magia ancestral."
+    },
+    {
+        "File":  "Arcano Casco II.asset",
+        "ItemName":  "Casco de Augur Ritus",
+        "Description":  "Cada pieza resuena con el poder de mil conjuros antiguos olvidados."
+    },
+    {
+        "File":  "Arcano Casco III.asset",
+        "ItemName":  "Casco de Augur Oraculum",
+        "Description":  "Los hechiceros de la torre alta crearon este equipo con magia ancestral."
+    },
+    {
+        "File":  "Arcano Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Augur Omen",
+        "Description":  "Imbuido con esencia magica que fluye desde los antiguos cristales"
+    },
+    {
+        "File":  "Arcano Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Augur Ritus",
+        "Description":  "Cada pieza resuena con el poder de mil conjuros antiguos olvidados."
+    },
+    {
+        "File":  "Arcano Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Augur Oraculum",
+        "Description":  "Forjado en los hornos arcanos donde la magia y el metal se fusionan."
+    },
+    {
+        "File":  "Arcano Collar I.asset",
+        "ItemName":  "Collar de Augur Omen",
+        "Description":  "Un collar que pulsa con la energia arcana del universo."
+    },
+    {
+        "File":  "Arcano Collar II.asset",
+        "ItemName":  "Collar de Augur Ritus",
+        "Description":  "Cada gema a\\xF1adida amplifica el poder m\\xE1gico del portador."
+    },
+    {
+        "File":  "Arcano Collar III.asset",
+        "ItemName":  "Collar de Augur Oraculum",
+        "Description":  "El collar del archimago, que concentra las fuerzas arcanas del cosmos."
+    },
+    {
+        "File":  "Arcano Escudo I.asset",
+        "ItemName":  "Escudo de Augur Omen",
+        "Description":  "Creado para aquellos que dominan las artes arcanas con maestria absoluta."
+    },
+    {
+        "File":  "Arcano Escudo II.asset",
+        "ItemName":  "Escudo de Augur Ritus",
+        "Description":  "Los magos mas sabios reconocen el aura que emana de este equipo."
+    },
+    {
+        "File":  "Arcano Escudo III.asset",
+        "ItemName":  "Escudo de Augur Oraculum",
+        "Description":  "Runas brillantes recorren su superficie canalizando energia mistica"
+    },
+    {
+        "File":  "Arcano Guantes I.asset",
+        "ItemName":  "Guantes de Augur Omen",
+        "Description":  "Los magos mas sabios reconocen el aura que emana de este equipo."
+    },
+    {
+        "File":  "Arcano Guantes II.asset",
+        "ItemName":  "Guantes de Augur Ritus",
+        "Description":  "Los magos mas sabios reconocen el aura que emana de este equipo."
+    },
+    {
+        "File":  "Arcano Guantes III.asset",
+        "ItemName":  "Guantes de Augur Oraculum",
+        "Description":  "Los hechiceros de la torre alta crearon este equipo con magia ancestral."
+    },
+    {
+        "File":  "Arcano Montura I.asset",
+        "ItemName":  "Montura de Augur Omen",
+        "Description":  "Un corcel infundido con magia arcana que puede atravesar dimensiones."
+    },
+    {
+        "File":  "Arcano Montura II.asset",
+        "ItemName":  "Montura de Augur Ritus",
+        "Description":  "\"La montura m\\xE1gica que responde a los pensamientos de su jinete"
+    },
+    {
+        "File":  "Arcano Montura III.asset",
+        "ItemName":  "Montura de Augur Oraculum",
+        "Description":  "El corcel arcano que ha viajado entre planos de existencia."
+    },
+    {
+        "File":  "Cazador Anillo I.asset",
+        "ItemName":  "Anillo de Explorator Peregrinus",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Anillo II.asset",
+        "ItemName":  "Anillo de Explorator Venator",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Anillo III.asset",
+        "ItemName":  "Anillo de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Arma I.asset",
+        "ItemName":  "Arma de Explorator Peregrinus",
+        "Description":  "Usado por cazadores de bestias que acechan en los bosques oscuros."
+    },
+    {
+        "File":  "Cazador Arma II.asset",
+        "ItemName":  "Arma de Explorator Venator",
+        "Description":  "Manchado con la sangre de criaturas que otros no se atreven enfrentar."
+    },
+    {
+        "File":  "Cazador Arma III.asset",
+        "ItemName":  "Arma de Explorator Praedator",
+        "Description":  "Usado por cazadores de bestias que acechan en los bosques oscuros."
+    },
+    {
+        "File":  "Cazador Armadura I.asset",
+        "ItemName":  "Armadura de Explorator Peregrinus",
+        "Description":  "Cada marca en este equipo cuenta la historia de una presa caida."
+    },
+    {
+        "File":  "Cazador Armadura II.asset",
+        "ItemName":  "Armadura de Explorator Venator",
+        "Description":  "Manchado con la sangre de criaturas que otros no se atreven enfrentar."
+    },
+    {
+        "File":  "Cazador Armadura III.asset",
+        "ItemName":  "Armadura de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Botas I.asset",
+        "ItemName":  "Botas de Explorator Peregrinus",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Botas II.asset",
+        "ItemName":  "Botas de Explorator Venator",
+        "Description":  "Cada marca en este equipo cuenta la historia de una presa caida."
+    },
+    {
+        "File":  "Cazador Botas III.asset",
+        "ItemName":  "Botas de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Casco I.asset",
+        "ItemName":  "Casco de Explorator Peregrinus",
+        "Description":  "Perfecto para rastrear y eliminar las amenazas que acechan en la oscuridad."
+    },
+    {
+        "File":  "Cazador Casco II.asset",
+        "ItemName":  "Casco de Explorator Venator",
+        "Description":  "Cada marca en este equipo cuenta la historia de una presa caida."
+    },
+    {
+        "File":  "Cazador Casco III.asset",
+        "ItemName":  "Casco de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Explorator Peregrinus",
+        "Description":  "Forjado para aquellos que cazan monstruos bajo la luz de la luna."
+    },
+    {
+        "File":  "Cazador Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Explorator Venator",
+        "Description":  "Manchado con la sangre de criaturas que otros no se atreven enfrentar."
+    },
+    {
+        "File":  "Cazador Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Explorator Praedator",
+        "Description":  "Manchado con la sangre de criaturas que otros no se atreven enfrentar."
+    },
+    {
+        "File":  "Cazador Collar I.asset",
+        "ItemName":  "Collar de Explorator Peregrinus",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Collar II.asset",
+        "ItemName":  "Collar de  Explorator Venator",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Collar III.asset",
+        "ItemName":  "Collar de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Escudo I.asset",
+        "ItemName":  "Escudo de Explorator Peregrinus",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Escudo II.asset",
+        "ItemName":  "Escudo de Explorator Venator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Escudo III.asset",
+        "ItemName":  "Escudo de Explorator Praedator",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Guantes I.asset",
+        "ItemName":  "Guantes de Explorator Peregrinus",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Guantes II.asset",
+        "ItemName":  "Guantes de Explorator Venator",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Guantes III.asset",
+        "ItemName":  "Guantes de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Montura I.asset",
+        "ItemName":  "Montura de Explorator Peregrinus",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Cazador Montura II.asset",
+        "ItemName":  "Montura de Explorator Venator",
+        "Description":  "Los cazadores veteranos reconocen al instante el valor de estas piezas."
+    },
+    {
+        "File":  "Cazador Montura III.asset",
+        "ItemName":  "Montura de Explorator Praedator",
+        "Description":  "Los depredadores mas temidos del reino portan este equipo con orgullo."
+    },
+    {
+        "File":  "Conquistador Anillo I.asset",
+        "ItemName":  "Anillo de Legionarius Cohors",
+        "Description":  "Un anillo que otorga la autoridad y el carisma de un conquistador."
+    },
+    {
+        "File":  "Conquistador Anillo II.asset",
+        "ItemName":  "Anillo de Legionarius Centuria",
+        "Description":  "El poder de liderazgo se concentra en este anillo de mando."
+    },
+    {
+        "File":  "Conquistador Anillo III.asset",
+        "ItemName":  "Anillo de Legionarius Legio",
+        "Description":  "El anillo que marca a quien ha conquistado continentes enteros."
+    },
+    {
+        "File":  "Conquistador Arma I.asset",
+        "ItemName":  "Arma de Legionarius Cohors",
+        "Description":  "Imperios enteros han caido ante guerreros equipados con estas armas"
+    },
+    {
+        "File":  "Conquistador Arma II.asset",
+        "ItemName":  "Arma de Legionarius Centuria",
+        "Description":  "La victoria es el unico destino para quien porte este equipo glorioso."
+    },
+    {
+        "File":  "Conquistador Arma III.asset",
+        "ItemName":  "Arma de Legionarius Legio",
+        "Description":  "El poder de cien victorias resuena en cada fibra de este equipo."
+    },
+    {
+        "File":  "Conquistador Armadura I.asset",
+        "ItemName":  "Armadura de Legionarius Cohors",
+        "Description":  "Cada batalla ganada ha fortalecido el espiritu que habita en este"
+    },
+    {
+        "File":  "Conquistador Armadura II.asset",
+        "ItemName":  "Armadura de Legionarius Centuria",
+        "Description":  "La victoria es el unico destino para quien porte este equipo glorioso."
+    },
+    {
+        "File":  "Conquistador Armadura III.asset",
+        "ItemName":  "Armadura de Legionarius Legio",
+        "Description":  "Imperios enteros han caido ante guerreros equipados con estas armas"
+    },
+    {
+        "File":  "Conquistador Botas I.asset",
+        "ItemName":  "Botas de Legionarius Cohors",
+        "Description":  "Cada batalla ganada ha fortalecido el espiritu que habita en este"
+    },
+    {
+        "File":  "Conquistador Botas II.asset",
+        "ItemName":  "Botas de Legionarius Centuria",
+        "Description":  "Los conquistadores mas temidos de la historia portaron piezas como"
+    },
+    {
+        "File":  "Conquistador Botas III.asset",
+        "ItemName":  "Botas de Legionarius Legio",
+        "Description":  "El poder de cien victorias resuena en cada fibra de este equipo."
+    },
+    {
+        "File":  "Conquistador Casco I.asset",
+        "ItemName":  "Casco de Legionarius Cohors",
+        "Description":  "El poder de cien victorias resuena en cada fibra de este equipo."
+    },
+    {
+        "File":  "Conquistador Casco II.asset",
+        "ItemName":  "Casco de Legionarius Centuria",
+        "Description":  "Los conquistadores mas temidos de la historia portaron piezas como"
+    },
+    {
+        "File":  "Conquistador Casco III.asset",
+        "ItemName":  "Casco de Legionarius Legio",
+        "Description":  "La victoria es el unico destino para quien porte este equipo glorioso."
+    },
+    {
+        "File":  "Conquistador Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Legionarius Cohors",
+        "Description":  "Portado por generales que han conquistado reinos enteros sin conocer"
+    },
+    {
+        "File":  "Conquistador Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Legionarius Centuria",
+        "Description":  "Forjado para aquellos destinados a gobernar sobre las cenizas del"
+    },
+    {
+        "File":  "Conquistador Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Legionarius Legio",
+        "Description":  "Cada batalla ganada ha fortalecido el espiritu que habita en este"
+    },
+    {
+        "File":  "Conquistador Collar I.asset",
+        "ItemName":  "Collar de Legionarius Cohors",
+        "Description":  "Un collar forjado con metales de las tierras conquistadas."
+    },
+    {
+        "File":  "Conquistador Collar II.asset",
+        "ItemName":  "Collar de Legionarius Centuria",
+        "Description":  "Cada medallon representa una nueva tierra a\\xF1adida al imperio."
+    },
+    {
+        "File":  "Conquistador Collar III.asset",
+        "ItemName":  "Collar de Legionarius Legio",
+        "Description":  "\"El collar del gran conquistador, s\\xEDmbolo de dominio sobre reinos"
+    },
+    {
+        "File":  "Conquistador Escudo I.asset",
+        "ItemName":  "Escudo de Legionarius Cohors",
+        "Description":  "Portado por generales que han conquistado reinos enteros sin conocer"
+    },
+    {
+        "File":  "Conquistador Escudo II.asset",
+        "ItemName":  "Escudo de Legionarius Centuria",
+        "Description":  "La victoria es el unico destino para quien porte este equipo glorioso."
+    },
+    {
+        "File":  "Conquistador Escudo III.asset",
+        "ItemName":  "Escudo de Legionarius Legio",
+        "Description":  "El poder de cien victorias resuena en cada fibra de este equipo."
+    },
+    {
+        "File":  "Conquistador Guantes I.asset",
+        "ItemName":  "Guantes de Legionarius Cohors",
+        "Description":  "Imperios enteros han caido ante guerreros equipados con estas armas"
+    },
+    {
+        "File":  "Conquistador Guantes II.asset",
+        "ItemName":  "Guantes de Legionarius Centuria",
+        "Description":  "Imperios enteros han caido ante guerreros equipados con estas armas"
+    },
+    {
+        "File":  "Conquistador Guantes III.asset",
+        "ItemName":  "Guantes de Legionarius Legio",
+        "Description":  "El poder de cien victorias resuena en cada fibra de este equipo."
+    },
+    {
+        "File":  "Conquistador Montura I.asset",
+        "ItemName":  "Montura de Legionarius Cohors",
+        "Description":  "Un corcel de guerra que ha visto innumerables batallas y conquistas."
+    },
+    {
+        "File":  "Conquistador Montura II.asset",
+        "ItemName":  "Montura de Legionarius Centuria",
+        "Description":  "La montura que ha llevado a su jinete a la victoria en tierras lejanas."
+    },
+    {
+        "File":  "Conquistador Montura III.asset",
+        "ItemName":  "Montura de Legionarius Legio",
+        "Description":  "El corcel legendario que los bardos cantan en sus historias de conquista."
+    },
+    {
+        "File":  "Fantasma Anillo I.asset",
+        "ItemName":  "Anillo de Speculator Umbra",
+        "Description":  "Un anillo que conecta al portador con el reino de los espiritus."
+    },
+    {
+        "File":  "Fantasma Anillo II.asset",
+        "ItemName":  "Anillo de Speculator Silentium",
+        "Description":  "La frontera entre vida y muerte se desvanece al portar este anillo."
+    },
+    {
+        "File":  "Fantasma Anillo III.asset",
+        "ItemName":  "Anillo de Speculator Occultus",
+        "Description":  "El anillo del necromante, que otorga poder sobre las almas perdidas."
+    },
+    {
+        "File":  "Fantasma Arma I.asset",
+        "ItemName":  "Arma de Speculator Umbra",
+        "Description":  "Los espiritus errantes susurran secretos a quien porte este equipo"
+    },
+    {
+        "File":  "Fantasma Arma II.asset",
+        "ItemName":  "Arma de Speculator Silentium",
+        "Description":  "Permite a su portador caminar entre las sombras del mundo espectral."
+    },
+    {
+        "File":  "Fantasma Arma III.asset",
+        "ItemName":  "Arma de Speculator Occultus",
+        "Description":  "Forjado entre los velos del mundo de los vivos y los muertos."
+    },
+    {
+        "File":  "Fantasma Armadura I.asset",
+        "ItemName":  "Armadura de Speculator Umbra",
+        "Description":  "Translucido como la niebla del amanecer sobre los campos de batalla."
+    },
+    {
+        "File":  "Fantasma Armadura II.asset",
+        "ItemName":  "Armadura de Speculator Silentium",
+        "Description":  "Creado con esencia de almas que buscan redimir sus pecados pasados."
+    },
+    {
+        "File":  "Fantasma Armadura III.asset",
+        "ItemName":  "Armadura de Speculator Occultus",
+        "Description":  "Forjado entre los velos del mundo de los vivos y los muertos."
+    },
+    {
+        "File":  "Fantasma Botas I.asset",
+        "ItemName":  "Botas de Speculator Umbra",
+        "Description":  "Los fantasmas del pasado otorgan su bendicion a este equipo antiguo."
+    },
+    {
+        "File":  "Fantasma Botas II.asset",
+        "ItemName":  "Botas de Speculator Silentium",
+        "Description":  "Translucido como la niebla del amanecer sobre los campos de batalla."
+    },
+    {
+        "File":  "Fantasma Botas III.asset",
+        "ItemName":  "Botas de Speculator Occultus",
+        "Description":  "Creado con esencia de almas que buscan redimir sus pecados pasados."
+    },
+    {
+        "File":  "Fantasma Casco I.asset",
+        "ItemName":  "Casco de Speculator Umbra",
+        "Description":  "Entre la vida y la muerte existe poder que pocos pueden comprender."
+    },
+    {
+        "File":  "Fantasma Casco II.asset",
+        "ItemName":  "Casco de Speculator Silentium",
+        "Description":  "Forjado entre los velos del mundo de los vivos y los muertos."
+    },
+    {
+        "File":  "Fantasma Casco III.asset",
+        "ItemName":  "Casco de Speculator Occultus",
+        "Description":  "Los espiritus errantes susurran secretos a quien porte este equipo"
+    },
+    {
+        "File":  "Fantasma Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Speculator Umbra",
+        "Description":  "Permite a su portador caminar entre las sombras del mundo espectral."
+    },
+    {
+        "File":  "Fantasma Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Speculator Silentium",
+        "Description":  "Los fantasmas del pasado otorgan su bendicion a este equipo antiguo."
+    },
+    {
+        "File":  "Fantasma Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Speculator Occultus",
+        "Description":  "Translucido como la niebla del amanecer sobre los campos de batalla."
+    },
+    {
+        "File":  "Fantasma Collar I.asset",
+        "ItemName":  "Collar de Speculator Umbra",
+        "Description":  "Un collar que guarda los ecos de las almas que han partido."
+    },
+    {
+        "File":  "Fantasma Collar II.asset",
+        "ItemName":  "Collar de Speculator Silentium",
+        "Description":  "Cada medallon contiene el recuerdo de un espiritu que otorga su bendicion."
+    },
+    {
+        "File":  "Fantasma Collar III.asset",
+        "ItemName":  "Collar de Speculator Occultus",
+        "Description":  "El collar del medium, que permite comunicarse con los espiritus del"
+    },
+    {
+        "File":  "Fantasma Escudo I.asset",
+        "ItemName":  "Escudo de Speculator Umbra",
+        "Description":  "Creado con esencia de almas que buscan redimir sus pecados pasados."
+    },
+    {
+        "File":  "Fantasma Escudo II.asset",
+        "ItemName":  "Escudo de Speculator Silentium",
+        "Description":  "Los fantasmas del pasado otorgan su bendicion a este equipo antiguo."
+    },
+    {
+        "File":  "Fantasma Escudo III.asset",
+        "ItemName":  "Escudo de Speculator Occultus",
+        "Description":  "Los espiritus errantes susurran secretos a quien porte este equipo"
+    },
+    {
+        "File":  "Fantasma Guantes I.asset",
+        "ItemName":  "Guantes de Speculator Umbra",
+        "Description":  "Forjado entre los velos del mundo de los vivos y los muertos."
+    },
+    {
+        "File":  "Fantasma Guantes II.asset",
+        "ItemName":  "Guantes de Speculator Silentium",
+        "Description":  "Forjado entre los velos del mundo de los vivos y los muertos."
+    },
+    {
+        "File":  "Fantasma Guantes III.asset",
+        "ItemName":  "Guantes de Speculator Occultus",
+        "Description":  "Los fantasmas del pasado otorgan su bendicion a este equipo antiguo."
+    },
+    {
+        "File":  "Fantasma Montura I.asset",
+        "ItemName":  "Montura de Speculator Umbra",
+        "Description":  "Un corcel espectral que se desliza entre las sombras como un susurro."
+    },
+    {
+        "File":  "Fantasma Montura II.asset",
+        "ItemName":  "Montura de Speculator Silentium",
+        "Description":  "La montura fantasma que puede atravesar barreras y aparecer de la"
+    },
+    {
+        "File":  "Fantasma Montura III.asset",
+        "ItemName":  "Montura de Speculator Occultus",
+        "Description":  "El corcel del mas alla, que lleva a su jinete entre el mundo de los"
+    },
+    {
+        "File":  "Heroe Anillo I.asset",
+        "ItemName":  "Anillo de Roma Virtus",
+        "Description":  "Un anillo que canaliza el coraje y la determinacion del heroe."
+    },
+    {
+        "File":  "Heroe Anillo II.asset",
+        "ItemName":  "Anillo de Roma Honor",
+        "Description":  "La valentia del portador se refleja en el brillo heroico del anillo."
+    },
+    {
+        "File":  "Heroe Anillo III.asset",
+        "ItemName":  "Anillo de Roma Gloria",
+        "Description":  "El anillo del heroe epico, que otorga la fuerza para cambiar el destino."
+    },
+    {
+        "File":  "Heroe Arma I.asset",
+        "ItemName":  "Arma de Roma Virtus",
+        "Description":  "Forjado para aquellos cuyas hazanias seran recordadas por mil generaciones."
+    },
+    {
+        "File":  "Heroe Arma II.asset",
+        "ItemName":  "Arma de Roma Honor",
+        "Description":  "La gloria eterna aguarda a quien sea digno de portar este equipo heroico."
+    },
+    {
+        "File":  "Heroe Arma III.asset",
+        "ItemName":  "Arma de Roma Gloria",
+        "Description":  "Creado para protagonizar las historias que los ninos escucharan antes"
+    },
+    {
+        "File":  "Heroe Armadura I.asset",
+        "ItemName":  "Armadura de Roma Virtus",
+        "Description":  "Creado para protagonizar las historias que los ninos escucharan antes"
+    },
+    {
+        "File":  "Heroe Armadura II.asset",
+        "ItemName":  "Armadura de Roma Honor",
+        "Description":  "El destino de reinos enteros ha cambiado gracias a este equipo sagrado."
+    },
+    {
+        "File":  "Heroe Armadura III.asset",
+        "ItemName":  "Armadura de Roma Gloria",
+        "Description":  "Los bardos cantan sobre los heroes que portaron este equipo en batallas"
+    },
+    {
+        "File":  "Heroe Botas I.asset",
+        "ItemName":  "Botas de Roma Virtus",
+        "Description":  "El destino de reinos enteros ha cambiado gracias a este equipo sagrado."
+    },
+    {
+        "File":  "Heroe Botas II.asset",
+        "ItemName":  "Botas de Roma Honor",
+        "Description":  "Los bardos cantan sobre los heroes que portaron este equipo en batallas"
+    },
+    {
+        "File":  "Heroe Botas III.asset",
+        "ItemName":  "Botas de Roma Gloria",
+        "Description":  "Creado para protagonizar las historias que los ninos escucharan antes"
+    },
+    {
+        "File":  "Heroe Casco I.asset",
+        "ItemName":  "Casco de Roma Virtus",
+        "Description":  "Los heroes de las leyendas antiguas sonrien desde el mas alla sobre"
+    },
+    {
+        "File":  "Heroe Casco II.asset",
+        "ItemName":  "Casco de Roma Honor",
+        "Description":  "Forjado para aquellos cuyas hazanias seran recordadas por mil generaciones."
+    },
+    {
+        "File":  "Heroe Casco III.asset",
+        "ItemName":  "Casco de Roma Gloria",
+        "Description":  "Forjado para aquellos cuyas hazanias seran recordadas por mil generaciones."
+    },
+    {
+        "File":  "Heroe Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Roma Virtus",
+        "Description":  "Cada heroe legendario de la historia ha dejado su marca en estas piezas."
+    },
+    {
+        "File":  "Heroe Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Roma Honor",
+        "Description":  "Los heroes de las leyendas antiguas sonrien desde el mas alla sobre"
+    },
+    {
+        "File":  "Heroe Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Roma Gloria",
+        "Description":  "Los heroes de las leyendas antiguas sonrien desde el mas alla sobre"
+    },
+    {
+        "File":  "Heroe Collar I.asset",
+        "ItemName":  "Collar de Roma Virtus",
+        "Description":  "Un collar que guarda las memorias de las haza\\xF1as heroicas realizadas."
+    },
+    {
+        "File":  "Heroe Collar II.asset",
+        "ItemName":  "Collar de Roma Honor",
+        "Description":  "Cada medallon representa una batalla ganada y una vida salvada."
+    },
+    {
+        "File":  "Heroe Collar III.asset",
+        "ItemName":  "Collar de Roma Gloria",
+        "Description":  "El collar del heroe legendario, cuyas historias inspiraran a generaciones"
+    },
+    {
+        "File":  "Heroe Escudo I.asset",
+        "ItemName":  "Escudo de Roma Virtus",
+        "Description":  "El destino de reinos enteros ha cambiado gracias a este equipo sagrado."
+    },
+    {
+        "File":  "Heroe Escudo II.asset",
+        "ItemName":  "Escudo de Roma Honor",
+        "Description":  "Cada heroe legendario de la historia ha dejado su marca en estas piezas."
+    },
+    {
+        "File":  "Heroe Escudo III.asset",
+        "ItemName":  "Escudo de Roma Gloria",
+        "Description":  "Cada heroe legendario de la historia ha dejado su marca en estas piezas."
+    },
+    {
+        "File":  "Heroe Guantes I.asset",
+        "ItemName":  "Guantes de Roma Virtus",
+        "Description":  "Los bardos cantan sobre los heroes que portaron este equipo en batallas"
+    },
+    {
+        "File":  "Heroe Guantes II.asset",
+        "ItemName":  "Guantes de Roma Honor",
+        "Description":  "Cada heroe legendario de la historia ha dejado su marca en estas piezas."
+    },
+    {
+        "File":  "Heroe Guantes III.asset",
+        "ItemName":  "Guantes de Roma Gloria",
+        "Description":  "Cada heroe legendario de la historia ha dejado su marca en estas piezas."
+    },
+    {
+        "File":  "Heroe Montura I.asset",
+        "ItemName":  "Montura de Roma Virtus",
+        "Description":  "\"El corcel que ha llevado a heroes a trav\\xE9s de las mas grandes"
+    },
+    {
+        "File":  "Heroe Montura II.asset",
+        "ItemName":  "Montura de Roma Honor",
+        "Description":  "Una montura digna de las leyendas que los bardos cantaran por generaciones."
+    },
+    {
+        "File":  "Heroe Montura III.asset",
+        "ItemName":  "Montura de Roma Gloria",
+        "Description":  "\"El corcel heroico que ha presenciado haza\\xF1as que cambiaron el"
+    },
+    {
+        "File":  "Serafin Anillo I.asset",
+        "ItemName":  "Anillo de Pontifex Sacrum",
+        "Description":  "Un anillo que canaliza la luz divina de los serafines."
+    },
+    {
+        "File":  "Serafin Anillo II.asset",
+        "ItemName":  "Anillo de Pontifex Divinus",
+        "Description":  "La gracia celestial fluye a trav\\xE9s de este anillo sagrado."
+    },
+    {
+        "File":  "Serafin Anillo III.asset",
+        "ItemName":  "Anillo de Pontifex Sanctus",
+        "Description":  "El anillo de los serafines, que otorga poder sobre las fuerzas divinas."
+    },
+    {
+        "File":  "Serafin Arma I.asset",
+        "ItemName":  "Arma de Pontifex Sacrum",
+        "Description":  "La luz divina emana de cada superficie de este equipo sagrado y puro."
+    },
+    {
+        "File":  "Serafin Arma II.asset",
+        "ItemName":  "Arma de Pontifex Divinus",
+        "Description":  "Forjado en los talleres del cielo donde los angeles crean armas divinas."
+    },
+    {
+        "File":  "Serafin Arma III.asset",
+        "ItemName":  "Arma de Pontifex Sanctus",
+        "Description":  "Creado con la esencia de estrellas caidas y bendiciones de seres divinos."
+    },
+    {
+        "File":  "Serafin Armadura I.asset",
+        "ItemName":  "Armadura de Pontifex Sacrum",
+        "Description":  "Bendecido por los serafines que guardan las puertas del reino celestial."
+    },
+    {
+        "File":  "Serafin Armadura II.asset",
+        "ItemName":  "Armadura de Pontifex Divinus",
+        "Description":  "La luz divina emana de cada superficie de este equipo sagrado y puro."
+    },
+    {
+        "File":  "Serafin Armadura III.asset",
+        "ItemName":  "Armadura de Pontifex Sanctus",
+        "Description":  "Creado con la esencia de estrellas caidas y bendiciones de seres divinos."
+    },
+    {
+        "File":  "Serafin Botas I.asset",
+        "ItemName":  "Botas de Pontifex Sacrum",
+        "Description":  "Creado con la esencia de estrellas caidas y bendiciones de seres divinos."
+    },
+    {
+        "File":  "Serafin Botas II.asset",
+        "ItemName":  "Botas de Pontifex Divinus",
+        "Description":  "Solo aquellos de corazon puro pueden empuniar este equipo celestial"
+    },
+    {
+        "File":  "Serafin Botas III.asset",
+        "ItemName":  "Botas de Pontifex Sanctus",
+        "Description":  "Solo aquellos de corazon puro pueden empuniar este equipo celestial"
+    },
+    {
+        "File":  "Serafin Casco I.asset",
+        "ItemName":  "Casco de Pontifex Sacrum",
+        "Description":  "Creado con la esencia de estrellas caidas y bendiciones de seres divinos."
+    },
+    {
+        "File":  "Serafin Casco II.asset",
+        "ItemName":  "Casco de Pontifex Divinus",
+        "Description":  "El cielo mismo protege a quien porte este equipo con fe inquebrantable."
+    },
+    {
+        "File":  "Serafin Casco III.asset",
+        "ItemName":  "Casco de Pontifex Sanctus",
+        "Description":  "La luz divina emana de cada superficie de este equipo sagrado y puro."
+    },
+    {
+        "File":  "Serafin Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Pontifex Sacrum",
+        "Description":  "Los coros angelicales cantan cuando este equipo entra en el campo"
+    },
+    {
+        "File":  "Serafin Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Pontifex Divinus",
+        "Description":  "Los coros angelicales cantan cuando este equipo entra en el campo"
+    },
+    {
+        "File":  "Serafin Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Pontifex Sanctus",
+        "Description":  "Solo aquellos de corazon puro pueden empuniar este equipo celestial"
+    },
+    {
+        "File":  "Serafin Collar I.asset",
+        "ItemName":  "Collar de Pontifex Sacrum",
+        "Description":  "Un collar bendito por los serafines en los jardines del cielo."
+    },
+    {
+        "File":  "Serafin Collar II.asset",
+        "ItemName":  "Collar de Pontifex Divinus",
+        "Description":  "Cada pluma a\\xF1adida otorga una bendicion divina al portador."
+    },
+    {
+        "File":  "Serafin Collar III.asset",
+        "ItemName":  "Collar de Pontifex Sanctus",
+        "Description":  "El collar de los serafines, s\\xEDmbolo de pureza y poder celestial."
+    },
+    {
+        "File":  "Serafin Escudo I.asset",
+        "ItemName":  "Escudo de Pontifex Sacrum",
+        "Description":  "Creado con la esencia de estrellas caidas y bendiciones de seres divinos."
+    },
+    {
+        "File":  "Serafin Escudo II.asset",
+        "ItemName":  "Escudo de Pontifex Divinus",
+        "Description":  "Los coros angelicales cantan cuando este equipo entra en el campo"
+    },
+    {
+        "File":  "Serafin Escudo III.asset",
+        "ItemName":  "Escudo de Pontifex Sanctus",
+        "Description":  "Solo aquellos de corazon puro pueden empuniar este equipo celestial"
+    },
+    {
+        "File":  "Serafin Guantes I.asset",
+        "ItemName":  "Guantes de Pontifex Sacrum",
+        "Description":  "Forjado en los talleres del cielo donde los angeles crean armas divinas."
+    },
+    {
+        "File":  "Serafin Guantes II.asset",
+        "ItemName":  "Guantes de Pontifex Divinus",
+        "Description":  "Forjado en los talleres del cielo donde los angeles crean armas divinas."
+    },
+    {
+        "File":  "Serafin Guantes III.asset",
+        "ItemName":  "Guantes de Pontifex Sanctus",
+        "Description":  "Solo aquellos de corazon puro pueden empuniar este equipo celestial"
+    },
+    {
+        "File":  "Serafin Montura I.asset",
+        "ItemName":  "Montura de Pontifex Sacrum",
+        "Description":  "Un corcel divino forjado en los talleres celestiales de los angeles."
+    },
+    {
+        "File":  "Serafin Montura II.asset",
+        "ItemName":  "Montura de Pontifex Divinus",
+        "Description":  "La montura serafica que puede volar entre las nubes del cielo."
+    },
+    {
+        "File":  "Serafin Montura III.asset",
+        "ItemName":  "Montura de Pontifex Sanctus",
+        "Description":  "El corcel de los serafines, que lleva a su jinete a las alturas divinas."
+    },
+    {
+        "File":  "Titan Anillo I.asset",
+        "ItemName":  "Anillo de Colossus Moles",
+        "Description":  "Un anillo que canaliza el poder inmenso de los titanes."
+    },
+    {
+        "File":  "Titan Anillo II.asset",
+        "ItemName":  "Anillo de Colossus Titanus",
+        "Description":  "La fuerza de los gigantes fluye a trav\\xE9s de este anillo legendario."
+    },
+    {
+        "File":  "Titan Anillo III.asset",
+        "ItemName":  "Anillo de Colossus Colossus",
+        "Description":  "El anillo de los titanes, que otorga poder sobre la creacion misma."
+    },
+    {
+        "File":  "Titan Arma I.asset",
+        "ItemName":  "Arma de Colossus Moles",
+        "Description":  "Creado en la era cuando los gigantes caminaban sobre el mundo mortal."
+    },
+    {
+        "File":  "Titan Arma II.asset",
+        "ItemName":  "Arma de Colossus Titanus",
+        "Description":  "Los titanes antiguos bendijeron este equipo con fuerza primordial"
+    },
+    {
+        "File":  "Titan Arma III.asset",
+        "ItemName":  "Arma de Colossus Colossus",
+        "Description":  "Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra."
+    },
+    {
+        "File":  "Titan Armadura I.asset",
+        "ItemName":  "Armadura de Colossus Moles",
+        "Description":  "Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra."
+    },
+    {
+        "File":  "Titan Armadura II.asset",
+        "ItemName":  "Armadura de Colossus Titanus",
+        "Description":  "La fuerza de los colosos ancestrales fluye a traves de cada pieza."
+    },
+    {
+        "File":  "Titan Armadura III.asset",
+        "ItemName":  "Armadura de Colossus Colossus",
+        "Description":  "Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra."
+    },
+    {
+        "File":  "Titan Botas I.asset",
+        "ItemName":  "Botas de Colossus Moles",
+        "Description":  "Forjado con fragmentos de armaduras de los titanes que crearon el"
+    },
+    {
+        "File":  "Titan Botas II.asset",
+        "ItemName":  "Botas de Colossus Titanus",
+        "Description":  "Cuenta la leyenda que quien lo porte obtendra poder sobre la tierra."
+    },
+    {
+        "File":  "Titan Botas III.asset",
+        "ItemName":  "Botas de Colossus Colossus",
+        "Description":  "Solo los guerreros mas poderosos pueden soportar el peso de esta leyenda."
+    },
+    {
+        "File":  "Titan Casco I.asset",
+        "ItemName":  "Casco de Colossus Moles",
+        "Description":  "Creado en la era cuando los gigantes caminaban sobre el mundo mortal."
+    },
+    {
+        "File":  "Titan Casco II.asset",
+        "ItemName":  "Casco de Colossus Titanus",
+        "Description":  "Creado en la era cuando los gigantes caminaban sobre el mundo mortal."
+    },
+    {
+        "File":  "Titan Casco III.asset",
+        "ItemName":  "Casco de Colossus Colossus",
+        "Description":  "El trueno y la montania obedecen a quien porte este equipo titanico."
+    },
+    {
+        "File":  "Titan Cinturon I.asset",
+        "ItemName":  "CinturÃ³n de Colossus Moles",
+        "Description":  "Solo los guerreros mas poderosos pueden soportar el peso de esta leyenda."
+    },
+    {
+        "File":  "Titan Cinturon II.asset",
+        "ItemName":  "CinturÃ³n de Colossus Titanus",
+        "Description":  "Solo los guerreros mas poderosos pueden soportar el peso de esta leyenda."
+    },
+    {
+        "File":  "Titan Cinturon III.asset",
+        "ItemName":  "CinturÃ³n de Colossus Colossus",
+        "Description":  "La fuerza de los colosos ancestrales fluye a traves de cada pieza."
+    },
+    {
+        "File":  "Titan Collar I.asset",
+        "ItemName":  "Collar de Colossus Moles",
+        "Description":  "Un collar creado con fragmentos de las armaduras de los titanes primigenios."
+    },
+    {
+        "File":  "Titan Collar II.asset",
+        "ItemName":  "Collar de Colossus Titanus",
+        "Description":  "Cada gema contiene el poder de un titan ancestral."
+    },
+    {
+        "File":  "Titan Collar III.asset",
+        "ItemName":  "Collar de Colossus Colossus",
+        "Description":  "El collar de los titanes, que otorga la fuerza de quienes crearon"
+    },
+    {
+        "File":  "Titan Escudo I.asset",
+        "ItemName":  "Escudo de Colossus Moles",
+        "Description":  "Forjado con fragmentos de armaduras de los titanes que crearon el"
+    },
+    {
+        "File":  "Titan Escudo II.asset",
+        "ItemName":  "Escudo de Colossus Titanus",
+        "Description":  "El trueno y la montania obedecen a quien porte este equipo titanico."
+    },
+    {
+        "File":  "Titan Escudo III.asset",
+        "ItemName":  "Escudo de Colossus Colossus",
+        "Description":  "El trueno y la montania obedecen a quien porte este equipo titanico."
+    },
+    {
+        "File":  "Titan Guantes I.asset",
+        "ItemName":  "Guantes de Colossus Moles",
+        "Description":  "Forjado con fragmentos de armaduras de los titanes que crearon el"
+    },
+    {
+        "File":  "Titan Guantes II.asset",
+        "ItemName":  "Guantes de Colossus Titanus",
+        "Description":  "Los titanes antiguos bendijeron este equipo con fuerza primordial"
+    },
+    {
+        "File":  "Titan Guantes III.asset",
+        "ItemName":  "Guantes de Colossus Colossus",
+        "Description":  "El trueno y la montania obedecen a quien porte este equipo titanico."
+    },
+    {
+        "File":  "Titan Montura I.asset",
+        "ItemName":  "Montura de Colossus Moles",
+        "Description":  "Un corcel forjado con la esencia de los titanes que crearon el mundo."
+    },
+    {
+        "File":  "Titan Montura II.asset",
+        "ItemName":  "Montura de Colossus Titanus",
+        "Description":  "La montura titanica que puede cargar el peso de las monta\\xF1as."
+    },
+    {
+        "File":  "Titan Montura III.asset",
+        "ItemName":  "Montura de Colossus Colossus",
+        "Description":  "El corcel de los titanes, que ha caminado sobre la tierra desde el"
+    }
+]

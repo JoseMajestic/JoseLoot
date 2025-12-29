@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,21 +16,25 @@ MonoBehaviour:
   description: "Un esqueleto con armadura y experiencia en combate. M\xE1s peligroso
     que sus parientes novatos."
   enemySprite: {fileID: 21300000, guid: 2834ad4796baf6d42a3d1b947e64f981, type: 3}
-  hp: 160
-  ataque: 22
-  defensa: 8
-  velocidadAtaque: 9
-  ataqueCritico: 4
-  danoCritico: 5
-  suerte: 1
-  destreza: 2
-  rewardCoins: 85
-  experienceReward: 10
+  hp: 330000
+  ataque: 27500
+  defensa: 15000
+  velocidadAtaque: 125
+  ataqueCritico: 20
+  danoCritico: 220
+  suerte: 42
+  destreza: 1500
+  rewardCoins: 1500
+  experienceReward: 6000
   rewardConfig:
-    rewardItemCount: 0
-    allowedTiers: 
+    rewardItemCount: 4
+    allowedTiers: 04000000
     distributeEvenly: 1
     forcedRewards: []
   requiredLevel: 2
   level: 3
-  availableAttacks: []
+  availableAttacks:
+  - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}
+  - {fileID: 11400000, guid: c493954b91965104880e199a0eaf930a, type: 2}
+  - {fileID: 11400000, guid: d91175aed122ca14db2383498b6b23a4, type: 2}
+  - {fileID: 11400000, guid: e6117e4f11890cd4fb0405fed5069672, type: 2}

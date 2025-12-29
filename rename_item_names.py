@@ -1,0 +1,398 @@
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent / "Assets" / "Items"
+
+TYPE_ORDER = [
+    "Arma",
+    "Armadura",
+    "Casco",
+    "Botas",
+    "Guantes",
+    "Cinturon",
+    "Collar",
+    "Anillo",
+    "Escudo",
+    "Montura",
+]
+LEVELS = ["I", "II", "III"]
+
+SET_NAME_MAP = {
+    "Aprendiz": [
+        "Arma de Tiro Rudimentum",
+        "Arma de Tiro Veteranum",
+        "Arma de Tiro Imperium",
+        "Armadura de Tiro Rudimentum",
+        "Armadura de Tiro Veteranum",
+        "Armadura de Tiro Imperium",
+        "Casco de Tiro Rudimentum",
+        "Casco de Tiro Veteranum",
+        "Casco de Tiro Imperium",
+        "Botas de Tiro Rudimentum",
+        "Botas de Tiro Veteranum",
+        "Botas de Tiro Imperium",
+        "Guantes de Tiro Rudimentum",
+        "Guantes de Tiro Veteranum",
+        "Guantes de Tiro Imperium",
+        "Cinturón de Tiro Rudimentum",
+        "Cinturón de Tiro Veteranum",
+        "Cinturón de Tiro Imperium",
+        "Collar de Tiro Rudimentum",
+        "Collar de Tiro Veteranum",
+        "Collar de Tiro Imperium",
+        "Anillo de Tiro Rudimentum",
+        "Anillo de Tiro Veteranum",
+        "Anillo de Tiro Imperium",
+        "Escudo de Tiro Rudimentum",
+        "Escudo de Tiro Veteranum",
+        "Escudo de Tiro Imperium",
+        "Montura de Tiro Rudimentum",
+        "Montura de Tiro Veteranum",
+        "Montura de Tiro Imperium",
+    ],
+    "Arcano": [
+        "Arma de Augur Omen",
+        "Arma de Augur Ritus",
+        "Arma de Augur Oraculum",
+        "Armadura de Augur Omen",
+        "Armadura de Augur Ritus",
+        "Armadura de Augur Oraculum",
+        "Casco de Augur Omen",
+        "Casco de Augur Ritus",
+        "Casco de Augur Oraculum",
+        "Botas de Augur Omen",
+        "Botas de Augur Ritus",
+        "Botas de Augur Oraculum",
+        "Guantes de Augur Omen",
+        "Guantes de Augur Ritus",
+        "Guantes de Augur Oraculum",
+        "Cinturón de Augur Omen",
+        "Cinturón de Augur Ritus",
+        "Cinturón de Augur Oraculum",
+        "Collar de Augur Omen",
+        "Collar de Augur Ritus",
+        "Collar de Augur Oraculum",
+        "Anillo de Augur Omen",
+        "Anillo de Augur Ritus",
+        "Anillo de Augur Oraculum",
+        "Escudo de Augur Omen",
+        "Escudo de Augur Ritus",
+        "Escudo de Augur Oraculum",
+        "Montura de Augur Omen",
+        "Montura de Augur Ritus",
+        "Montura de Augur Oraculum",
+    ],
+    "Cazador": [
+        "Arma de Explorator Peregrinus",
+        "Arma de Explorator Venator",
+        "Arma de Explorator Praedator",
+        "Armadura de Explorator Peregrinus",
+        "Armadura de Explorator Venator",
+        "Armadura de Explorator Praedator",
+        "Casco de Explorator Peregrinus",
+        "Casco de Explorator Venator",
+        "Casco de Explorator Praedator",
+        "Botas de Explorator Peregrinus",
+        "Botas de Explorator Venator",
+        "Botas de Explorator Praedator",
+        "Guantes de Explorator Peregrinus",
+        "Guantes de Explorator Venator",
+        "Guantes de Explorator Praedator",
+        "Cinturón de Explorator Peregrinus",
+        "Cinturón de Explorator Venator",
+        "Cinturón de Explorator Praedator",
+        "Collar de Explorator Peregrinus",
+        "Collar de Explorator Venator",
+        "Collar de Explorator Praedator",
+        "Anillo de Explorator Peregrinus",
+        "Anillo de Explorator Venator",
+        "Anillo de Explorator Praedator",
+        "Escudo de Explorator Peregrinus",
+        "Escudo de Explorator Venator",
+        "Escudo de Explorator Praedator",
+        "Montura de Explorator Peregrinus",
+        "Montura de Explorator Venator",
+        "Montura de Explorator Praedator",
+    ],
+    "Conquistador": [
+        "Arma de Legionarius Cohors",
+        "Arma de Legionarius Centuria",
+        "Arma de Legionarius Legio",
+        "Armadura de Legionarius Cohors",
+        "Armadura de Legionarius Centuria",
+        "Armadura de Legionarius Legio",
+        "Casco de Legionarius Cohors",
+        "Casco de Legionarius Centuria",
+        "Casco de Legionarius Legio",
+        "Botas de Legionarius Cohors",
+        "Botas de Legionarius Centuria",
+        "Botas de Legionarius Legio",
+        "Guantes de Legionarius Cohors",
+        "Guantes de Legionarius Centuria",
+        "Guantes de Legionarius Legio",
+        "Cinturón de Legionarius Cohors",
+        "Cinturón de Legionarius Centuria",
+        "Cinturón de Legionarius Legio",
+        "Collar de Legionarius Cohors",
+        "Collar de Legionarius Centuria",
+        "Collar de Legionarius Legio",
+        "Anillo de Legionarius Cohors",
+        "Anillo de Legionarius Centuria",
+        "Anillo de Legionarius Legio",
+        "Escudo de Legionarius Cohors",
+        "Escudo de Legionarius Centuria",
+        "Escudo de Legionarius Legio",
+        "Montura de Legionarius Cohors",
+        "Montura de Legionarius Centuria",
+        "Montura de Legionarius Legio",
+    ],
+    "Heroe": [
+        "Arma de Roma Virtus",
+        "Arma de Roma Honor",
+        "Arma de Roma Gloria",
+        "Armadura de Roma Virtus",
+        "Armadura de Roma Honor",
+        "Armadura de Roma Gloria",
+        "Casco de Roma Virtus",
+        "Casco de Roma Honor",
+        "Casco de Roma Gloria",
+        "Botas de Roma Virtus",
+        "Botas de Roma Honor",
+        "Botas de Roma Gloria",
+        "Guantes de Roma Virtus",
+        "Guantes de Roma Honor",
+        "Guantes de Roma Gloria",
+        "Cinturón de Roma Virtus",
+        "Cinturón de Roma Honor",
+        "Cinturón de Roma Gloria",
+        "Collar de Roma Virtus",
+        "Collar de Roma Honor",
+        "Collar de Roma Gloria",
+        "Anillo de Roma Virtus",
+        "Anillo de Roma Honor",
+        "Anillo de Roma Gloria",
+        "Escudo de Roma Virtus",
+        "Escudo de Roma Honor",
+        "Escudo de Roma Gloria",
+        "Montura de Roma Virtus",
+        "Montura de Roma Honor",
+        "Montura de Roma Gloria",
+    ],
+    "Fantasma": [
+        "Arma de Speculator Umbra",
+        "Arma de Speculator Silentium",
+        "Arma de Speculator Occultus",
+        "Armadura de Speculator Umbra",
+        "Armadura de Speculator Silentium",
+        "Armadura de Speculator Occultus",
+        "Casco de Speculator Umbra",
+        "Casco de Speculator Silentium",
+        "Casco de Speculator Occultus",
+        "Botas de Speculator Umbra",
+        "Botas de Speculator Silentium",
+        "Botas de Speculator Occultus",
+        "Guantes de Speculator Umbra",
+        "Guantes de Speculator Silentium",
+        "Guantes de Speculator Occultus",
+        "Cinturón de Speculator Umbra",
+        "Cinturón de Speculator Silentium",
+        "Cinturón de Speculator Occultus",
+        "Collar de Speculator Umbra",
+        "Collar de Speculator Silentium",
+        "Collar de Speculator Occultus",
+        "Anillo de Speculator Umbra",
+        "Anillo de Speculator Silentium",
+        "Anillo de Speculator Occultus",
+        "Escudo de Speculator Umbra",
+        "Escudo de Speculator Silentium",
+        "Escudo de Speculator Occultus",
+        "Montura de Speculator Umbra",
+        "Montura de Speculator Silentium",
+        "Montura de Speculator Occultus",
+    ],
+    "Titan": [
+        "Arma de Colossus Moles",
+        "Arma de Colossus Titanus",
+        "Arma de Colossus Colossus",
+        "Armadura de Colossus Moles",
+        "Armadura de Colossus Titanus",
+        "Armadura de Colossus Colossus",
+        "Casco de Colossus Moles",
+        "Casco de Colossus Titanus",
+        "Casco de Colossus Colossus",
+        "Botas de Colossus Moles",
+        "Botas de Colossus Titanus",
+        "Botas de Colossus Colossus",
+        "Guantes de Colossus Moles",
+        "Guantes de Colossus Titanus",
+        "Guantes de Colossus Colossus",
+        "Cinturón de Colossus Moles",
+        "Cinturón de Colossus Titanus",
+        "Cinturón de Colossus Colossus",
+        "Collar de Colossus Moles",
+        "Collar de Colossus Titanus",
+        "Collar de Colossus Colossus",
+        "Anillo de Colossus Moles",
+        "Anillo de Colossus Titanus",
+        "Anillo de Colossus Colossus",
+        "Escudo de Colossus Moles",
+        "Escudo de Colossus Titanus",
+        "Escudo de Colossus Colossus",
+        "Montura de Colossus Moles",
+        "Montura de Colossus Titanus",
+        "Montura de Colossus Colossus",
+    ],
+    "Serafin": [
+        "Arma de Pontifex Sacrum",
+        "Arma de Pontifex Divinus",
+        "Arma de Pontifex Sanctus",
+        "Armadura de Pontifex Sacrum",
+        "Armadura de Pontifex Divinus",
+        "Armadura de Pontifex Sanctus",
+        "Casco de Pontifex Sacrum",
+        "Casco de Pontifex Divinus",
+        "Casco de Pontifex Sanctus",
+        "Botas de Pontifex Sacrum",
+        "Botas de Pontifex Divinus",
+        "Botas de Pontifex Sanctus",
+        "Guantes de Pontifex Sacrum",
+        "Guantes de Pontifex Divinus",
+        "Guantes de Pontifex Sanctus",
+        "Cinturón de Pontifex Sacrum",
+        "Cinturón de Pontifex Divinus",
+        "Cinturón de Pontifex Sanctus",
+        "Collar de Pontifex Sacrum",
+        "Collar de Pontifex Divinus",
+        "Collar de Pontifex Sanctus",
+        "Anillo de Pontifex Sacrum",
+        "Anillo de Pontifex Divinus",
+        "Anillo de Pontifex Sanctus",
+        "Escudo de Pontifex Sacrum",
+        "Escudo de Pontifex Divinus",
+        "Escudo de Pontifex Sanctus",
+        "Montura de Pontifex Sacrum",
+        "Montura de Pontifex Divinus",
+        "Montura de Pontifex Sanctus",
+    ],
+    "Abismo": [
+        "Arma de Infernum Limbus",
+        "Arma de Infernum Inferus",
+        "Arma de Infernum Abyssus",
+        "Armadura de Infernum Limbus",
+        "Armadura de Infernum Inferus",
+        "Armadura de Infernum Abyssus",
+        "Casco de Infernum Limbus",
+        "Casco de Infernum Inferus",
+        "Casco de Infernum Abyssus",
+        "Botas de Infernum Limbus",
+        "Botas de Infernum Inferus",
+        "Botas de Infernum Abyssus",
+        "Guantes de Infernum Limbus",
+        "Guantes de Infernum Inferus",
+        "Guantes de Infernum Abyssus",
+        "Cinturón de Infernum Limbus",
+        "Cinturón de Infernum Inferus",
+        "Cinturón de Infernum Abyssus",
+        "Collar de Infernum Limbus",
+        "Collar de Infernum Inferus",
+        "Collar de Infernum Abyssus",
+        "Anillo de Infernum Limbus",
+        "Anillo de Infernum Inferus",
+        "Anillo de Infernum Abyssus",
+        "Escudo de Infernum Limbus",
+        "Escudo de Infernum Inferus",
+        "Escudo de Infernum Abyssus",
+        "Montura de Infernum Limbus",
+        "Montura de Infernum Inferus",
+        "Montura de Infernum Abyssus",
+    ],
+    "Apocalipsis": [
+        "Arma de Ultima Roma Exitium",
+        "Arma de Ultima Roma Cataclysmus",
+        "Arma de Ultima Roma Aeternitas",
+        "Armadura de Ultima Roma Exitium",
+        "Armadura de Ultima Roma Cataclysmus",
+        "Armadura de Ultima Roma Aeternitas",
+        "Casco de Ultima Roma Exitium",
+        "Casco de Ultima Roma Cataclysmus",
+        "Casco de Ultima Roma Aeternitas",
+        "Botas de Ultima Roma Exitium",
+        "Botas de Ultima Roma Cataclysmus",
+        "Botas de Ultima Roma Aeternitas",
+        "Guantes de Ultima Roma Exitium",
+        "Guantes de Ultima Roma Cataclysmus",
+        "Guantes de Ultima Roma Aeternitas",
+        "Cinturón de Ultima Roma Exitium",
+        "Cinturón de Ultima Roma Cataclysmus",
+        "Cinturón de Ultima Roma Aeternitas",
+        "Collar de Ultima Roma Exitium",
+        "Collar de Ultima Roma Cataclysmus",
+        "Collar de Ultima Roma Aeternitas",
+        "Anillo de Ultima Roma Exitium",
+        "Anillo de Ultima Roma Cataclysmus",
+        "Anillo de Ultima Roma Aeternitas",
+        "Escudo de Ultima Roma Exitium",
+        "Escudo de Ultima Roma Cataclysmus",
+        "Escudo de Ultima Roma Aeternitas",
+        "Montura de Ultima Roma Exitium",
+        "Montura de Ultima Roma Cataclysmus",
+        "Montura de Ultima Roma Aeternitas",
+    ],
+}
+
+
+def update_item_name(file_path: Path, new_name: str) -> bool:
+    lines = file_path.read_text(encoding="utf-8").splitlines()
+    updated = False
+    for idx, line in enumerate(lines):
+        stripped = line.lstrip()
+        if stripped.startswith("itemName:"):
+            indent = line[: len(line) - len(stripped)]
+            lines[idx] = f"{indent}itemName: {new_name}"
+            updated = True
+            break
+    if updated:
+        file_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return updated
+
+
+def main():
+    missing_files = []
+    missing_fields = []
+
+    for set_name, new_names in SET_NAME_MAP.items():
+        if len(new_names) != 30:
+            raise ValueError(f"El set {set_name} no tiene 30 nombres configurados.")
+
+        base_index = 0
+        for item_type in TYPE_ORDER:
+            for level in LEVELS:
+                file_name = f"{set_name} {item_type} {level}.asset"
+                file_path = BASE_DIR / file_name
+                new_name = new_names[base_index]
+                base_index += 1
+
+                if not file_path.exists():
+                    missing_files.append(str(file_path))
+                    continue
+
+                if not update_item_name(file_path, new_name):
+                    missing_fields.append(str(file_path))
+
+    if missing_files:
+        print("Archivos no encontrados:")
+        for path in missing_files:
+            print(f"  - {path}")
+    if missing_fields:
+        print("itemName no encontrado en:")
+        for path in missing_fields:
+            print(f"  - {path}")
+
+    if not missing_files and not missing_fields:
+        print("Renombrado completado correctamente.")
+    else:
+        print("Renombrado completado con advertencias.")
+
+
+if __name__ == "__main__":
+    main()
