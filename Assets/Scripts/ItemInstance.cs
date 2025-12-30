@@ -15,7 +15,7 @@ public class ItemInstance
 
     [Header("Datos de Instancia del Jugador")]
     [Tooltip("Nivel actual del objeto (1-999). El ItemData base siempre está en nivel 1.")]
-    [Range(1, 999)]
+    [Range(1, ItemImprovementCurves.MaxLevel)]
     public int currentLevel = 1;
 
     [Header("Identidad única")]
@@ -72,7 +72,7 @@ public class ItemInstance
         }
 
         baseItem = itemData;
-        currentLevel = Mathf.Clamp(level, 1, 999);
+        currentLevel = Mathf.Clamp(level, 1, ItemImprovementCurves.MaxLevel);
         GenerateInstanceIdIfNeeded();
     }
 
@@ -104,7 +104,7 @@ public class ItemInstance
             return new ItemStats();
         }
 
-        level = Mathf.Clamp(level, 1, 999);
+        level = Mathf.Clamp(level, 1, ItemImprovementCurves.MaxLevel);
 
         // Stats base del ItemData (nivel 1)
         ItemStats stats = new ItemStats
@@ -124,22 +124,15 @@ public class ItemInstance
         // TODO(KIRBY-APPROVAL): Confirmar fórmula exacta de bonificación por nivel
         // Por ahora: cada nivel añade una cantidad fija de stats según el tipo de stat
         // Esta es una implementación placeholder hasta confirmar la fórmula exacta
-        int levelsAboveBase = level - 1; // Niveles por encima del nivel 1
-
-        if (levelsAboveBase > 0)
-        {
-            // Bonificación base por nivel (ajustar según reglas del juego)
-            // Por ahora: +1 punto por cada stat principal por nivel
-            stats.hp += levelsAboveBase;
-            stats.mana += levelsAboveBase;
-            stats.ataque += levelsAboveBase;
-            stats.defensa += levelsAboveBase;
-            stats.velocidadAtaque += levelsAboveBase / 2; // Mitad para velocidad
-            stats.ataqueCritico += levelsAboveBase / 5; // Menos frecuente
-            stats.danoCritico += levelsAboveBase / 5;
-            stats.suerte += levelsAboveBase / 3;
-            stats.destreza += levelsAboveBase / 2;
-        }
+        stats.hp += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Hp);
+        stats.mana += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Mana);
+        stats.ataque += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Ataque);
+        stats.defensa += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Defensa);
+        stats.velocidadAtaque += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.VelocidadAtaque);
+        stats.ataqueCritico += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.AtaqueCritico);
+        stats.danoCritico += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.DanoCritico);
+        stats.suerte += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Suerte);
+        stats.destreza += ItemImprovementCurves.GetStatBonus(baseItem, level, ItemImprovementCurves.ItemStatType.Destreza);
 
         return stats;
     }
@@ -151,9 +144,9 @@ public class ItemInstance
     /// <returns>True si se aumentó el nivel, false si ya está en el máximo.</returns>
     public bool LevelUp()
     {
-        if (currentLevel >= 999)
+        if (currentLevel >= ItemImprovementCurves.MaxLevel)
         {
-            Debug.LogWarning($"El objeto '{baseItem?.itemName}' ya está en el nivel máximo (999).");
+            Debug.LogWarning($"El objeto '{baseItem?.itemName}' ya está en el nivel máximo ({ItemImprovementCurves.MaxLevel}).");
             return false;
         }
 
@@ -174,7 +167,7 @@ public class ItemInstance
     /// <param name="level">Nivel a establecer (1-999)</param>
     public void SetLevel(int level)
     {
-        int newLevel = Mathf.Clamp(level, 1, 999);
+        int newLevel = Mathf.Clamp(level, 1, ItemImprovementCurves.MaxLevel);
         if (newLevel != currentLevel)
         {
             int oldLevel = currentLevel;

@@ -65075,6 +65075,7 @@ GameObject:
   - component: {fileID: 620894633}
   - component: {fileID: 620894634}
   - component: {fileID: 620894635}
+  - component: {fileID: 620894636}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -65478,6 +65479,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroProgressionService
   progressionCsv: {fileID: 4900000, guid: 608123f776332c74c8091efa3d0f4b4e, type: 3}
+--- !u!114 &620894636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620894622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2501e7945e7b72449b9ebc5db6e82057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemImprovementSystem
+  equipmentManager: {fileID: 1770052694}
+  playerMoney: {fileID: 1770052692}
+  maxLevel: 999
+  baseCost: 100
+  costMultiplier: 1.2
 --- !u!1 &621517024
 GameObject:
   m_ObjectHideFlags: 0
@@ -195557,7 +195575,7 @@ MonoBehaviour:
   panelNavigationManager: {fileID: 1770052688}
   chestManager: {fileID: 620894623}
   inventoryAutoOrganizer: {fileID: 1770052689}
-  heroProgressionService: {fileID: 0}
+  heroProgressionService: {fileID: 620894635}
 --- !u!114 &1770052697
 MonoBehaviour:
   m_ObjectHideFlags: 0

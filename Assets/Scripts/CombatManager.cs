@@ -228,6 +228,11 @@ public class CombatManager : MonoBehaviour
     // Control de suerte (solo una vez por ronda)
     private bool playerLuckUsedThisRound = false;
     private bool enemyLuckUsedThisRound = false;
+
+    // Constantes para normalizar stats extendidos
+    private const float MAX_COMBAT_STAT_VALUE = 100000f;
+    private const float BASE_LUCK_CHANCE = 0.35f;
+    private const float BONUS_LUCK_RANGE = 0.65f; // 35% base + 65% escalado = 100%
     
     // Control de combate
     private bool combatInProgress = false;
@@ -2798,9 +2803,13 @@ public class CombatManager : MonoBehaviour
     private int CalculateDamage(int ataque, int destreza, int ataqueCritico, int danoCritico,
                                 int defensaOponente, int destrezaOponente, bool isPlayer, out bool isCritical)
     {
-        isCritical = Random.Range(0, 100) < ataqueCritico;
+        float critChance = Mathf.Clamp01(ataqueCritico / MAX_COMBAT_STAT_VALUE);
+        isCritical = Random.value < critChance;
 
-        float critMultiplier = isCritical ? (1f + (danoCritico / 10f) + 0.1f) : 1f;
+        float critMultiplier = isCritical
+            ? (1f + 9f * Mathf.Clamp01(danoCritico / MAX_COMBAT_STAT_VALUE))
+            : 1f;
+
         float attackerPenetration = destreza / 2f;
         float defenderBlock = destrezaOponente / 2f;
         float totalDamage = (ataque + attackerPenetration) * critMultiplier;
@@ -2815,11 +2824,10 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private bool CalculateLuck(int suerte)
     {
-        // Probabilidad: 35% base + 1% por cada punto de suerte (máximo 100%)
-        float luckChance = 35f + suerte;
-        luckChance = Mathf.Clamp(luckChance, 0f, 100f);
+        float normalizedLuck = Mathf.Clamp01(suerte / MAX_COMBAT_STAT_VALUE);
+        float luckChance = Mathf.Clamp01(BASE_LUCK_CHANCE + BONUS_LUCK_RANGE * normalizedLuck);
         
-        return Random.Range(0f, 100f) < luckChance;
+        return Random.value < luckChance;
     }
 
     /// <summary>
