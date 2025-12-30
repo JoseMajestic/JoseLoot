@@ -58,6 +58,9 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Panel donde se abre todo el combate (contiene todos los objetos de la escena de combate)")]
     [SerializeField] private GameObject combatPanel;
     
+    [Tooltip("Animator opcional que reproduce transición cuando se vuelve al panel de selección")]
+    [SerializeField] private Animator panelAnimator;
+    
     [Header("Panel General Gym")]
     [Tooltip("Panel General Gym que contiene la selección de enemigos (se cierra cuando se inicia el combate)")]
     [SerializeField] private GameObject panelGeneralGym;
@@ -308,6 +311,18 @@ public class BattleManager : MonoBehaviour
         RefreshEnergyUI();
         
         // Actualizar estado del botón de batalla (verifica energía)
+        UpdateBattleButtonState();
+    }
+    
+    /// <summary>
+    /// Refresca manualmente la lista de enemigos y restablece la selección.
+    /// Útil cuando se cierra un combate y se regresa al panel sin recrear el objeto.
+    /// </summary>
+    public void RefreshEnemySelectionUI()
+    {
+        RefreshEnemyButtons();
+        selectedEnemy = null;
+        RefreshEnergyUI();
         UpdateBattleButtonState();
     }
 

@@ -2849,40 +2849,61 @@ public class CombatManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Reduce el HP del jugador gradualmente de uno en uno hasta llegar al HP objetivo.
+    /// Reduce el HP del jugador interpolándolo hasta el objetivo en un segundo.
     /// </summary>
     private IEnumerator ReducePlayerHPGradually(int targetHp)
     {
         targetHp = Mathf.Max(0, targetHp);
-        
-        while (playerCurrentHp > targetHp)
+
+        int startHp = playerCurrentHp;
+        if (startHp <= targetHp)
         {
-            playerCurrentHp--;
+            playerCurrentHp = targetHp;
             UpdatePlayerHP();
-            yield return new WaitForSeconds(0.0001f); // Esperar un tiempo corto antes de reducir el siguiente punto para ir más rápido
+            yield break;
         }
-        
-        // Asegurar que llegamos exactamente al target
+
+        const float duration = 2f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            playerCurrentHp = Mathf.RoundToInt(Mathf.Lerp(startHp, targetHp, t));
+            UpdatePlayerHP();
+            yield return null;
+        }
+
         playerCurrentHp = targetHp;
         UpdatePlayerHP();
     }
 
     /// <summary>
-    /// Reduce el HP del enemigo gradualmente de 10 en 10 hasta llegar al HP objetivo.
+    /// Reduce el HP del enemigo interpolándolo hasta el objetivo en un segundo.
     /// </summary>
     private IEnumerator ReduceEnemyHPGradually(int targetHp)
     {
         targetHp = Mathf.Max(0, targetHp);
-        
-        while (enemyCurrentHp > targetHp)
+
+        int startHp = enemyCurrentHp;
+        if (startHp <= targetHp)
         {
-            int decrement = Mathf.Min(10, enemyCurrentHp - targetHp);
-            enemyCurrentHp -= decrement;
+            enemyCurrentHp = targetHp;
             UpdateEnemyHP();
-            yield return new WaitForSeconds(0.01f); // Esperar un tiempo corto antes de reducir el siguiente bloque para ir más rápido
+            yield break;
         }
-        
-        // Asegurar que llegamos exactamente al target
+
+        const float duration = 2f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            enemyCurrentHp = Mathf.RoundToInt(Mathf.Lerp(startHp, targetHp, t));
+            UpdateEnemyHP();
+            yield return null;
+        }
+
         enemyCurrentHp = targetHp;
         UpdateEnemyHP();
     }
@@ -3379,6 +3400,18 @@ public class CombatManager : MonoBehaviour
             {
                 // Fallback: activar directamente si no hay PanelNavigationManager
                 panelToActivate.SetActive(true);
+            }
+
+            // Refrescar selección de enemigos para que aparezca el siguiente desbloqueado sin reiniciar
+            BattleManager battleManager = panelToActivate.GetComponentInChildren<BattleManager>(true);
+            if (battleManager == null)
+            {
+                battleManager = FindFirstObjectByType<BattleManager>();
+            }
+
+            if (battleManager != null)
+            {
+                battleManager.RefreshEnemySelectionUI();
             }
         }
     }

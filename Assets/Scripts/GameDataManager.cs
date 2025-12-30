@@ -568,6 +568,13 @@ public class GameDataManager : MonoBehaviour
             heroProfileManager.RefreshStatistics();
             heroProfileManager.RefreshHeroExperience();
         }
+
+        // Refrescar sección de experiencia en BreedManager si está disponible
+        BreedManager breedManager = FindFirstObjectByType<BreedManager>();
+        if (breedManager != null)
+        {
+            breedManager.RefreshHeroExperienceSection();
+        }
     }
 
     /// <summary>

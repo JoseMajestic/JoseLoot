@@ -725,6 +725,15 @@ public class BreedManager : MonoBehaviour
         UpdateActionButtonsState();
     }
 
+    /// <summary>
+    /// Permite refrescar desde otros sistemas el nivel y la experiencia mostrados en Breed.
+    /// </summary>
+    public void RefreshHeroExperienceSection()
+    {
+        RefreshHeroLevelText();
+        RefreshHeroExperienceUI();
+    }
+
     private void ShowSleepingMessageImmediate()
     {
         if (messageText == null)

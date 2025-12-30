@@ -30,9 +30,6 @@ public class CombatRewardManager : MonoBehaviour
     [Header("Configuración")]
     [Tooltip("Si es true, muestra los objetos obtenidos en un panel antes de añadirlos al inventario")]
     [SerializeField] private bool showRewardPanel = true;
-    
-    [Tooltip("Tiempo que se muestra el panel de recompensas (segundos)")]
-    [SerializeField] private float rewardPanelDisplayTime = 3f;
 
     private bool waitingForAccept = false;
     private List<ItemInstance> pendingRewards = null;
