@@ -256,7 +256,10 @@ public class RewardSlot : MonoBehaviour
     
     private void Start()
     {
-        // Asegurar que el slot esté limpio al iniciar
-        ClearSlot();
+        // Sólo limpiar si aún no se configuró ningún objeto (caso prefabs en escena)
+        if (currentItem == null || !currentItem.IsValid())
+        {
+            ClearSlot();
+        }
     }
 }

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e33b09a512d9ad0469e2a1f982aae868, type: 3}
-  m_Name: New Story Panel Transition Node
+  m_Name: Diapositiva 4 A 2 prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: 'trans a '
+  text: Diapositiva 4 A 2
   optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: 7520efe8bb275224e9b2b1c8bf897a53, type: 2}
+  optionANode: {fileID: 11400000, guid: 0ea4c58cb36c3bd48b70feb8372bdf38, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"
   optionBNode: {fileID: 0}

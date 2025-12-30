@@ -11234,7 +11234,7 @@ GameObject:
   - component: {fileID: 109477692}
   - component: {fileID: 109477691}
   m_Layer: 5
-  m_Name: panel ui story  base  trans  B
+  m_Name: panel story B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22330,7 +22330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &213517635
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22412,7 +22412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelManager
   chapters:
   - chapterName: El comienzo
-    entryNode: {fileID: 11400000, guid: 5eaf54fda1f9fb34fb2ddef48d23f6f9, type: 2}
+    entryNode: {fileID: 11400000, guid: c2c2e7f8d79a87749933cc5b3b7e9ab1, type: 2}
     rewardCoins: 100
     rewardItems:
     - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
@@ -37842,6 +37842,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361957954}
   m_CullTransparentMesh: 1
+--- !u!1 &361976499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 361976500}
+  m_Layer: 0
+  m_Name: -------------------------------------------------------------------- (22)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &361976500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361976499}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.29486, y: -1266, z: 2575.8682}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 567688724}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &362874873
 GameObject:
   m_ObjectHideFlags: 0
@@ -41707,7 +41738,7 @@ GameObject:
   - component: {fileID: 388445345}
   - component: {fileID: 388445344}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Boton Mono decision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59668,7 +59699,6 @@ RectTransform:
   - {fileID: 2094145417}
   - {fileID: 2117907549}
   - {fileID: 1614554043}
-  - {fileID: 659548446}
   - {fileID: 1539442292}
   - {fileID: 1471403247}
   - {fileID: 1540756185}
@@ -59676,6 +59706,7 @@ RectTransform:
   - {fileID: 1686682176}
   - {fileID: 1339654460}
   - {fileID: 1158406933}
+  - {fileID: 361976500}
   - {fileID: 72782647}
   - {fileID: 983185043}
   - {fileID: 1648171333}
@@ -69915,81 +69946,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658211510}
   m_CullTransparentMesh: 1
---- !u!1 &659548445
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 659548446}
-  - component: {fileID: 659548448}
-  - component: {fileID: 659548447}
-  m_Layer: 0
-  m_Name: Botonera inferior completa
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &659548446
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659548445}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 567688724}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1265.95}
-  m_SizeDelta: {x: 0, y: 2531.9}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &659548447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659548445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &659548448
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659548445}
-  m_CullTransparentMesh: 1
 --- !u!1 &659907186
 GameObject:
   m_ObjectHideFlags: 0
@@ -78587,9 +78543,9 @@ RectTransform:
   - {fileID: 45458842}
   m_Father: {fileID: 1605072734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 153.20135, y: -87.98825}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 306.4027, y: 175.9765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741700613
@@ -86633,7 +86589,7 @@ GameObject:
   - component: {fileID: 812545360}
   - component: {fileID: 812545359}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text  boton aceptar salir cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114757,9 +114713,9 @@ RectTransform:
   - {fileID: 1261196968}
   m_Father: {fileID: 1605072734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 153.20135, y: -520.33527}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 306.4027, y: 175.9765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057597389
@@ -115807,7 +115763,7 @@ GameObject:
   - component: {fileID: 1067275704}
   - component: {fileID: 1067275703}
   m_Layer: 5
-  m_Name: panel texo
+  m_Name: panel texo diapositiva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126110,7 +126066,7 @@ GameObject:
   - component: {fileID: 1178365451}
   - component: {fileID: 1178365450}
   m_Layer: 5
-  m_Name: panel texo (1)
+  m_Name: panel texo titulo diapositiva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127016,7 +126972,7 @@ GameObject:
   - component: {fileID: 1188119041}
   - component: {fileID: 1188119040}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: boton Bifurcacion A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133145,7 +133101,7 @@ GameObject:
   - component: {fileID: 1236353676}
   - component: {fileID: 1236353675}
   m_Layer: 5
-  m_Name: panel ui story  base  fin
+  m_Name: panel story FIN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141210,12 +141166,12 @@ GameObject:
   - component: {fileID: 1304070725}
   - component: {fileID: 1304070724}
   m_Layer: 5
-  m_Name: 'panel ui story  base  trans '
+  m_Name: panel story A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1304070723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -168094,7 +168050,7 @@ GameObject:
   - component: {fileID: 1521954040}
   - component: {fileID: 1521954039}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button Aceptar salir cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168603,7 +168559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1526478821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168733,7 +168689,7 @@ GameObject:
   - component: {fileID: 1528530600}
   - component: {fileID: 1528530599}
   m_Layer: 5
-  m_Name: panel imagen
+  m_Name: panel imagen diapositiva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170464,7 +170420,7 @@ GameObject:
   - component: {fileID: 1539442294}
   - component: {fileID: 1539442293}
   m_Layer: 5
-  m_Name: panel monedas jugadr (1)
+  m_Name: panel monedas jugadr contenedor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177032,7 +176988,7 @@ GameObject:
   - component: {fileID: 1605072736}
   - component: {fileID: 1605072735}
   m_Layer: 5
-  m_Name: panel botones (1)
+  m_Name: panel botones decisiones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177952,7 +177908,7 @@ GameObject:
   - component: {fileID: 1611277680}
   - component: {fileID: 1611277679}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (bifuracion B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178395,7 +178351,7 @@ GameObject:
   - component: {fileID: 1614554044}
   - component: {fileID: 1614554047}
   m_Layer: 5
-  m_Name: f
+  m_Name: Botonera inferior completa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184162,12 +184118,12 @@ GameObject:
   - component: {fileID: 1663011374}
   - component: {fileID: 1663011373}
   m_Layer: 5
-  m_Name: panel ui story  base  intro
+  m_Name: panel story INTRO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1663011372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -205691,7 +205647,7 @@ GameObject:
   - component: {fileID: 1881959241}
   - component: {fileID: 1881959240}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button bifuracion B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206502,9 +206458,9 @@ RectTransform:
   - {fileID: 551038164}
   m_Father: {fileID: 1605072734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 153.20135, y: -304.16174}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 306.4027, y: 175.9765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1886413733
@@ -209495,7 +209451,7 @@ GameObject:
   - component: {fileID: 1910863754}
   - component: {fileID: 1910863753}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button ENTRAR capi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224613,7 +224569,7 @@ GameObject:
   - component: {fileID: 2058472848}
   - component: {fileID: 2058472847}
   m_Layer: 5
-  m_Name: panel monedas jugadr (2)
+  m_Name: panel monedas icono
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227530,7 +227486,7 @@ GameObject:
   - component: {fileID: 2084677191}
   - component: {fileID: 2084677190}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text  Entrar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

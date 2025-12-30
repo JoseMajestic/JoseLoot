@@ -40,6 +40,10 @@ public class StoryPanelManager : MonoBehaviour
     [Header("UI - Recompensas")]
     [Tooltip("Texto donde se listan monedas e items obtenidos al finalizar el capítulo")]
     [SerializeField] private TextMeshProUGUI rewardsText;
+    [Tooltip("Contenedor para instanciar slots de objetos de recompensa (opcional)")]
+    [SerializeField] private Transform rewardSlotsContainer;
+    [Tooltip("Prefab para mostrar cada objeto de recompensa (debe tener RewardSlot)")]
+    [SerializeField] private GameObject rewardSlotPrefab;
 
     [Header("UI - Panel Contenedor")]
     [Tooltip("Panel que contiene la UI del capítulo (intro/transiciones/fin). Se activa al pulsar un botón de capítulo.")]
@@ -149,6 +153,7 @@ public class StoryPanelManager : MonoBehaviour
 
         SetContent(introImage, introText, node.image, node.text);
         SetRewardsText(null);
+        ClearRewardSlots();
         HideAllActionButtons();
         ActivateSubPanel(introPanel);
 
@@ -307,32 +312,91 @@ public class StoryPanelManager : MonoBehaviour
 
     private void UpdateRewardsPreviewText()
     {
-        if (rewardsText == null)
-            return;
-
         if (currentChapter == null)
         {
-            rewardsText.text = "";
+            SetRewardsText("");
+            ClearRewardSlots();
             return;
         }
 
-        string itemsLine = "";
-        if (currentChapter.rewardItems != null)
+        bool canShowSlots = rewardSlotsContainer != null && rewardSlotPrefab != null;
+        string itemsLine = BuildItemsLine(currentChapter.rewardItems);
+
+        if (!string.IsNullOrEmpty(itemsLine) && !canShowSlots)
         {
-            List<string> names = new List<string>();
-            foreach (var item in currentChapter.rewardItems)
-            {
-                if (item != null)
-                    names.Add(item.itemName);
-            }
-            if (names.Count > 0)
-                itemsLine = string.Join(", ", names);
+            SetRewardsText($"Monedas: {currentChapter.rewardCoins}\nObjetos: {itemsLine}");
+        }
+        else
+        {
+            SetRewardsText($"Monedas: {currentChapter.rewardCoins}");
         }
 
-        if (!string.IsNullOrEmpty(itemsLine))
-            rewardsText.text = $"Monedas: {currentChapter.rewardCoins}\nObjetos: {itemsLine}";
+        if (canShowSlots)
+        {
+            PopulateRewardSlots(currentChapter.rewardItems);
+        }
         else
-            rewardsText.text = $"Monedas: {currentChapter.rewardCoins}";
+        {
+            ClearRewardSlots();
+        }
+    }
+
+    private string BuildItemsLine(ItemData[] rewardItems)
+    {
+        if (rewardItems == null || rewardItems.Length == 0)
+            return "";
+
+        List<string> names = new List<string>();
+        foreach (var item in rewardItems)
+        {
+            if (item != null && !string.IsNullOrEmpty(item.itemName))
+            {
+                names.Add(item.itemName);
+            }
+        }
+
+        return names.Count > 0 ? string.Join(", ", names) : "";
+    }
+
+    private void PopulateRewardSlots(ItemData[] rewardItems)
+    {
+        ClearRewardSlots();
+
+        if (rewardItems == null || rewardItems.Length == 0 || rewardSlotsContainer == null || rewardSlotPrefab == null)
+            return;
+
+        foreach (var itemData in rewardItems)
+        {
+            if (itemData == null)
+                continue;
+
+            GameObject slotObj = Instantiate(rewardSlotPrefab, rewardSlotsContainer);
+            if (slotObj == null)
+                continue;
+
+            RewardSlot slot = slotObj.GetComponent<RewardSlot>();
+            if (slot == null)
+            {
+                slot = slotObj.GetComponentInChildren<RewardSlot>(true);
+            }
+
+            if (slot == null)
+                continue;
+
+            ItemInstance tempInstance = new ItemInstance(itemData);
+            slot.Setup(tempInstance);
+        }
+    }
+
+    private void ClearRewardSlots()
+    {
+        if (rewardSlotsContainer == null)
+            return;
+
+        for (int i = rewardSlotsContainer.childCount - 1; i >= 0; i--)
+        {
+            Destroy(rewardSlotsContainer.GetChild(i).gameObject);
+        }
     }
 
     private void HideAllActionButtons()
