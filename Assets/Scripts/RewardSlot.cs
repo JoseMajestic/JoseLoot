@@ -82,30 +82,33 @@ public class RewardSlot : MonoBehaviour
         {
             string itemName = itemInstance.GetItemName();
             itemNameText.text = itemName ?? "Objeto sin nombre";
+
+            Color rarityColor = GetRarityColor(itemInstance.GetRarity());
+            itemNameText.color = rarityColor;
+            itemNameText.richText = false;
+
             Debug.Log($"Nombre asignado: {itemName}");
         }
         
-        // Configurar texto de información (nivel y rareza)
+        // Configurar texto de información (nivel y tipo)
         Debug.Log($"ItemInfoText component null: {itemInfoText == null}");
         if (itemInfoText != null)
         {
             try
             {
-                string rarity = itemInstance.GetRarity();
-                if (!string.IsNullOrEmpty(rarity))
+                string typeLabel = "Objeto";
+                if (itemInstance.baseItem != null)
                 {
-                    itemInfoText.text = $"Nivel {itemInstance.currentLevel} - {rarity}";
+                    typeLabel = itemInstance.baseItem.itemType.ToString();
                 }
-                else
-                {
-                    itemInfoText.text = $"Nivel {itemInstance.currentLevel}";
-                }
-                Debug.Log($"Info asignada: Nivel {itemInstance.currentLevel} - {rarity}");
+
+                itemInfoText.text = $"Nivel {itemInstance.currentLevel} - {typeLabel}";
+                Debug.Log($"Info asignada: Nivel {itemInstance.currentLevel} - {typeLabel}");
             }
             catch (System.Exception e)
             {
                 Debug.LogError($"RewardSlot: Error al obtener información del objeto: {e.Message}");
-                itemInfoText.text = $"Nivel {itemInstance.currentLevel}";
+                itemInfoText.text = $"Nivel {itemInstance.currentLevel} - Objeto";
             }
         }
         
@@ -118,6 +121,43 @@ public class RewardSlot : MonoBehaviour
         }
         
         Debug.Log("=== REWARD SLOT SETUP COMPLETADO ===");
+    }
+
+    private Color GetRarityColor(string rarity)
+    {
+        if (string.IsNullOrEmpty(rarity))
+            return Color.white;
+
+        switch (rarity.ToLowerInvariant())
+        {
+            case "comun":
+            case "común":
+                return new Color32(189, 189, 189, 255);
+            case "raro":
+                return new Color32(80, 141, 247, 255);
+            case "epico":
+            case "épico":
+                return new Color32(176, 82, 255, 255);
+            case "magico":
+            case "mágico":
+                return new Color32(120, 200, 255, 255);
+            case "excelente":
+                return new Color32(64, 255, 173, 255);
+            case "extremo":
+                return new Color32(255, 105, 180, 255);
+            case "demoniaco":
+            case "demoníaco":
+                return new Color32(255, 99, 71, 255);
+            case "etereo":
+            case "etéreo":
+                return new Color32(140, 120, 255, 255);
+            case "legendario":
+                return new Color32(255, 174, 46, 255);
+            case "celestial":
+                return new Color32(255, 255, 140, 255);
+            default:
+                return Color.white;
+        }
     }
     
     /// <summary>
@@ -146,6 +186,16 @@ public class RewardSlot : MonoBehaviour
         if (backgroundImage != null)
         {
             backgroundImage.color = Color.white;
+        }
+
+        Debug.Log($"RewardSlot: ClearSlot completado. Nombre color actual {(itemNameText != null ? itemNameText.color.ToString() : "null")}.");
+    }
+
+    private void OnEnable()
+    {
+        if (itemNameText != null)
+        {
+            Debug.Log($"RewardSlot: OnEnable -> itemNameText '{itemNameText.name}' color actual {itemNameText.color}");
         }
     }
     

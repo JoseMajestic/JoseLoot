@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelIntroNode
   image: {fileID: 0}
-  text: 
+  text: 'Diapositiva 0 Intro cap 2 '
   acceptText: Continuar
-  nextNode: {fileID: 0}
+  nextNode: {fileID: 11400000, guid: 6ebdd8a612bceb84b8b25772a15767d0, type: 2}

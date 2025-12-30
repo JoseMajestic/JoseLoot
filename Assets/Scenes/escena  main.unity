@@ -9959,9 +9959,9 @@ RectTransform:
   m_Father: {fileID: 1236353674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 294, y: 1194.866}
-  m_SizeDelta: {x: -698, y: -2071.6887}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 657}
+  m_SizeDelta: {x: 0, y: 130.31128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &99118340
 MonoBehaviour:
@@ -9983,7 +9983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SALIR
+  m_text: RECOMPN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22357,8 +22357,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 72.084}
-  m_SizeDelta: {x: 0, y: -137.57}
+  m_AnchoredPosition: {x: 0, y: 70.436}
+  m_SizeDelta: {x: 0, y: -140.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213517638
 MonoBehaviour:
@@ -22417,6 +22417,12 @@ MonoBehaviour:
     rewardItems:
     - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
     openChapterButton: {fileID: 741700613}
+  - chapterName: Primeros pasos
+    entryNode: {fileID: 11400000, guid: 2b6ab83b710a213448255eee3440dffa, type: 2}
+    rewardCoins: 100
+    rewardItems:
+    - {fileID: 11400000, guid: fef93f1532f96dc4c84a5ffc044a6f9e, type: 2}
+    openChapterButton: {fileID: 1886413733}
   currentChapter:
     chapterName: 
     entryNode: {fileID: 0}
@@ -22433,6 +22439,8 @@ MonoBehaviour:
   chapterEndImage: {fileID: 905153584}
   chapterEndText: {fileID: 365369713}
   rewardsText: {fileID: 99118340}
+  rewardSlotsContainer: {fileID: 895988664}
+  rewardSlotPrefab: {fileID: 3184423269420772098, guid: c3c19c07ac1245c43b416bdef035dfc2, type: 3}
   chapterContentPanel: {fileID: 294836704}
   introPanel: {fileID: 1663011371}
   transitionAPanel: {fileID: 1304070722}
@@ -22449,7 +22457,7 @@ MonoBehaviour:
   transitionBButtonText: {fileID: 1188119040}
   transitionBSecondButtonText: {fileID: 1611277679}
   chapterEndAcceptButtonText: {fileID: 812545359}
-  panelToOpenOnExit: {fileID: 213517634}
+  panelToOpenOnExit: {fileID: 2035664130}
 --- !u!1 &214077340
 GameObject:
   m_ObjectHideFlags: 0
@@ -96219,6 +96227,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 991582595}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &895988663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895988664}
+  - component: {fileID: 895988666}
+  - component: {fileID: 895988665}
+  - component: {fileID: 895988667}
+  m_Layer: 5
+  m_Name: panel container slots recompensas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &895988664
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895988663}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1236353674}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -607.2823}
+  m_SizeDelta: {x: 0, y: 660.6354}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &895988665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895988663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6886792, g: 0.4190548, b: 0.4190548, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &895988666
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895988663}
+  m_CullTransparentMesh: 1
+--- !u!114 &895988667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895988663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 220
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 1
+  m_ReverseArrangement: 0
 --- !u!1 &896317142
 GameObject:
   m_ObjectHideFlags: 0
@@ -133106,7 +133216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1236353674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -133121,6 +133231,7 @@ RectTransform:
   m_Children:
   - {fileID: 431357907}
   - {fileID: 905153583}
+  - {fileID: 895988664}
   - {fileID: 1455477384}
   - {fileID: 1000818743}
   - {fileID: 99118339}
@@ -141171,7 +141282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1304070723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -184123,7 +184234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663011372
 RectTransform:
   m_ObjectHideFlags: 0

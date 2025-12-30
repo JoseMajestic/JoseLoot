@@ -79,6 +79,8 @@ public class StoryPanelManager : MonoBehaviour
     [SerializeField] private GameObject panelToOpenOnExit;
 
     private GameDataManager gameDataManager;
+    private int accumulatedNodeRewardCoins = 0;
+    private readonly List<ItemData> accumulatedNodeRewardItems = new List<ItemData>();
 
     private void Awake()
     {
@@ -127,6 +129,7 @@ public class StoryPanelManager : MonoBehaviour
             return;
 
         currentChapter = chapter;
+        ResetAccumulatedNodeRewards();
 
         if (chapterContentPanel != null)
         {
@@ -141,6 +144,7 @@ public class StoryPanelManager : MonoBehaviour
         if (node == null)
             return;
 
+        AddNodeRewards(node);
         currentNode = node;
         node.Enter(this);
         SaveStoryState();
@@ -151,7 +155,7 @@ public class StoryPanelManager : MonoBehaviour
         if (node == null)
             return;
 
-        SetContent(introImage, introText, node.image, node.text);
+        SetContent(introImage, introText, node.image, node.text, node);
         SetRewardsText(null);
         ClearRewardSlots();
         HideAllActionButtons();
@@ -167,15 +171,110 @@ public class StoryPanelManager : MonoBehaviour
         }
     }
 
+    private string FormatNodeText(StoryPanelNode node, string originalText)
+    {
+        if (string.IsNullOrEmpty(originalText))
+            return "";
+
+        if (node == null)
+            return originalText;
+
+        string result = originalText;
+
+        // Placeholder de monedas ({COINS}, {COINS_COLORED})
+        if (result.Contains("{COINS}") || result.Contains("{COINS_COLORED}"))
+        {
+            string coinsValue = Mathf.Max(0, node.nodeRewardCoins).ToString();
+            if (result.Contains("{COINS}"))
+            {
+                result = result.Replace("{COINS}", coinsValue);
+            }
+
+            if (result.Contains("{COINS_COLORED}"))
+            {
+                result = result.Replace("{COINS_COLORED}", $"<color=#{GetCoinColorHex()}>{coinsValue}</color>");
+            }
+        }
+
+        // Placeholders de items ({ITEM0}, {ITEM0_COLORED}, etc.)
+        if (node.nodeRewardItems != null && node.nodeRewardItems.Length > 0)
+        {
+            for (int i = 0; i < node.nodeRewardItems.Length; i++)
+            {
+                ItemData item = node.nodeRewardItems[i];
+                if (item == null)
+                    continue;
+
+                string plainToken = $"{{ITEM{i}}}";
+                string coloredToken = $"{{ITEM{i}_COLORED}}";
+
+                if (result.Contains(plainToken))
+                {
+                    result = result.Replace(plainToken, item.itemName);
+                }
+
+                if (result.Contains(coloredToken))
+                {
+                    result = result.Replace(coloredToken, BuildColoredItemName(item));
+                    Debug.Log($"StoryPanelManager: Placeholder {coloredToken} aplicado con color {GetRarityColorHex(item.rareza)} para item '{item.itemName}' en nodo '{node.name}'.");
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private string BuildColoredItemName(ItemData item)
+    {
+        if (item == null || string.IsNullOrEmpty(item.itemName))
+            return "";
+
+        string colorHex = GetRarityColorHex(item.rareza);
+        return $"<color=#{colorHex}>{item.itemName}</color>";
+    }
+
+    private string GetRarityColorHex(string rarity)
+    {
+        if (string.IsNullOrEmpty(rarity))
+            return ColorUtility.ToHtmlStringRGB(Color.white);
+
+        Color color = rarity.ToLowerInvariant() switch
+        {
+            "comun" => new Color32(189, 189, 189, 255),
+            "común" => new Color32(189, 189, 189, 255),
+            "raro" => new Color32(80, 141, 247, 255),
+            "epico" => new Color32(176, 82, 255, 255),
+            "épico" => new Color32(176, 82, 255, 255),
+            "magico" => new Color32(120, 200, 255, 255),
+            "mágico" => new Color32(120, 200, 255, 255),
+            "excelente" => new Color32(64, 255, 173, 255),
+            "extremo" => new Color32(255, 105, 180, 255),
+            "demoniaco" => new Color32(255, 99, 71, 255),
+            "demoníaco" => new Color32(255, 99, 71, 255),
+            "etereo" => new Color32(140, 120, 255, 255),
+            "etéreo" => new Color32(140, 120, 255, 255),
+            "legendario" => new Color32(255, 174, 46, 255),
+            "celestial" => new Color32(255, 255, 140, 255),
+            _ => Color.white
+        };
+
+        return ColorUtility.ToHtmlStringRGB(color);
+    }
+
+    private string GetCoinColorHex()
+    {
+        return "FFD54F"; // Dorado suave
+    }
+
     public void ShowTransitionNode(StoryPanelTransitionNode node)
     {
         if (node == null)
             return;
 
         if (node.hasOptionB)
-            SetContent(transitionBImage, transitionBText, node.image, node.text);
+            SetContent(transitionBImage, transitionBText, node.image, node.text, node);
         else
-            SetContent(transitionAImage, transitionAText, node.image, node.text);
+            SetContent(transitionAImage, transitionAText, node.image, node.text, node);
 
         SetRewardsText(null);
         HideAllActionButtons();
@@ -233,7 +332,7 @@ public class StoryPanelManager : MonoBehaviour
         if (node == null)
             return;
 
-        SetContent(chapterEndImage, chapterEndText, node.image, node.text);
+        SetContent(chapterEndImage, chapterEndText, node.image, node.text, node);
         UpdateRewardsPreviewText();
         HideAllActionButtons();
         ActivateSubPanel(chapterEndPanel);
@@ -258,22 +357,28 @@ public class StoryPanelManager : MonoBehaviour
 
         if (gameDataManager != null)
         {
-            if (gameDataManager.PlayerMoney != null)
+            int totalCoins = GetTotalRewardCoins();
+            List<ItemData> totalItems = GetTotalRewardItems();
+
+            if (totalCoins > 0)
             {
-                gameDataManager.PlayerMoney.AddMoney(currentChapter.rewardCoins);
-            }
-            else
-            {
-                PlayerProfileData profile = gameDataManager.GetPlayerProfile();
-                if (profile != null)
+                if (gameDataManager.PlayerMoney != null)
                 {
-                    profile.playerMoney += currentChapter.rewardCoins;
+                    gameDataManager.PlayerMoney.AddMoney(totalCoins);
+                }
+                else
+                {
+                    PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+                    if (profile != null)
+                    {
+                        profile.playerMoney += totalCoins;
+                    }
                 }
             }
 
-            if (gameDataManager.InventoryManager != null && currentChapter.rewardItems != null)
+            if (gameDataManager.InventoryManager != null && totalItems != null)
             {
-                foreach (var item in currentChapter.rewardItems)
+                foreach (var item in totalItems)
                 {
                     if (item != null)
                     {
@@ -288,7 +393,7 @@ public class StoryPanelManager : MonoBehaviour
         ExitTo(panelToOpenOnExit);
     }
 
-    private void SetContent(Image targetImage, TextMeshProUGUI targetText, Sprite sprite, string text)
+    private void SetContent(Image targetImage, TextMeshProUGUI targetText, Sprite sprite, string text, StoryPanelNode node = null)
     {
         if (targetImage != null)
         {
@@ -298,7 +403,9 @@ public class StoryPanelManager : MonoBehaviour
 
         if (targetText != null)
         {
-            targetText.text = text ?? "";
+            targetText.richText = true;
+            targetText.text = FormatNodeText(node, text);
+            Debug.Log($"StoryPanelManager: SetContent -> Text '{targetText.name}' color actual {targetText.color} (node: {node?.name ?? "null"})");
         }
     }
 
@@ -307,6 +414,7 @@ public class StoryPanelManager : MonoBehaviour
         if (rewardsText == null)
             return;
 
+        rewardsText.richText = true;
         rewardsText.text = value ?? "";
     }
 
@@ -320,20 +428,22 @@ public class StoryPanelManager : MonoBehaviour
         }
 
         bool canShowSlots = rewardSlotsContainer != null && rewardSlotPrefab != null;
-        string itemsLine = BuildItemsLine(currentChapter.rewardItems);
+        List<ItemData> totalRewardItems = GetTotalRewardItems();
+        string itemsLine = BuildItemsLine(totalRewardItems);
+        int totalCoins = GetTotalRewardCoins();
 
         if (!string.IsNullOrEmpty(itemsLine) && !canShowSlots)
         {
-            SetRewardsText($"Monedas: {currentChapter.rewardCoins}\nObjetos: {itemsLine}");
+            SetRewardsText($"Monedas: {totalCoins}\nObjetos: {itemsLine}");
         }
         else
         {
-            SetRewardsText($"Monedas: {currentChapter.rewardCoins}");
+            SetRewardsText($"Monedas: {totalCoins}");
         }
 
         if (canShowSlots)
         {
-            PopulateRewardSlots(currentChapter.rewardItems);
+            PopulateRewardSlots(totalRewardItems);
         }
         else
         {
@@ -341,9 +451,9 @@ public class StoryPanelManager : MonoBehaviour
         }
     }
 
-    private string BuildItemsLine(ItemData[] rewardItems)
+    private string BuildItemsLine(IList<ItemData> rewardItems)
     {
-        if (rewardItems == null || rewardItems.Length == 0)
+        if (rewardItems == null || rewardItems.Count == 0)
             return "";
 
         List<string> names = new List<string>();
@@ -358,11 +468,11 @@ public class StoryPanelManager : MonoBehaviour
         return names.Count > 0 ? string.Join(", ", names) : "";
     }
 
-    private void PopulateRewardSlots(ItemData[] rewardItems)
+    private void PopulateRewardSlots(IList<ItemData> rewardItems)
     {
         ClearRewardSlots();
 
-        if (rewardItems == null || rewardItems.Length == 0 || rewardSlotsContainer == null || rewardSlotPrefab == null)
+        if (rewardItems == null || rewardItems.Count == 0 || rewardSlotsContainer == null || rewardSlotPrefab == null)
             return;
 
         foreach (var itemData in rewardItems)
@@ -397,6 +507,63 @@ public class StoryPanelManager : MonoBehaviour
         {
             Destroy(rewardSlotsContainer.GetChild(i).gameObject);
         }
+    }
+
+    private void ResetAccumulatedNodeRewards()
+    {
+        accumulatedNodeRewardCoins = 0;
+        accumulatedNodeRewardItems.Clear();
+    }
+
+    private void AddNodeRewards(StoryPanelNode node)
+    {
+        if (node == null)
+            return;
+
+        if (node.nodeRewardCoins > 0)
+        {
+            accumulatedNodeRewardCoins += node.nodeRewardCoins;
+        }
+
+        if (node.nodeRewardItems != null && node.nodeRewardItems.Length > 0)
+        {
+            foreach (var item in node.nodeRewardItems)
+            {
+                if (item != null)
+                {
+                    accumulatedNodeRewardItems.Add(item);
+                }
+            }
+        }
+    }
+
+    private int GetTotalRewardCoins()
+    {
+        int baseCoins = currentChapter != null ? currentChapter.rewardCoins : 0;
+        return baseCoins + accumulatedNodeRewardCoins;
+    }
+
+    private List<ItemData> GetTotalRewardItems()
+    {
+        List<ItemData> items = new List<ItemData>();
+
+        if (currentChapter != null && currentChapter.rewardItems != null)
+        {
+            foreach (var item in currentChapter.rewardItems)
+            {
+                if (item != null)
+                {
+                    items.Add(item);
+                }
+            }
+        }
+
+        if (accumulatedNodeRewardItems.Count > 0)
+        {
+            items.AddRange(accumulatedNodeRewardItems);
+        }
+
+        return items;
     }
 
     private void HideAllActionButtons()
@@ -447,7 +614,20 @@ public class StoryPanelManager : MonoBehaviour
         if (exitButton != null)
         {
             exitButton.onClick.RemoveAllListeners();
-            exitButton.onClick.AddListener(() => ExitTo(panelToOpenOnExit));
+            exitButton.onClick.AddListener(HandleExitButton);
+        }
+    }
+
+    private void HandleExitButton()
+    {
+        // Si estamos en el nodo final, aplicar recompensas antes de salir
+        if (currentNode is StoryPanelChapterEndNode)
+        {
+            ApplyChapterRewardsAndExit();
+        }
+        else
+        {
+            ExitTo(panelToOpenOnExit);
         }
     }
 
@@ -455,24 +635,52 @@ public class StoryPanelManager : MonoBehaviour
     {
         HideAllActionButtons();
 
+        PanelNavigationManager navigationManager = gameDataManager != null ? gameDataManager.PanelNavigationManager : null;
+
+        if (navigationManager != null)
+        {
+            bool storyPanelTracked = navigationManager.GetCurrentActivePanel() == gameObject;
+
+            if (panelToOpen != null)
+            {
+                navigationManager.OpenPanel(panelToOpen);
+
+                if (!storyPanelTracked)
+                {
+                    DeactivateStoryPanel();
+                }
+            }
+            else
+            {
+                if (storyPanelTracked)
+                {
+                    navigationManager.ClosePanel(gameObject);
+                }
+                else
+                {
+                    DeactivateStoryPanel();
+                }
+            }
+
+            return;
+        }
+
+        DeactivateStoryPanel();
+
+        if (panelToOpen != null)
+        {
+            panelToOpen.SetActive(true);
+        }
+    }
+
+    private void DeactivateStoryPanel()
+    {
         if (chapterContentPanel != null)
         {
             chapterContentPanel.SetActive(false);
         }
 
         gameObject.SetActive(false);
-
-        if (panelToOpen == null)
-            return;
-
-        if (gameDataManager != null && gameDataManager.PanelNavigationManager != null)
-        {
-            gameDataManager.PanelNavigationManager.OpenPanel(panelToOpen);
-        }
-        else
-        {
-            panelToOpen.SetActive(true);
-        }
     }
 
     private void SaveStoryState()

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Diapositiva 1 A
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 1 A 0
+  text: Diapositiva 0 Intro cap 2 \n {ITEM0_COLORED}\n {ITEM0} {COINS}\n {COINS_COLORED}
+  nodeRewardCoins: 150
+  nodeRewardItems:
+  - {fileID: 11400000, guid: 16003bebb8fa66f47af8539803a9aaa4, type: 2}
   optionAText: Continuar
   optionANode: {fileID: 11400000, guid: 7520efe8bb275224e9b2b1c8bf897a53, type: 2}
   hasOptionB: 0
