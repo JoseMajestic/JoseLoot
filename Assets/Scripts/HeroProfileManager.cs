@@ -1156,6 +1156,7 @@ public class HeroProfileManager : MonoBehaviour
 
         // Obtener stats del equipo
         EquipmentStats equipmentStats = equipmentManager.GetTotalEquipmentStats();
+        ItemStats heroProgressionStats = new ItemStats();
 
         // Obtener mejoras de gimnasio desde PlayerProfileData
         int gymHPBonus = 0;
@@ -1182,19 +1183,20 @@ public class HeroProfileManager : MonoBehaviour
                 gymCriticalDamageBonus = profile.gymCriticalDamageTotalBonus;
                 gymAttackSpeedBonus = profile.gymAttackSpeedTotalBonus;
                 gymLuckBonus = profile.gymLuckTotalBonus;
+                heroProgressionStats = profile.GetHeroProgressionStats();
             }
         }
 
-        // Calcular stats totales (base del héroe + equipo + mejoras de gimnasio)
-        int totalHP = baseHP + equipmentStats.hp + gymHPBonus;
-        int totalMana = baseMana + equipmentStats.mana + gymManaBonus;
-        int totalAtaque = baseAtaque + equipmentStats.ataque + gymAttackBonus;
-        int totalDefensa = baseDefensa + equipmentStats.defensa + gymDefenseBonus;
-        int totalVelocidadAtaque = baseVelocidadAtaque + equipmentStats.velocidadAtaque + gymAttackSpeedBonus;
-        int totalAtaqueCritico = baseAtaqueCritico + equipmentStats.ataqueCritico + gymCriticalAttackBonus;
-        int totalDanoCritico = baseDanoCritico + equipmentStats.danoCritico + gymCriticalDamageBonus;
-        int totalSuerte = baseSuerte + equipmentStats.suerte + gymLuckBonus;
-        int totalDestreza = baseDestreza + equipmentStats.destreza + gymSkillBonus;
+        // Calcular stats totales (base del héroe + equipo + mejoras de gimnasio + progresión)
+        int totalHP = baseHP + equipmentStats.hp + gymHPBonus + heroProgressionStats.hp;
+        int totalMana = baseMana + equipmentStats.mana + gymManaBonus + heroProgressionStats.mana;
+        int totalAtaque = baseAtaque + equipmentStats.ataque + gymAttackBonus + heroProgressionStats.ataque;
+        int totalDefensa = baseDefensa + equipmentStats.defensa + gymDefenseBonus + heroProgressionStats.defensa;
+        int totalVelocidadAtaque = baseVelocidadAtaque + equipmentStats.velocidadAtaque + gymAttackSpeedBonus + heroProgressionStats.velocidadAtaque;
+        int totalAtaqueCritico = baseAtaqueCritico + equipmentStats.ataqueCritico + gymCriticalAttackBonus + heroProgressionStats.ataqueCritico;
+        int totalDanoCritico = baseDanoCritico + equipmentStats.danoCritico + gymCriticalDamageBonus + heroProgressionStats.danoCritico;
+        int totalSuerte = baseSuerte + equipmentStats.suerte + gymLuckBonus + heroProgressionStats.suerte;
+        int totalDestreza = baseDestreza + equipmentStats.destreza + gymSkillBonus + heroProgressionStats.destreza;
 
         // Actualizar textos usando NumberFormatter para números grandes
         if (hpText != null)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -137,6 +138,13 @@ public class CombatManager : MonoBehaviour
     
     [Tooltip("Botón de aceptar derrota que cierra el panel")]
     [SerializeField] private Button defeatAcceptButton;
+    
+    [Header("Panel de Estadísticas de Subida de Nivel")]
+    [Tooltip("Panel que muestra el resumen de stats cuando el héroe sube de nivel")]
+    [SerializeField] private GameObject levelUpStatsPanel;
+    
+    [Tooltip("Texto que mostrará el desglose de stats antes y después del nivel")]
+    [SerializeField] private TextMeshProUGUI levelUpStatsText;
     
     [Header("Referencias")]
     [Tooltip("Referencia a la base de datos de ataques")]
@@ -625,6 +633,7 @@ public class CombatManager : MonoBehaviour
         
         // Ocultar todos los paneles de estados alterados al inicio del combate
         HideAllStatusPanels();
+        HideLevelUpStatsPanel();
         
         UpdateUI();
         
@@ -659,19 +668,27 @@ public class CombatManager : MonoBehaviour
         }
 
         EquipmentStats stats = equipmentManager.GetTotalEquipmentStats();
+        ItemStats heroProgressionStats = new ItemStats();
+
+        if (GameDataManager.Instance != null)
+        {
+            PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+            if (profile != null)
+            {
+                heroProgressionStats = profile.GetHeroProgressionStats();
+            }
+        }
         
-        // El HP del jugador se calcula desde el equipo
-        // Por ahora, usamos un HP base + HP del equipo
         int baseHp = 100; // HP base del jugador
-        playerMaxHp = baseHp + stats.hp;
+        playerMaxHp = baseHp + stats.hp + heroProgressionStats.hp;
         playerCurrentHp = playerMaxHp;
-        playerAtaque = stats.ataque;
-        playerDefensa = stats.defensa;
-        playerVelocidadAtaque = stats.velocidadAtaque;
-        playerAtaqueCritico = stats.ataqueCritico;
-        playerDanoCritico = stats.danoCritico;
-        playerSuerte = stats.suerte;
-        playerDestreza = stats.destreza;
+        playerAtaque = stats.ataque + heroProgressionStats.ataque;
+        playerDefensa = stats.defensa + heroProgressionStats.defensa;
+        playerVelocidadAtaque = stats.velocidadAtaque + heroProgressionStats.velocidadAtaque;
+        playerAtaqueCritico = stats.ataqueCritico + heroProgressionStats.ataqueCritico;
+        playerDanoCritico = stats.danoCritico + heroProgressionStats.danoCritico;
+        playerSuerte = stats.suerte + heroProgressionStats.suerte;
+        playerDestreza = stats.destreza + heroProgressionStats.destreza;
     }
 
     /// <summary>
@@ -763,6 +780,52 @@ public class CombatManager : MonoBehaviour
         if (enemyDefenseBuffPanel != null) enemyDefenseBuffPanel.SetActive(false);
         if (enemyPoisonPanel != null) enemyPoisonPanel.SetActive(false);
         if (enemyStunPanel != null) enemyStunPanel.SetActive(false);
+    }
+    
+    private void ShowLevelUpStatsPanel(ItemStats beforeStats, ItemStats afterStats)
+    {
+        if (levelUpStatsPanel == null || levelUpStatsText == null)
+            return;
+
+        levelUpStatsPanel.SetActive(true);
+        levelUpStatsText.text = BuildLevelUpStatsText(beforeStats, afterStats);
+    }
+
+    private void HideLevelUpStatsPanel()
+    {
+        if (levelUpStatsPanel != null)
+        {
+            levelUpStatsPanel.SetActive(false);
+        }
+    }
+
+    private string BuildLevelUpStatsText(ItemStats beforeStats, ItemStats afterStats)
+    {
+        StringBuilder sb = new StringBuilder();
+        AppendStatLine(sb, "HP", beforeStats.hp, afterStats.hp);
+        AppendStatLine(sb, "Mana", beforeStats.mana, afterStats.mana);
+        AppendStatLine(sb, "Ataque", beforeStats.ataque, afterStats.ataque);
+        AppendStatLine(sb, "Defensa", beforeStats.defensa, afterStats.defensa);
+        AppendStatLine(sb, "Velocidad Ataque", beforeStats.velocidadAtaque, afterStats.velocidadAtaque);
+        AppendStatLine(sb, "Ataque Crítico", beforeStats.ataqueCritico, afterStats.ataqueCritico);
+        AppendStatLine(sb, "Daño Crítico", beforeStats.danoCritico, afterStats.danoCritico);
+        AppendStatLine(sb, "Destreza", beforeStats.destreza, afterStats.destreza);
+        AppendStatLine(sb, "Suerte", beforeStats.suerte, afterStats.suerte);
+        return sb.ToString();
+    }
+
+    private void AppendStatLine(StringBuilder sb, string label, int beforeValue, int afterValue)
+    {
+        if (sb.Length > 0)
+        {
+            sb.AppendLine();
+        }
+
+        sb.Append(label)
+          .Append(": ")
+          .Append(beforeValue)
+          .Append(" > ")
+          .Append(afterValue);
     }
 
     /// <summary>
@@ -2975,6 +3038,8 @@ public class CombatManager : MonoBehaviour
         // Mostrar experiencia ganada ANTES del mensaje de victoria
         int oldHeroLevel = -1;
         int newHeroLevel = -1;
+        ItemStats heroStatsBeforeLevel = new ItemStats();
+        ItemStats heroStatsAfterLevel = new ItemStats();
         int experienceReward = 0;
         if (currentEnemy != null)
         {
@@ -2987,6 +3052,7 @@ public class CombatManager : MonoBehaviour
             if (profileBefore != null)
             {
                 oldHeroLevel = profileBefore.heroLevel;
+                heroStatsBeforeLevel = profileBefore.GetHeroProgressionStats();
             }
 
             if (roundDetailsText != null)
@@ -3000,11 +3066,17 @@ public class CombatManager : MonoBehaviour
             if (profileAfter != null)
             {
                 newHeroLevel = profileAfter.heroLevel;
+                heroStatsAfterLevel = profileAfter.GetHeroProgressionStats();
             }
 
-            if (newHeroLevel > oldHeroLevel && newHeroLevel > 0 && roundDetailsText != null)
+            bool leveledUp = newHeroLevel > oldHeroLevel && newHeroLevel > 0;
+            if (leveledUp)
             {
-                yield return StartCoroutine(DisplayTextWithDelay($"El jugador ha subido al nivel {newHeroLevel}"));
+                ShowLevelUpStatsPanel(heroStatsBeforeLevel, heroStatsAfterLevel);
+                if (roundDetailsText != null)
+                {
+                    yield return StartCoroutine(DisplayTextWithDelay($"El jugador ha subido al nivel {newHeroLevel}"));
+                }
             }
         }
 
@@ -3070,6 +3142,7 @@ public class CombatManager : MonoBehaviour
         }
 
         // Mostrar panel de victoria
+        HideLevelUpStatsPanel();
         if (victoryPanel != null)
         {
             victoryPanel.SetActive(true);

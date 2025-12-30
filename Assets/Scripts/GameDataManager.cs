@@ -36,6 +36,10 @@ public class GameDataManager : MonoBehaviour
 
     [Tooltip("Referencia al InventoryAutoOrganizer")]
     [SerializeField] private InventoryAutoOrganizer inventoryAutoOrganizer;
+    
+    [Header("Servicios de Progresión")]
+    [Tooltip("Servicio que aplica las bonificaciones irregulares por nivel del héroe")]
+    [SerializeField] private HeroProgressionService heroProgressionService;
 
     [Header("Sistema de Guardado")]
     [Tooltip("Datos del perfil del jugador")]
@@ -161,6 +165,9 @@ public class GameDataManager : MonoBehaviour
         
         if (inventoryAutoOrganizer == null)
             inventoryAutoOrganizer = FindFirstObjectByType<InventoryAutoOrganizer>();
+        
+        if (heroProgressionService == null)
+            heroProgressionService = FindFirstObjectByType<HeroProgressionService>();
 
         Debug.Log("GameDataManager: Referencias auto-asignadas.");
     }
@@ -277,6 +284,12 @@ public class GameDataManager : MonoBehaviour
             {
                 playerMoney.SetMoney(playerProfile.playerMoney);
                 playerMoney.MarkMoneyLoadedFromProfile();
+            }
+
+            // Aplicar cualquier bonificación de progresión pendiente y guardar si hubo cambios
+            if (ApplyHeroProgressionToCurrentLevel())
+            {
+                SavePlayerProfile();
             }
         }
         else
@@ -571,6 +584,7 @@ public class GameDataManager : MonoBehaviour
         {
             int oldLevel = playerProfile.heroLevel;
             playerProfile.AddHeroExperience(experience);
+            bool progressionUpdated = ApplyHeroProgressionToCurrentLevel();
             SavePlayerProfile();
             
             // Si subió de nivel, actualizar botones de ataque
@@ -584,7 +598,7 @@ public class GameDataManager : MonoBehaviour
                     combatManager.OnHeroLevelUp();
                 }
             }
-            else
+            else if (progressionUpdated)
             {
                 RefreshHeroProfileStatistics();
             }
@@ -627,6 +641,30 @@ public class GameDataManager : MonoBehaviour
         }
         
         return false;
+    }
+
+    /// <summary>
+    /// Aplica las bonificaciones de progresión del héroe hasta el nivel actual.
+    /// </summary>
+    private bool ApplyHeroProgressionToCurrentLevel()
+    {
+        if (playerProfile == null)
+            return false;
+
+        if (heroProgressionService == null)
+        {
+            heroProgressionService = FindFirstObjectByType<HeroProgressionService>();
+        }
+
+        if (heroProgressionService == null)
+        {
+            Debug.LogWarning("GameDataManager: HeroProgressionService no está disponible; no se aplicarán bonificaciones de nivel.");
+            return false;
+        }
+
+        int previousLevelApplied = playerProfile.heroProgressionLevelApplied;
+        heroProgressionService.ApplyLevelBonuses(playerProfile, playerProfile.heroLevel);
+        return playerProfile.heroProgressionLevelApplied != previousLevelApplied;
     }
 }
 

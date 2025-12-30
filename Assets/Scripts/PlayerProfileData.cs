@@ -169,6 +169,57 @@ public class PlayerProfileData
     [Tooltip("Bonus total acumulado de Luck")]
     public int gymLuckTotalBonus = 0;
 
+    // Bonificaciones por progresión de nivel del héroe
+    [Header("Bonificaciones por progresión de nivel del héroe")]
+    [Tooltip("Bonificación total de HP obtenida por subir de nivel")]
+    public int heroBonusHp = 0;
+
+    [Tooltip("Bonificación total de Mana obtenida por subir de nivel")]
+    public int heroBonusMana = 0;
+
+    [Tooltip("Bonificación total de Ataque obtenida por subir de nivel")]
+    public int heroBonusAtaque = 0;
+
+    [Tooltip("Bonificación total de Defensa obtenida por subir de nivel")]
+    public int heroBonusDefensa = 0;
+
+    [Tooltip("Bonificación total de Velocidad de Ataque obtenida por subir de nivel")]
+    public int heroBonusVelocidadAtaque = 0;
+
+    [Tooltip("Bonificación total de Ataque Crítico obtenida por subir de nivel")]
+    public int heroBonusAtaqueCritico = 0;
+
+    [Tooltip("Bonificación total de Daño Crítico obtenida por subir de nivel")]
+    public int heroBonusDanoCritico = 0;
+
+    [Tooltip("Bonificación total de Destreza obtenida por subir de nivel")]
+    public int heroBonusDestreza = 0;
+
+    [Tooltip("Bonificación total de Suerte obtenida por subir de nivel")]
+    public int heroBonusSuerte = 0;
+
+    [Tooltip("Último nivel para el cual se aplicaron bonificaciones de progresión")]
+    public int heroProgressionLevelApplied = 1;
+
+    /// <summary>
+    /// Obtiene las bonificaciones acumuladas por progresión de nivel del héroe.
+    /// </summary>
+    public ItemStats GetHeroProgressionStats()
+    {
+        return new ItemStats
+        {
+            hp = heroBonusHp,
+            mana = heroBonusMana,
+            ataque = heroBonusAtaque,
+            defensa = heroBonusDefensa,
+            velocidadAtaque = heroBonusVelocidadAtaque,
+            ataqueCritico = heroBonusAtaqueCritico,
+            danoCritico = heroBonusDanoCritico,
+            destreza = heroBonusDestreza,
+            suerte = heroBonusSuerte
+        };
+    }
+
     /// <summary>
     /// Guarda el estado actual del equipo en el perfil.
     /// </summary>
