@@ -18,13 +18,13 @@ MonoBehaviour:
   price: 1464
   hp: 0
   mana: 0
-  ataque: 1771470
+  ataque: 250
   defensa: 0
-  velocidadAtaque: 160
-  ataqueCritico: 9
-  danoCritico: 93
-  suerte: 6
-  destreza: 10240
+  velocidadAtaque: 624
+  ataqueCritico: 356
+  danoCritico: 291
+  suerte: 146
+  destreza: 356
   nivel: 1
   rareza: Extremo
   itemType: 6

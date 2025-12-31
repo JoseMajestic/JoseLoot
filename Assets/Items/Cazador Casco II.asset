@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 128934338, guid: 3058321df368ff649811b1fa8d0cee6a, type: 3}
   description: Casco reforzado que mejora la proteccion manteniendo atencion constante al entorno.
   price: 259
-  hp: 5062
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 810
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 125
+  destreza: 5
   nivel: 1
   rareza: Raro
   itemType: 1

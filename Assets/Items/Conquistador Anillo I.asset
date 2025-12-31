@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo militar basico que marca el juramento de servicio legionarios.
   price: 250
   hp: 0
-  mana: 28
-  ataque: 2430
+  mana: 19
+  ataque: 1
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 39
-  suerte: 6
-  destreza: 120
+  danoCritico: 98
+  suerte: 146
+  destreza: 5
   nivel: 1
   rareza: Raro
   itemType: 8

@@ -18,11 +18,11 @@ MonoBehaviour:
   price: 714
   hp: 0
   mana: 0
-  ataque: 116640
+  ataque: 17
   defensa: 0
-  velocidadAtaque: 44
-  ataqueCritico: 10
-  danoCritico: 126
+  velocidadAtaque: 142
+  ataqueCritico: 400
+  danoCritico: 409
   suerte: 0
   destreza: 0
   nivel: 1

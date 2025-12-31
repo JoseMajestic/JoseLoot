@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1856840275, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Botas silenciosas que permiten desplazamientos rapidos sin dejar rastro.
   price: 408
-  hp: 60750
+  hp: 3
   mana: 0
   ataque: 0
-  defensa: 9720
-  velocidadAtaque: 60
+  defensa: 2
+  velocidadAtaque: 209
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 640
+  destreza: 23
   nivel: 1
   rareza: Etereo
   itemType: 9

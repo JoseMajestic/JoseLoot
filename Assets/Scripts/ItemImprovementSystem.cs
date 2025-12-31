@@ -31,6 +31,8 @@ public class ItemImprovementSystem : MonoBehaviour
     public System.Action<ItemInstance, int, int> OnItemImproved; // item, nivelAnterior, nivelNuevo
     public System.Action<ItemInstance> OnImprovementFailed; // item, razón del fallo
 
+    public int MaxLevel => maxLevel;
+
     /// <summary>
     /// Mejora un item equipado en el slot especificado.
     /// Solo mejora objetos equipados.
@@ -75,6 +77,21 @@ public class ItemImprovementSystem : MonoBehaviour
         if (itemInstance.currentLevel >= maxLevel)
         {
             Debug.LogWarning($"El item '{itemInstance.GetItemName()}' ya está en el nivel máximo ({maxLevel}).");
+            OnImprovementFailed?.Invoke(itemInstance);
+            return false;
+        }
+
+        if (!TryGetHeroLevel(out int heroLevel))
+        {
+            Debug.LogWarning("ItemImprovementSystem: No se pudo obtener el nivel del héroe.");
+            OnImprovementFailed?.Invoke(itemInstance);
+            return false;
+        }
+
+        int nextLevel = Mathf.Min(itemInstance.currentLevel + 1, maxLevel);
+        if (heroLevel < nextLevel)
+        {
+            Debug.LogWarning($"El héroe necesita nivel {nextLevel} para mejorar '{itemInstance.GetItemName()}' (nivel actual del héroe: {heroLevel}).");
             OnImprovementFailed?.Invoke(itemInstance);
             return false;
         }
@@ -202,6 +219,13 @@ public class ItemImprovementSystem : MonoBehaviour
         if (itemInstance.currentLevel >= maxLevel)
             return false;
 
+        if (!TryGetHeroLevel(out int heroLevel))
+            return false;
+
+        int nextLevel = Mathf.Min(itemInstance.currentLevel + 1, maxLevel);
+        if (heroLevel < nextLevel)
+            return false;
+
         int cost = CalculateImprovementCost(itemInstance.currentLevel);
         return playerMoney.GetMoney() >= cost;
     }
@@ -220,6 +244,9 @@ public class ItemImprovementSystem : MonoBehaviour
         if (itemInstance == null || !itemInstance.IsValid())
             return null;
 
+        TryGetHeroLevel(out int heroLevel);
+        int nextLevel = Mathf.Min(itemInstance.currentLevel + 1, maxLevel);
+
         ImprovementInfo info = new ImprovementInfo
         {
             itemInstance = itemInstance,
@@ -229,10 +256,27 @@ public class ItemImprovementSystem : MonoBehaviour
             currentStats = itemInstance.GetFinalStats(),
             projectedStats = GetProjectedStats(itemInstance),
             improvementCost = itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance.currentLevel) : -1,
-            hasEnoughMoney = playerMoney != null && playerMoney.GetMoney() >= (itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance.currentLevel) : 0)
+            hasEnoughMoney = playerMoney != null && playerMoney.GetMoney() >= (itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance.currentLevel) : 0),
+            heroLevel = heroLevel,
+            requiredHeroLevelForNextUpgrade = nextLevel,
+            heroMeetsLevelRequirement = heroLevel >= nextLevel
         };
 
         return info;
+    }
+
+    private bool TryGetHeroLevel(out int heroLevel)
+    {
+        heroLevel = 0;
+        if (GameDataManager.Instance == null)
+            return false;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        if (profile == null)
+            return false;
+
+        heroLevel = profile.heroLevel;
+        return true;
     }
 }
 
@@ -250,5 +294,8 @@ public class ImprovementInfo
     public ItemStats projectedStats;
     public int improvementCost;
     public bool hasEnoughMoney;
+    public int heroLevel;
+    public int requiredHeroLevelForNextUpgrade;
+    public bool heroMeetsLevelRequirement;
 }
 

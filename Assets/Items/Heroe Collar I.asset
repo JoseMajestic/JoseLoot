@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1854110239, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Distintivo noble que reconoce valor demostrado en el campo de batalla.
   price: 480
-  hp: 20250
-  mana: 20
+  hp: 2
+  mana: 8
   ataque: 0
-  defensa: 3240
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 48
-  suerte: 11
-  destreza: 160
+  danoCritico: 130
+  suerte: 290
+  destreza: 6
   nivel: 1
   rareza: Epico
   itemType: 2

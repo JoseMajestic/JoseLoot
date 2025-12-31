@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1213418766, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Collar pesado que simboliza poder acumulado mediante combate persistente.
   price: 1440
-  hp: 273375
-  mana: 75
+  hp: 10
+  mana: 85
   ataque: 0
-  defensa: 43740
+  defensa: 7
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 69
-  suerte: 16
-  destreza: 800
+  ataqueCritico: 45
+  danoCritico: 205
+  suerte: 435
+  destreza: 28
   nivel: 1
   rareza: Legendario
   itemType: 2

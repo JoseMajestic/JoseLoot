@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -182863653, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Emblema final que simboliza lealtad en los ultimos dias de Roma.
   price: 1080
-  hp: 4920750
-  mana: 33
+  hp: 167
+  mana: 26
   ataque: 0
-  defensa: 787320
+  defensa: 112
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 93
-  suerte: 23
-  destreza: 5120
+  ataqueCritico: 90
+  danoCritico: 291
+  suerte: 637
+  destreza: 178
   nivel: 1
   rareza: Demoniaco
   itemType: 2

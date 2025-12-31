@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas prestigiosas asociadas a heroes celebrados tras grandes gestas.
     de dormir.
   price: 974
-  hp: 40500
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 6480
-  velocidadAtaque: 57
+  defensa: 2
+  velocidadAtaque: 196
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 480
+  destreza: 17
   nivel: 1
   rareza: Epico
   itemType: 9

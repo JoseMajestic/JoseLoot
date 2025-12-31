@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: e6a4a3c934e8aaa4ea6bf6592788c158, type: 3}
   description: Armadura reforzada que equilibra defensa y movilidad en misiones de caza avanzada.
   price: 259
-  hp: 10125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1620
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

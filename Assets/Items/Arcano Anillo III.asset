@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo sagrado que encarna la autoridad profetica del portador.
   price: 1000
   hp: 0
-  mana: 224
-  ataque: 540
+  mana: 295
+  ataque: 1
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 27
-  suerte: 4
-  destreza: 45
+  danoCritico: 55
+  suerte: 88
+  destreza: 2
   nivel: 1
   rareza: Epico
   itemType: 8

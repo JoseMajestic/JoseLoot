@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1847605406, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Collar consagrado que amplifica la comunion directa con fuerzas profeticas.
   price: 1200
-  hp: 1500
-  mana: 113
+  hp: 1
+  mana: 139
   ataque: 0
-  defensa: 240
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 27
-  suerte: 5
-  destreza: 30
+  danoCritico: 55
+  suerte: 117
+  destreza: 2
   nivel: 1
   rareza: Epico
   itemType: 2

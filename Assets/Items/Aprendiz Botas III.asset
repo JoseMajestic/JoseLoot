@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 832776092, guid: 99ff6d1bf82b5cf4a85695c78cd1b666, type: 3}
   description: Botas de formacion avanzada que garantizan movilidad segura en situaciones exigentes.
   price: 168
-  hp: 500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 80
-  velocidadAtaque: 21
+  defensa: 1
+  velocidadAtaque: 47
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 30
+  destreza: 2
   nivel: 1
   rareza: Comun
   itemType: 9

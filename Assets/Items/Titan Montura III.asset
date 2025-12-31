@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura colosal utilizada por guerreros imponentes en batallas decisivas.
     principio de los tiempos.
   price: 3600
-  hp: 546750
+  hp: 19
   mana: 0
-  ataque: 174960
-  defensa: 87480
+  ataque: 26
+  defensa: 13
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 9
+  suerte: 232
   destreza: 0
   nivel: 1
   rareza: Legendario

@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Infernum Abyssus
   itemSprite: {fileID: -1765631073, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
-  description: Arma abismal que desata destruccion sostenida alimentada por corrupcion extrema.
+  description: Arma abismal que desata destruccion sostenida alimentada por corrupcion
+    extrema.
   price: 2856
   hp: 0
   mana: 0
-  ataque: 3149280
+  ataque: 1
   defensa: 0
-  velocidadAtaque: 62
-  ataqueCritico: 14
-  danoCritico: 180
+  velocidadAtaque: 217
+  ataqueCritico: 577
+  danoCritico: 602
   suerte: 0
   destreza: 0
   nivel: 1

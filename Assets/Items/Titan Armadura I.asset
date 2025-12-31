@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 150693071, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Armadura gruesa que prioriza proteccion frente a movilidad en combate directo.
   price: 600
-  hp: 546750
+  hp: 19
   mana: 0
   ataque: 0
-  defensa: 87480
+  defensa: 13
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

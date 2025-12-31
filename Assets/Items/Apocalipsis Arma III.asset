@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Ultima Roma Aeternitas
   itemSprite: {fileID: 2045339469, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
-  description: Arma absoluta que simboliza el legado eterno de Roma mas alla del fin.
+  description: Arma absoluta que simboliza el legado eterno de Roma mas alla del
+    fin.
   price: 2562
   hp: 0
   mana: 0
-  ataque: 9447840
+  ataque: 2
   defensa: 0
-  velocidadAtaque: 68
-  ataqueCritico: 16
-  danoCritico: 198
+  velocidadAtaque: 242
+  ataqueCritico: 666
+  danoCritico: 666
   suerte: 0
   destreza: 0
   nivel: 1

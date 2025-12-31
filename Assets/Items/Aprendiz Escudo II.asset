@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 712a4cae797c50b40a5d6c4176018655, type: 3}
   description: Escudo reforzado que mejora la postura defensiva tras experiencia practica.
   price: 144
-  hp: 750
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 120
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

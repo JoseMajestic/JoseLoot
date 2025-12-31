@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo reservado que representa autoridad en redes de espionaje imperiales.
   price: 1100
   hp: 0
-  mana: 128
-  ataque: 43740
+  mana: 160
+  ataque: 7
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 63
-  suerte: 11
-  destreza: 720
+  ataqueCritico: 45
+  danoCritico: 183
+  suerte: 290
+  destreza: 26
   nivel: 1
   rareza: Epico
   itemType: 8

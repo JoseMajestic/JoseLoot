@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 2031465268, guid: 9ce346908e96b09429122e80d0ef74c0, type: 3}
   description: Armadura avanzada disenada para desaparecer entre sombras y confusion.
   price: 571
-  hp: 364500
+  hp: 13
   mana: 0
   ataque: 0
-  defensa: 58320
+  defensa: 9
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

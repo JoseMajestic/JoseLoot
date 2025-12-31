@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: d71a18d8b9d32ab49acec1b99aa46de2, type: 3}
   description: Casco consagrado que canaliza visiones profeticas con claridad absoluta.
   price: 437
-  hp: 2250
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 360
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 75
+  destreza: 3
   nivel: 1
   rareza: Magico
   itemType: 1

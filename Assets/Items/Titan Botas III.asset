@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -892060584, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: Botas colosales que mantienen al portador imparable en el campo de batalla.
   price: 840
-  hp: 364500
+  hp: 13
   mana: 0
   ataque: 0
-  defensa: 58320
-  velocidadAtaque: 75
+  defensa: 9
+  velocidadAtaque: 271
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1920
+  destreza: 67
   nivel: 1
   rareza: Legendario
   itemType: 9

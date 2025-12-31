@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -324126002, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Collar ritual que refuerza la conexion magica durante ceremonias establecidas.
   price: 600
-  hp: 1125
-  mana: 77
+  hp: 1
+  mana: 88
   ataque: 0
-  defensa: 180
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 24
-  suerte: 4
-  destreza: 25
+  danoCritico: 44
+  suerte: 88
+  destreza: 2
   nivel: 1
   rareza: Epico
   itemType: 2

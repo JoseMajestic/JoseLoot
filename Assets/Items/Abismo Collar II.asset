@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 2092532609, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: Collar infernal que refuerza la conexion con energias corruptas.
   price: 960
-  hp: 2460375
-  mana: 55
+  hp: 84
+  mana: 57
   ataque: 0
-  defensa: 393660
+  defensa: 56
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 87
-  suerte: 21
-  destreza: 3200
+  ataqueCritico: 90
+  danoCritico: 269
+  suerte: 579
+  destreza: 112
   nivel: 1
   rareza: Demoniaco
   itemType: 2

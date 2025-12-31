@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura silenciosa preparada para infiltraciones prolongadas sin deteccion.
     nada.
   price: 825
-  hp: 136688
+  hp: 6
   mana: 0
-  ataque: 43740
-  defensa: 21870
+  ataque: 7
+  defensa: 4
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 7
+  suerte: 174
   destreza: 0
   nivel: 1
   rareza: Epico

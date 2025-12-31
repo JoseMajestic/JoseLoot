@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas robustas que aseguran estabilidad durante combates de fuerza bruta.
     mundo.
   price: 600
-  hp: 182250
+  hp: 7
   mana: 0
   ataque: 0
-  defensa: 29160
-  velocidadAtaque: 69
+  defensa: 5
+  velocidadAtaque: 246
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1280
+  destreza: 45
   nivel: 1
   rareza: Legendario
   itemType: 9

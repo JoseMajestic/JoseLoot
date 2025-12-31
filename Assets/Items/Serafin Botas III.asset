@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas sagradas que aseguran paso firme en nombre de los dioses.
     bendito.
   price: 1814
-  hp: 1093500
+  hp: 38
   mana: 0
   ataque: 0
-  defensa: 174960
-  velocidadAtaque: 84
+  defensa: 26
+  velocidadAtaque: 309
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 3840
+  destreza: 134
   nivel: 1
   rareza: Celestial
   itemType: 9

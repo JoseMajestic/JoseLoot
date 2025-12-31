@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Emblema de honor que representa participacion en campanas imperiales.
     enteros."
   price: 600
-  hp: 13500
-  mana: 35
+  hp: 1
+  mana: 29
   ataque: 0
-  defensa: 2160
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 45
-  suerte: 10
-  destreza: 120
+  danoCritico: 119
+  suerte: 261
+  destreza: 5
   nivel: 1
   rareza: Raro
   itemType: 2

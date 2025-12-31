@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo reglamentario disenado para defensa colectiva en formacion cerrada.
     derrota.
   price: 504
-  hp: 13500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 2160
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

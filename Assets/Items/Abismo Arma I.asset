@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Infernum Limbus
   itemSprite: {fileID: -1716279706, guid: 3154f9b159fd89043909858e0c22de82, type: 3}
-  description: Arma corrupta inicial que inflige dano mientras consume lentamente la esencia del combate.
-    maldito.
+  description: Arma corrupta inicial que inflige dano mientras consume lentamente
+    la esencia del combate. maldito.
   price: 2040
   hp: 0
   mana: 0
-  ataque: 1574640
+  ataque: 1
   defensa: 0
-  velocidadAtaque: 58
-  ataqueCritico: 13
-  danoCritico: 168
+  velocidadAtaque: 200
+  ataqueCritico: 533
+  danoCritico: 559
   suerte: 0
   destreza: 0
   nivel: 1

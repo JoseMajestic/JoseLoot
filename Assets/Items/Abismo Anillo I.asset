@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo oscuro que marca el inicio del pacto prohibido.
   price: 800
   hp: 0
-  mana: 58
-  ataque: 590490
+  mana: 61
+  ataque: 2
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 84
-  suerte: 15
-  destreza: 3840
+  ataqueCritico: 90
+  danoCritico: 258
+  suerte: 406
+  destreza: 134
   nivel: 1
   rareza: Demoniaco
   itemType: 8

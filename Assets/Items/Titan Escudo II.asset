@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1420194690, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Escudo reforzado capaz de soportar ataques continuos en primera linea.
   price: 720
-  hp: 546750
+  hp: 19
   mana: 0
   ataque: 0
-  defensa: 87480
+  defensa: 13
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

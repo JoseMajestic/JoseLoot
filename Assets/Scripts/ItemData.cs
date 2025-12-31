@@ -43,6 +43,10 @@ public class ItemData : ScriptableObject
     
     [Tooltip("Nivel requerido o nivel del item")]
     public int nivel = 1;
+
+    [Header("=== Requisitos ===")]
+    [Tooltip("Nivel mínimo del héroe para equipar este item cuando está en nivel 1.")]
+    public int requiredHeroLevel = 1;
     
     [Header("=== Rareza ===")]
     [Tooltip("Rareza del item (ej: Comun, Raro, Epico, Legendario)")]

@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: b5b859642b8bf4b4385ebd6f26c745cd, type: 3}
   description: Armadura reforzada de aprendizaje, mejora la supervivencia tras experiencia basica en combate.
   price: 144
-  hp: 1125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 180
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

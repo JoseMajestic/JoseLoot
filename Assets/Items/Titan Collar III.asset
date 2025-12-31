@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Collar colosal que encarna la supremacia fisica del portador.
     el mundo.
   price: 2880
-  hp: 364500
-  mana: 110
+  hp: 13
+  mana: 135
   ataque: 0
-  defensa: 58320
+  defensa: 9
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 72
-  suerte: 17
-  destreza: 960
+  ataqueCritico: 45
+  danoCritico: 216
+  suerte: 464
+  destreza: 34
   nivel: 1
   rareza: Legendario
   itemType: 2

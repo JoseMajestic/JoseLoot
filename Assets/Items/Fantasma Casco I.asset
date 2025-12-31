@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -2016397825, guid: 2fead51a434119b49b14bae94e1cb52c, type: 3}
   description: Casco discreto que protege sin interferir con percepcion ni sigilo.
   price: 408
-  hp: 91125
+  hp: 4
   mana: 0
   ataque: 0
-  defensa: 14580
+  defensa: 3
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 800
+  destreza: 28
   nivel: 1
   rareza: Etereo
   itemType: 1

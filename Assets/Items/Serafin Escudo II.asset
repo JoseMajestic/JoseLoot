@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo bendecido que protege bajo amparo divino constante.
     de batalla.
   price: 1555
-  hp: 1640250
+  hp: 56
   mana: 0
   ataque: 0
-  defensa: 262440
+  defensa: 38
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

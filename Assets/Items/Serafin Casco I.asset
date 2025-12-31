@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -184810146, guid: a7c3221122991b74bbb44055684984a7, type: 3}
   description: Tocado ceremonial que protege la mente durante actos y combates rituales.
   price: 1296
-  hp: 820125
+  hp: 29
   mana: 0
   ataque: 0
-  defensa: 131220
+  defensa: 19
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 3200
+  destreza: 112
   nivel: 1
   rareza: Celestial
   itemType: 1

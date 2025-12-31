@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo honorifico que simboliza valentia reconocida oficialmente por Roma.
   price: 400
   hp: 0
-  mana: 38
-  ataque: 7290
+  mana: 33
+  ataque: 2
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 48
-  suerte: 8
-  destreza: 240
+  danoCritico: 130
+  suerte: 203
+  destreza: 9
   nivel: 1
   rareza: Epico
   itemType: 8

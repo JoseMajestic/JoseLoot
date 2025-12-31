@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura disciplinada que facilita viajes durante ceremonias magicas prolongadas.
     arcano."
   price: 750
-  hp: 1688
+  hp: 1
   mana: 0
-  ataque: 540
-  defensa: 270
+  ataque: 1
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 2
+  suerte: 30
   destreza: 0
   nivel: 1
   rareza: Epico

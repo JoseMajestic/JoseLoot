@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: -1212101656, guid: 8cf13876894bd92469693aff6c167068, type: 3}
   description: Escudo emblematico que proclama gloria militar ante aliados y enemigos.
   price: 974
-  hp: 81000
+  hp: 4
   mana: 0
   ataque: 0
-  defensa: 12960
+  defensa: 3
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

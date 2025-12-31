@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Ultima Roma Exitium
   itemSprite: {fileID: -187596327, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
-  description: Arma final disenada para infligir destruccion masiva en los ultimos conflictos del Imperio.
-    tierra.
+  description: Arma final disenada para infligir destruccion masiva en los ultimos
+    conflictos del Imperio. tierra.
   price: 1830
   hp: 0
   mana: 0
-  ataque: 4723920
+  ataque: 2
   defensa: 0
-  velocidadAtaque: 64
-  ataqueCritico: 14
-  danoCritico: 186
+  velocidadAtaque: 225
+  ataqueCritico: 577
+  danoCritico: 623
   suerte: 0
   destreza: 0
   nivel: 1

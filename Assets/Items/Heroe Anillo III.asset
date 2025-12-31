@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo ilustre que marca al portador como heroe celebrado.
   price: 800
   hp: 0
-  mana: 98
-  ataque: 14580
+  mana: 118
+  ataque: 3
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 54
-  suerte: 9
-  destreza: 360
+  ataqueCritico: 45
+  danoCritico: 151
+  suerte: 232
+  destreza: 13
   nivel: 1
   rareza: Epico
   itemType: 8

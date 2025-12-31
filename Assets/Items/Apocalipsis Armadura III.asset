@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Ultima Roma Aeternitas
   itemSprite: {fileID: 1667721009, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
-  description: Armadura eterna que trasciende la destruccion y preserva el legado imperial.
-    tierra.
+  description: Armadura eterna que trasciende la destruccion y preserva el legado
+    imperial. tierra.
   price: 2050
-  hp: 29524500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 4723920
+  defensa: 666
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

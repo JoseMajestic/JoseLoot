@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo pesado que absorbe impactos directos sin ceder posicion.
     mundo.
   price: 600
-  hp: 364500
+  hp: 13
   mana: 0
   ataque: 0
-  defensa: 58320
+  defensa: 9
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -18,14 +18,14 @@ MonoBehaviour:
     romano.
   price: 696
   hp: 0
-  mana: 87
-  ataque: 4860
+  mana: 102
+  ataque: 2
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 160
+  destreza: 6
   nivel: 1
   rareza: Epico
   itemType: 7

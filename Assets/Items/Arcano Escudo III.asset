@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo consagrado que protege bajo la vision anticipada del oraculo.
     pura.
   price: 437
-  hp: 3000
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 480
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

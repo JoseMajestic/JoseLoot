@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo colosal que simboliza dominio total de la fuerza bruta.
   price: 2400
   hp: 0
-  mana: 218
-  ataque: 131220
+  mana: 286
+  ataque: 19
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 72
-  suerte: 13
-  destreza: 1440
+  ataqueCritico: 45
+  danoCritico: 216
+  suerte: 348
+  destreza: 51
   nivel: 1
   rareza: Legendario
   itemType: 8

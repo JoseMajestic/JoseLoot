@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo especializado disenado para proteger sin revelar la posicion.
     sagrado.
   price: 571
-  hp: 243000
+  hp: 9
   mana: 0
   ataque: 0
-  defensa: 38880
+  defensa: 6
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

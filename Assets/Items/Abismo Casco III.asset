@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1156165817, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Casco abismal que anula el temor mediante dominio total de la corrupcion.
   price: 2285
-  hp: 4920750
+  hp: 167
   mana: 0
   ataque: 0
-  defensa: 787320
+  defensa: 112
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 9600
+  destreza: 333
   nivel: 1
   rareza: Demoniaco
   itemType: 1

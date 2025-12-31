@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 267827494, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Casco tactico que atenua sonidos y mejora la concentracion operativa.
   price: 490
-  hp: 136688
+  hp: 6
   mana: 0
   ataque: 0
-  defensa: 21870
+  defensa: 4
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1000
+  destreza: 35
   nivel: 1
   rareza: Etereo
   itemType: 1

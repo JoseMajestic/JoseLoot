@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas reforzadas que mantienen estabilidad durante combates intensos.
     estas.
   price: 605
-  hp: 10125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1620
-  velocidadAtaque: 45
+  defensa: 1
+  velocidadAtaque: 146
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 200
+  destreza: 8
   nivel: 1
   rareza: Excelente
   itemType: 9

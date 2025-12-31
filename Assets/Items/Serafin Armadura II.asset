@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1799980108, guid: d54ea597a2c96aa4aad218452ef82655, type: 3}
   description: Armadura bendecida que refuerza la defensa mediante proteccion religiosa activa.
   price: 1555
-  hp: 2460375
+  hp: 84
   mana: 0
   ataque: 0
-  defensa: 393660
+  defensa: 56
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

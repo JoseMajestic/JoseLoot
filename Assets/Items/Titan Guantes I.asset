@@ -19,13 +19,13 @@ MonoBehaviour:
   price: 600
   hp: 0
   mana: 0
-  ataque: 65610
+  ataque: 10
   defensa: 0
-  velocidadAtaque: 115
-  ataqueCritico: 6
-  danoCritico: 66
-  suerte: 4
-  destreza: 1280
+  velocidadAtaque: 437
+  ataqueCritico: 223
+  danoCritico: 194
+  suerte: 88
+  destreza: 45
   nivel: 1
   rareza: Legendario
   itemType: 6

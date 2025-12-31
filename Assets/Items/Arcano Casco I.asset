@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 46ec7b95c5dc3ac4ca1c856d1e1f1bb7, type: 3}
   description: Tocado ritual que protege la mente mientras se interpretan presagios iniciales.
   price: 312
-  hp: 1125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 180
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 50
+  destreza: 2
   nivel: 1
   rareza: Magico
   itemType: 1

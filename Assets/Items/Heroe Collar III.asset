@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Collar prestigioso que proclama fama obtenida mediante victorias notables.
     futuras.
   price: 960
-  hp: 40500
+  hp: 2
   mana: 50
   ataque: 0
-  defensa: 6480
+  defensa: 2
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 54
-  suerte: 12
-  destreza: 240
+  ataqueCritico: 45
+  danoCritico: 151
+  suerte: 319
+  destreza: 9
   nivel: 1
   rareza: Epico
   itemType: 2

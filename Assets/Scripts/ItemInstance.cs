@@ -138,6 +138,24 @@ public class ItemInstance
     }
 
     /// <summary>
+    /// Obtiene el nivel mínimo de héroe requerido para equipar este item en su nivel actual.
+    /// </summary>
+    public int GetRequiredHeroLevelForCurrentLevel()
+    {
+        return GetRequiredHeroLevel(currentLevel);
+    }
+
+    /// <summary>
+    /// Obtiene el nivel mínimo de héroe requerido para equipar el item en un nivel específico.
+    /// </summary>
+    public int GetRequiredHeroLevel(int targetLevel)
+    {
+        int baseRequirement = baseItem != null ? Mathf.Max(1, baseItem.requiredHeroLevel) : 1;
+        int clampedLevel = Mathf.Clamp(targetLevel, 1, ItemImprovementCurves.MaxLevel);
+        return baseRequirement + (clampedLevel - 1);
+    }
+
+    /// <summary>
     /// Aumenta el nivel del objeto en 1 (hasta máximo 999).
     /// También incrementa la versión para que los slots detecten el cambio.
     /// </summary>

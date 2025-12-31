@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo bendecido que representa autoridad espiritual creciente.
   price: 1500
   hp: 0
-  mana: 328
-  ataque: 295245
+  mana: 441
+  ataque: 43
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 78
-  suerte: 14
-  destreza: 2400
+  ataqueCritico: 45
+  danoCritico: 237
+  suerte: 377
+  destreza: 84
   nivel: 1
   rareza: Legendario
   itemType: 8

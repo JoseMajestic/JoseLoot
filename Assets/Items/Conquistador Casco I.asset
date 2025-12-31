@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 269315027, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: Casco militar basico que protege la cabeza durante maniobras reglamentarias.
   price: 504
-  hp: 10125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1620
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 200
+  destreza: 8
   nivel: 1
   rareza: Excelente
   itemType: 1

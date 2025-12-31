@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas sagradas que aseguran paso firme guiado por visiones profeticas.
     pura.
   price: 437
-  hp: 1500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 240
-  velocidadAtaque: 30
+  defensa: 1
+  velocidadAtaque: 84
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 60
+  destreza: 3
   nivel: 1
   rareza: Magico
   itemType: 9

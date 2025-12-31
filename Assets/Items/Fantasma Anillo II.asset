@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo tactico que simboliza experiencia en operaciones secretas exitosas.
   price: 550
   hp: 0
-  mana: 88
-  ataque: 32805
+  mana: 104
+  ataque: 6
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 60
-  suerte: 10
-  destreza: 600
+  ataqueCritico: 45
+  danoCritico: 173
+  suerte: 261
+  destreza: 21
   nivel: 1
   rareza: Epico
   itemType: 8

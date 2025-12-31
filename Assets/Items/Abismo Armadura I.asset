@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Infernum Limbus
   itemSprite: {fileID: 21300000, guid: 7891535aaa0fdb649a87656634a90625, type: 3}
-  description: Armadura corrupta que ofrece proteccion basica a costa de estabilidad espiritual.
-    este set.
+  description: Armadura corrupta que ofrece proteccion basica a costa de estabilidad
+    espiritual. este set.
   price: 1632
-  hp: 4920750
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 787320
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

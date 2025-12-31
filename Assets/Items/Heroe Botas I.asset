@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 474731302, guid: 0448210f4abf5844d91669e6f84f211a, type: 3}
   description: Botas robustas usadas por heroes que han demostrado valor en campana.
   price: 696
-  hp: 20250
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 3240
-  velocidadAtaque: 51
+  defensa: 1
+  velocidadAtaque: 171
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 320
+  destreza: 12
   nivel: 1
   rareza: Epico
   itemType: 9

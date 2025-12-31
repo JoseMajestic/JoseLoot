@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura prestigiosa reservada a heroes celebrados por toda Roma.
     destino del mundo."
   price: 1200
-  hp: 60750
+  hp: 3
   mana: 0
-  ataque: 19440
-  defensa: 9720
+  ataque: 4
+  defensa: 2
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 6
+  suerte: 146
   destreza: 0
   nivel: 1
   rareza: Epico

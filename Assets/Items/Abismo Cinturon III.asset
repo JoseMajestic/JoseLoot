@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Cinturon abismal que mantiene estable el flujo de corrupcion.
   price: 2285
   hp: 0
-  mana: 204
-  ataque: 787320
+  mana: 267
+  ataque: 112
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 3840
+  destreza: 134
   nivel: 1
   rareza: Demoniaco
   itemType: 7

@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1661214789, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Escudo resistente que soporta el asalto final del mundo en ruinas.
   price: 1757
-  hp: 14762250
+  hp: 500
   mana: 0
   ataque: 0
-  defensa: 2361960
+  defensa: 333
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

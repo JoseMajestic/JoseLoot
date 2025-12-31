@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: 1951063584, guid: 1d5620e4692811841a88f634c1a782db, type: 3}
   description: Montura disciplinada que mejora movilidad tactica en campanas activas.
   price: 375
-  hp: 15188
+  hp: 2
   mana: 0
-  ataque: 4860
-  defensa: 2430
+  ataque: 2
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 5
+  suerte: 117
   destreza: 0
   nivel: 1
   rareza: Raro

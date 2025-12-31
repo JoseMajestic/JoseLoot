@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura experta utilizada en operaciones secretas de maxima prioridad.
     vivos y los muertos.
   price: 1650
-  hp: 182250
+  hp: 7
   mana: 0
-  ataque: 58320
-  defensa: 29160
+  ataque: 9
+  defensa: 5
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 7
+  suerte: 174
   destreza: 0
   nivel: 1
   rareza: Epico

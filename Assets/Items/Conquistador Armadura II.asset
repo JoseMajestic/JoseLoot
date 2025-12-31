@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: -70728368, guid: 0448210f4abf5844d91669e6f84f211a, type: 3}
   description: Armadura reforzada que mejora la resistencia en enfrentamientos prolongados.
   price: 605
-  hp: 30375
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 4860
+  defensa: 2
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

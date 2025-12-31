@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Armadura pesada disenada para resistir campanas militares intensivas.
     legendarias.
   price: 706
-  hp: 40500
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 6480
+  defensa: 2
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1363807512, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: Armadura ceremonial que refleja integridad y respeto ganado en combate.
   price: 835
-  hp: 91125
+  hp: 4
   mana: 0
   ataque: 0
-  defensa: 14580
+  defensa: 3
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

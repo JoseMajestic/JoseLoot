@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: -734584478, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Montura resistente que atraviesa paisajes destruidos por el colapso total.
   price: 1350
-  hp: 11071688
+  hp: 375
   mana: 0
-  ataque: 3542940
-  defensa: 1771470
+  ataque: 500
+  defensa: 250
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 12
+  suerte: 319
   destreza: 0
   nivel: 1
   rareza: Demoniaco

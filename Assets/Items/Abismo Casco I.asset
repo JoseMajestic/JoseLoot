@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 241326790, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Casco oscuro que protege la mente mientras expone al portador a susurros prohibidos.
   price: 1632
-  hp: 2460375
+  hp: 84
   mana: 0
   ataque: 0
-  defensa: 393660
+  defensa: 56
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 6400
+  destreza: 222
   nivel: 1
   rareza: Demoniaco
   itemType: 1

@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1319466212, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: Calzado ritual que permite desplazarse con solemnidad durante ceremonias sagradas.
   price: 1296
-  hp: 546750
+  hp: 19
   mana: 0
   ataque: 0
-  defensa: 87480
-  velocidadAtaque: 78
+  defensa: 13
+  velocidadAtaque: 284
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 2560
+  destreza: 89
   nivel: 1
   rareza: Celestial
   itemType: 9

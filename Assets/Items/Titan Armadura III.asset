@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1483357703, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Armadura colosal disenada para soportar asaltos continuos en batallas frontales.
   price: 840
-  hp: 1093500
+  hp: 38
   mana: 0
   ataque: 0
-  defensa: 174960
+  defensa: 26
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

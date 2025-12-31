@@ -1,0 +1,337 @@
+﻿{
+    "item_count":  283,
+    "enemy_count":  21,
+    "item_numeric_summary":  {
+                                 "velocidadAtaque":  {
+                                                         "avg":  20.74,
+                                                         "min":  0,
+                                                         "max":  170,
+                                                         "count":  282,
+                                                         "minPositive":  10
+                                                     },
+                                 "ataqueCritico":  {
+                                                       "avg":  1.73,
+                                                       "min":  0,
+                                                       "max":  16,
+                                                       "count":  282,
+                                                       "minPositive":  1
+                                                   },
+                                 "price":  {
+                                               "avg":  990.95,
+                                               "min":  120,
+                                               "max":  4500,
+                                               "count":  282,
+                                               "minPositive":  120
+                                           },
+                                 "suerte":  {
+                                                "avg":  3.2,
+                                                "min":  0,
+                                                "max":  24,
+                                                "count":  282,
+                                                "minPositive":  1
+                                            },
+                                 "danoCritico":  {
+                                                     "avg":  28.5,
+                                                     "min":  0,
+                                                     "max":  198,
+                                                     "count":  282,
+                                                     "minPositive":  12
+                                                 },
+                                 "nivel":  {
+                                               "avg":  1,
+                                               "min":  1,
+                                               "max":  1,
+                                               "count":  282,
+                                               "minPositive":  1
+                                           },
+                                 "mana":  {
+                                              "avg":  26.64,
+                                              "min":  0,
+                                              "max":  488,
+                                              "count":  282,
+                                              "minPositive":  15
+                                          },
+                                 "ataque":  {
+                                                "avg":  172906.15,
+                                                "min":  0,
+                                                "max":  4723920,
+                                                "count":  282,
+                                                "minPositive":  60
+                                            },
+                                 "hp":  {
+                                            "avg":  864092.27,
+                                            "min":  0,
+                                            "max":  19683000,
+                                            "count":  282,
+                                            "minPositive":  250
+                                        },
+                                 "destreza":  {
+                                                  "avg":  1358.71,
+                                                  "min":  0,
+                                                  "max":  19200,
+                                                  "count":  282,
+                                                  "minPositive":  10
+                                              },
+                                 "defensa":  {
+                                                 "avg":  167516.67,
+                                                 "min":  0,
+                                                 "max":  4723920,
+                                                 "count":  282,
+                                                 "minPositive":  40
+                                             }
+                             },
+    "enemy_numeric_summary":  {
+                                  "experienceReward":  {
+                                                           "avg":  72856.25,
+                                                           "min":  25,
+                                                           "max":  280000,
+                                                           "count":  20,
+                                                           "minPositive":  25
+                                                       },
+                                  "velocidadAtaque":  {
+                                                          "avg":  127.75,
+                                                          "min":  100,
+                                                          "max":  170,
+                                                          "count":  20,
+                                                          "minPositive":  100
+                                                      },
+                                  "ataqueCritico":  {
+                                                        "avg":  19.7,
+                                                        "min":  5,
+                                                        "max":  38,
+                                                        "count":  20,
+                                                        "minPositive":  5
+                                                    },
+                                  "suerte":  {
+                                                 "avg":  42.8,
+                                                 "min":  10,
+                                                 "max":  80,
+                                                 "count":  20,
+                                                 "minPositive":  10
+                                             },
+                                  "danoCritico":  {
+                                                      "avg":  265.75,
+                                                      "min":  120,
+                                                      "max":  550,
+                                                      "count":  20,
+                                                      "minPositive":  120
+                                                  },
+                                  "level":  {
+                                                "avg":  3.65,
+                                                "min":  1,
+                                                "max":  6,
+                                                "count":  20,
+                                                "minPositive":  1
+                                            },
+                                  "rewardCoins":  {
+                                                      "avg":  4231.85,
+                                                      "min":  12,
+                                                      "max":  19000,
+                                                      "count":  20,
+                                                      "minPositive":  12
+                                                  },
+                                  "ataque":  {
+                                                 "avg":  98249,
+                                                 "min":  880,
+                                                 "max":  385000,
+                                                 "count":  20,
+                                                 "minPositive":  880
+                                             },
+                                  "hp":  {
+                                             "avg":  920410,
+                                             "min":  7200,
+                                             "max":  3000000,
+                                             "count":  20,
+                                             "minPositive":  7200
+                                         },
+                                  "destreza":  {
+                                                   "avg":  2169,
+                                                   "min":  200,
+                                                   "max":  6000,
+                                                   "count":  20,
+                                                   "minPositive":  200
+                                               },
+                                  "requiredLevel":  {
+                                                        "avg":  2.65,
+                                                        "min":  0,
+                                                        "max":  5,
+                                                        "count":  20,
+                                                        "minPositive":  1
+                                                    },
+                                  "defensa":  {
+                                                  "avg":  58776,
+                                                  "min":  720,
+                                                  "max":  300000,
+                                                  "count":  20,
+                                                  "minPositive":  720
+                                              }
+                              },
+    "item_scaled_fields":  [
+                               "price_scaled",
+                               "hp_scaled",
+                               "mana_scaled",
+                               "ataque_scaled",
+                               "defensa_scaled",
+                               "velocidadAtaque_scaled",
+                               "ataqueCritico_scaled",
+                               "danoCritico_scaled",
+                               "suerte_scaled",
+                               "destreza_scaled",
+                               "nivel_scaled"
+                           ],
+    "comparison":  {
+                       "velocidadAtaque":  {
+                                               "items":  {
+                                                             "avg":  20.74,
+                                                             "min":  0,
+                                                             "max":  170,
+                                                             "count":  282,
+                                                             "minPositive":  10
+                                                         },
+                                               "enemies":  {
+                                                               "avg":  127.75,
+                                                               "min":  100,
+                                                               "max":  170,
+                                                               "count":  20,
+                                                               "minPositive":  100
+                                                           }
+                                           },
+                       "ataqueCritico":  {
+                                             "items":  {
+                                                           "avg":  1.73,
+                                                           "min":  0,
+                                                           "max":  16,
+                                                           "count":  282,
+                                                           "minPositive":  1
+                                                       },
+                                             "enemies":  {
+                                                             "avg":  19.7,
+                                                             "min":  5,
+                                                             "max":  38,
+                                                             "count":  20,
+                                                             "minPositive":  5
+                                                         }
+                                         },
+                       "suerte":  {
+                                      "items":  {
+                                                    "avg":  3.2,
+                                                    "min":  0,
+                                                    "max":  24,
+                                                    "count":  282,
+                                                    "minPositive":  1
+                                                },
+                                      "enemies":  {
+                                                      "avg":  42.8,
+                                                      "min":  10,
+                                                      "max":  80,
+                                                      "count":  20,
+                                                      "minPositive":  10
+                                                  }
+                                  },
+                       "danoCritico":  {
+                                           "items":  {
+                                                         "avg":  28.5,
+                                                         "min":  0,
+                                                         "max":  198,
+                                                         "count":  282,
+                                                         "minPositive":  12
+                                                     },
+                                           "enemies":  {
+                                                           "avg":  265.75,
+                                                           "min":  120,
+                                                           "max":  550,
+                                                           "count":  20,
+                                                           "minPositive":  120
+                                                       }
+                                       },
+                       "ataque":  {
+                                      "items":  {
+                                                    "avg":  172906.15,
+                                                    "min":  0,
+                                                    "max":  4723920,
+                                                    "count":  282,
+                                                    "minPositive":  60
+                                                },
+                                      "enemies":  {
+                                                      "avg":  98249,
+                                                      "min":  880,
+                                                      "max":  385000,
+                                                      "count":  20,
+                                                      "minPositive":  880
+                                                  }
+                                  },
+                       "hp":  {
+                                  "items":  {
+                                                "avg":  864092.27,
+                                                "min":  0,
+                                                "max":  19683000,
+                                                "count":  282,
+                                                "minPositive":  250
+                                            },
+                                  "enemies":  {
+                                                  "avg":  920410,
+                                                  "min":  7200,
+                                                  "max":  3000000,
+                                                  "count":  20,
+                                                  "minPositive":  7200
+                                              }
+                              },
+                       "destreza":  {
+                                        "items":  {
+                                                      "avg":  1358.71,
+                                                      "min":  0,
+                                                      "max":  19200,
+                                                      "count":  282,
+                                                      "minPositive":  10
+                                                  },
+                                        "enemies":  {
+                                                        "avg":  2169,
+                                                        "min":  200,
+                                                        "max":  6000,
+                                                        "count":  20,
+                                                        "minPositive":  200
+                                                    }
+                                    },
+                       "defensa":  {
+                                       "items":  {
+                                                     "avg":  167516.67,
+                                                     "min":  0,
+                                                     "max":  4723920,
+                                                     "count":  282,
+                                                     "minPositive":  40
+                                                 },
+                                       "enemies":  {
+                                                       "avg":  58776,
+                                                       "min":  720,
+                                                       "max":  300000,
+                                                       "count":  20,
+                                                       "minPositive":  720
+                                                   }
+                                   }
+                   },
+    "missing_item_guids":  [
+                               "d314d227ab4a408dbf18674bedc4b43f",
+                               "4a0c2a025dbd45c190c69f8c577f2b9a",
+                               "dcc27468ed6f4b02b530928ad05c0807",
+                               "0903975142c54b87806f5e34f759551c",
+                               "13a4b674ba22449ebcff9850212dcd26",
+                               "27912b1c9482422ba4d8dc1d192a9204",
+                               "457d1a7e0aa74caab7a6bbe34c2f21ed",
+                               "d84c68f525214b2d8baf8924fe7b36cf",
+                               "2680fe0c881f44dc81d4029344f1b7fa",
+                               "ef59ef0000734132ad30a5b3ccf6fe2c",
+                               "cc84555c49314968bbb79d097317620a",
+                               "4db5f7d09cb9494d87a1b3490b0dd5c3",
+                               "50bbc6884b064fcdafc7f4c661da581b",
+                               "1b127804ef3644ebbabc2e1eee74ce49",
+                               "3cb68c8c6923477da75d7e12514f20b9",
+                               "89fddbff64064d049616081df9176479",
+                               "79d70c2982914eb9b1ea6ee27da5d805",
+                               "0443e3d75c8744f48c29be795113fd9e"
+                           ],
+    "missing_enemy_guids":  [
+
+                            ],
+    "item_csv":  "reports\\item_database_stats.csv",
+    "enemy_csv":  "reports\\enemy_database_stats.csv"
+}

@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Casco final usado en los ultimos combates que sellan el destino de Roma.
     tierra.
   price: 1464
-  hp: 7381125
+  hp: 250
   mana: 0
   ataque: 0
-  defensa: 1180980
+  defensa: 167
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 12800
+  destreza: 444
   nivel: 1
   rareza: Extremo
   itemType: 1

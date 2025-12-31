@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1346341774, guid: 42b7277b0c7bf0f4db564dd1f7367689, type: 3}
   description: Casco sagrado que simboliza autoridad religiosa incuestionable en batalla.
   price: 1814
-  hp: 1640250
+  hp: 56
   mana: 0
   ataque: 0
-  defensa: 262440
+  defensa: 38
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 4800
+  destreza: 167
   nivel: 1
   rareza: Celestial
   itemType: 1

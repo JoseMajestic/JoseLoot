@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 887172386, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Botas abismales que sostienen al portador en entornos hostiles extremos.
   price: 2285
-  hp: 3280500
+  hp: 112
   mana: 0
   ataque: 0
-  defensa: 524880
-  velocidadAtaque: 93
+  defensa: 75
+  velocidadAtaque: 346
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 7680
+  destreza: 267
   nivel: 1
   rareza: Demoniaco
   itemType: 9

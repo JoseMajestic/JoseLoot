@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas eternas que sostienen al portador mas alla del fin del Imperio.
     equipo.
   price: 2050
-  hp: 9841500
+  hp: 333
   mana: 0
   ataque: 0
-  defensa: 1574640
-  velocidadAtaque: 102
+  defensa: 223
+  velocidadAtaque: 383
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 15360
+  destreza: 533
   nivel: 1
   rareza: Extremo
   itemType: 9

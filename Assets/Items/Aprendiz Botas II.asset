@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -794436500, guid: 7131c20c494c87e41a733307a6e7782d, type: 3}
   description: Botas mejoradas que aumentan firmeza y control tras experiencia prolongada en combate.
   price: 144
-  hp: 375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 60
-  velocidadAtaque: 18
+  defensa: 1
+  velocidadAtaque: 34
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 25
+  destreza: 2
   nivel: 1
   rareza: Comun
   itemType: 9

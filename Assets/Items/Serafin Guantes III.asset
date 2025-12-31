@@ -19,13 +19,13 @@ MonoBehaviour:
   price: 1814
   hp: 0
   mana: 0
-  ataque: 393660
+  ataque: 56
   defensa: 0
-  velocidadAtaque: 140
-  ataqueCritico: 8
-  danoCritico: 81
-  suerte: 5
-  destreza: 3840
+  velocidadAtaque: 541
+  ataqueCritico: 311
+  danoCritico: 248
+  suerte: 117
+  destreza: 134
   nivel: 1
   rareza: Celestial
   itemType: 6

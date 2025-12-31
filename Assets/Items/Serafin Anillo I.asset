@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo ritual que simboliza inicio del servicio religioso romano.
   price: 1500
   hp: 0
-  mana: 168
-  ataque: 196830
+  mana: 216
+  ataque: 29
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 75
-  suerte: 14
-  destreza: 1920
+  ataqueCritico: 45
+  danoCritico: 226
+  suerte: 377
+  destreza: 67
   nivel: 1
   rareza: Legendario
   itemType: 8

@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 663641111, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Armadura ceremonial que refuerza la defensa mediante rituales magicos establecidos.
   price: 374
-  hp: 3375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 540
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

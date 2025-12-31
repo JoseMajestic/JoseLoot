@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 269315027, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
   description: Casco tactico que ofrece proteccion solida durante persecuciones y ataques sorpresa.
   price: 302
-  hp: 6750
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1080
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 150
+  destreza: 6
   nivel: 1
   rareza: Raro
   itemType: 1

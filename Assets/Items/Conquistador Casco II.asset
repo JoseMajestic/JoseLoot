@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Casco reforzado que incrementa la supervivencia en batallas organizadas.
     estas.
   price: 605
-  hp: 15188
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 2430
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 250
+  destreza: 9
   nivel: 1
   rareza: Excelente
   itemType: 1

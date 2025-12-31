@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas bendecidas que otorgan firmeza bajo guia divina.
     bendito.
   price: 1555
-  hp: 820125
+  hp: 29
   mana: 0
   ataque: 0
-  defensa: 131220
-  velocidadAtaque: 81
+  defensa: 19
+  velocidadAtaque: 296
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 3200
+  destreza: 112
   nivel: 1
   rareza: Celestial
   itemType: 9

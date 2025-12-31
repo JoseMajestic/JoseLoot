@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo reforzado que simboliza autoridad durante el colapso definitivo.
   price: 900
   hp: 0
-  mana: 120
-  ataque: 2657205
+  mana: 149
+  ataque: 375
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 96
-  suerte: 18
-  destreza: 9600
+  ataqueCritico: 90
+  danoCritico: 301
+  suerte: 493
+  destreza: 333
   nivel: 1
   rareza: Demoniaco
   itemType: 8

@@ -74,6 +74,14 @@ public class ForgeUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nivelSiguienteTextA;
     [SerializeField] private TextMeshProUGUI nivelSiguienteTextB;
 
+    [Header("Requisitos de Nivel")]
+    [Tooltip("Texto que muestra el nivel de héroe requerido para equipar el item (layout A)")]
+    [SerializeField] private TextMeshProUGUI requiredHeroLevelTextA;
+    [Tooltip("Texto duplicado para layout alternativo")]
+    [SerializeField] private TextMeshProUGUI requiredHeroLevelTextB;
+    [Tooltip("Texto que muestra el requisito para poder mejorar al siguiente nivel")]
+    [SerializeField] private TextMeshProUGUI upgradeRequirementText;
+
     [Header("Coste de mejora")]
     [SerializeField] private TextMeshProUGUI costUpgradeText;
 
@@ -143,6 +151,91 @@ public class ForgeUIManager : MonoBehaviour
                     slot.OnSlotClicked -= OnForgeSlotClicked;
             }
         }
+    }
+
+    private void UpdateHeroRequirementTexts(ItemInstance item)
+    {
+        string text = "";
+        Color color = Color.white;
+
+        if (item != null && item.IsValid())
+        {
+            int requiredLevel = item.GetRequiredHeroLevelForCurrentLevel();
+            int heroLevel = GetHeroLevel();
+            bool meetsRequirement = heroLevel >= requiredLevel;
+            text = requiredLevel.ToString();
+            color = meetsRequirement ? Color.white : Color.red;
+        }
+
+        if (requiredHeroLevelTextA != null)
+        {
+            requiredHeroLevelTextA.text = text;
+            requiredHeroLevelTextA.color = color;
+        }
+
+        if (requiredHeroLevelTextB != null)
+        {
+            requiredHeroLevelTextB.text = text;
+            requiredHeroLevelTextB.color = color;
+        }
+    }
+
+    private void UpdateUpgradeButtonState(ItemInstance item)
+    {
+        bool canUpgrade = false;
+        string requirementText = "";
+        Color textColor = Color.white;
+
+        if (item != null && item.IsValid() && improvementSystem != null)
+        {
+            int heroLevel = GetHeroLevel();
+            int maxLevel = improvementSystem.MaxLevel;
+            bool atMaxLevel = item.currentLevel >= maxLevel;
+
+            if (atMaxLevel)
+            {
+                requirementText = "MAX";
+                textColor = Color.yellow;
+            }
+            else
+            {
+                int requiredLevel = Mathf.Min(item.currentLevel + 1, maxLevel);
+                bool heroMeetsRequirement = heroLevel >= requiredLevel;
+
+                if (heroMeetsRequirement)
+                {
+                    requirementText = requiredLevel.ToString();
+                    textColor = Color.white;
+                    canUpgrade = true;
+                }
+                else
+                {
+                    requirementText = requiredLevel.ToString();
+                    textColor = Color.red;
+                    canUpgrade = false;
+                }
+            }
+        }
+
+        if (upgradeRequirementText != null)
+        {
+            upgradeRequirementText.text = requirementText;
+            upgradeRequirementText.color = textColor;
+        }
+
+        if (upgradeButton != null)
+        {
+            upgradeButton.interactable = canUpgrade;
+        }
+    }
+
+    private int GetHeroLevel()
+    {
+        if (GameDataManager.Instance == null)
+            return 1;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        return profile != null ? Mathf.Max(1, profile.heroLevel) : 1;
     }
 
     private void EnsureInitialized()
@@ -696,6 +789,8 @@ public class ForgeUIManager : MonoBehaviour
         if (nivelActualTextB != null) nivelActualTextB.text = $"Nv. {item.currentLevel}";
         if (nivelSiguienteTextA != null) nivelSiguienteTextA.text = $"Nv. {nextLevel}";
         if (nivelSiguienteTextB != null) nivelSiguienteTextB.text = $"Nv. {nextLevel}";
+        UpdateHeroRequirementTexts(item);
+        UpdateUpgradeButtonState(item);
 
         // Coste de mejora
         if (costUpgradeText != null)
@@ -730,6 +825,8 @@ public class ForgeUIManager : MonoBehaviour
         if (nivelActualTextB != null) nivelActualTextB.text = "";
         if (nivelSiguienteTextA != null) nivelSiguienteTextA.text = "";
         if (nivelSiguienteTextB != null) nivelSiguienteTextB.text = "";
+        UpdateHeroRequirementTexts(null);
+        UpdateUpgradeButtonState(null);
 
         if (costUpgradeText != null) costUpgradeText.text = "";
 

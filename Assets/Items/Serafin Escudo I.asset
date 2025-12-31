@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1475158119, guid: 8cf13876894bd92469693aff6c167068, type: 3}
   description: Escudo ceremonial que ofrece proteccion simbolica durante ritos sagrados.
   price: 1296
-  hp: 1093500
+  hp: 38
   mana: 0
   ataque: 0
-  defensa: 174960
+  defensa: 26
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

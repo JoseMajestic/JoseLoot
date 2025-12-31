@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -284508767, guid: c4acd4fd6a588ab42883a871d44e275c, type: 3}
   description: Casco colosal que simboliza invulnerabilidad frente a ataques enemigos.
   price: 840
-  hp: 546750
+  hp: 19
   mana: 0
   ataque: 0
-  defensa: 87480
+  defensa: 13
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 2400
+  destreza: 84
   nivel: 1
   rareza: Legendario
   itemType: 1

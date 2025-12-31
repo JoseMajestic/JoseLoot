@@ -107,6 +107,12 @@ public class EquipmentManager : MonoBehaviour
             return null;
         }
 
+        if (!PlayerMeetsHeroRequirement(itemInstance, out int requiredHeroLevel, out int heroLevel))
+        {
+            Debug.LogWarning($"El héroe necesita nivel {requiredHeroLevel} para equipar '{itemInstance.GetItemName()}' (nivel actual del héroe: {heroLevel}).");
+            return null;
+        }
+
         ItemInstance previousItem = GetEquippedItem(slot);
 
         // Equipar el nuevo item
@@ -126,6 +132,22 @@ public class EquipmentManager : MonoBehaviour
         }
 
         return previousItem;
+    }
+
+    private bool PlayerMeetsHeroRequirement(ItemInstance itemInstance, out int requiredHeroLevel, out int heroLevel)
+    {
+        requiredHeroLevel = itemInstance.GetRequiredHeroLevelForCurrentLevel();
+        heroLevel = 0;
+
+        PlayerProfileData profile = GameDataManager.Instance != null ? GameDataManager.Instance.GetPlayerProfile() : null;
+        if (profile == null)
+        {
+            Debug.LogWarning("EquipmentManager: No se pudo obtener el perfil del jugador para validar el nivel del héroe.");
+            return false;
+        }
+
+        heroLevel = profile.heroLevel;
+        return heroLevel >= requiredHeroLevel;
     }
 
     /// <summary>
@@ -536,6 +558,7 @@ public class EquipmentManager : MonoBehaviour
         if (itemInstance == null || !itemInstance.IsValid())
         {
             selectedItemForEquip = null;
+            UpdateEquipButtonState();
             return;
         }
 
@@ -543,6 +566,22 @@ public class EquipmentManager : MonoBehaviour
         
         // Determinar automáticamente el slot según el tipo de item
         selectedSlotForEquip = DetermineSlotForItem(itemInstance.baseItem);
+        UpdateEquipButtonState();
+    }
+
+    private void UpdateEquipButtonState()
+    {
+        if (equipButton == null)
+            return;
+
+        if (selectedItemForEquip == null || !selectedItemForEquip.IsValid())
+        {
+            equipButton.interactable = false;
+            return;
+        }
+
+        bool meetsRequirement = PlayerMeetsHeroRequirement(selectedItemForEquip, out _, out _);
+        equipButton.interactable = meetsRequirement;
     }
 
     /// <summary>

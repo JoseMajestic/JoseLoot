@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: 383391093, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: Montura de guerra preparada para operaciones imperiales prolongadas.
   price: 750
-  hp: 20250
+  hp: 2
   mana: 0
-  ataque: 6480
-  defensa: 3240
+  ataque: 2
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 5
+  suerte: 117
   destreza: 0
   nivel: 1
   rareza: Raro

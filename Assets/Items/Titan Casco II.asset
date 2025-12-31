@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1156165817, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Casco reforzado que incrementa resistencia ante impactos constantes.
   price: 720
-  hp: 410062
+  hp: 15
   mana: 0
   ataque: 0
-  defensa: 65610
+  defensa: 10
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 2000
+  destreza: 70
   nivel: 1
   rareza: Legendario
   itemType: 1

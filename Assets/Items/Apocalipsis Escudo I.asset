@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1739323113, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Escudo final levantado en las ultimas defensas desesperadas del Imperio.
   price: 1464
-  hp: 9841500
+  hp: 333
   mana: 0
   ataque: 0
-  defensa: 1574640
+  defensa: 223
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

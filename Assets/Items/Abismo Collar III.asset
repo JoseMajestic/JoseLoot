@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1457985799, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Collar abismal que encarna sumision total a la corrupcion.
   price: 1920
-  hp: 3280500
-  mana: 80
+  hp: 112
+  mana: 92
   ataque: 0
-  defensa: 524880
+  defensa: 75
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 90
-  suerte: 22
-  destreza: 3840
+  ataqueCritico: 90
+  danoCritico: 280
+  suerte: 608
+  destreza: 134
   nivel: 1
   rareza: Demoniaco
   itemType: 2

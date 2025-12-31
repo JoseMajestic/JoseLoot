@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1495828822, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Botas especializadas que permiten movimientos rapidos y silenciosos en combate.
   price: 302
-  hp: 4500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 720
-  velocidadAtaque: 39
+  defensa: 1
+  velocidadAtaque: 122
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 120
+  destreza: 5
   nivel: 1
   rareza: Raro
   itemType: 9

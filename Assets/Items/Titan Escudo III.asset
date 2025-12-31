@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1117279851, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
   description: Escudo colosal disenado para resistir asaltos masivos sin romper formacion.
   price: 840
-  hp: 729000
+  hp: 26
   mana: 0
   ataque: 0
-  defensa: 116640
+  defensa: 17
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

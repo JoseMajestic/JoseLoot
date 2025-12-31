@@ -19,13 +19,13 @@ MonoBehaviour:
   price: 1958
   hp: 0
   mana: 0
-  ataque: 885735
+  ataque: 126
   defensa: 0
-  velocidadAtaque: 150
-  ataqueCritico: 8
-  danoCritico: 87
-  suerte: 5
-  destreza: 6400
+  velocidadAtaque: 583
+  ataqueCritico: 311
+  danoCritico: 269
+  suerte: 117
+  destreza: 222
   nivel: 1
   rareza: Demoniaco
   itemType: 6

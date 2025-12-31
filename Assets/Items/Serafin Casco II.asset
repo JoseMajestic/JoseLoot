@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1702391838, guid: 42b7277b0c7bf0f4db564dd1f7367689, type: 3}
   description: Casco bendecido que mejora concentracion y resistencia espiritual.
   price: 1555
-  hp: 1230188
+  hp: 43
   mana: 0
   ataque: 0
-  defensa: 196830
+  defensa: 29
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 4000
+  destreza: 139
   nivel: 1
   rareza: Celestial
   itemType: 1

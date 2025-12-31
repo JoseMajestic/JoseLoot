@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: -1584915919, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Escudo ligero que ofrece proteccion minima sin comprometer movilidad ni sigilo.
   price: 408
-  hp: 121500
+  hp: 5
   mana: 0
   ataque: 0
-  defensa: 19440
+  defensa: 4
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

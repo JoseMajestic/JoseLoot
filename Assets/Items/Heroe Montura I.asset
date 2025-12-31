@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura noble asignada a heroes reconocidos por su valentia.
     aventuras."
   price: 600
-  hp: 30375
+  hp: 2
   mana: 0
-  ataque: 9720
-  defensa: 4860
+  ataque: 2
+  defensa: 2
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 5
+  suerte: 117
   destreza: 0
   nivel: 1
   rareza: Epico

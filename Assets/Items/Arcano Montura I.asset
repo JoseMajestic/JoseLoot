@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: 286463407, guid: d54ea597a2c96aa4aad218452ef82655, type: 3}
   description: Montura tranquila entrenada para acompanar desplazamientos rituales iniciales.
   price: 750
-  hp: 1125
+  hp: 1
   mana: 0
-  ataque: 360
-  defensa: 180
+  ataque: 1
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 2
+  suerte: 30
   destreza: 0
   nivel: 1
   rareza: Epico

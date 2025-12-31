@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo reforzado que refleja resistencia y poder ganados con esfuerzo.
   price: 1200
   hp: 0
-  mana: 148
-  ataque: 98415
+  mana: 188
+  ataque: 15
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 69
-  suerte: 12
-  destreza: 1200
+  ataqueCritico: 45
+  danoCritico: 205
+  suerte: 319
+  destreza: 42
   nivel: 1
   rareza: Legendario
   itemType: 8

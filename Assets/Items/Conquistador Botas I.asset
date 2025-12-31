@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas militares resistentes disenadas para marchas prolongadas en formacion.
     equipo.
   price: 504
-  hp: 6750
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1080
-  velocidadAtaque: 42
+  defensa: 1
+  velocidadAtaque: 134
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 160
+  destreza: 6
   nivel: 1
   rareza: Excelente
   itemType: 9

@@ -1,0 +1,16 @@
+﻿{
+    "base_curve_csv":  "reports\\item_stat_growth.csv",
+    "description":  "BonificaciÃ³n acumulada base por nivel (sin multiplicador de set). Multiplica cada columna por el SetMultiplier correspondiente para obtener la bonificaciÃ³n final de un ItemData.",
+    "stat_names":  [
+                       "hp",
+                       "mana",
+                       "ataque",
+                       "defensa",
+                       "velocidadAtaque",
+                       "ataqueCritico",
+                       "danoCritico",
+                       "suerte",
+                       "destreza"
+                   ],
+    "max_level":  999
+}

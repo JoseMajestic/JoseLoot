@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo reforzado que simboliza rango y experiencia en combate.
   price: 250
   hp: 0
-  mana: 48
-  ataque: 3645
+  mana: 47
+  ataque: 2
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 42
-  suerte: 7
-  destreza: 150
+  danoCritico: 108
+  suerte: 174
+  destreza: 6
   nivel: 1
   rareza: Raro
   itemType: 8

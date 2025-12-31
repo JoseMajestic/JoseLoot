@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -18,14 +18,14 @@ MonoBehaviour:
     de batalla.
   price: 1296
   hp: 0
-  mana: 162
-  ataque: 131220
+  mana: 208
+  ataque: 19
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1280
+  destreza: 45
   nivel: 1
   rareza: Celestial
   itemType: 7

@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Emblema reservado que identifica a maestros del espionaje romano.
     pasado.
   price: 1320
-  hp: 121500
-  mana: 65
+  hp: 5
+  mana: 71
   ataque: 0
-  defensa: 19440
+  defensa: 4
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 63
-  suerte: 15
-  destreza: 480
+  ataqueCritico: 45
+  danoCritico: 183
+  suerte: 406
+  destreza: 17
   nivel: 1
   rareza: Epico
   itemType: 2

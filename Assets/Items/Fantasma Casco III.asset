@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Casco especializado que oculta presencia y refuerza la conciencia situacional.
     sagrado.
   price: 571
-  hp: 182250
+  hp: 7
   mana: 0
   ataque: 0
-  defensa: 29160
+  defensa: 5
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1200
+  destreza: 42
   nivel: 1
   rareza: Etereo
   itemType: 1

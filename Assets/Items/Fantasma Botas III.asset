@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1207809943, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
   description: Botas avanzadas disenadas para movimientos invisibles en cualquier terreno.
   price: 571
-  hp: 121500
+  hp: 5
   mana: 0
   ataque: 0
-  defensa: 19440
-  velocidadAtaque: 66
+  defensa: 4
+  velocidadAtaque: 234
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 960
+  destreza: 34
   nivel: 1
   rareza: Etereo
   itemType: 9

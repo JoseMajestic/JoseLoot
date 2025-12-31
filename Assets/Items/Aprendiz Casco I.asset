@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -2114323834, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Casco sencillo que protege la cabeza durante entrenamientos y enfrentamientos menores.
   price: 120
-  hp: 375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 60
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 25
+  destreza: 2
   nivel: 1
   rareza: Comun
   itemType: 1

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -18,14 +18,14 @@ MonoBehaviour:
     prolongados.
   price: 1958
   hp: 0
-  mana: 204
-  ataque: 590490
+  mana: 267
+  ataque: 84
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 3200
+  destreza: 112
   nivel: 1
   rareza: Demoniaco
   itemType: 7

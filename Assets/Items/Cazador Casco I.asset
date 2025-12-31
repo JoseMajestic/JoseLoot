@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 87670185a7d512c449763f66ce9ffb24, type: 3}
   description: Casco ligero que protege sin obstaculizar la vision durante exploraciones iniciales.
   price: 216
-  hp: 3375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 540
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 100
+  destreza: 4
   nivel: 1
   rareza: Raro
   itemType: 1

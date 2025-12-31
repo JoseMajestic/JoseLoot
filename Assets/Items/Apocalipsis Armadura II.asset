@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Ultima Roma Cataclysmus
   itemSprite: {fileID: -896788129, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
-  description: Armadura devastada pero resistente, disenada para sobrevivir al colapso del mundo conocido.
+  description: Armadura devastada pero resistente, disenada para sobrevivir al colapso
+    del mundo conocido.
   price: 1757
-  hp: 22143375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 3542940
+  defensa: 500
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

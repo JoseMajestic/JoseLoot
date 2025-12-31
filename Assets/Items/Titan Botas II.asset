@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 2045412846, guid: 1cc9548bdb64d794eaafa866f1acf2d9, type: 3}
   description: Botas reforzadas que permiten avanzar firmemente bajo presion constante.
   price: 720
-  hp: 273375
+  hp: 10
   mana: 0
   ataque: 0
-  defensa: 43740
-  velocidadAtaque: 72
+  defensa: 7
+  velocidadAtaque: 259
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1600
+  destreza: 56
   nivel: 1
   rareza: Legendario
   itemType: 9

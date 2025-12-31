@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Calzado basico que proporciona estabilidad minima durante desplazamientos de entrenamiento.
     del destino.
   price: 120
-  hp: 250
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 40
-  velocidadAtaque: 15
+  defensa: 1
+  velocidadAtaque: 22
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 20
+  destreza: 1
   nivel: 1
   rareza: Comun
   itemType: 9

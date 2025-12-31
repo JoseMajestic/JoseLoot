@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 921334409, guid: 289dd331f5faee84c9ba7a3d5312d6c5, type: 3}
   description: Escudo abismal que bloquea ataques con corrupcion solidificada.
   price: 2285
-  hp: 6561000
+  hp: 223
   mana: 0
   ataque: 0
-  defensa: 1049760
+  defensa: 149
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 716059922, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
   description: Botas de campana usadas durante las marchas finales hacia la destruccion.
   price: 1464
-  hp: 4920750
+  hp: 167
   mana: 0
   ataque: 0
-  defensa: 787320
-  velocidadAtaque: 96
+  defensa: 112
+  velocidadAtaque: 358
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 10240
+  destreza: 356
   nivel: 1
   rareza: Extremo
   itemType: 9

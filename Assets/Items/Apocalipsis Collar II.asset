@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 542248357, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Collar devastado que representa fidelidad durante la ruina imperial.
   price: 1080
-  hp: 7381125
-  mana: 61
+  hp: 250
+  mana: 66
   ataque: 0
-  defensa: 1180980
+  defensa: 167
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 96
-  suerte: 24
-  destreza: 6400
+  ataqueCritico: 90
+  danoCritico: 301
+  suerte: 666
+  destreza: 222
   nivel: 1
   rareza: Demoniaco
   itemType: 2

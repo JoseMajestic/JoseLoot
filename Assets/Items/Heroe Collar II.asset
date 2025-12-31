@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -2136371526, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Emblema ceremonial que identifica a guerreros respetados por su conducta.
   price: 480
-  hp: 30375
-  mana: 35
+  hp: 2
+  mana: 29
   ataque: 0
-  defensa: 4860
+  defensa: 2
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 51
-  suerte: 12
-  destreza: 200
+  ataqueCritico: 45
+  danoCritico: 140
+  suerte: 319
+  destreza: 8
   nivel: 1
   rareza: Epico
   itemType: 2

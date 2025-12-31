@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo de guerra que representa lealtad absoluta a la legion.
   price: 500
   hp: 0
-  mana: 68
-  ataque: 4860
+  mana: 76
+  ataque: 2
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 1
-  danoCritico: 45
-  suerte: 8
-  destreza: 180
+  danoCritico: 119
+  suerte: 203
+  destreza: 7
   nivel: 1
   rareza: Raro
   itemType: 8

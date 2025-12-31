@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 835018598, guid: 53b5b3be4e9eb204eb6abc84b90e37ab, type: 3}
   description: Casco reforzado que resiste el caos absoluto de la caida imperial.
   price: 1757
-  hp: 11071688
+  hp: 375
   mana: 0
   ataque: 0
-  defensa: 1771470
+  defensa: 250
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 16000
+  destreza: 555
   nivel: 1
   rareza: Extremo
   itemType: 1

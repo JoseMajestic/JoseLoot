@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: 383391093, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: Montura sagrada guiada por presagios que asegura desplazamientos seguros.
   price: 1500
-  hp: 2250
+  hp: 1
   mana: 0
-  ataque: 720
-  defensa: 360
+  ataque: 1
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 3
+  suerte: 59
   destreza: 0
   nivel: 1
   rareza: Epico

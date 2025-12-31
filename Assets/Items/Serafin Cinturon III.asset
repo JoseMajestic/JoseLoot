@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Cinturon sagrado que simboliza dominio completo del rito divino. bendito.
   price: 1814
   hp: 0
-  mana: 162
-  ataque: 262440
+  mana: 208
+  ataque: 38
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 1920
+  destreza: 67
   nivel: 1
   rareza: Celestial
   itemType: 7

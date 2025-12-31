@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1274223644, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Collar eterno que conserva la identidad romana tras la destruccion.
   price: 2160
-  hp: 9841500
-  mana: 89
+  hp: 333
+  mana: 105
   ataque: 0
-  defensa: 1574640
+  defensa: 223
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 99
-  suerte: 24
-  destreza: 7680
+  ataqueCritico: 90
+  danoCritico: 312
+  suerte: 666
+  destreza: 267
   nivel: 1
   rareza: Demoniaco
   itemType: 2

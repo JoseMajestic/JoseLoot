@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: -1063693134, guid: a3d3d79b97c00ca4bb7b110b9cd4be24, type: 3}
   description: Montura entrenada para desplazamientos militares controlados y seguros.
   price: 375
-  hp: 10125
+  hp: 1
   mana: 0
-  ataque: 3240
-  defensa: 1620
+  ataque: 1
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 4
+  suerte: 88
   destreza: 0
   nivel: 1
   rareza: Raro

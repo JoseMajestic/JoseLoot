@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo sagrado que manifiesta proteccion divina incuestionable.
     bendito.
   price: 1814
-  hp: 2187000
+  hp: 75
   mana: 0
   ataque: 0
-  defensa: 349920
+  defensa: 50
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

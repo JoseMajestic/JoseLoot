@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Armadura ilustre que simboliza prestigio alcanzado tras grandes victorias.
     epicas.
   price: 974
-  hp: 121500
+  hp: 5
   mana: 0
   ataque: 0
-  defensa: 19440
+  defensa: 4
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

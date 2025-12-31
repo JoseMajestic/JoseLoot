@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 26b8fbfa30e3f65498f1f5ac198eba68, type: 3}
   description: Escudo basico que ensena defensa elemental durante las primeras batallas.
   price: 120
-  hp: 500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 80
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

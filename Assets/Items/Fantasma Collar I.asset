@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1457985799, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Amuleto discreto que simboliza pertenencia a redes de informacion secreta.
   price: 660
-  hp: 60750
-  mana: 25
+  hp: 3
+  mana: 15
   ataque: 0
-  defensa: 9720
+  defensa: 2
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 57
-  suerte: 13
-  destreza: 320
+  ataqueCritico: 45
+  danoCritico: 162
+  suerte: 348
+  destreza: 12
   nivel: 1
   rareza: Epico
   itemType: 2

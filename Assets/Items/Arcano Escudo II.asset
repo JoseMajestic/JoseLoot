@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1653294197, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Escudo ceremonial que refuerza la defensa mediante runas rituales activas.
   price: 374
-  hp: 2250
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 360
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1296867336, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Botas reforzadas que mejoran la traccion durante persecuciones prolongadas.
   price: 259
-  hp: 3375
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 540
-  velocidadAtaque: 36
+  defensa: 1
+  velocidadAtaque: 109
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 100
+  destreza: 4
   nivel: 1
   rareza: Raro
   itemType: 9

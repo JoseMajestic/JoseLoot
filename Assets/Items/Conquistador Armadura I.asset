@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Armadura estandar que protege eficazmente durante combates disciplinados en formacion.
     equipo.
   price: 504
-  hp: 20250
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 3240
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

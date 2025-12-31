@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo solido que marca dedicacion al combate de fuerza directa.
   price: 1200
   hp: 0
-  mana: 78
-  ataque: 65610
+  mana: 90
+  ataque: 10
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 66
-  suerte: 12
-  destreza: 960
+  ataqueCritico: 45
+  danoCritico: 194
+  suerte: 319
+  destreza: 34
   nivel: 1
   rareza: Legendario
   itemType: 8

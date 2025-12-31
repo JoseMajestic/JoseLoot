@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Ultima Roma Exitium
   itemSprite: {fileID: 663641111, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
-  description: Armadura final que protege durante las ultimas batallas del Imperio agonizante.
+  description: Armadura final que protege durante las ultimas batallas del Imperio
+    agonizante.
   price: 1464
-  hp: 14762250
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 2361960
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

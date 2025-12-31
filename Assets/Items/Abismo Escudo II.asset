@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo infernal que protege mediante resistencia nacida del caos.
     este set.
   price: 1958
-  hp: 4920750
+  hp: 167
   mana: 0
   ataque: 0
-  defensa: 787320
+  defensa: 112
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 270420883, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
   description: Casco infernal que incrementa resistencia mental bajo influencia corrupta.
   price: 1958
-  hp: 3690562
+  hp: 126
   mana: 0
   ataque: 0
-  defensa: 590490
+  defensa: 84
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 8000
+  destreza: 278
   nivel: 1
   rareza: Demoniaco
   itemType: 1

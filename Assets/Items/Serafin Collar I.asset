@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -182863653, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Amuleto ceremonial que refuerza vinculo inicial con los cultos oficiales.
   price: 1800
-  hp: 546750
-  mana: 85
+  hp: 19
+  mana: 99
   ataque: 0
-  defensa: 87480
+  defensa: 13
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 75
-  suerte: 18
-  destreza: 1280
+  ataqueCritico: 45
+  danoCritico: 226
+  suerte: 493
+  destreza: 45
   nivel: 1
   rareza: Legendario
   itemType: 2

@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo sencillo que marca iniciacion en labores de inteligencia encubierta.
   price: 550
   hp: 0
-  mana: 48
-  ataque: 21870
+  mana: 47
+  ataque: 4
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 57
-  suerte: 10
-  destreza: 480
+  ataqueCritico: 45
+  danoCritico: 162
+  suerte: 261
+  destreza: 17
   nivel: 1
   rareza: Epico
   itemType: 8

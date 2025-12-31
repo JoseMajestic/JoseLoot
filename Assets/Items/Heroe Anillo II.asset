@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo ceremonial que representa integridad y lealtad demostradas en servicio.
   price: 400
   hp: 0
-  mana: 68
-  ataque: 10935
+  mana: 76
+  ataque: 3
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 51
-  suerte: 9
-  destreza: 300
+  ataqueCritico: 45
+  danoCritico: 140
+  suerte: 232
+  destreza: 11
   nivel: 1
   rareza: Epico
   itemType: 8

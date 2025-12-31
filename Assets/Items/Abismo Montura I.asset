@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Montura corrompida entrenada para resistir entornos inestables y hostiles.
     ha tocado.
   price: 1200
-  hp: 2460375
+  hp: 84
   mana: 0
-  ataque: 787320
-  defensa: 393660
+  ataque: 112
+  defensa: 56
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 10
+  suerte: 261
   destreza: 0
   nivel: 1
   rareza: Demoniaco

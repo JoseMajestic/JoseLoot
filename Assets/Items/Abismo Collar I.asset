@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -1085076470, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Amuleto oscuro que simboliza el primer vinculo con fuerzas prohibidas.
   price: 960
-  hp: 1640250
-  mana: 30
+  hp: 56
+  mana: 22
   ataque: 0
-  defensa: 262440
+  defensa: 38
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 84
-  suerte: 20
-  destreza: 2560
+  ataqueCritico: 90
+  danoCritico: 258
+  suerte: 550
+  destreza: 89
   nivel: 1
   rareza: Demoniaco
   itemType: 2

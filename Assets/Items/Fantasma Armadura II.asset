@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1846299315, guid: fc56a9ef41ba6cf4a9a5719910034a08, type: 3}
   description: Armadura reforzada que mantiene sigilo incluso en enfrentamientos prolongados.
   price: 490
-  hp: 273375
+  hp: 10
   mana: 0
   ataque: 0
-  defensa: 43740
+  defensa: 7
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo final que marca el juramento en los ultimos momentos del Imperio.
   price: 900
   hp: 0
-  mana: 64
-  ataque: 1771470
+  mana: 70
+  ataque: 250
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 93
-  suerte: 17
-  destreza: 7680
+  ataqueCritico: 90
+  danoCritico: 291
+  suerte: 464
+  destreza: 267
   nivel: 1
   rareza: Demoniaco
   itemType: 8

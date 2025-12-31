@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: -324126002, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
   description: Amuleto robusto que representa fortaleza fisica y resistencia constante.
   price: 1440
-  hp: 182250
-  mana: 40
+  hp: 7
+  mana: 36
   ataque: 0
-  defensa: 29160
+  defensa: 5
   velocidadAtaque: 0
-  ataqueCritico: 2
-  danoCritico: 66
-  suerte: 16
-  destreza: 640
+  ataqueCritico: 45
+  danoCritico: 194
+  suerte: 435
+  destreza: 23
   nivel: 1
   rareza: Legendario
   itemType: 2

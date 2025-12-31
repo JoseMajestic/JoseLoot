@@ -18,14 +18,14 @@ MonoBehaviour:
     del mundo.
   price: 1800
   hp: 0
-  mana: 176
-  ataque: 3542940
+  mana: 227
+  ataque: 500
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 99
-  suerte: 18
-  destreza: 11520
+  ataqueCritico: 90
+  danoCritico: 312
+  suerte: 493
+  destreza: 400
   nivel: 1
   rareza: Demoniaco
   itemType: 8

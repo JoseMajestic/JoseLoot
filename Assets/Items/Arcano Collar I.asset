@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1226054322, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: Amuleto simple que acompana al augur durante lecturas iniciales de presagios.
   price: 600
-  hp: 750
-  mana: 41
+  hp: 1
+  mana: 38
   ataque: 0
-  defensa: 120
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
-  danoCritico: 21
-  suerte: 4
-  destreza: 20
+  danoCritico: 33
+  suerte: 88
+  destreza: 1
   nivel: 1
   rareza: Epico
   itemType: 2

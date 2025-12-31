@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -18,14 +18,14 @@ MonoBehaviour:
     absoluto.
   price: 571
   hp: 0
-  mana: 51
-  ataque: 29160
+  mana: 52
+  ataque: 5
   defensa: 0
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 480
+  destreza: 17
   nivel: 1
   rareza: Etereo
   itemType: 7

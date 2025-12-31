@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1154453935, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
   description: Botas corruptas que permiten avanzar sin sentir el peso del terreno.
   price: 1632
-  hp: 1640250
+  hp: 56
   mana: 0
   ataque: 0
-  defensa: 262440
-  velocidadAtaque: 87
+  defensa: 38
+  velocidadAtaque: 321
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 5120
+  destreza: 178
   nivel: 1
   rareza: Demoniaco
   itemType: 9

@@ -18,13 +18,13 @@ MonoBehaviour:
   price: 374
   hp: 0
   mana: 0
-  ataque: 405
+  ataque: 1
   defensa: 0
-  velocidadAtaque: 45
-  ataqueCritico: 2
-  danoCritico: 24
+  velocidadAtaque: 146
+  ataqueCritico: 45
+  danoCritico: 44
   suerte: 1
-  destreza: 50
+  destreza: 2
   nivel: 1
   rareza: Magico
   itemType: 6

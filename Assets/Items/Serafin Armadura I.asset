@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: -1521656735, guid: 73f96c842c2bf9140a29322258c1a19a, type: 3}
   description: Vestimenta ceremonial que ofrece proteccion basica durante rituales y enfrentamientos sagrados.
   price: 1296
-  hp: 1640250
+  hp: 56
   mana: 0
   ataque: 0
-  defensa: 262440
+  defensa: 38
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -16,14 +16,14 @@ MonoBehaviour:
   itemSprite: {fileID: -1724744423, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Montura sagrada reservada a autoridades supremas del culto romano.
   price: 4500
-  hp: 1640250
+  hp: 56
   mana: 0
-  ataque: 524880
-  defensa: 262440
+  ataque: 75
+  defensa: 38
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
-  suerte: 10
+  suerte: 261
   destreza: 0
   nivel: 1
   rareza: Legendario

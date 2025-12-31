@@ -17,14 +17,14 @@ MonoBehaviour:
   description: Anillo abismal que representa dominio absoluto de fuerzas corruptas.
   price: 1600
   hp: 0
-  mana: 158
-  ataque: 1180980
+  mana: 202
+  ataque: 3
   defensa: 0
   velocidadAtaque: 0
-  ataqueCritico: 3
-  danoCritico: 90
-  suerte: 16
-  destreza: 5760
+  ataqueCritico: 90
+  danoCritico: 280
+  suerte: 435
+  destreza: 200
   nivel: 1
   rareza: Demoniaco
   itemType: 8

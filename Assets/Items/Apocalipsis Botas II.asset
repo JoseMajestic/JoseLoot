@@ -17,15 +17,15 @@ MonoBehaviour:
   description: Botas resistentes que soportan terrenos arrasados por el colapso total.
     equipo.
   price: 1757
-  hp: 7381125
+  hp: 250
   mana: 0
   ataque: 0
-  defensa: 1180980
-  velocidadAtaque: 99
+  defensa: 167
+  velocidadAtaque: 371
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 12800
+  destreza: 444
   nivel: 1
   rareza: Extremo
   itemType: 9

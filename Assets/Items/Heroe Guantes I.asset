@@ -19,13 +19,13 @@ MonoBehaviour:
   price: 696
   hp: 0
   mana: 0
-  ataque: 7290
+  ataque: 2
   defensa: 0
-  velocidadAtaque: 85
-  ataqueCritico: 4
-  danoCritico: 48
-  suerte: 3
-  destreza: 320
+  velocidadAtaque: 313
+  ataqueCritico: 134
+  danoCritico: 130
+  suerte: 59
+  destreza: 12
   nivel: 1
   rareza: Epico
   itemType: 6

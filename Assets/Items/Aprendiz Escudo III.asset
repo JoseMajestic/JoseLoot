@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Escudo avanzado que demuestra dominio defensivo adquirido mediante formacion rigurosa.
     del destino.
   price: 168
-  hp: 1000
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 160
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

@@ -67,6 +67,9 @@ public class InventoryUIManager : MonoBehaviour
     [Tooltip("Texto que muestra el Nivel del item seleccionado")]
     [SerializeField] private TextMeshProUGUI levelText;
     
+    [Tooltip("Texto que muestra el nivel de héroe requerido para equipar el item seleccionado")]
+    [SerializeField] private TextMeshProUGUI requiredHeroLevelText;
+    
     [Tooltip("Texto que muestra el HP del item seleccionado")]
     [SerializeField] private TextMeshProUGUI hpText;
     
@@ -149,6 +152,35 @@ public class InventoryUIManager : MonoBehaviour
     private void Awake()
     {
         EnsureInitialized();
+    }
+
+    private void UpdateRequiredHeroLevelText(ItemInstance itemInstance)
+    {
+        if (requiredHeroLevelText == null)
+            return;
+
+        if (itemInstance == null || !itemInstance.IsValid())
+        {
+            requiredHeroLevelText.text = "";
+            requiredHeroLevelText.color = Color.white;
+            return;
+        }
+
+        int requiredLevel = itemInstance.GetRequiredHeroLevelForCurrentLevel();
+        int heroLevel = GetHeroLevel();
+        bool meetsRequirement = heroLevel >= requiredLevel;
+
+        requiredHeroLevelText.text = requiredLevel.ToString();
+        requiredHeroLevelText.color = meetsRequirement ? Color.white : Color.red;
+    }
+
+    private int GetHeroLevel()
+    {
+        if (GameDataManager.Instance == null)
+            return 1;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        return profile != null ? Mathf.Max(1, profile.heroLevel) : 1;
     }
 
     private void Start()
@@ -1002,6 +1034,7 @@ public class InventoryUIManager : MonoBehaviour
         // Actualizar todos los textos de estadísticas usando el item actualizado
         if (levelText != null)
             levelText.text = $"Nv. {updatedItem.currentLevel}";
+        UpdateRequiredHeroLevelText(updatedItem);
 
         if (hpText != null)
             hpText.text = stats.hp.ToString();
@@ -1102,6 +1135,12 @@ public class InventoryUIManager : MonoBehaviour
         {
             itemTitleText.text = "";
             itemTitleText.color = Color.white;
+        }
+        
+        if (requiredHeroLevelText != null)
+        {
+            requiredHeroLevelText.text = "";
+            requiredHeroLevelText.color = Color.white;
         }
 
         if (descriptionText != null)

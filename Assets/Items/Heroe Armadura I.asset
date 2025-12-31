@@ -17,10 +17,10 @@ MonoBehaviour:
   description: Armadura noble que protege al portador reconocido por su coraje probado.
     de dormir.
   price: 696
-  hp: 60750
+  hp: 3
   mana: 0
   ataque: 0
-  defensa: 9720
+  defensa: 2
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

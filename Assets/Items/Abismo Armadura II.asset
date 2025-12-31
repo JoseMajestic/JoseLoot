@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Infernum Inferus
   itemSprite: {fileID: 1077872623, guid: 8ae7ab800f727eb4bbe36bf4c0f400f8, type: 3}
-  description: Armadura oscura que refuerza defensa mediante energias infernales activas.
-    este set.
+  description: Armadura oscura que refuerza defensa mediante energias infernales
+    activas. este set.
   price: 1958
-  hp: 7381125
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 1180980
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

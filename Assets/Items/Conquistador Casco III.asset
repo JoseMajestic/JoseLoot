@@ -16,15 +16,15 @@ MonoBehaviour:
   itemSprite: {fileID: 1876297099, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
   description: Casco de guerra avanzado usado en campanas de conquista extensas.
   price: 706
-  hp: 20250
+  hp: 2
   mana: 0
   ataque: 0
-  defensa: 3240
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
   suerte: 0
-  destreza: 300
+  destreza: 11
   nivel: 1
   rareza: Excelente
   itemType: 1

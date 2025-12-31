@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 704deaac4b2fedc4e93f8a7586df6bcd, type: 3}
   description: Armadura completa de formacion, simboliza control defensivo logrado mediante practica continua.
   price: 168
-  hp: 1500
+  hp: 1
   mana: 0
   ataque: 0
-  defensa: 240
+  defensa: 1
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0

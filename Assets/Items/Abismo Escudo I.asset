@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 1433497771, guid: 27d5a619bb10d8d4885c32fad32835a4, type: 3}
   description: Escudo corrupto que absorbe impactos mientras filtra energia oscura.
   price: 1632
-  hp: 3280500
+  hp: 112
   mana: 0
   ataque: 0
-  defensa: 524880
+  defensa: 75
   velocidadAtaque: 0
   ataqueCritico: 0
   danoCritico: 0
