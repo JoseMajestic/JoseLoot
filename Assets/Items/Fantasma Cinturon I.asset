@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -2141897012, guid: abd96bbb88c990446b43529b8799d407, type: 3}
   description: Cinturon discreto que organiza herramientas esenciales para infiltracion
     basica.
-  price: 408
+  price: 165000
   hp: 0
   mana: 52
   ataque: 3
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 12
   nivel: 1
-  rareza: Etereo
+  requiredHeroLevel: 333
+  rareza: Comun
   itemType: 7

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Heroe Guantes II_Imperialis
+  m_EditorClassIdentifier: 
+  itemName: Guantes de Roma Honor - Imperialis
+  itemSprite: {fileID: 1275809394, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
+  description: Guantes ceremoniales que reflejan disciplina y respeto dentro del
+    ejercito.
+  price: 644973
+  hp: 0
+  mana: 0
+  ataque: 11
+  defensa: 0
+  velocidadAtaque: 1197
+  ataqueCritico: 480
+  danoCritico: 502
+  suerte: 211
+  destreza: 54
+  nivel: 1
+  requiredHeroLevel: 180
+  rareza: Imperialis
+  itemType: 6

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Augur Omen
   itemSprite: {fileID: -2102423843, guid: be19fda40f08ab046bfa0a243ad76fd5, type: 3}
-  description: Arma ritual sencilla, canaliza presagios iniciales para apoyar ataques basicos del combatiente.
-    de poder.
-  price: 390
+  description: Arma ritual sencilla, canaliza presagios iniciales para apoyar ataques
+    basicos del combatiente. de poder.
+  price: 21000
   hp: 0
   mana: 0
   ataque: 1
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Magico
+  requiredHeroLevel: 32
+  rareza: Comun
   itemType: 3

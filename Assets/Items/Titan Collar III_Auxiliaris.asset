@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Titan Collar III_Auxiliaris
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Collar de Colossus Colossus - Auxiliaris
+  itemSprite: {fileID: -1810264046, guid: 74e159a7becd7f14999a1ce4cee62192, type: 3}
+  description: Collar colosal que encarna la supremacia fisica del portador. el mundo.
+  price: 336000
+  hp: 16
+  mana: 162
+  ataque: 0
+  defensa: 11
+  velocidadAtaque: 0
+  ataqueCritico: 54
+  danoCritico: 259
+  suerte: 557
+  destreza: 41
+  nivel: 1
+  requiredHeroLevel: 481
+  rareza: Auxiliaris
+  itemType: 2

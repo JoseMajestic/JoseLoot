@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Anillo de Ultima Roma Exitium
   itemSprite: {fileID: 21300000, guid: cd5c18880146ed3418fa7045eaa97183, type: 3}
   description: Anillo final que marca el juramento en los ultimos momentos del Imperio.
-  price: 900
+  price: 350000
   hp: 0
   mana: 70
   ataque: 250
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 464
   destreza: 267
   nivel: 1
-  rareza: Demoniaco
+  requiredHeroLevel: 430
+  rareza: Comun
   itemType: 8

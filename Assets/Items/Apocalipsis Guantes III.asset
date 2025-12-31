@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -1912166920, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Guantes eternos que simbolizan dominio incluso tras la caida de Roma.
     equipo.
-  price: 2050
+  price: 350000
   hp: 0
   mana: 0
   ataque: 500
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 146
   destreza: 533
   nivel: 1
-  rareza: Extremo
+  requiredHeroLevel: 500
+  rareza: Comun
   itemType: 6

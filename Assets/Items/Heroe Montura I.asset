@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Montura de Roma Virtus
   itemSprite: {fileID: -734584478, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
-  description: Montura noble asignada a heroes reconocidos por su valentia.
-    aventuras."
-  price: 600
+  description: Montura noble asignada a heroes reconocidos por su valentia. aventuras."
+  price: 180000
   hp: 2
   mana: 0
   ataque: 2
@@ -27,5 +26,6 @@ MonoBehaviour:
   suerte: 117
   destreza: 0
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 180
+  rareza: Comun
   itemType: 0

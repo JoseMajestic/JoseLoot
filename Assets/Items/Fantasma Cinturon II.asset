@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "Cintur\xF3n de Speculator Silentium"
   itemSprite: {fileID: -36848442, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Cinturon tactico que facilita acceso rapido a equipo sin delatar presencia.
-  price: 490
+  price: 165000
   hp: 0
   mana: 52
   ataque: 4
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 15
   nivel: 1
-  rareza: Etereo
+  requiredHeroLevel: 333
+  rareza: Comun
   itemType: 7

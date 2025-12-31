@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Guantes de Pontifex Divinus
   itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
   description: Guantes bendecidos que canalizan energia divina con control absoluto.
-  price: 1555
+  price: 240000
   hp: 0
   mana: 0
   ataque: 43
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 117
   destreza: 112
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 6

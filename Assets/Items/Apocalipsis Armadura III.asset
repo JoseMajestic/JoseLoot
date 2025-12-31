@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 1667721009, guid: d397a1b43b967fa478bbfc51233b5434, type: 3}
   description: Armadura eterna que trasciende la destruccion y preserva el legado
     imperial. tierra.
-  price: 2050
+  price: 350000
   hp: 1
   mana: 0
   ataque: 0
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Extremo
+  requiredHeroLevel: 500
+  rareza: Comun
   itemType: 4

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Montura de Speculator Umbra
   itemSprite: {fileID: 680388622, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
   description: Montura entrenada para desplazamientos discretos en misiones de reconocimiento.
-  price: 825
+  price: 165000
   hp: 4
   mana: 0
   ataque: 5
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 174
   destreza: 0
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 333
+  rareza: Comun
   itemType: 0

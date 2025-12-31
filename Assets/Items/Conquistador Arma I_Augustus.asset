@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Arma I_Augustus
+  m_EditorClassIdentifier: 
+  itemName: Arma de Legionarius Cohors - Augustus
+  itemSprite: {fileID: 1131100454, guid: 31e938ecebb4e474d9852dedac23505b, type: 3}
+  description: Arma reglamentaria disenada para combatir en formacion cerrada junto
+    a la cohorte. legendarias.
+  price: 429978
+  hp: 0
+  mana: 0
+  ataque: 9
+  defensa: 0
+  velocidadAtaque: 327
+  ataqueCritico: 959
+  danoCritico: 1019
+  suerte: 0
+  destreza: 0
+  nivel: 1
+  requiredHeroLevel: 204
+  rareza: Augustus
+  itemType: 3

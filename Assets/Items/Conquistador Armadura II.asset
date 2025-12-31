@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Armadura de Legionarius Centuria
   itemSprite: {fileID: -70728368, guid: 0448210f4abf5844d91669e6f84f211a, type: 3}
   description: Armadura reforzada que mejora la resistencia en enfrentamientos prolongados.
-  price: 605
+  price: 99999
   hp: 2
   mana: 0
   ataque: 0
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Excelente
+  requiredHeroLevel: 204
+  rareza: Comun
   itemType: 4

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Montura de Explorator Venator
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Montura agil que facilita persecuciones sostenidas en terrenos variados.
-  price: 100
+  price: 85000
   hp: 5062
   mana: 0
   ataque: 1620
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 3
   destreza: 0
   nivel: 1
+  requiredHeroLevel: 66
   rareza: Comun
   itemType: 0

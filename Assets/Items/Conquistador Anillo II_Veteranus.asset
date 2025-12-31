@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Anillo II_Veteranus
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Anillo de Legionarius Centuria - Veteranus
+  itemSprite: {fileID: 225467922, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
+  description: Anillo reforzado que simboliza rango y experiencia en combate.
+  price: 172798
+  hp: 0
+  mana: 81
+  ataque: 3
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 2
+  danoCritico: 187
+  suerte: 301
+  destreza: 10
+  nivel: 2
+  requiredHeroLevel: 353
+  rareza: Veteranus
+  itemType: 8

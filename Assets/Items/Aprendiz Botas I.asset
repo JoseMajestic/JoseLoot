@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Botas de Tiro Rudimentum
   itemSprite: {fileID: 1609960186, guid: c88165515191c714f8d198e8fc38135c, type: 3}
-  description: Calzado basico que proporciona estabilidad minima durante desplazamientos de entrenamiento.
-    del destino.
-  price: 120
+  description: Calzado basico que proporciona estabilidad minima durante desplazamientos
+    de entrenamiento. del destino.
+  price: 1500
   hp: 1
   mana: 0
   ataque: 0
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 1
   nivel: 1
+  requiredHeroLevel: 1
   rareza: Comun
   itemType: 9

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Casco de Pontifex Sanctus
   itemSprite: {fileID: 1346341774, guid: 42b7277b0c7bf0f4db564dd1f7367689, type: 3}
-  description: Casco sagrado que simboliza autoridad religiosa incuestionable en batalla.
-  price: 1814
+  description: Casco sagrado que simboliza autoridad religiosa incuestionable en
+    batalla.
+  price: 240000
   hp: 56
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 167
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 1

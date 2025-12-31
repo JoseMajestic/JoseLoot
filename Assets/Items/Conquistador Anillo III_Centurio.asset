@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Anillo III_Centurio
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Anillo de Legionarius Legio - Centurio
+  itemSprite: {fileID: -1005229158, guid: ccd1c3550f2313c47bcc001efd674f75, type: 3}
+  description: Anillo de guerra que representa lealtad absoluta a la legion.
+  price: 207358
+  hp: 0
+  mana: 158
+  ataque: 4
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 2
+  danoCritico: 247
+  suerte: 421
+  destreza: 15
+  nivel: 2
+  requiredHeroLevel: 423
+  rareza: Centurio
+  itemType: 8

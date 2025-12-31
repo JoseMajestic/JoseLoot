@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Escudo de Legionarius Centuria
   itemSprite: {fileID: 840487990, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
   description: Escudo reforzado que mejora la resistencia durante choques prolongados.
-  price: 605
+  price: 99999
   hp: 2
   mana: 0
   ataque: 0
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Excelente
+  requiredHeroLevel: 204
+  rareza: Comun
   itemType: 5

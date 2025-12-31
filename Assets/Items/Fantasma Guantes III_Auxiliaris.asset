@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Fantasma Guantes III_Auxiliaris
+  m_EditorClassIdentifier: 
+  itemName: Guantes de Speculator Occultus - Auxiliaris
+  itemSprite: {fileID: -2034443838, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
+  description: Guantes especializados que optimizan control absoluto en misiones
+    encubiertas.
+  price: 198000
+  hp: 0
+  mana: 0
+  ataque: 8
+  defensa: 0
+  velocidadAtaque: 500
+  ataqueCritico: 268
+  danoCritico: 220
+  suerte: 106
+  destreza: 41
+  nivel: 1
+  requiredHeroLevel: 400
+  rareza: Auxiliaris
+  itemType: 6

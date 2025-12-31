@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Guantes I_Veteranus
+  m_EditorClassIdentifier: 
+  itemName: Guantes de Legionarius Cohors - Veteranus
+  itemSprite: {fileID: -1218128843, guid: a3d3d79b97c00ca4bb7b110b9cd4be24, type: 3}
+  description: Guantes militares que facilitan el manejo seguro de armas reglamentarias.
+    legendarias.
+  price: 172798
+  hp: 0
+  mana: 0
+  ataque: 2
+  defensa: 0
+  velocidadAtaque: 432
+  ataqueCritico: 156
+  danoCritico: 169
+  suerte: 52
+  destreza: 10
+  nivel: 2
+  requiredHeroLevel: 353
+  rareza: Veteranus
+  itemType: 6

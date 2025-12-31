@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Serafin Guantes II_Tribunus
+  m_EditorClassIdentifier: 
+  itemName: Guantes de Pontifex Divinus - Tribunus
+  itemSprite: {fileID: 989703489, guid: 5b7588e1735f14d45a6b225a1f8d42d3, type: 3}
+  description: Guantes bendecidos que canalizan energia divina con control absoluto.
+  price: 597197
+  hp: 0
+  mana: 0
+  ataque: 107
+  defensa: 0
+  velocidadAtaque: 1296
+  ataqueCritico: 664
+  danoCritico: 590
+  suerte: 291
+  destreza: 279
+  nivel: 1
+  requiredHeroLevel: 300
+  rareza: Tribunus
+  itemType: 6

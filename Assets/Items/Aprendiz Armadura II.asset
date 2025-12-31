@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Tiro Veteranum
   itemSprite: {fileID: 21300000, guid: b5b859642b8bf4b4385ebd6f26c745cd, type: 3}
-  description: Armadura reforzada de aprendizaje, mejora la supervivencia tras experiencia basica en combate.
-  price: 144
+  description: Armadura reforzada de aprendizaje, mejora la supervivencia tras experiencia
+    basica en combate.
+  price: 1500
   hp: 1
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
+  requiredHeroLevel: 40
   rareza: Comun
   itemType: 4

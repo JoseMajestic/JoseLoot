@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "Cintur\xF3n de Pontifex Sanctus"
   itemSprite: {fileID: 654337981, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Cinturon sagrado que simboliza dominio completo del rito divino. bendito.
-  price: 1814
+  price: 240000
   hp: 0
   mana: 208
   ataque: 38
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 67
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 7

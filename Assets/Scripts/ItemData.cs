@@ -49,8 +49,8 @@ public class ItemData : ScriptableObject
     public int requiredHeroLevel = 1;
     
     [Header("=== Rareza ===")]
-    [Tooltip("Rareza del item (ej: Comun, Raro, Epico, Legendario)")]
-    public string rareza = "Comun";
+    [Tooltip("Rareza del item (ej: Plebeius, Auxiliaris, Legionarius)")]
+    public string rareza = "Plebeius";
     
     [Header("=== Tipo de Item ===")]
     public ItemType itemType = ItemType.Arma;

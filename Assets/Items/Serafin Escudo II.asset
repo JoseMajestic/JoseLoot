@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Escudo de Pontifex Divinus
   itemSprite: {fileID: 921334409, guid: 289dd331f5faee84c9ba7a3d5312d6c5, type: 3}
-  description: Escudo bendecido que protege bajo amparo divino constante.
-    de batalla.
-  price: 1555
+  description: Escudo bendecido que protege bajo amparo divino constante. de batalla.
+  price: 240000
   hp: 56
   mana: 0
   ataque: 0
@@ -27,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 5

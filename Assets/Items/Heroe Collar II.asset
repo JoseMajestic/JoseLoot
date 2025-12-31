@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Collar de Roma Honor
   itemSprite: {fileID: -2136371526, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
   description: Emblema ceremonial que identifica a guerreros respetados por su conducta.
-  price: 480
+  price: 180000
   hp: 2
   mana: 29
   ataque: 0
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 319
   destreza: 8
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 180
+  rareza: Comun
   itemType: 2

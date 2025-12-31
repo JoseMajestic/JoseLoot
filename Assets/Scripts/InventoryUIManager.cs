@@ -10,26 +10,6 @@ using System.Collections.Generic;
 /// </summary>
 public class InventoryUIManager : MonoBehaviour
 {
-    // Diccionario de colores para cada tipo de rareza
-    private static readonly Dictionary<string, Color> RarityColors = new Dictionary<string, Color>
-    {
-        { "Comun", new Color(0.7f, 0.7f, 0.7f, 1f) },           // Gris
-        { "Común", new Color(0.7f, 0.7f, 0.7f, 1f) },           // Gris (con tilde)
-        { "Raro", new Color(0.2f, 0.6f, 1f, 1f) },              // Azul
-        { "Rara", new Color(0.2f, 0.6f, 1f, 1f) },              // Azul (femenino)
-        { "Epico", new Color(0.8f, 0.2f, 0.9f, 1f) },           // Púrpura
-        { "Épico", new Color(0.8f, 0.2f, 0.9f, 1f) },           // Púrpura (con tilde)
-        { "Epica", new Color(0.8f, 0.2f, 0.9f, 1f) },           // Púrpura (femenino)
-        { "Épica", new Color(0.8f, 0.2f, 0.9f, 1f) },          // Púrpura (femenino con tilde)
-        { "Legendario", new Color(1f, 0.5f, 0f, 1f) },          // Naranja/Dorado
-        { "Legendaria", new Color(1f, 0.5f, 0f, 1f) },          // Naranja/Dorado (femenino)
-        { "Demoniaco", new Color(0.6f, 0f, 0.2f, 1f) },         // Rojo oscuro/Sangre
-        { "Demoníaco", new Color(0.6f, 0f, 0.2f, 1f) },         // Rojo oscuro/Sangre (con tilde)
-        { "Demoniaca", new Color(0.6f, 0f, 0.2f, 1f) },         // Rojo oscuro/Sangre (femenino)
-        { "Demoníaca", new Color(0.6f, 0f, 0.2f, 1f) },         // Rojo oscuro/Sangre (femenino con tilde)
-        { "Extremo", new Color(0f, 1f, 0.8f, 1f) },              // Cian brillante
-        { "Extrema", new Color(0f, 1f, 0.8f, 1f) }               // Cian brillante (femenino)
-    };
     [Header("Referencias")]
     [Tooltip("Referencia al InventoryManager")]
     [SerializeField] private InventoryManager inventoryManager;
@@ -1063,12 +1043,13 @@ public class InventoryUIManager : MonoBehaviour
         if (destrezaText != null)
             destrezaText.text = stats.destreza.ToString();
 
-        if (rarezaText != null && baseItem != null)
+        if (rarezaText != null)
         {
-            rarezaText.text = baseItem.rareza;
-            // Aplicar color según la rareza
-            Color rarityColor = GetRarityColor(baseItem.rareza);
-            rarezaText.color = rarityColor;
+            if (baseItem != null)
+            {
+                rarezaText.text = RarityColorProvider.GetDisplayName(baseItem.rareza);
+                rarezaText.color = GetRarityColor(baseItem.rareza);
+            }
         }
 
         if (descriptionText != null && baseItem != null)
@@ -1337,28 +1318,7 @@ public class InventoryUIManager : MonoBehaviour
     /// </summary>
     private Color GetRarityColor(string rarity)
     {
-        if (string.IsNullOrEmpty(rarity))
-            return Color.white;
-
-        // Buscar la rareza en el diccionario (case-insensitive)
-        string rarityKey = rarity.Trim();
-        
-        if (RarityColors.ContainsKey(rarityKey))
-        {
-            return RarityColors[rarityKey];
-        }
-
-        // Si no se encuentra exactamente, buscar sin importar mayúsculas/minúsculas
-        foreach (var kvp in RarityColors)
-        {
-            if (string.Equals(kvp.Key, rarityKey, System.StringComparison.OrdinalIgnoreCase))
-            {
-                return kvp.Value;
-            }
-        }
-
-        // Color por defecto si no se encuentra
-        return Color.white;
+        return RarityColorProvider.GetColor(rarity);
     }
 
     /// <summary>

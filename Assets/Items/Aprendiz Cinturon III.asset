@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: eb8240beeba4db0439092ca100e79df8, type: 3}
   description: Cinturon avanzado que simboliza orden y control propios de una formacion
     completa.
-  price: 168
+  price: 1500
   hp: 0
   mana: 1
   ataque: 1
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 1
   nivel: 1
+  requiredHeroLevel: 80
   rareza: Comun
   itemType: 7

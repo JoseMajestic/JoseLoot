@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Heroe Anillo III_Imperialis
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Anillo de Roma Gloria - Imperialis
+  itemSprite: {fileID: -1456065770, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
+  description: Anillo ilustre que marca al portador como heroe celebrado.
+  price: 644973
+  hp: 0
+  mana: 423
+  ataque: 11
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 161
+  danoCritico: 541
+  suerte: 831
+  destreza: 47
+  nivel: 1
+  requiredHeroLevel: 180
+  rareza: Imperialis
+  itemType: 8

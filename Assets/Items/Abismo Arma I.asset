@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -1716279706, guid: 3154f9b159fd89043909858e0c22de82, type: 3}
   description: Arma corrupta inicial que inflige dano mientras consume lentamente
     la esencia del combate. maldito.
-  price: 2040
+  price: 500000
   hp: 0
   mana: 0
   ataque: 1
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Demoniaco
+  requiredHeroLevel: 580
+  rareza: Comun
   itemType: 3

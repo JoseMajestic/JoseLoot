@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Casco de Colossus Moles
   itemSprite: {fileID: -175846735, guid: 1c6db528c1d93d549b0080a2145abeeb, type: 3}
-  description: Casco pesado que protege eficazmente la cabeza durante enfrentamientos directos.
-  price: 600
+  description: Casco pesado que protege eficazmente la cabeza durante enfrentamientos
+    directos.
+  price: 280000
   hp: 10
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 56
   nivel: 1
-  rareza: Legendario
+  requiredHeroLevel: 401
+  rareza: Comun
   itemType: 1

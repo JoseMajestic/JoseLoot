@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Tiro Veteranum
   itemSprite: {fileID: 1542947436, guid: 328517ee060dd534c942bda2edbf25f5, type: 3}
-  description: Arma mejorada de instruccion, ofrece mayor fiabilidad tras un entrenamiento constante y disciplinado.
-    guerrero.
-  price: 180
+  description: Arma mejorada de instruccion, ofrece mayor fiabilidad tras un entrenamiento
+    constante y disciplinado. guerrero.
+  price: 1500
   hp: 0
   mana: 0
   ataque: 1
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
+  requiredHeroLevel: 40
   rareza: Comun
   itemType: 3

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Montura de Colossus Moles
   itemSprite: {fileID: 680388622, guid: 8ada6f03b24c8c044936e71cbbf1605d, type: 3}
-  description: Montura poderosa entrenada para soportar el peso del guerrero y su equipo.
-  price: 1800
+  description: Montura poderosa entrenada para soportar el peso del guerrero y su
+    equipo.
+  price: 280000
   hp: 10
   mana: 0
   ataque: 13
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 203
   destreza: 0
   nivel: 1
-  rareza: Legendario
+  requiredHeroLevel: 401
+  rareza: Comun
   itemType: 0

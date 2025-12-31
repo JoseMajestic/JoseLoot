@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Escudo de Pontifex Sanctus
   itemSprite: {fileID: -1101951139, guid: 8cf13876894bd92469693aff6c167068, type: 3}
-  description: Escudo sagrado que manifiesta proteccion divina incuestionable.
-    bendito.
-  price: 1814
+  description: Escudo sagrado que manifiesta proteccion divina incuestionable. bendito.
+  price: 240000
   hp: 75
   mana: 0
   ataque: 0
@@ -27,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 5

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Anillo de Tiro Imperium
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
-  description: Anillo avanzado que representa control y madurez alcanzados tras entrenamiento completo.
-  price: 100
+  description: Anillo avanzado que representa control y madurez alcanzados tras entrenamiento
+    completo.
+  price: 1500
   hp: 0
   mana: 0
   ataque: 180
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 2
   destreza: 22
   nivel: 1
+  requiredHeroLevel: 80
   rareza: Comun
   itemType: 8

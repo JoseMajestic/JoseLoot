@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Pontifex Sacrum
   itemSprite: {fileID: -1521656735, guid: 73f96c842c2bf9140a29322258c1a19a, type: 3}
-  description: Vestimenta ceremonial que ofrece proteccion basica durante rituales y enfrentamientos sagrados.
-  price: 1296
+  description: Vestimenta ceremonial que ofrece proteccion basica durante rituales
+    y enfrentamientos sagrados.
+  price: 240000
   hp: 56
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 4

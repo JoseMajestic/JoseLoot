@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Escudo de Colossus Moles
   itemSprite: {fileID: 911892270, guid: 8aa5e7d88b1aa5a4b8551d107261f412, type: 3}
-  description: Escudo pesado que absorbe impactos directos sin ceder posicion.
-    mundo.
-  price: 600
+  description: Escudo pesado que absorbe impactos directos sin ceder posicion. mundo.
+  price: 280000
   hp: 13
   mana: 0
   ataque: 0
@@ -27,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Legendario
+  requiredHeroLevel: 401
+  rareza: Comun
   itemType: 5

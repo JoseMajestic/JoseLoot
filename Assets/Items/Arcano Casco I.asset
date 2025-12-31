@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Casco de Augur Omen
   itemSprite: {fileID: 21300000, guid: 46ec7b95c5dc3ac4ca1c856d1e1f1bb7, type: 3}
-  description: Tocado ritual que protege la mente mientras se interpretan presagios iniciales.
-  price: 312
+  description: Tocado ritual que protege la mente mientras se interpretan presagios
+    iniciales.
+  price: 21000
   hp: 1
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 2
   nivel: 1
-  rareza: Magico
+  requiredHeroLevel: 32
+  rareza: Comun
   itemType: 1

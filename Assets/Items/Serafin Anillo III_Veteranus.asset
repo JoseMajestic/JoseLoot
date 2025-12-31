@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Serafin Anillo III_Veteranus
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Anillo de Pontifex Sanctus - Veteranus
+  itemSprite: {fileID: -1446573409, guid: d50ac254a4408124f802822395deaa8b, type: 3}
+  description: Anillo sagrado que confirma supremacia religiosa absoluta.
+  price: 414720
+  hp: 0
+  mana: 1151
+  ataque: 97
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 78
+  danoCritico: 429
+  suerte: 702
+  destreza: 173
+  nivel: 2
+  requiredHeroLevel: 518
+  rareza: Veteranus
+  itemType: 8

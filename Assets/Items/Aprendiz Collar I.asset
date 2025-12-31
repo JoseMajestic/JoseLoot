@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Collar de Tiro Rudimentum
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Amuleto sencillo que acompana al aprendiz durante sus primeras pruebas.
-  price: 100
+  price: 1500
   hp: 250
   mana: 0
   ataque: 0
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 2
   destreza: 10
   nivel: 1
+  requiredHeroLevel: 1
   rareza: Comun
   itemType: 2

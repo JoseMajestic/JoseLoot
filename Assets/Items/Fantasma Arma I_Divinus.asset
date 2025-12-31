@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Fantasma Arma I_Divinus
+  m_EditorClassIdentifier: 
+  itemName: Arma de Speculator Umbra - Divinus
+  itemSprite: {fileID: -1716279706, guid: 3154f9b159fd89043909858e0c22de82, type: 3}
+  description: Arma discreta disenada para ataques rapidos sin revelar la posicion
+    del portador. sagrado.
+  price: 851364
+  hp: 0
+  mana: 0
+  ataque: 46
+  defensa: 0
+  velocidadAtaque: 650
+  ataqueCritico: 1605
+  danoCritico: 1888
+  suerte: 0
+  destreza: 0
+  nivel: 1
+  requiredHeroLevel: 333
+  rareza: Divinus
+  itemType: 3

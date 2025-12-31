@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Guantes de Roma Honor
   itemSprite: {fileID: 1275809394, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
-  description: Guantes ceremoniales que reflejan disciplina y respeto dentro del ejercito.
-  price: 835
+  description: Guantes ceremoniales que reflejan disciplina y respeto dentro del
+    ejercito.
+  price: 180000
   hp: 0
   mana: 0
   ataque: 3
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 59
   destreza: 15
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 180
+  rareza: Comun
   itemType: 6

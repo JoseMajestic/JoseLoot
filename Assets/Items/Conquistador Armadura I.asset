@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Armadura de Legionarius Cohors
   itemSprite: {fileID: -1300272161, guid: 2b7fa8b83677c844e89bcae416246aab, type: 3}
-  description: Armadura estandar que protege eficazmente durante combates disciplinados en formacion.
-    equipo.
-  price: 504
+  description: Armadura estandar que protege eficazmente durante combates disciplinados
+    en formacion. equipo.
+  price: 99999
   hp: 2
   mana: 0
   ataque: 0
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Excelente
+  requiredHeroLevel: 204
+  rareza: Comun
   itemType: 4

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Anillo de Ultima Roma Aeternitas
   itemSprite: {fileID: 1493450964, guid: 9076b6d87a8061c48bcfdd4368f6f7a6, type: 3}
-  description: Anillo eterno que representa el legado inmortal de Roma.
-    del mundo.
-  price: 1800
+  description: Anillo eterno que representa el legado inmortal de Roma. del mundo.
+  price: 350000
   hp: 0
   mana: 227
   ataque: 500
@@ -27,5 +26,6 @@ MonoBehaviour:
   suerte: 493
   destreza: 400
   nivel: 1
-  rareza: Demoniaco
+  requiredHeroLevel: 500
+  rareza: Comun
   itemType: 8

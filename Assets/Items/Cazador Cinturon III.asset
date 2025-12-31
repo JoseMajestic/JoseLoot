@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "Cintur\xF3n de Explorator Praedator"
   itemSprite: {fileID: -2030652397, guid: 7752c294ab1b65542b6eeffc462f2b8e, type: 3}
   description: Cinturon tactico que permite acceso rapido a equipo durante emboscadas.
-  price: 302
+  price: 85000
   hp: 0
   mana: 18
   ataque: 1
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 3
   nivel: 1
-  rareza: Raro
+  requiredHeroLevel: 99
+  rareza: Comun
   itemType: 7

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 860470734, guid: 889346911a5c43c45843fe86f6d254f5, type: 3}
   description: Emblema reservado que identifica a maestros del espionaje romano.
     pasado.
-  price: 1320
+  price: 165000
   hp: 5
   mana: 71
   ataque: 0
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 406
   destreza: 17
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 333
+  rareza: Comun
   itemType: 2

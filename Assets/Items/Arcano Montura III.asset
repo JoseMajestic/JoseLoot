@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Montura de Augur Oraculum
   itemSprite: {fileID: 383391093, guid: 6c81068cd2ee65f48bf23b99cd51da13, type: 3}
   description: Montura sagrada guiada por presagios que asegura desplazamientos seguros.
-  price: 1500
+  price: 21000
   hp: 1
   mana: 0
   ataque: 1
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 59
   destreza: 0
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 32
+  rareza: Comun
   itemType: 0

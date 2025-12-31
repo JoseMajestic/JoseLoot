@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Abismo Anillo III_Augustus
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Anillo de Infernum Abyssus - Augustus
+  itemSprite: {fileID: 866176007, guid: d50ac254a4408124f802822395deaa8b, type: 3}
+  description: Anillo abismal que representa dominio absoluto de fuerzas corruptas.
+  price: 2149909
+  hp: 0
+  mana: 869
+  ataque: 13
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 387
+  danoCritico: 1204
+  suerte: 1870
+  destreza: 860
+  nivel: 1
+  requiredHeroLevel: 700
+  rareza: Augustus
+  itemType: 8

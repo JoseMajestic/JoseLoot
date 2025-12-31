@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -27,11 +27,11 @@ MonoBehaviour:
   rewardCoins: 1200
   experienceReward: 12000
   rewardConfig:
-    rewardItemCount: 4
-    allowedTiers: 03000000
+    rewardItemCount: 3
+    allowedTiers: 02000000
     distributeEvenly: 1
     forcedRewards: []
-  requiredLevel: 0
+  requiredLevel: 140
   level: 1
   availableAttacks:
   - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}

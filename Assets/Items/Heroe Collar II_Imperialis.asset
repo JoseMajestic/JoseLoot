@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Heroe Collar II_Imperialis
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Collar de Roma Honor - Imperialis
+  itemSprite: {fileID: -2136371526, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
+  description: Emblema ceremonial que identifica a guerreros respetados por su conducta.
+  price: 644973
+  hp: 7
+  mana: 104
+  ataque: 0
+  defensa: 7
+  velocidadAtaque: 0
+  ataqueCritico: 161
+  danoCritico: 502
+  suerte: 1143
+  destreza: 29
+  nivel: 1
+  requiredHeroLevel: 180
+  rareza: Imperialis
+  itemType: 2

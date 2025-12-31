@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Conquistador Guantes II_Praetorianus
+  m_EditorClassIdentifier: 
+  itemName: Guantes de Legionarius Centuria - Praetorianus
+  itemSprite: {fileID: -882489248, guid: 47ffa97bdbf4966419bfd997d01f001f, type: 3}
+  description: Guantes reforzados que mejoran control y resistencia durante el combate.
+    legendarias.
+  price: 298596
+  hp: 0
+  mana: 0
+  ataque: 6
+  defensa: 0
+  velocidadAtaque: 809
+  ataqueCritico: 400
+  danoCritico: 322
+  suerte: 90
+  destreza: 24
+  nivel: 1
+  requiredHeroLevel: 204
+  rareza: Praetorianus
+  itemType: 6

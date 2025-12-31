@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,22 +15,22 @@ MonoBehaviour:
   enemyName: Vampiro Supremo
   description: Un vampiro que vive en Roma pero no paga impuestos y bebe mucha sangre.
   enemySprite: {fileID: 21300000, guid: b07e6b53322170e4aac1f6ebcdf1ffdd, type: 3}
-  hp: 2850000
-  ataque: 332000
-  defensa: 186000
-  velocidadAtaque: 165
-  ataqueCritico: 35
-  danoCritico: 500
-  suerte: 78
-  destreza: 5400
-  rewardCoins: 19000
-  experienceReward: 280000
+  hp: 6666666
+  ataque: 666666
+  defensa: 666666
+  velocidadAtaque: 666666
+  ataqueCritico: 666666
+  danoCritico: 666666
+  suerte: 666666
+  destreza: 666666
+  rewardCoins: 99999
+  experienceReward: 666999
   rewardConfig:
-    rewardItemCount: 8
+    rewardItemCount: 10
     allowedTiers: 05000000
     distributeEvenly: 1
     forcedRewards: []
-  requiredLevel: 4
+  requiredLevel: 700
   level: 5
   availableAttacks:
   - {fileID: 11400000, guid: 3f7083b4a7e006047a93680f6d7b8298, type: 2}

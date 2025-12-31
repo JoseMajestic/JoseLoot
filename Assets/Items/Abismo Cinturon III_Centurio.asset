@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Abismo Cinturon III_Centurio
+  m_EditorClassIdentifier: 
+  itemName: "Cintur\xF3n de Infernum Abyssus - Centurio"
+  itemSprite: {fileID: -377170109, guid: abd96bbb88c990446b43529b8799d407, type: 3}
+  description: Cinturon abismal que mantiene estable el flujo de corrupcion.
+  price: 1036800
+  hp: 0
+  mana: 554
+  ataque: 232
+  defensa: 0
+  velocidadAtaque: 0
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 0
+  destreza: 278
+  nivel: 2
+  requiredHeroLevel: 1452
+  rareza: Centurio
+  itemType: 7

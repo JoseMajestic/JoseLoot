@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -1218128843, guid: a3d3d79b97c00ca4bb7b110b9cd4be24, type: 3}
   description: Guantes militares que facilitan el manejo seguro de armas reglamentarias.
     legendarias.
-  price: 504
+  price: 99999
   hp: 0
   mana: 0
   ataque: 1
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 30
   destreza: 6
   nivel: 1
-  rareza: Excelente
+  requiredHeroLevel: 204
+  rareza: Comun
   itemType: 6

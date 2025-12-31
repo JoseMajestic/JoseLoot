@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Escudo de Explorator Venator
   itemSprite: {fileID: 1653294197, guid: 418c0676f71816a42b0c58bf65db61ff, type: 3}
-  description: Escudo equilibrado que permite defenderse eficazmente durante combates prolongados.
-  price: 259
+  description: Escudo equilibrado que permite defenderse eficazmente durante combates
+    prolongados.
+  price: 85000
   hp: 1
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Raro
+  requiredHeroLevel: 66
+  rareza: Comun
   itemType: 5

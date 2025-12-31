@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Fantasma Casco III_Imperialis
+  m_EditorClassIdentifier: 
+  itemName: Casco de Speculator Occultus - Imperialis
+  itemSprite: {fileID: 835018598, guid: 53b5b3be4e9eb204eb6abc84b90e37ab, type: 3}
+  description: Casco especializado que oculta presencia y refuerza la conciencia
+    situacional. sagrado.
+  price: 591225
+  hp: 25
+  mana: 0
+  ataque: 0
+  defensa: 18
+  velocidadAtaque: 0
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 0
+  destreza: 150
+  nivel: 1
+  requiredHeroLevel: 333
+  rareza: Imperialis
+  itemType: 1

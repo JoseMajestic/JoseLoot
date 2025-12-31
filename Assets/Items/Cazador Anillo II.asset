@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Anillo de Explorator Venator
   itemSprite: {fileID: -1565976107, guid: c88165515191c714f8d198e8fc38135c, type: 3}
   description: Anillo reforzado que refleja habilidad creciente en rastreo y combate.
-  price: 100
+  price: 85000
   hp: 0
   mana: 0
   ataque: 1215
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 5
   destreza: 75
   nivel: 1
+  requiredHeroLevel: 66
   rareza: Comun
   itemType: 8

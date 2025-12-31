@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Abismo Collar I_Veteranus
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Collar de Infernum Limbus - Veteranus
+  itemSprite: {fileID: -1085076470, guid: 15035cdcf7ecbc345bb73df5b3a1e160, type: 3}
+  description: Amuleto oscuro que simboliza el primer vinculo con fuerzas prohibidas.
+  price: 864000
+  hp: 97
+  mana: 38
+  ataque: 0
+  defensa: 66
+  velocidadAtaque: 0
+  ataqueCritico: 156
+  danoCritico: 446
+  suerte: 950
+  destreza: 154
+  nivel: 2
+  requiredHeroLevel: 1002
+  rareza: Veteranus
+  itemType: 2

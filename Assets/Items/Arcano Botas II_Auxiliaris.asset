@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Arcano Botas II_Auxiliaris
+  m_EditorClassIdentifier: 
+  itemName: Botas de Augur Ritus - Auxiliaris
+  itemSprite: {fileID: 1802136118, guid: 1c310ace010a4ff4fac5242d6f2c0fc8, type: 3}
+  description: Botas ceremoniales que mejoran el control corporal durante rituales
+    complejos.
+  price: 25200
+  hp: 1
+  mana: 0
+  ataque: 0
+  defensa: 1
+  velocidadAtaque: 86
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 0
+  destreza: 2
+  nivel: 1
+  requiredHeroLevel: 38
+  rareza: Auxiliaris
+  itemType: 9

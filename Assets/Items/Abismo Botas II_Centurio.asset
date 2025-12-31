@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04862611ff0cbd941bb72b22ae5654f3, type: 3}
+  m_Name: Abismo Botas II_Centurio
+  m_EditorClassIdentifier: 
+  itemName: Botas de Infernum Inferus - Centurio
+  itemSprite: {fileID: -1856840275, guid: 2349f617f7bd60e4da181bfa07f5cec7, type: 3}
+  description: Botas infernales que mejoran estabilidad durante combates prolongados
+    y caoticos.
+  price: 1036800
+  hp: 174
+  mana: 0
+  ataque: 0
+  defensa: 116
+  velocidadAtaque: 693
+  ataqueCritico: 0
+  danoCritico: 0
+  suerte: 0
+  destreza: 460
+  nivel: 2
+  requiredHeroLevel: 1348
+  rareza: Centurio
+  itemType: 9

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -895300541, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Cinturon bendecido que mejora preparacion durante ceremonias prolongadas.
     de batalla.
-  price: 1555
+  price: 240000
   hp: 0
   mana: 208
   ataque: 29
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 56
   nivel: 1
-  rareza: Celestial
+  requiredHeroLevel: 300
+  rareza: Comun
   itemType: 7

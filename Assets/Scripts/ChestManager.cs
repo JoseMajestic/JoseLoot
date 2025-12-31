@@ -428,36 +428,7 @@ public class ChestManager : MonoBehaviour
     /// </summary>
     private Color GetRarityColor(string rarity)
     {
-        if (string.IsNullOrEmpty(rarity))
-            return Color.white;
-
-        switch (rarity.Trim().ToLower())
-        {
-            case "comun":
-            case "común":
-                return new Color(0.7f, 0.7f, 0.7f, 1f); // Gris
-            case "raro":
-            case "rara":
-                return new Color(0.2f, 0.6f, 1f, 1f);   // Azul
-            case "epico":
-            case "épico":
-            case "epica":
-            case "épica":
-                return new Color(0.8f, 0.2f, 0.9f, 1f); // Morado
-            case "legendario":
-            case "legendaria":
-                return new Color(1f, 0.5f, 0f, 1f);     // Naranja/dorado
-            case "demoniaco":
-            case "demoníaco":
-            case "demoniaca":
-            case "demoníaca":
-                return new Color(0.6f, 0f, 0.2f, 1f);   // Rojo oscuro
-            case "extremo":
-            case "extrema":
-                return new Color(0f, 1f, 0.8f, 1f);     // Cian brillante
-            default:
-                return Color.white;
-        }
+        return RarityColorProvider.GetColor(rarity);
     }
 
     /// <summary>

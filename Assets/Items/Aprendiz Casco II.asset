@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Casco de Tiro Veteranum
   itemSprite: {fileID: 569188646, guid: 7131c20c494c87e41a733307a6e7782d, type: 3}
-  description: Casco reforzado que incrementa resistencia tras superar las fases basicas de instruccion.
-  price: 144
+  description: Casco reforzado que incrementa resistencia tras superar las fases
+    basicas de instruccion.
+  price: 1500
   hp: 1
   mana: 0
   ataque: 0
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 2
   nivel: 1
+  requiredHeroLevel: 40
   rareza: Comun
   itemType: 1

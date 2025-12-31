@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Escudo de Roma Honor
   itemSprite: {fileID: 649806717, guid: 8cf13876894bd92469693aff6c167068, type: 3}
   description: Escudo ceremonial que refleja disciplina y respeto dentro de las filas.
-  price: 835
+  price: 180000
   hp: 3
   mana: 0
   ataque: 0
@@ -26,5 +26,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 180
+  rareza: Comun
   itemType: 5

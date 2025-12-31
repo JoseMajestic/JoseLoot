@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: -1779079948, guid: 054bfacbc9a10f346ae3ad6ecec3ed9a, type: 3}
   description: Cinturon emblematico asociado a figuras admiradas por toda Roma. este
     equipo.
-  price: 974
+  price: 180000
   hp: 0
   mana: 102
   ataque: 2
@@ -27,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 9
   nivel: 1
-  rareza: Epico
+  requiredHeroLevel: 180
+  rareza: Comun
   itemType: 7

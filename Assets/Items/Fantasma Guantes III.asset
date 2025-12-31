@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Guantes de Speculator Occultus
   itemSprite: {fileID: -2034443838, guid: a52a0a9c0c0abd34ea166c3a378fb70f, type: 3}
-  description: Guantes especializados que optimizan control absoluto en misiones encubiertas.
-  price: 571
+  description: Guantes especializados que optimizan control absoluto en misiones
+    encubiertas.
+  price: 165000
   hp: 0
   mana: 0
   ataque: 7
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 88
   destreza: 34
   nivel: 1
-  rareza: Etereo
+  requiredHeroLevel: 333
+  rareza: Comun
   itemType: 6

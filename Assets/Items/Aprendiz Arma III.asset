@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Arma de Tiro Imperium
   itemSprite: {fileID: -2016999836, guid: 99ff6d1bf82b5cf4a85695c78cd1b666, type: 3}
-  description: Arma avanzada de formacion, refleja dominio tecnico adquirido mediante rigor militar prolongado.
-  price: 210
+  description: Arma avanzada de formacion, refleja dominio tecnico adquirido mediante
+    rigor militar prolongado.
+  price: 1500
   hp: 0
   mana: 0
   ataque: 1
@@ -26,5 +27,6 @@ MonoBehaviour:
   suerte: 0
   destreza: 0
   nivel: 1
+  requiredHeroLevel: 80
   rareza: Comun
   itemType: 3

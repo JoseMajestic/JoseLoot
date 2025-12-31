@@ -125,39 +125,7 @@ public class RewardSlot : MonoBehaviour
 
     private Color GetRarityColor(string rarity)
     {
-        if (string.IsNullOrEmpty(rarity))
-            return Color.white;
-
-        switch (rarity.ToLowerInvariant())
-        {
-            case "comun":
-            case "común":
-                return new Color32(189, 189, 189, 255);
-            case "raro":
-                return new Color32(80, 141, 247, 255);
-            case "epico":
-            case "épico":
-                return new Color32(176, 82, 255, 255);
-            case "magico":
-            case "mágico":
-                return new Color32(120, 200, 255, 255);
-            case "excelente":
-                return new Color32(64, 255, 173, 255);
-            case "extremo":
-                return new Color32(255, 105, 180, 255);
-            case "demoniaco":
-            case "demoníaco":
-                return new Color32(255, 99, 71, 255);
-            case "etereo":
-            case "etéreo":
-                return new Color32(140, 120, 255, 255);
-            case "legendario":
-                return new Color32(255, 174, 46, 255);
-            case "celestial":
-                return new Color32(255, 255, 140, 255);
-            default:
-                return Color.white;
-        }
+        return RarityColorProvider.GetColor(rarity);
     }
     
     /// <summary>
