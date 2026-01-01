@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 /// Gestiona la UI del inventario, conectando los botones y textos con el InventoryManager.
@@ -91,6 +92,16 @@ public class InventoryUIManager : MonoBehaviour
 
     [Tooltip("Texto que muestra el Precio de Venta del item seleccionado")]
     [SerializeField] private TextMeshProUGUI sellPriceText;
+
+    [Tooltip("Texto combinado que muestra todos los datos del ITEM EQUIPADO correspondiente al tipo visualizado")]
+    [SerializeField] private TextMeshProUGUI itemSummaryText;
+
+    [Header("Resumen Visual del Item Equipado")]
+    [Tooltip("Panel (o contenedor) donde se mostrará la imagen del item equipado asociado al resumen")]
+    [SerializeField] private GameObject equippedItemSummaryPanel;
+
+    [Tooltip("Image que mostrará el sprite del item equipado del mismo tipo que el item visualizado")]
+    [SerializeField] private Image equippedItemSummaryImage;
 
     [Header("Botones de Acción")]
     [Tooltip("Botón para vender el item visualizado en el visor")]
@@ -1017,31 +1028,31 @@ public class InventoryUIManager : MonoBehaviour
         UpdateRequiredHeroLevelText(updatedItem);
 
         if (hpText != null)
-            hpText.text = stats.hp.ToString();
+            hpText.text = FormatNumberWithSign(stats.hp);
 
         if (manaText != null)
-            manaText.text = stats.mana.ToString();
+            manaText.text = FormatNumberWithSign(stats.mana);
 
         if (ataqueText != null)
-            ataqueText.text = stats.ataque.ToString();
+            ataqueText.text = FormatNumberWithSign(stats.ataque);
 
         if (defensaText != null)
-            defensaText.text = stats.defensa.ToString();
+            defensaText.text = FormatNumberWithSign(stats.defensa);
 
         if (velocidadAtaqueText != null)
-            velocidadAtaqueText.text = stats.velocidadAtaque.ToString();
+            velocidadAtaqueText.text = FormatNumberWithSign(stats.velocidadAtaque);
 
         if (ataqueCriticoText != null)
-            ataqueCriticoText.text = stats.ataqueCritico.ToString();
+            ataqueCriticoText.text = FormatNumberWithSign(stats.ataqueCritico);
 
         if (danoCriticoText != null)
-            danoCriticoText.text = stats.danoCritico.ToString();
+            danoCriticoText.text = FormatNumberWithSign(stats.danoCritico);
 
         if (suerteText != null)
-            suerteText.text = stats.suerte.ToString();
+            suerteText.text = FormatNumberWithSign(stats.suerte);
 
         if (destrezaText != null)
-            destrezaText.text = stats.destreza.ToString();
+            destrezaText.text = FormatNumberWithSign(stats.destreza);
 
         if (rarezaText != null)
         {
@@ -1071,6 +1082,8 @@ public class InventoryUIManager : MonoBehaviour
             string formattedPrice = formatMoneyWithThousands ? FormatNumber(sellPrice) : sellPrice.ToString();
             sellPriceText.text = $"Precio de Venta: {formattedPrice}";
         }
+
+        UpdateEquippedItemSummary(updatedItem);
 
         // Establecer el item visualizado en EquipmentManager para que los botones Equipar/Quitar funcionen
         if (equipmentManager != null)
@@ -1138,6 +1151,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             sellPriceText.text = "";
         }
+
+        ClearEquippedItemSummaryDisplay();
     }
 
     /// <summary>
@@ -1150,6 +1165,11 @@ public class InventoryUIManager : MonoBehaviour
 
         // Buscar el slot del inventario que contiene este item
         UpdateEquippedPanelForItem(itemInstance, true);
+
+        if (currentlyViewedItem != null && currentlyViewedItem.IsValid())
+        {
+            UpdateEquippedItemSummary(currentlyViewedItem);
+        }
     }
 
     /// <summary>
@@ -1233,6 +1253,11 @@ public class InventoryUIManager : MonoBehaviour
 
         // NO limpiar el visor - el item sigue en el inventario y puede seguir visualizándose
         // Si el item desequipado es el que está visualizado, el visor se mantiene mostrándolo
+
+        if (currentlyViewedItem != null && currentlyViewedItem.IsValid())
+        {
+            UpdateEquippedItemSummary(currentlyViewedItem);
+        }
     }
 
     /// <summary>
@@ -1500,6 +1525,243 @@ public class InventoryUIManager : MonoBehaviour
     private string FormatNumber(int number)
     {
         return number.ToString("N0");
+    }
+
+    private const string EquippedSummaryLabelSeparator = " :    ";
+
+    private void UpdateEquippedItemSummary(ItemInstance referenceItem)
+    {
+        if (referenceItem == null || !referenceItem.IsValid() || equipmentManager == null)
+        {
+            ClearEquippedItemSummaryDisplay();
+            return;
+        }
+
+        if (!TryGetSlotTypeForItem(referenceItem, out EquipmentManager.EquipmentSlotType slotType))
+        {
+            ClearEquippedItemSummaryDisplay();
+            return;
+        }
+
+        ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+        if (equippedItem == null || !equippedItem.IsValid())
+        {
+            ClearEquippedItemSummaryDisplay();
+            return;
+        }
+
+        if (itemSummaryText != null)
+        {
+            itemSummaryText.text = BuildEquippedItemSummaryText(equippedItem);
+        }
+
+        UpdateEquippedItemSummaryVisuals(equippedItem);
+    }
+
+    private bool TryGetSlotTypeForItem(ItemInstance itemInstance, out EquipmentManager.EquipmentSlotType slotType)
+    {
+        slotType = EquipmentManager.EquipmentSlotType.Arma;
+
+        ItemData baseItem = itemInstance?.baseItem;
+        if (baseItem == null)
+            return false;
+
+        string nameLower = baseItem.itemName?.ToLowerInvariant() ?? string.Empty;
+
+        // Heurísticas por nombre
+        if (nameLower.Contains("escudo"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Escudo;
+            return true;
+        }
+        if (nameLower.Contains("casco") || nameLower.Contains("sombrero"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Casco;
+            return true;
+        }
+        if (nameLower.Contains("armadura") || nameLower.Contains("pechera"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Armadura;
+            return true;
+        }
+        if (nameLower.Contains("botas"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Botas;
+            return true;
+        }
+        if (nameLower.Contains("guantes"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Guantes;
+            return true;
+        }
+        if (nameLower.Contains("cinturon") || nameLower.Contains("cinturón"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Cinturon;
+            return true;
+        }
+        if (nameLower.Contains("montura"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Montura;
+            return true;
+        }
+        if (nameLower.Contains("collar"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Collar;
+            return true;
+        }
+        if (nameLower.Contains("anillo"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Anillo;
+            return true;
+        }
+        if (nameLower.Contains("arma"))
+        {
+            slotType = EquipmentManager.EquipmentSlotType.Arma;
+            return true;
+        }
+
+        // Fallback según ItemType
+        switch (baseItem.itemType)
+        {
+            case ItemType.Montura:
+                slotType = EquipmentManager.EquipmentSlotType.Montura;
+                return true;
+            case ItemType.Casco:
+                slotType = EquipmentManager.EquipmentSlotType.Casco;
+                return true;
+            case ItemType.Collar:
+                slotType = EquipmentManager.EquipmentSlotType.Collar;
+                return true;
+            case ItemType.Arma:
+                slotType = EquipmentManager.EquipmentSlotType.Arma;
+                return true;
+            case ItemType.Armadura:
+                slotType = EquipmentManager.EquipmentSlotType.Armadura;
+                return true;
+            case ItemType.Escudo:
+                slotType = EquipmentManager.EquipmentSlotType.Escudo;
+                return true;
+            case ItemType.Guantes:
+                slotType = EquipmentManager.EquipmentSlotType.Guantes;
+                return true;
+            case ItemType.Cinturon:
+                slotType = EquipmentManager.EquipmentSlotType.Cinturon;
+                return true;
+            case ItemType.Anillo:
+                slotType = EquipmentManager.EquipmentSlotType.Anillo;
+                return true;
+            case ItemType.Botas:
+                slotType = EquipmentManager.EquipmentSlotType.Botas;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private string BuildEquippedItemSummaryText(ItemInstance itemInstance)
+    {
+        ItemData baseItem = itemInstance.baseItem;
+        string itemName = itemInstance.GetItemName();
+        string rarityKey = itemInstance.GetRarity();
+        string rarityDisplay = !string.IsNullOrEmpty(rarityKey)
+            ? RarityColorProvider.GetDisplayName(rarityKey)
+            : "-";
+        string rarityHex = !string.IsNullOrEmpty(rarityKey)
+            ? RarityColorProvider.GetColorHex(rarityKey)
+            : null;
+
+        ItemStats stats = itemInstance.GetFinalStats();
+        int price = CalculateSellPrice(itemInstance);
+
+        string coloredName = !string.IsNullOrEmpty(rarityHex)
+            ? $"<color=#{rarityHex}>{itemName}</color>"
+            : itemName;
+        string rarityValue = !string.IsNullOrEmpty(rarityHex)
+            ? $"<color=#{rarityHex}>{rarityDisplay}</color>"
+            : rarityDisplay;
+        string itemTypeName = baseItem != null ? GetItemTypeName(baseItem) : "-";
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine(FormatSummaryDetailLine("Nombre", coloredName));
+        sb.AppendLine(FormatSummaryDetailLine("Calidad", rarityDisplay));
+        sb.AppendLine(FormatSummaryDetailLine("Tipo", itemTypeName));
+        sb.AppendLine(FormatSummaryDetailLine("Nivel", FormatNumber(itemInstance.currentLevel)));
+        sb.AppendLine(FormatSummaryDetailLine("Rareza", rarityValue));
+
+        AppendSummaryStatLineIfPositive(sb, "Ataque", stats.ataque);
+        AppendSummaryStatLineIfPositive(sb, "Defensa", stats.defensa);
+        AppendSummaryStatLineIfPositive(sb, "Velocidad Ataque", stats.velocidadAtaque);
+        AppendSummaryStatLineIfPositive(sb, "Ataque Crítico", stats.ataqueCritico);
+        AppendSummaryStatLineIfPositive(sb, "Daño Crítico", stats.danoCritico);
+        AppendSummaryStatLineIfPositive(sb, "Suerte", stats.suerte);
+        AppendSummaryStatLineIfPositive(sb, "Destreza", stats.destreza);
+        sb.Append(FormatSummaryDetailLine("Precio", FormatNumber(price)));
+
+        return sb.ToString();
+    }
+
+    private void AppendSummaryStatLineIfPositive(StringBuilder sb, string label, int value)
+    {
+        if (value <= 0)
+            return;
+
+        sb.AppendLine(FormatSummaryDetailLine(label, FormatNumberWithSign(value)));
+    }
+
+    private string FormatSummaryDetailLine(string label, string value)
+    {
+        string safeValue = string.IsNullOrEmpty(value) ? "-" : value;
+        return $"{label}{EquippedSummaryLabelSeparator}{safeValue}";
+    }
+
+    private string FormatNumberWithSign(int value)
+    {
+        string formatted = FormatNumber(value);
+        return value > 0 ? $"+{formatted}" : formatted;
+    }
+
+    private void UpdateEquippedItemSummaryVisuals(ItemInstance equippedItem)
+    {
+        Sprite itemSprite = equippedItem != null ? equippedItem.GetItemSprite() : null;
+        bool hasSprite = itemSprite != null;
+
+        if (equippedItemSummaryImage != null)
+        {
+            if (hasSprite)
+            {
+                equippedItemSummaryImage.sprite = itemSprite;
+                equippedItemSummaryImage.enabled = true;
+            }
+            else
+            {
+                equippedItemSummaryImage.sprite = null;
+                equippedItemSummaryImage.enabled = false;
+            }
+        }
+
+        if (equippedItemSummaryPanel != null)
+        {
+            equippedItemSummaryPanel.SetActive(hasSprite);
+        }
+    }
+
+    private void ClearEquippedItemSummaryDisplay()
+    {
+        if (itemSummaryText != null)
+        {
+            itemSummaryText.text = "";
+        }
+
+        if (equippedItemSummaryImage != null)
+        {
+            equippedItemSummaryImage.sprite = null;
+            equippedItemSummaryImage.enabled = false;
+        }
+
+        if (equippedItemSummaryPanel != null)
+        {
+            equippedItemSummaryPanel.SetActive(false);
+        }
     }
 
     /// <summary>

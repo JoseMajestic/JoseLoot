@@ -820,50 +820,141 @@ public class HeroProfileManager : MonoBehaviour
         }
     }
 
+    private const string DetailLabelSeparator = " :    ";
+
     private string BuildDetailText(ItemInstance itemInstance)
     {
         StringBuilder sb = new StringBuilder();
 
         string itemName = itemInstance.GetItemName();
-        string itemType = itemInstance.baseItem != null ? itemInstance.baseItem.itemType.ToString() : "-";
-        string rarity = !string.IsNullOrEmpty(itemInstance.GetRarity())
-            ? RarityColorProvider.GetDisplayName(itemInstance.GetRarity())
+        string itemType = GetItemTypeDisplayName(itemInstance);
+        string rarityKey = itemInstance.GetRarity();
+        string rarityDisplay = !string.IsNullOrEmpty(rarityKey)
+            ? RarityColorProvider.GetDisplayName(rarityKey)
             : "-";
         string rarityHex = null;
-        if (!string.IsNullOrEmpty(itemInstance.GetRarity()))
+        if (!string.IsNullOrEmpty(rarityKey))
         {
-            rarityHex = RarityColorProvider.GetColorHex(itemInstance.GetRarity());
+            rarityHex = RarityColorProvider.GetColorHex(rarityKey);
         }
+
         ItemStats stats = itemInstance.GetFinalStats();
+        int price = CalculateItemPrice(itemInstance);
 
-        if (!string.IsNullOrEmpty(rarityHex))
-        {
-            sb.AppendLine($"<color=#{rarityHex}>{itemName}</color>");
-        }
-        else
-        {
-            sb.AppendLine(itemName);
-        }
+        string coloredName = !string.IsNullOrEmpty(rarityHex)
+            ? $"<color=#{rarityHex}>{itemName}</color>"
+            : itemName;
 
-        sb.AppendLine(itemType);
-        sb.AppendLine(NumberFormatter.FormatNumber(itemInstance.currentLevel));
-        if (!string.IsNullOrEmpty(rarityHex))
-        {
-            sb.AppendLine($"<color=#{rarityHex}>{rarity}</color>");
-        }
-        else
-        {
-            sb.AppendLine(rarity);
-        }
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.ataque));
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.defensa));
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.velocidadAtaque));
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.ataqueCritico));
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.danoCritico));
-        sb.AppendLine(NumberFormatter.FormatNumber(stats.suerte));
-        sb.Append(NumberFormatter.FormatNumber(stats.destreza));
+        sb.AppendLine(FormatDetailLine("Nombre", coloredName));
+        sb.AppendLine(FormatDetailLine("Calidad", rarityDisplay));
+        sb.AppendLine(FormatDetailLine("Tipo", itemType));
+        sb.AppendLine(FormatDetailLine("Nivel", NumberFormatter.FormatNumber(itemInstance.currentLevel)));
+
+        string rarityValue = !string.IsNullOrEmpty(rarityHex)
+            ? $"<color=#{rarityHex}>{rarityDisplay}</color>"
+            : rarityDisplay;
+        sb.AppendLine(FormatDetailLine("Rareza", rarityValue));
+
+        AppendStatLineIfPositive(sb, "Ataque", stats.ataque);
+        AppendStatLineIfPositive(sb, "Defensa", stats.defensa);
+        AppendStatLineIfPositive(sb, "Velocidad Ataque", stats.velocidadAtaque);
+        AppendStatLineIfPositive(sb, "Ataque Crítico", stats.ataqueCritico);
+        AppendStatLineIfPositive(sb, "Daño Crítico", stats.danoCritico);
+        AppendStatLineIfPositive(sb, "Suerte", stats.suerte);
+        AppendStatLineIfPositive(sb, "Destreza", stats.destreza);
+        sb.Append(FormatDetailLine("Precio", NumberFormatter.FormatNumber(price)));
 
         return sb.ToString();
+    }
+
+    private string FormatNumberWithSign(int value)
+    {
+        if (value > 0)
+        {
+            return $"+{NumberFormatter.FormatNumber(value)}";
+        }
+
+        return NumberFormatter.FormatNumber(value);
+    }
+
+    private void AppendStatLineIfPositive(StringBuilder sb, string label, int value)
+    {
+        if (value <= 0)
+            return;
+
+        sb.AppendLine(FormatDetailLine(label, FormatNumberWithSign(value)));
+    }
+
+    private string FormatDetailLine(string label, string value)
+    {
+        string safeValue = string.IsNullOrEmpty(value) ? "-" : value;
+        return $"{label}{DetailLabelSeparator}{safeValue}";
+    }
+
+    private string GetItemTypeDisplayName(ItemInstance itemInstance)
+    {
+        if (itemInstance?.baseItem == null)
+            return "-";
+
+        ItemData baseItem = itemInstance.baseItem;
+        string itemNameLower = baseItem.itemName?.ToLowerInvariant() ?? string.Empty;
+
+        if (itemNameLower.Contains("escudo"))
+            return "Escudo";
+        if (itemNameLower.Contains("casco") || itemNameLower.Contains("sombrero"))
+            return "Casco";
+        if (itemNameLower.Contains("armadura") || itemNameLower.Contains("pechera"))
+            return "Armadura";
+        if (itemNameLower.Contains("botas"))
+            return "Botas";
+        if (itemNameLower.Contains("guantes"))
+            return "Guantes";
+        if (itemNameLower.Contains("cinturón") || itemNameLower.Contains("cinturon"))
+            return "Cinturón";
+        if (itemNameLower.Contains("arma"))
+            return "Arma";
+
+        switch (baseItem.itemType)
+        {
+            case ItemType.Montura:
+                return "Montura";
+            case ItemType.Casco:
+                return "Casco";
+            case ItemType.Collar:
+                return "Collar";
+            case ItemType.Arma:
+                return "Arma";
+            case ItemType.Armadura:
+                return "Armadura";
+            case ItemType.Escudo:
+                return "Escudo";
+            case ItemType.Guantes:
+                return "Guantes";
+            case ItemType.Cinturon:
+                return "Cinturón";
+            case ItemType.Anillo:
+                return "Anillo";
+            case ItemType.Botas:
+                return "Botas";
+            case ItemType.Otros:
+            default:
+                return "Otros";
+        }
+    }
+
+    private int CalculateItemPrice(ItemInstance itemInstance)
+    {
+        if (itemInstance == null || !itemInstance.IsValid())
+            return 0;
+
+        ItemData baseItem = itemInstance.baseItem;
+        if (baseItem == null)
+            return 0;
+
+        int baseSellPrice = Mathf.Max(1, baseItem.price / 2);
+        float levelMultiplier = 1f + ((itemInstance.currentLevel - 1) * 0.05f);
+        int finalPrice = Mathf.RoundToInt(baseSellPrice * levelMultiplier);
+        return Mathf.Max(1, finalPrice);
     }
 
     public void OnEquipmentSlotPointerDown(EquipmentManager.EquipmentSlotType slotType, HeroProfileEquipmentSlotButton sourceButton)

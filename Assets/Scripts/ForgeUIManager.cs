@@ -704,26 +704,26 @@ public class ForgeUIManager : MonoBehaviour
         }
 
         // Stats actuales
-        if (hpText != null) hpText.text = stats.hp.ToString();
-        if (manaText != null) manaText.text = stats.mana.ToString();
-        if (ataqueText != null) ataqueText.text = stats.ataque.ToString();
-        if (defensaText != null) defensaText.text = stats.defensa.ToString();
-        if (velocidadAtaqueText != null) velocidadAtaqueText.text = stats.velocidadAtaque.ToString();
-        if (ataqueCriticoText != null) ataqueCriticoText.text = stats.ataqueCritico.ToString();
-        if (danoCriticoText != null) danoCriticoText.text = stats.danoCritico.ToString();
-        if (suerteText != null) suerteText.text = stats.suerte.ToString();
-        if (destrezaText != null) destrezaText.text = stats.destreza.ToString();
+        if (hpText != null) hpText.text = FormatNumberWithSign(stats.hp);
+        if (manaText != null) manaText.text = FormatNumberWithSign(stats.mana);
+        if (ataqueText != null) ataqueText.text = FormatNumberWithSign(stats.ataque);
+        if (defensaText != null) defensaText.text = FormatNumberWithSign(stats.defensa);
+        if (velocidadAtaqueText != null) velocidadAtaqueText.text = FormatNumberWithSign(stats.velocidadAtaque);
+        if (ataqueCriticoText != null) ataqueCriticoText.text = FormatNumberWithSign(stats.ataqueCritico);
+        if (danoCriticoText != null) danoCriticoText.text = FormatNumberWithSign(stats.danoCritico);
+        if (suerteText != null) suerteText.text = FormatNumberWithSign(stats.suerte);
+        if (destrezaText != null) destrezaText.text = FormatNumberWithSign(stats.destreza);
 
         // Stats siguientes
-        if (nextHpText != null) nextHpText.text = nextStats.hp.ToString();
-        if (nextManaText != null) nextManaText.text = nextStats.mana.ToString();
-        if (nextAtaqueText != null) nextAtaqueText.text = nextStats.ataque.ToString();
-        if (nextDefensaText != null) nextDefensaText.text = nextStats.defensa.ToString();
-        if (nextVelocidadAtaqueText != null) nextVelocidadAtaqueText.text = nextStats.velocidadAtaque.ToString();
-        if (nextAtaqueCriticoText != null) nextAtaqueCriticoText.text = nextStats.ataqueCritico.ToString();
-        if (nextDanoCriticoText != null) nextDanoCriticoText.text = nextStats.danoCritico.ToString();
-        if (nextSuerteText != null) nextSuerteText.text = nextStats.suerte.ToString();
-        if (nextDestrezaText != null) nextDestrezaText.text = nextStats.destreza.ToString();
+        if (nextHpText != null) nextHpText.text = FormatNumberWithSign(nextStats.hp);
+        if (nextManaText != null) nextManaText.text = FormatNumberWithSign(nextStats.mana);
+        if (nextAtaqueText != null) nextAtaqueText.text = FormatNumberWithSign(nextStats.ataque);
+        if (nextDefensaText != null) nextDefensaText.text = FormatNumberWithSign(nextStats.defensa);
+        if (nextVelocidadAtaqueText != null) nextVelocidadAtaqueText.text = FormatNumberWithSign(nextStats.velocidadAtaque);
+        if (nextAtaqueCriticoText != null) nextAtaqueCriticoText.text = FormatNumberWithSign(nextStats.ataqueCritico);
+        if (nextDanoCriticoText != null) nextDanoCriticoText.text = FormatNumberWithSign(nextStats.danoCritico);
+        if (nextSuerteText != null) nextSuerteText.text = FormatNumberWithSign(nextStats.suerte);
+        if (nextDestrezaText != null) nextDestrezaText.text = FormatNumberWithSign(nextStats.destreza);
 
         // Deltas
         int dHp = nextStats.hp - stats.hp;
@@ -866,6 +866,12 @@ public class ForgeUIManager : MonoBehaviour
     private Color GetRarityColor(string rarity)
     {
         return RarityColorProvider.GetColor(rarity);
+    }
+
+    private string FormatNumberWithSign(int value)
+    {
+        string formatted = NumberFormatter.FormatNumber(value);
+        return value > 0 ? $"+{formatted}" : formatted;
     }
 
     private string FormatDelta(int delta)
