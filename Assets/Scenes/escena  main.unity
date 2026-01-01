@@ -170768,7 +170768,7 @@ MonoBehaviour:
   rotationSpeed: 6
   reverseRotation: 0
   pauseRotation: 0
-  cylinderMaterial: {fileID: 2100000, guid: e9b53e197e1beeb45a0e71d5ded2c748, type: 2}
+  cylinderMaterial: {fileID: 2100000, guid: 70c42f4753c24b84f95a2d365a44570a, type: 2}
   backgroundSprites:
   - {fileID: 21300000, guid: 0be3f769b3f8ffd4a8256c20a56592a6, type: 3}
   - {fileID: 21300000, guid: a9edbc70f832f484c85625129ef0ba95, type: 3}
@@ -170824,7 +170824,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9b53e197e1beeb45a0e71d5ded2c748, type: 2}
+  - {fileID: 2100000, guid: 70c42f4753c24b84f95a2d365a44570a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
