@@ -15,6 +15,9 @@ public class ChestManager : MonoBehaviour
     [Tooltip("Referencia al ItemDatabase")]
     [SerializeField] private ItemDatabase itemDatabase;
 
+    [Tooltip("Base de datos de tiers para recompensas (opcional, para cofres escalados)")]
+    [SerializeField] private RewardTierDatabase rewardTierDatabase;
+
     [Tooltip("Referencia al InventoryManager")]
     [SerializeField] private InventoryManager inventoryManager;
 
@@ -437,31 +440,62 @@ public class ChestManager : MonoBehaviour
     /// </summary>
     private ItemInstance GetNextItem()
     {
-        if (availableItems == null || availableItems.Count == 0)
+        ItemData itemData = GetTierItemForHeroLevel();
+        if (itemData == null)
         {
-            Debug.LogWarning("No hay items disponibles.");
-            return null;
-        }
+            if (availableItems == null || availableItems.Count == 0)
+            {
+                Debug.LogWarning("ChestManager: No hay items disponibles ni en RewardTierDatabase ni en el ItemDatabase.");
+                return null;
+            }
 
-        // SOLUCIÓN: Obtener un item aleatorio en lugar de siempre el primero
-        int randomIndex = Random.Range(0, availableItems.Count);
-        ItemData itemData = availableItems[randomIndex];
-
-        // Incrementar índice para la próxima vez (aunque ahora usamos aleatorio)
-        currentItemIndex++;
-        if (currentItemIndex >= availableItems.Count)
-        {
-            currentItemIndex = 0;
+            // Fallback: usar lista general
+            int fallbackIndex = Random.Range(0, availableItems.Count);
+            itemData = availableItems[fallbackIndex];
         }
 
         if (itemData == null)
         {
-            Debug.LogWarning("ItemData nulo encontrado en la lista de items disponibles.");
+            Debug.LogWarning("ChestManager: ItemData nulo obtenido al intentar generar recompensa.");
             return null;
         }
 
-        // Crear nueva instancia (nivel 1)
         return new ItemInstance(itemData);
+    }
+
+    private ItemData GetTierItemForHeroLevel()
+    {
+        if (rewardTierDatabase == null)
+            return null;
+
+        int heroLevel = GetHeroLevel();
+        int targetTier = DetermineTierForLevel(heroLevel);
+        ItemData tierItem = rewardTierDatabase.GetRandomItemFromTier(targetTier);
+
+        if (tierItem == null)
+        {
+            Debug.LogWarning($"ChestManager: No se encontró item para el tier {targetTier}. Usando fallback.");
+        }
+
+        return tierItem;
+    }
+
+    private int DetermineTierForLevel(int heroLevel)
+    {
+        if (heroLevel <= 100) return 1;
+        if (heroLevel <= 200) return 2;
+        if (heroLevel <= 300) return 3;
+        if (heroLevel <= 400) return 4;
+        return 5;
+    }
+
+    private int GetHeroLevel()
+    {
+        if (GameDataManager.Instance == null)
+            return 1;
+
+        PlayerProfileData profile = GameDataManager.Instance.GetPlayerProfile();
+        return profile != null ? Mathf.Clamp(profile.heroLevel, 1, 999) : 1;
     }
 
     /// <summary>

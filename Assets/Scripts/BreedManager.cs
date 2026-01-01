@@ -47,6 +47,14 @@ public class BreedManager : MonoBehaviour
 
     [Tooltip("Texto de experiencia del héroe (formato: actual/needed)")]
     [SerializeField] private TextMeshProUGUI heroExperienceText;
+
+    [Header("Recursos del Jugador")]
+    [Tooltip("Texto que muestra las monedas del jugador dentro de Breed")]
+    [SerializeField] private TextMeshProUGUI playerMoneyText;
+    [Tooltip("Formato para mostrar las monedas (usa {0} para el valor)")]
+    [SerializeField] private string playerMoneyFormat = "{0}";
+    [Tooltip("Formatear monedas con separador de miles")]
+    [SerializeField] private bool formatMoneyWithThousands = true;
     
     [Tooltip("Estado General (título)")]
     [SerializeField] private TextMeshProUGUI generalStateText;
@@ -286,6 +294,19 @@ public class BreedManager : MonoBehaviour
     [Tooltip("Velocidad de incremento gradual de stats (puntos por segundo)")]
     [Range(1f, 100f)]
     [SerializeField] private float gradualFillSpeed = 10f; // 10 puntos por segundo = 0.1s por punto
+    [Tooltip("Duración de la animación para recompensas de monedas/EXP")]
+    [Range(0.25f, 5f)]
+    [SerializeField] private float rewardAnimationDuration = 2f;
+    
+    [Header("Recompensas de Acciones")]
+    [Tooltip("Monedas base otorgadas por acciones de crianza (nivel 1)")]
+    [SerializeField] private int baseActionCoinReward = 25;
+    [Tooltip("Experiencia base otorgada por acciones de crianza (nivel 1)")]
+    [SerializeField] private int baseActionExperienceReward = 10;
+    [Tooltip("Multiplicador aplicado por cada nivel de héroe (ej. 1.2 = +20% por nivel)")]
+    [SerializeField] private float actionRewardMultiplierPerLevel = 1.2f;
+    [Tooltip("Si es true, muestra mensajes indicando las recompensas obtenidas")]
+    [SerializeField] private bool showActionRewardMessages = true;
     
     // Variable para evitar múltiples animaciones simultáneas
     private bool isFillingStat = false;
@@ -305,6 +326,12 @@ public class BreedManager : MonoBehaviour
     private Coroutine decayCoroutine;
     private Coroutine messageCoroutine;
     private Coroutine typewriterCoroutine;
+    private Coroutine moneyAnimationCoroutine;
+    private Coroutine experienceAnimationCoroutine;
+    private int displayedMoneyValue = 0;
+    private float displayedHeroTotalExperience = 0f;
+    private bool experienceAnimationLocked = false;
+    private PlayerMoney cachedPlayerMoney;
     private Coroutine idleAnimationCoroutine = null;
     private Animator animationTargetAnimator = null;
     private SpriteRenderer animationSpriteRenderer = null;
@@ -370,6 +397,7 @@ public class BreedManager : MonoBehaviour
         
         // Cargar y actualizar UI inicial
         RefreshAllUI();
+        InitializeMoneyTracking();
         
         // Inicializar estado anterior de sueño
         if (energySystem != null)
@@ -408,47 +436,18 @@ public class BreedManager : MonoBehaviour
         usedMessageIndices.Clear();
         lastGlobalState = GlobalState.Excelencia;
         lastDeficiency = DominantDeficiency.Trabajo;
-        
-        // Abrir el panel de animaciones e iniciar las animaciones
-        OpenAnimationPanel();
-    }
+        lastDisplayedMessage = "";
 
-    /// <summary>
-    /// Se llama cuando el GameObject se desactiva (cuando se cierra el panel General Breed).
-    /// </summary>
-    /// <summary>
-    /// Alterna el estado de la voz (activado/desactivado)
-    /// </summary>
-    private void ToggleVoice()
-    {
-        isVoiceEnabled = !isVoiceEnabled;
-        
-        if (audioVisualizer != null)
+        InitializeMoneyTracking();
+        if (audioVisualizer != null && isVoiceEnabled)
         {
-            if (isVoiceEnabled)
-            {
-                audioVisualizer.EnableVisualizer();
-                // Opcional: Cambiar el color o icono del botón para indicar que está activado
-                if (voiceToggleButton != null && voiceToggleButton.image != null)
-                {
-                    voiceToggleButton.image.color = Color.white;
-                }
-            }
-            else
-            {
-                audioVisualizer.DisableVisualizer();
-                // Opcional: Cambiar el color o icono del botón para indicar que está desactivado
-                if (voiceToggleButton != null && voiceToggleButton.image != null)
-                {
-                    voiceToggleButton.image.color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
-                }
-            }
+            audioVisualizer.EnableVisualizer();
         }
     }
 
     private void OnDisable()
     {
-        // Resetear pool de mensajes al cerrar el panel
+        // Cuando se cierra el panel General Breed, detener corutinas y animaciones
         usedMessageIndices.Clear();
         
         // Cerrar el panel de animaciones y detener las animaciones
@@ -471,6 +470,21 @@ public class BreedManager : MonoBehaviour
             StopCoroutine(messageCoroutine);
         if (typewriterCoroutine != null)
             StopCoroutine(typewriterCoroutine);
+        if (moneyAnimationCoroutine != null)
+        {
+            StopCoroutine(moneyAnimationCoroutine);
+            moneyAnimationCoroutine = null;
+        }
+
+        if (experienceAnimationCoroutine != null)
+        {
+            StopCoroutine(experienceAnimationCoroutine);
+            experienceAnimationCoroutine = null;
+            experienceAnimationLocked = false;
+        }
+
+        UnsubscribeMoneyTracking();
+
         if (idleAnimationCoroutine != null)
             StopCoroutine(idleAnimationCoroutine);
     }
@@ -633,6 +647,28 @@ public class BreedManager : MonoBehaviour
         if (resetCancelButton != null)
             resetCancelButton.onClick.AddListener(OnResetCancelButtonClicked);
     }
+
+    private void ToggleVoice()
+    {
+        isVoiceEnabled = !isVoiceEnabled;
+
+        if (audioVisualizer != null)
+        {
+            if (isVoiceEnabled)
+            {
+                audioVisualizer.EnableVisualizer();
+            }
+            else
+            {
+                audioVisualizer.DisableVisualizer();
+            }
+        }
+
+        if (voiceToggleButton != null && voiceToggleButton.image != null)
+        {
+            voiceToggleButton.image.color = isVoiceEnabled ? Color.white : new Color(0.7f, 0.7f, 0.7f, 0.7f);
+        }
+    }
     
     // ===== ACCIONES =====
     
@@ -657,6 +693,7 @@ public class BreedManager : MonoBehaviour
         // Activar panel de animación
         ActivateAnimationPanel(eatAnimationPanel, eatActionClip);
         
+        GrantActionRewards("Comer");
         StartCoroutine(GraduallyFillStat(() => profile.breedHunger, (value) => profile.breedHunger = value, actionFillAmount));
     }
     
@@ -681,6 +718,7 @@ public class BreedManager : MonoBehaviour
         // Activar panel de animación
         ActivateAnimationPanel(studyAnimationPanel, studyActionClip);
         
+        GrantActionRewards("Estudio");
         StartCoroutine(GraduallyFillStat(() => profile.breedDiscipline, (value) => profile.breedDiscipline = value, actionFillAmount));
     }
     
@@ -730,6 +768,8 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     public void RefreshHeroExperienceSection()
     {
+        if (experienceAnimationLocked)
+            return;
         RefreshHeroLevelText();
         RefreshHeroExperienceUI();
     }
@@ -767,6 +807,7 @@ public class BreedManager : MonoBehaviour
         // Activar panel de animación
         ActivateAnimationPanel(playAnimationPanel, playActionClip);
         
+        GrantActionRewards("Jugar");
         StartCoroutine(GraduallyFillStat(() => profile.breedHappiness, (value) => profile.breedHappiness = value, actionFillAmount));
     }
     
@@ -843,6 +884,7 @@ public class BreedManager : MonoBehaviour
         // Activar panel de animación
         ActivateAnimationPanel(cleanAnimationPanel, cleanActionClip);
         
+        GrantActionRewards("Limpiar");
         StartCoroutine(GraduallyFillStat(() => profile.breedHygiene, (value) => profile.breedHygiene = value, actionFillAmount));
     }
     
@@ -1735,6 +1777,248 @@ public class BreedManager : MonoBehaviour
         
         typewriterCoroutine = null;
     }
+
+    private void GrantActionRewards(string actionDisplayName)
+    {
+        if (gameDataManager == null)
+            return;
+
+        PlayerProfileData profile = gameDataManager.GetPlayerProfile();
+        if (profile == null)
+            return;
+
+        int heroLevel = Mathf.Clamp(profile.heroLevel, 1, 999);
+        CalculateActionRewardAmounts(heroLevel, out int coinsAward, out int experienceAward);
+
+        PlayerMoney playerMoney = gameDataManager.PlayerMoney;
+        if (playerMoney != null && coinsAward > 0)
+        {
+            playerMoney.AddMoney(coinsAward);
+        }
+
+        if (experienceAward > 0)
+        {
+            float startingTotalExperience = CalculateTotalExperienceValue(profile.heroLevel, profile.heroExperience);
+            experienceAnimationLocked = true;
+            gameDataManager.AddHeroExperience(experienceAward);
+            PlayerProfileData refreshedProfile = gameDataManager.GetPlayerProfile();
+            if (refreshedProfile != null)
+            {
+                float targetTotalExperience = CalculateTotalExperienceValue(refreshedProfile.heroLevel, refreshedProfile.heroExperience);
+                StartHeroExperienceAnimation(startingTotalExperience, targetTotalExperience);
+            }
+            else
+            {
+                experienceAnimationLocked = false;
+                RefreshHeroExperienceSection();
+            }
+        }
+
+        if (showActionRewardMessages)
+        {
+            string message = $"{actionDisplayName}: +{coinsAward} monedas y +{experienceAward} EXP";
+            ShowActionRewardMessage(message);
+        }
+    }
+
+    private void CalculateActionRewardAmounts(int heroLevel, out int coinsAward, out int experienceAward)
+    {
+        int normalizedLevel = Mathf.Max(1, heroLevel);
+        double levelMultiplier = Math.Pow(actionRewardMultiplierPerLevel, Math.Max(0, normalizedLevel - 1));
+
+        double coinValue = baseActionCoinReward * levelMultiplier;
+        double experienceValue = baseActionExperienceReward * levelMultiplier;
+
+        coinsAward = (int)Math.Max(0, Math.Min(Math.Round(coinValue), int.MaxValue));
+        experienceAward = (int)Math.Max(0, Math.Min(Math.Round(experienceValue), int.MaxValue));
+    }
+
+    private void ShowActionRewardMessage(string message)
+    {
+        if (messageText == null)
+            return;
+
+        if (typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+        }
+
+        lastDisplayedMessage = message;
+        typewriterCoroutine = StartCoroutine(DisplayTextWithTypewriter(message));
+    }
+
+    private void InitializeMoneyTracking()
+    {
+        if (gameDataManager == null)
+            return;
+
+        cachedPlayerMoney = gameDataManager.PlayerMoney;
+        if (cachedPlayerMoney == null)
+            return;
+
+        cachedPlayerMoney.OnMoneyChanged -= HandleMoneyChanged;
+        cachedPlayerMoney.OnMoneyChanged += HandleMoneyChanged;
+        displayedMoneyValue = cachedPlayerMoney.GetMoney();
+        UpdatePlayerMoneyDisplay(displayedMoneyValue);
+    }
+
+    private void UnsubscribeMoneyTracking()
+    {
+        if (cachedPlayerMoney != null)
+        {
+            cachedPlayerMoney.OnMoneyChanged -= HandleMoneyChanged;
+            cachedPlayerMoney = null;
+        }
+    }
+
+    private void HandleMoneyChanged(int newAmount)
+    {
+        if (playerMoneyText == null)
+            return;
+
+        if (moneyAnimationCoroutine != null)
+        {
+            StopCoroutine(moneyAnimationCoroutine);
+        }
+
+        moneyAnimationCoroutine = StartCoroutine(AnimateMoneyDisplay(displayedMoneyValue, newAmount));
+    }
+
+    private IEnumerator AnimateMoneyDisplay(int fromAmount, int toAmount)
+    {
+        displayedMoneyValue = fromAmount;
+        UpdatePlayerMoneyDisplay(displayedMoneyValue);
+
+        float duration = Mathf.Max(0.1f, rewardAnimationDuration);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float eased = Mathf.SmoothStep(0f, 1f, t);
+            displayedMoneyValue = Mathf.RoundToInt(Mathf.Lerp(fromAmount, toAmount, eased));
+            UpdatePlayerMoneyDisplay(displayedMoneyValue);
+            yield return null;
+        }
+
+        displayedMoneyValue = toAmount;
+        UpdatePlayerMoneyDisplay(displayedMoneyValue);
+        moneyAnimationCoroutine = null;
+    }
+
+    private void UpdatePlayerMoneyDisplay(int amount)
+    {
+        if (playerMoneyText == null)
+            return;
+
+        string formatted = formatMoneyWithThousands ? FormatNumber(amount) : amount.ToString();
+        playerMoneyText.text = string.Format(playerMoneyFormat, formatted);
+    }
+
+    private string FormatNumber(int number)
+    {
+        return number.ToString("N0");
+    }
+
+    private void StartHeroExperienceAnimation(float startTotal, float endTotal)
+    {
+        if (heroExperienceSlider == null || heroExperienceText == null)
+        {
+            experienceAnimationLocked = false;
+            RefreshHeroExperienceSection();
+            return;
+        }
+
+        if (experienceAnimationCoroutine != null)
+        {
+            StopCoroutine(experienceAnimationCoroutine);
+        }
+
+        displayedHeroTotalExperience = startTotal;
+        experienceAnimationCoroutine = StartCoroutine(AnimateHeroExperienceGain(startTotal, endTotal));
+    }
+
+    private IEnumerator AnimateHeroExperienceGain(float startTotal, float endTotal)
+    {
+        float duration = Mathf.Max(0.1f, rewardAnimationDuration);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float eased = Mathf.SmoothStep(0f, 1f, t);
+            float currentTotal = Mathf.Lerp(startTotal, endTotal, eased);
+            displayedHeroTotalExperience = currentTotal;
+            UpdateHeroExperienceDisplayFromTotal(currentTotal);
+            yield return null;
+        }
+
+        displayedHeroTotalExperience = endTotal;
+        UpdateHeroExperienceDisplayFromTotal(endTotal);
+        experienceAnimationCoroutine = null;
+        experienceAnimationLocked = false;
+        RefreshHeroExperienceSection();
+    }
+
+    private void UpdateHeroExperienceDisplayFromTotal(float totalExperience)
+    {
+        ConvertTotalExperienceToLevel(totalExperience, out int level, out float expWithinLevel, out int neededForLevel);
+
+        if (heroLevelText != null)
+        {
+            heroLevelText.text = $"Nivel {level}";
+        }
+
+        if (heroExperienceSlider != null)
+        {
+            heroExperienceSlider.minValue = 0;
+            heroExperienceSlider.maxValue = neededForLevel;
+            heroExperienceSlider.value = expWithinLevel;
+        }
+
+        if (heroExperienceText != null)
+        {
+            heroExperienceText.text = $"{Mathf.RoundToInt(expWithinLevel)}/{neededForLevel}";
+        }
+    }
+
+    private float CalculateTotalExperienceValue(int level, int currentExp)
+    {
+        int normalizedLevel = Mathf.Max(1, level);
+        float expAtLevelStart = 50f * (normalizedLevel - 1) * (normalizedLevel);
+        return expAtLevelStart + Mathf.Max(0, currentExp);
+    }
+
+    private void ConvertTotalExperienceToLevel(float totalExperience, out int level, out float expWithinLevel, out int neededForLevel)
+    {
+        if (totalExperience <= 0f)
+        {
+            level = 1;
+            expWithinLevel = 0f;
+            neededForLevel = 100;
+            return;
+        }
+
+        // totalExpAtLevelStart = 50 * n^2 + 50 * n, where n = level - 1
+        double a = 50d;
+        double b = 50d;
+        double c = -totalExperience;
+        double discriminant = Math.Max(0d, b * b - 4d * a * c);
+        double n = (-b + Math.Sqrt(discriminant)) / (2d * a);
+        int completedLevels = Mathf.Clamp((int)Math.Floor(n), 0, 100000);
+
+        level = completedLevels + 1;
+        double totalAtLevelStart = 50d * completedLevels * completedLevels + 50d * completedLevels;
+        expWithinLevel = Mathf.Max(0f, (float)(totalExperience - totalAtLevelStart));
+        neededForLevel = level * 100;
+
+        if (expWithinLevel > neededForLevel)
+        {
+            expWithinLevel = neededForLevel;
+        }
+    }
     
     // ===== TÍTULOS =====
     
@@ -1820,6 +2104,13 @@ public class BreedManager : MonoBehaviour
 
     private void RefreshHeroExperienceUI()
     {
+        if (experienceAnimationCoroutine != null)
+        {
+            StopCoroutine(experienceAnimationCoroutine);
+            experienceAnimationCoroutine = null;
+            experienceAnimationLocked = false;
+        }
+
         PlayerProfileData profile = gameDataManager.GetPlayerProfile();
         if (profile == null)
             return;
@@ -1838,6 +2129,9 @@ public class BreedManager : MonoBehaviour
         {
             heroExperienceText.text = $"{currentExp}/{neededExp}";
         }
+
+        displayedHeroTotalExperience = CalculateTotalExperienceValue(profile.heroLevel, profile.heroExperience);
+        RefreshHeroLevelText();
     }
     
     /// <summary>

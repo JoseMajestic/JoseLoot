@@ -4973,7 +4973,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff atq 1
+  m_text: Arenga de Optio
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18413,7 +18413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff def 3
+  m_text: Aegis de Imperator
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -47618,7 +47618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: magia
+  m_text: Impulsus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -60362,7 +60362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff def 2
+  m_text: Fortaleza de Praefectus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -65502,6 +65502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChestManager
   itemDatabase: {fileID: 11400000, guid: ddb9184ede5820b44a9279cc6601c9a9, type: 2}
+  rewardTierDatabase: {fileID: 0}
   inventoryManager: {fileID: 1770052695}
   playerMoney: {fileID: 1770052692}
   inventoryAutoOrganizer: {fileID: 1770052689}
@@ -65698,6 +65699,7 @@ MonoBehaviour:
   heroLevelText: {fileID: 125815412}
   heroExperienceSlider: {fileID: 899490091}
   heroExperienceText: {fileID: 2070429480}
+  playerMoneyText: {fileID: 0}
   generalStateText: {fileID: 1851105158}
   workSlider: {fileID: 1728608322}
   workText: {fileID: 2005813721}
@@ -65764,6 +65766,11 @@ MonoBehaviour:
   actionFillAmount: 15
   typewriterSpeed: 90
   gradualFillSpeed: 8
+  baseActionCoinReward: 25
+  baseActionExperienceReward: 10
+  actionRewardMultiplierPerLevel: 1.2
+  showActionRewardMessages: 1
+  actionRewardAnimationDuration: 2
   messageInterval: 18
 --- !u!114 &620894631
 MonoBehaviour:
@@ -74163,7 +74170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: heal 2
+  m_text: "Bendici\xF3n de Augur"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -77548,7 +77555,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: heal 1
+  m_text: "Ung\xFCento de Sanador"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -91070,7 +91077,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: especiales
+  m_text: Martialis
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -98303,7 +98310,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque multiple 2
+  m_text: Tormenta de Pilum
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -98440,7 +98447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque fuerte 1
+  m_text: "Embate de Centuri\xF3n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -101177,7 +101184,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque fuerte 3
+  m_text: Coloso de Imperator
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -103921,7 +103928,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff atq 2
+  m_text: Furia de Centurio
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -118820,7 +118827,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff def 1
+  m_text: Muralla de Vexillarius
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -122880,7 +122887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: heal 3
+  m_text: Milagro de Divinidad
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -129896,7 +129903,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: veneno 3
+  m_text: Peste de Dictador
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -151832,7 +151839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque basico
+  m_text: Estoque
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -168922,7 +168929,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: veneno 2
+  m_text: "P\xF3cima de Tribuno"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -192595,7 +192602,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque multiple
+  m_text: Lluvia de Gladius
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: -6163918486310106829, guid: 07b03c471831fb5458669e24515df248, type: 2}
@@ -193201,7 +193208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: heal 3
+  m_text: "Gracia de Pont\xEDfex"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -197984,7 +197991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: buff atq 3
+  m_text: "Fervor de C\xF3nsul"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -200959,7 +200966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: veneno 1
+  m_text: Toxina de Auxiliar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -204672,7 +204679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque multiple 1
+  m_text: 'Lluvia de Gladius '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -229207,7 +229214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: stun
+  m_text: Mazazo de Hastatus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -229447,7 +229454,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque fuerte 2
+  m_text: Golpe de Legatus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -230645,7 +230652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ataque multiple 3
+  m_text: Tempestad de Ballista
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07b03c471831fb5458669e24515df248, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
