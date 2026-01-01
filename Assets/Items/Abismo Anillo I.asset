@@ -26,6 +26,6 @@ MonoBehaviour:
   suerte: 406
   destreza: 134
   nivel: 1
-  requiredHeroLevel: 580
+  requiredHeroLevel: 1
   rareza: Comun
   itemType: 8

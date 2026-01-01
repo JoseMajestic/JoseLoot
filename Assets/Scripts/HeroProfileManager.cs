@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 /// Gestiona el perfil del jugador (Hero), mostrando:
@@ -117,6 +118,16 @@ public class HeroProfileManager : MonoBehaviour
     [Tooltip("Texto que muestra el nivel del item equipado en el slot Botas")]
     [SerializeField] private TextMeshProUGUI botasLevelText;
 
+    [Header("Panel Detallado de Equipo")]
+    [Tooltip("Panel que se mostrará mientras se mantiene pulsado un slot")]
+    [SerializeField] private GameObject equipmentDetailPanel;
+    [Tooltip("Texto donde se mostrarán los valores detallados del item")]
+    [SerializeField] private TextMeshProUGUI equipmentDetailText;
+    [Tooltip("Opcional: CanvasGroup para controlar la visibilidad por alpha (si no se asigna se usará SetActive)")]
+    [SerializeField] private CanvasGroup equipmentDetailCanvasGroup;
+    [Tooltip("Botones asociados a cada slot para detectar el hold")]
+    [SerializeField] private HeroProfileEquipmentSlotButton[] equipmentSlotButtons;
+
     [Header("UI de Características del Héroe")]
     [Tooltip("Texto que muestra el HP total del héroe (base + equipo)")]
     [SerializeField] private TextMeshProUGUI hpText;
@@ -184,7 +195,8 @@ public class HeroProfileManager : MonoBehaviour
 
     // Diccionario para guardar los sprites por defecto de cada slot
     private Dictionary<Image, Sprite> defaultSlotSprites = new Dictionary<Image, Sprite>();
-
+    private HeroProfileEquipmentSlotButton activeSlotButton = null;
+    
     private void Start()
     {
         // Obtener referencias desde GameDataManager si no están asignadas
@@ -242,6 +254,8 @@ public class HeroProfileManager : MonoBehaviour
 
         // Guardar los sprites por defecto de todos los slots antes de cualquier modificación
         SaveDefaultSlotSprites();
+
+        InitializeEquipmentSlotButtons();
 
         // Refrescar toda la UI al inicio (después de un frame para asegurar orden)
         StartCoroutine(RefreshAfterFrame());
@@ -621,6 +635,8 @@ public class HeroProfileManager : MonoBehaviour
             StopCoroutine(timeUpdateCoroutine);
             timeUpdateCoroutine = null;
         }
+
+        activeSlotButton = null;
     }
 
     /// <summary>
@@ -741,6 +757,147 @@ public class HeroProfileManager : MonoBehaviour
         // Esperar otro frame y forzar actualización del canvas
         yield return null;
         Canvas.ForceUpdateCanvases();
+    }
+
+    private void InitializeEquipmentSlotButtons()
+    {
+        if (equipmentSlotButtons == null || equipmentSlotButtons.Length == 0)
+            return;
+
+        foreach (var slotButton in equipmentSlotButtons)
+        {
+            if (slotButton == null)
+                continue;
+
+            slotButton.SetHeroProfileManager(this);
+        }
+
+        HideEquipmentDetailPanel();
+    }
+
+    private void ShowEquipmentDetailPanel(ItemInstance itemInstance)
+    {
+        if (itemInstance == null || !itemInstance.IsValid())
+        {
+            HideEquipmentDetailPanel();
+            return;
+        }
+
+        string detailText = BuildDetailText(itemInstance);
+        if (equipmentDetailText != null)
+        {
+            equipmentDetailText.text = detailText;
+        }
+
+        if (equipmentDetailCanvasGroup != null)
+        {
+            equipmentDetailCanvasGroup.alpha = 1f;
+            equipmentDetailCanvasGroup.blocksRaycasts = true;
+            equipmentDetailCanvasGroup.interactable = true;
+        }
+        else if (equipmentDetailPanel != null && !equipmentDetailPanel.activeSelf)
+        {
+            equipmentDetailPanel.SetActive(true);
+        }
+    }
+
+    private void HideEquipmentDetailPanel()
+    {
+        if (equipmentDetailCanvasGroup != null)
+        {
+            equipmentDetailCanvasGroup.alpha = 0f;
+            equipmentDetailCanvasGroup.blocksRaycasts = false;
+            equipmentDetailCanvasGroup.interactable = false;
+        }
+        else if (equipmentDetailPanel != null)
+        {
+            equipmentDetailPanel.SetActive(false);
+        }
+
+        if (equipmentDetailText != null)
+        {
+            equipmentDetailText.text = string.Empty;
+        }
+    }
+
+    private string BuildDetailText(ItemInstance itemInstance)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        string itemName = itemInstance.GetItemName();
+        string itemType = itemInstance.baseItem != null ? itemInstance.baseItem.itemType.ToString() : "-";
+        string rarity = !string.IsNullOrEmpty(itemInstance.GetRarity())
+            ? RarityColorProvider.GetDisplayName(itemInstance.GetRarity())
+            : "-";
+        string rarityHex = null;
+        if (!string.IsNullOrEmpty(itemInstance.GetRarity()))
+        {
+            rarityHex = RarityColorProvider.GetColorHex(itemInstance.GetRarity());
+        }
+        ItemStats stats = itemInstance.GetFinalStats();
+
+        if (!string.IsNullOrEmpty(rarityHex))
+        {
+            sb.AppendLine($"<color=#{rarityHex}>{itemName}</color>");
+        }
+        else
+        {
+            sb.AppendLine(itemName);
+        }
+
+        sb.AppendLine(itemType);
+        sb.AppendLine(NumberFormatter.FormatNumber(itemInstance.currentLevel));
+        if (!string.IsNullOrEmpty(rarityHex))
+        {
+            sb.AppendLine($"<color=#{rarityHex}>{rarity}</color>");
+        }
+        else
+        {
+            sb.AppendLine(rarity);
+        }
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.ataque));
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.defensa));
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.velocidadAtaque));
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.ataqueCritico));
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.danoCritico));
+        sb.AppendLine(NumberFormatter.FormatNumber(stats.suerte));
+        sb.Append(NumberFormatter.FormatNumber(stats.destreza));
+
+        return sb.ToString();
+    }
+
+    public void OnEquipmentSlotPointerDown(EquipmentManager.EquipmentSlotType slotType, HeroProfileEquipmentSlotButton sourceButton)
+    {
+        if (sourceButton == null)
+            return;
+
+        if (activeSlotButton != null && activeSlotButton != sourceButton)
+        {
+            OnEquipmentSlotPointerUp(activeSlotButton);
+        }
+
+        ItemInstance equippedItem = equipmentManager != null ? equipmentManager.GetEquippedItem(slotType) : null;
+        if (equippedItem == null || !equippedItem.IsValid())
+        {
+            HideEquipmentDetailPanel();
+            activeSlotButton = null;
+            return;
+        }
+
+        activeSlotButton = sourceButton;
+        ShowEquipmentDetailPanel(equippedItem);
+    }
+
+    public void OnEquipmentSlotPointerUp(HeroProfileEquipmentSlotButton sourceButton)
+    {
+        if (sourceButton == null)
+            return;
+
+        if (activeSlotButton == sourceButton)
+        {
+            activeSlotButton = null;
+            HideEquipmentDetailPanel();
+        }
     }
 
     /// <summary>
@@ -970,6 +1127,18 @@ public class HeroProfileManager : MonoBehaviour
             {
                 slotLevelText.text = "";
                 slotLevelText.gameObject.SetActive(false);
+            }
+        }
+        
+        if (activeSlotButton != null && activeSlotButton.SlotType == slot)
+        {
+            if (itemInstance != null && itemInstance.IsValid())
+            {
+                ShowEquipmentDetailPanel(itemInstance);
+            }
+            else
+            {
+                HideEquipmentDetailPanel();
             }
         }
     }
