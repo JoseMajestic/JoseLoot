@@ -4,6 +4,8 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Linq;
 
 /// <summary>
 /// Gestiona el perfil del jugador (Hero), mostrando:
@@ -127,6 +129,16 @@ public class HeroProfileManager : MonoBehaviour
     [SerializeField] private CanvasGroup equipmentDetailCanvasGroup;
     [Tooltip("Botones asociados a cada slot para detectar el hold")]
     [SerializeField] private HeroProfileEquipmentSlotButton[] equipmentSlotButtons;
+
+    [Header("Panel de Sets")]
+    [Tooltip("Panel contenedor de la información de sets (opcional)")]
+    [SerializeField] private GameObject setBonusPanel;
+    [Tooltip("CanvasGroup opcional para animar el panel de sets")]
+    [SerializeField] private CanvasGroup setBonusPanelCanvasGroup;
+    [Tooltip("Texto donde se muestra el nombre del set y sus piezas")]
+    [SerializeField] private TextMeshProUGUI setNameAndPiecesText;
+    [Tooltip("Texto donde se muestran las bonificaciones del set")]
+    [SerializeField] private TextMeshProUGUI setBonusesText;
 
     [Header("UI de Características del Héroe")]
     [Tooltip("Texto que muestra el HP total del héroe (base + equipo)")]
@@ -672,7 +684,10 @@ public class HeroProfileManager : MonoBehaviour
         }
         
         UpdateEquipmentSlot(slot, null, forceRefresh: true); // Forzar actualización del sprite
-        RefreshHeroStats(); // Actualizar características cuando se desequipa
+        
+        // SOLUCIÓN: Usar corrutina para refrescar stats después de un frame, similar a OnItemEquipped
+        // Esto asegura que EquipmentManager haya actualizado sus stats internos antes de refrescar la UI
+        StartCoroutine(RefreshHeroStatsAfterFrame());
     }
     
     /// <summary>
@@ -759,6 +774,16 @@ public class HeroProfileManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
     }
 
+    /// <summary>
+    /// Refresca las stats del héroe después de esperar un frame.
+    /// Esto asegura que EquipmentManager haya actualizado sus stats internos.
+    /// </summary>
+    private IEnumerator RefreshHeroStatsAfterFrame()
+    {
+        yield return null;
+        RefreshHeroStats();
+    }
+
     private void InitializeEquipmentSlotButtons()
     {
         if (equipmentSlotButtons == null || equipmentSlotButtons.Length == 0)
@@ -789,6 +814,8 @@ public class HeroProfileManager : MonoBehaviour
             equipmentDetailText.text = detailText;
         }
 
+        UpdateSetBonusPanel(itemInstance);
+
         if (equipmentDetailCanvasGroup != null)
         {
             equipmentDetailCanvasGroup.alpha = 1f;
@@ -818,6 +845,240 @@ public class HeroProfileManager : MonoBehaviour
         {
             equipmentDetailText.text = string.Empty;
         }
+
+        HideSetBonusPanel();
+    }
+
+    private void UpdateSetBonusPanel(ItemInstance itemInstance)
+    {
+        if (!HasSetBonusUI())
+            return;
+
+        var setData = FindSetDataForItem(itemInstance);
+        if (setData == null)
+        {
+            HideSetBonusPanel();
+            return;
+        }
+
+        int equippedPieces;
+        string piecesText = BuildSetPiecesText(setData, itemInstance, out equippedPieces);
+        if (setNameAndPiecesText != null)
+        {
+            setNameAndPiecesText.text = piecesText;
+        }
+
+        if (setBonusesText != null)
+        {
+            setBonusesText.text = BuildSetBonusesText(setData, equippedPieces);
+        }
+
+        ShowSetBonusPanel();
+    }
+
+    private bool HasSetBonusUI()
+    {
+        return setBonusPanel != null ||
+               setBonusPanelCanvasGroup != null ||
+               setNameAndPiecesText != null ||
+               setBonusesText != null;
+    }
+
+    private void ShowSetBonusPanel()
+    {
+        if (setBonusPanelCanvasGroup != null)
+        {
+            setBonusPanelCanvasGroup.alpha = 1f;
+            setBonusPanelCanvasGroup.blocksRaycasts = true;
+            setBonusPanelCanvasGroup.interactable = true;
+        }
+        else if (setBonusPanel != null)
+        {
+            setBonusPanel.SetActive(true);
+        }
+    }
+
+    private void HideSetBonusPanel()
+    {
+        if (setBonusPanelCanvasGroup != null)
+        {
+            setBonusPanelCanvasGroup.alpha = 0f;
+            setBonusPanelCanvasGroup.blocksRaycasts = false;
+            setBonusPanelCanvasGroup.interactable = false;
+        }
+        else if (setBonusPanel != null)
+        {
+            setBonusPanel.SetActive(false);
+        }
+
+        if (setNameAndPiecesText != null)
+        {
+            setNameAndPiecesText.text = string.Empty;
+        }
+
+        if (setBonusesText != null)
+        {
+            setBonusesText.text = string.Empty;
+        }
+    }
+
+    private SetBonusesData FindSetDataForItem(ItemInstance itemInstance)
+    {
+        if (itemInstance?.baseItem == null || SetBonusManager.Instance == null)
+            return null;
+
+        string identifier = itemInstance.baseItem.itemName;
+        foreach (var setData in SetBonusManager.Instance.allSetBonuses)
+        {
+            if (setData == null)
+                continue;
+
+            if (setData.MatchesIdentifier(identifier) && ItemMeetsSetRequirements(setData, itemInstance))
+            {
+                return setData;
+            }
+        }
+
+        return null;
+    }
+
+    private string BuildSetPiecesText(SetBonusesData setData, ItemInstance sourceItem, out int equippedPieces)
+    {
+        equippedPieces = 0;
+        List<string> pieceNames = new List<string>();
+
+        if (equipmentManager != null)
+        {
+            foreach (EquipmentManager.EquipmentSlotType slot in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
+            {
+                ItemInstance equippedItem = equipmentManager.GetEquippedItem(slot);
+                if (ItemMatchesSet(setData, equippedItem))
+                {
+                    equippedPieces++;
+                    pieceNames.Add(equippedItem.GetItemName());
+                }
+            }
+        }
+        else if (ItemMatchesSet(setData, sourceItem))
+        {
+            equippedPieces = 1;
+            pieceNames.Add(sourceItem.GetItemName());
+        }
+
+        string header = $"{setData.setName} ({equippedPieces} piezas)";
+        string piecesList = pieceNames.Count > 0 ? string.Join(", ", pieceNames.Distinct()) : "Sin piezas equipadas de este set";
+        return $"{header}\n{piecesList}";
+    }
+
+    private string BuildSetBonusesText(SetBonusesData setData, int equippedPieces)
+    {
+        if (setData == null || setData.bonuses == null || setData.bonuses.Count == 0)
+            return "No hay bonificaciones registradas para este set.";
+
+        StringBuilder sb = new StringBuilder();
+        var orderedBonuses = setData.bonuses.OrderBy(b => b.minPieces);
+
+        foreach (var bonus in orderedBonuses)
+        {
+            if (bonus == null)
+                continue;
+
+            bool isActive = equippedPieces >= bonus.minPieces;
+            string statsText = FormatItemStats(bonus.bonusStats);
+            string lineContent = $"{bonus.minPieces} piezas: {statsText}";
+
+            if (!string.IsNullOrEmpty(bonus.description))
+            {
+                lineContent += $" ({bonus.description})";
+            }
+
+            if (isActive)
+            {
+                sb.AppendLine($"<color=#6CFF9C>{lineContent}</color>");
+            }
+            else
+            {
+                sb.AppendLine(lineContent);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private bool ItemMatchesSet(SetBonusesData setData, ItemInstance item)
+    {
+        if (setData == null || item?.baseItem == null)
+            return false;
+
+        return setData.MatchesIdentifier(item.baseItem.itemName) && ItemMeetsSetRequirements(setData, item);
+    }
+
+    private bool ItemMeetsSetRequirements(SetBonusesData setData, ItemInstance item)
+    {
+        if (setData == null || item == null)
+            return false;
+
+        string itemRarity = item.GetRarity();
+        if (string.IsNullOrEmpty(setData.minRarity))
+            return true;
+
+        return GetRarityRank(itemRarity) >= GetRarityRank(setData.minRarity);
+    }
+
+    private int GetRarityRank(string rarity)
+    {
+        if (string.IsNullOrEmpty(rarity))
+            return 0;
+
+        string rarityLower = rarity.ToLowerInvariant();
+
+        if (rarityLower.Contains("plebeius") || rarityLower.Contains("comun") || rarityLower.Contains("común"))
+            return 1;
+        if (rarityLower.Contains("auxiliaris") || rarityLower.Contains("magico") || rarityLower.Contains("mágico"))
+            return 2;
+        if (rarityLower.Contains("legionarius") || rarityLower.Contains("raro") || rarityLower.Contains("rara"))
+            return 3;
+        if (rarityLower.Contains("veteranus") || rarityLower.Contains("excelente"))
+            return 4;
+        if (rarityLower.Contains("centurio") || rarityLower.Contains("legendario") || rarityLower.Contains("legendaria"))
+            return 5;
+        if (rarityLower.Contains("tribunus") || rarityLower.Contains("epico") || rarityLower.Contains("épico") || rarityLower.Contains("epica") || rarityLower.Contains("épica"))
+            return 6;
+        if (rarityLower.Contains("praetorianus") || rarityLower.Contains("extremo") || rarityLower.Contains("extrema"))
+            return 7;
+        if (rarityLower.Contains("imperialis") || rarityLower.Contains("demoniaco") || rarityLower.Contains("demoníaco") || rarityLower.Contains("demoniaca") || rarityLower.Contains("demoníaca"))
+            return 8;
+        if (rarityLower.Contains("augustus") || rarityLower.Contains("celestial"))
+            return 9;
+        if (rarityLower.Contains("divinus") || rarityLower.Contains("etereo") || rarityLower.Contains("etéreo"))
+            return 10;
+
+        return 0;
+    }
+
+    private string FormatItemStats(ItemStats stats)
+    {
+        List<string> parts = new List<string>();
+
+        AppendStatText(parts, "HP", stats.hp);
+        AppendStatText(parts, "Mana", stats.mana);
+        AppendStatText(parts, "Ataque", stats.ataque);
+        AppendStatText(parts, "Defensa", stats.defensa);
+        AppendStatText(parts, "Velocidad", stats.velocidadAtaque);
+        AppendStatText(parts, "Atk Crítico", stats.ataqueCritico);
+        AppendStatText(parts, "Daño Crítico", stats.danoCritico);
+        AppendStatText(parts, "Suerte", stats.suerte);
+        AppendStatText(parts, "Destreza", stats.destreza);
+
+        return parts.Count > 0 ? string.Join(", ", parts) : "Sin bonificación";
+    }
+
+    private void AppendStatText(List<string> parts, string label, int value)
+    {
+        if (value == 0)
+            return;
+
+        parts.Add($"{label} +{value}");
     }
 
     private const string DetailLabelSeparator = " :    ";

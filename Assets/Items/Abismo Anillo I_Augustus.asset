@@ -26,6 +26,6 @@ MonoBehaviour:
   suerte: 1746
   destreza: 576
   nivel: 1
-  requiredHeroLevel: 580
+  requiredHeroLevel: 1
   rareza: Augustus
   itemType: 8
