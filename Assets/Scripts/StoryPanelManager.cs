@@ -37,6 +37,12 @@ public class StoryPanelManager : MonoBehaviour
     [SerializeField] private Image chapterEndImage;
     [SerializeField] private TextMeshProUGUI chapterEndText;
 
+    [Header("UI - Títulos de Nodos")]
+    [Tooltip("Texto donde se mostrará el título personalizado de nodos Intro.")]
+    [SerializeField] private TextMeshProUGUI introTitleText;
+    [Tooltip("Texto donde se mostrará el título personalizado de nodos de Transición.")]
+    [SerializeField] private TextMeshProUGUI transitionTitleText;
+
     [Header("UI - Recompensas")]
     [Tooltip("Texto donde se listan monedas e items obtenidos al finalizar el capítulo")]
     [SerializeField] private TextMeshProUGUI rewardsText;
@@ -155,7 +161,7 @@ public class StoryPanelManager : MonoBehaviour
         if (node == null)
             return;
 
-        SetContent(introImage, introText, node.image, node.text, node);
+        SetContent(introImage, introText, node.image, node.text, node, introTitleText, node.title);
         SetRewardsText(null);
         ClearRewardSlots();
         HideAllActionButtons();
@@ -272,9 +278,9 @@ public class StoryPanelManager : MonoBehaviour
             return;
 
         if (node.hasOptionB)
-            SetContent(transitionBImage, transitionBText, node.image, node.text, node);
+            SetContent(transitionBImage, transitionBText, node.image, node.text, node, transitionTitleText, node.title);
         else
-            SetContent(transitionAImage, transitionAText, node.image, node.text, node);
+            SetContent(transitionAImage, transitionAText, node.image, node.text, node, transitionTitleText, node.title);
 
         SetRewardsText(null);
         HideAllActionButtons();
@@ -393,7 +399,7 @@ public class StoryPanelManager : MonoBehaviour
         ExitTo(panelToOpenOnExit);
     }
 
-    private void SetContent(Image targetImage, TextMeshProUGUI targetText, Sprite sprite, string text, StoryPanelNode node = null)
+    private void SetContent(Image targetImage, TextMeshProUGUI targetText, Sprite sprite, string text, StoryPanelNode node = null, TextMeshProUGUI targetTitleText = null, string title = null)
     {
         if (targetImage != null)
         {
@@ -406,6 +412,13 @@ public class StoryPanelManager : MonoBehaviour
             targetText.richText = true;
             targetText.text = FormatNodeText(node, text);
             Debug.Log($"StoryPanelManager: SetContent -> Text '{targetText.name}' color actual {targetText.color} (node: {node?.name ?? "null"})");
+        }
+
+        if (targetTitleText != null)
+        {
+            bool hasTitle = !string.IsNullOrWhiteSpace(title);
+            targetTitleText.text = hasTitle ? title : string.Empty;
+            targetTitleText.gameObject.SetActive(hasTitle);
         }
     }
 

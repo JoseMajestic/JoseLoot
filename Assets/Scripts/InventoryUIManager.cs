@@ -1040,16 +1040,16 @@ public class InventoryUIManager : MonoBehaviour
             defensaText.text = FormatNumberWithSign(stats.defensa);
 
         if (velocidadAtaqueText != null)
-            velocidadAtaqueText.text = FormatNumberWithSign(stats.velocidadAtaque);
+            velocidadAtaqueText.text = FormatCombatStatWithSign(stats.velocidadAtaque);
 
         if (ataqueCriticoText != null)
-            ataqueCriticoText.text = FormatNumberWithSign(stats.ataqueCritico);
+            ataqueCriticoText.text = FormatCombatStatWithSign(stats.ataqueCritico);
 
         if (danoCriticoText != null)
-            danoCriticoText.text = FormatNumberWithSign(stats.danoCritico);
+            danoCriticoText.text = FormatCombatStatWithSign(stats.danoCritico);
 
         if (suerteText != null)
-            suerteText.text = FormatNumberWithSign(stats.suerte);
+            suerteText.text = FormatCombatStatWithSign(stats.suerte);
 
         if (destrezaText != null)
             destrezaText.text = FormatNumberWithSign(stats.destreza);
@@ -1114,10 +1114,10 @@ public class InventoryUIManager : MonoBehaviour
         if (manaText != null) manaText.text = "0";
         if (ataqueText != null) ataqueText.text = "0";
         if (defensaText != null) defensaText.text = "0";
-        if (velocidadAtaqueText != null) velocidadAtaqueText.text = "0";
-        if (ataqueCriticoText != null) ataqueCriticoText.text = "0";
-        if (danoCriticoText != null) danoCriticoText.text = "0";
-        if (suerteText != null) suerteText.text = "0";
+        if (velocidadAtaqueText != null) velocidadAtaqueText.text = "0%";
+        if (ataqueCriticoText != null) ataqueCriticoText.text = "0%";
+        if (danoCriticoText != null) danoCriticoText.text = "0%";
+        if (suerteText != null) suerteText.text = "0%";
         if (destrezaText != null) destrezaText.text = "0";
         if (rarezaText != null)
         {
@@ -1705,7 +1705,7 @@ public class InventoryUIManager : MonoBehaviour
         if (value <= 0)
             return;
 
-        sb.AppendLine(FormatSummaryDetailLine(label, FormatNumberWithSign(value)));
+        sb.AppendLine(FormatSummaryDetailLine(label, FormatStatValue(label, value)));
     }
 
     private string FormatSummaryDetailLine(string label, string value)
@@ -1718,6 +1718,34 @@ public class InventoryUIManager : MonoBehaviour
     {
         string formatted = FormatNumber(value);
         return value > 0 ? $"+{formatted}" : formatted;
+    }
+
+    private string FormatCombatStatWithSign(int value)
+    {
+        return NumberFormatter.FormatCombatPercentWithSign(value);
+    }
+
+    private string FormatStatValue(string label, int value)
+    {
+        if (IsCombatPercentLabel(label))
+        {
+            return NumberFormatter.FormatCombatPercentWithSign(value);
+        }
+
+        return FormatNumberWithSign(value);
+    }
+
+    private static readonly HashSet<string> CombatPercentLabels = new HashSet<string>
+    {
+        "Velocidad Ataque",
+        "Ataque Crítico",
+        "Daño Crítico",
+        "Suerte"
+    };
+
+    private bool IsCombatPercentLabel(string label)
+    {
+        return CombatPercentLabels.Contains(label);
     }
 
     private void UpdateEquippedItemSummaryVisuals(ItemInstance equippedItem)

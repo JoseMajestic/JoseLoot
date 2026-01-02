@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Globalization;
 
 /// <summary>
 /// Utilidad estática para formatear números grandes con K (miles) y M (millones).
@@ -41,6 +42,30 @@ public static class NumberFormatter
     public static string FormatNumber(float value)
     {
         return FormatNumber(Mathf.RoundToInt(value));
+    }
+
+    private const float CombatStatToPercentFactor = 1f / 1000f;
+
+    /// <summary>
+    /// Convierte un valor de stat de combate (0-100000) a porcentaje legible.
+    /// </summary>
+    public static string FormatCombatPercent(int statValue)
+    {
+        float percent = statValue * CombatStatToPercentFactor;
+        return string.Format(CultureInfo.InvariantCulture, "{0:0.###}%", percent);
+    }
+
+    /// <summary>
+    /// Igual que FormatCombatPercent pero añade signo positivo cuando corresponde.
+    /// </summary>
+    public static string FormatCombatPercentWithSign(int statValue)
+    {
+        string formatted = FormatCombatPercent(statValue);
+        if (statValue > 0 && !formatted.StartsWith("+"))
+        {
+            return "+" + formatted;
+        }
+        return formatted;
     }
 }
 

@@ -874,10 +874,38 @@ public class ForgeUIManager : MonoBehaviour
         return value > 0 ? $"+{formatted}" : formatted;
     }
 
-    private string FormatDelta(int delta)
+    private string FormatCombatStatWithSign(int value)
     {
+        return NumberFormatter.FormatCombatPercentWithSign(value);
+    }
+
+    private string FormatDelta(int delta, bool isCombatStat = false)
+    {
+        if (isCombatStat)
+        {
+            return NumberFormatter.FormatCombatPercentWithSign(delta);
+        }
+
         if (delta > 0) return $"+{delta}";
         return delta.ToString();
+    }
+
+    private string FormatStatValue(string label, int value)
+    {
+        if (IsCombatPercentLabel(label))
+        {
+            return NumberFormatter.FormatCombatPercentWithSign(value);
+        }
+
+        return FormatNumberWithSign(value);
+    }
+
+    private bool IsCombatPercentLabel(string label)
+    {
+        return label == "Velocidad Ataque" ||
+               label == "Ataque Crítico" ||
+               label == "Daño Crítico" ||
+               label == "Suerte";
     }
 
     /// <summary>

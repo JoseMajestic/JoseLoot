@@ -800,6 +800,16 @@ public class HeroProfileManager : MonoBehaviour
         HideEquipmentDetailPanel();
     }
 
+    private static readonly HashSet<string> CombatPercentStatLabels = new HashSet<string>
+    {
+        "Velocidad Ataque",
+        "Velocidad",
+        "Ataque Crítico",
+        "Atk Crítico",
+        "Daño Crítico",
+        "Suerte"
+    };
+
     private void ShowEquipmentDetailPanel(ItemInstance itemInstance)
     {
         if (itemInstance == null || !itemInstance.IsValid())
@@ -1078,7 +1088,22 @@ public class HeroProfileManager : MonoBehaviour
         if (value == 0)
             return;
 
-        parts.Add($"{label} +{value}");
+        parts.Add($"{label} {FormatStatValue(label, value)}");
+    }
+
+    private string FormatStatValue(string label, int value)
+    {
+        if (IsCombatPercentLabel(label))
+        {
+            return NumberFormatter.FormatCombatPercentWithSign(value);
+        }
+
+        return FormatNumberWithSign(value);
+    }
+
+    private bool IsCombatPercentLabel(string label)
+    {
+        return CombatPercentStatLabels.Contains(label);
     }
 
     private const string DetailLabelSeparator = " :    ";
@@ -1143,7 +1168,7 @@ public class HeroProfileManager : MonoBehaviour
         if (value <= 0)
             return;
 
-        sb.AppendLine(FormatDetailLine(label, FormatNumberWithSign(value)));
+        sb.AppendLine(FormatDetailLine(label, FormatStatValue(label, value)));
     }
 
     private string FormatDetailLine(string label, string value)
@@ -1733,16 +1758,16 @@ public class HeroProfileManager : MonoBehaviour
             defensaText.text = NumberFormatter.FormatNumber(totalDefensa);
         
         if (velocidadAtaqueText != null)
-            velocidadAtaqueText.text = NumberFormatter.FormatNumber(totalVelocidadAtaque);
+            velocidadAtaqueText.text = NumberFormatter.FormatCombatPercent(totalVelocidadAtaque);
         
         if (ataqueCriticoText != null)
-            ataqueCriticoText.text = NumberFormatter.FormatNumber(totalAtaqueCritico);
+            ataqueCriticoText.text = NumberFormatter.FormatCombatPercent(totalAtaqueCritico);
         
         if (danoCriticoText != null)
-            danoCriticoText.text = NumberFormatter.FormatNumber(totalDanoCritico);
+            danoCriticoText.text = NumberFormatter.FormatCombatPercent(totalDanoCritico);
         
         if (suerteText != null)
-            suerteText.text = NumberFormatter.FormatNumber(totalSuerte);
+            suerteText.text = NumberFormatter.FormatCombatPercent(totalSuerte);
         
         if (destrezaText != null)
             destrezaText.text = NumberFormatter.FormatNumber(totalDestreza);

@@ -3,6 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "StoryPanel/Nodes/Transition")]
 public class StoryPanelTransitionNode : StoryPanelNode
 {
+    [Header("Título del nodo")]
+    [Tooltip("Título que se mostrará en las diapositivas de transición.")]
+    public string title;
+
     [Header("Opciones")]
     public string optionAText = "Continuar";
     public StoryPanelNode optionANode;
