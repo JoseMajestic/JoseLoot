@@ -1128,9 +1128,9 @@ public class HeroProfileManager : MonoBehaviour
         AppendStatText(parts, "Mana", stats.mana);
         AppendStatText(parts, "Ataque", stats.ataque);
         AppendStatText(parts, "Defensa", stats.defensa);
-        AppendStatText(parts, "Velocidad", stats.velocidadAtaque);
-        AppendStatText(parts, "Atk Crítico", stats.ataqueCritico);
-        AppendStatText(parts, "Daño Crítico", stats.danoCritico);
+        AppendStatText(parts, "Vel. Ataque", stats.velocidadAtaque);
+        AppendStatText(parts, "Prob. Critico", stats.ataqueCritico);
+        AppendStatText(parts, "Daño Crit.", stats.danoCritico);
         AppendStatText(parts, "Suerte", stats.suerte);
         AppendStatText(parts, "Destreza", stats.destreza);
 

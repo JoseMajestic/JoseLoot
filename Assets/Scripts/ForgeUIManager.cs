@@ -795,7 +795,7 @@ public class ForgeUIManager : MonoBehaviour
         // Coste de mejora
         if (costUpgradeText != null)
         {
-            int upgradeCost = improvementSystem != null ? improvementSystem.CalculateImprovementCost(item.currentLevel) : 0;
+            int upgradeCost = improvementSystem != null ? improvementSystem.CalculateImprovementCost(item) : 0;
             costUpgradeText.text = upgradeCost.ToString();
         }
     }

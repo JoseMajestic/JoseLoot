@@ -387,6 +387,7 @@ public class StoryPanelManager : MonoBehaviour
             if (totalExperience > 0)
             {
                 gameDataManager.AddHeroExperience(totalExperience);
+                ForceRefreshHeroPanels();
             }
 
             if (gameDataManager.InventoryManager != null && totalItems != null)
@@ -404,6 +405,23 @@ public class StoryPanelManager : MonoBehaviour
         }
 
         ExitTo(panelToOpenOnExit);
+    }
+
+    private void ForceRefreshHeroPanels()
+    {
+        // Refrescar siempre el perfil del héroe para que la UI refleje los cambios de EXP incluso si el panel estaba oculto.
+        HeroProfileManager heroProfileManager = FindObjectOfType<HeroProfileManager>(true);
+        if (heroProfileManager != null)
+        {
+            heroProfileManager.RefreshHeroExperience();
+            heroProfileManager.RefreshStatistics();
+        }
+
+        BreedManager breedManager = FindObjectOfType<BreedManager>(true);
+        if (breedManager != null)
+        {
+            breedManager.RefreshHeroExperienceSection();
+        }
     }
 
     private void SetContent(Image targetImage, TextMeshProUGUI targetText, Sprite sprite, string text, StoryPanelNode node = null, TextMeshProUGUI targetTitleText = null, string title = null)

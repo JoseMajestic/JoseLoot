@@ -1788,6 +1788,8 @@ public class BreedManager : MonoBehaviour
             return;
 
         int heroLevel = Mathf.Clamp(profile.heroLevel, 1, 999);
+        int resultingHeroLevel = heroLevel;
+        bool leveledUpFromAction = false;
         CalculateActionRewardAmounts(heroLevel, out int coinsAward, out int experienceAward);
 
         PlayerMoney playerMoney = gameDataManager.PlayerMoney;
@@ -1804,6 +1806,8 @@ public class BreedManager : MonoBehaviour
             PlayerProfileData refreshedProfile = gameDataManager.GetPlayerProfile();
             if (refreshedProfile != null)
             {
+                resultingHeroLevel = Mathf.Clamp(refreshedProfile.heroLevel, 1, 999);
+                leveledUpFromAction = resultingHeroLevel > heroLevel;
                 float targetTotalExperience = CalculateTotalExperienceValue(refreshedProfile.heroLevel, refreshedProfile.heroExperience);
                 StartHeroExperienceAnimation(startingTotalExperience, targetTotalExperience);
             }
@@ -1817,6 +1821,10 @@ public class BreedManager : MonoBehaviour
         if (showActionRewardMessages)
         {
             string message = $"{actionDisplayName}: +{coinsAward} monedas y +{experienceAward} EXP";
+            if (leveledUpFromAction)
+            {
+                message += $"\n¡Has subido al nivel {resultingHeroLevel}!";
+            }
             ShowActionRewardMessage(message);
         }
     }

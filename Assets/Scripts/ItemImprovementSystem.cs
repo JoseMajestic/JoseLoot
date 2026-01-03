@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -22,16 +25,48 @@ public class ItemImprovementSystem : MonoBehaviour
 
     [Header("Coste de Mejora")]
     [Tooltip("Fórmula de coste: coste = baseCost * (nivelActual ^ costMultiplier)")]
-    [SerializeField] private int baseCost = 100;
+    [SerializeField] private int baseCost = 1;
 
     [Tooltip("Multiplicador de coste por nivel (mayor = más caro subir nivel)")]
     [SerializeField] private float costMultiplier = 1.2f;
+
+    [Header("Coste por Rareza")]
+    [Tooltip("Configuración opcional para multiplicadores de coste por rareza")]
+    [SerializeField] private List<RarityCostEntry> rarityCostEntries = new List<RarityCostEntry>
+    {
+        new RarityCostEntry { rarityKey = "Aprendiz", multiplier = 1f },
+        new RarityCostEntry { rarityKey = "Auxiliaris", multiplier = 2f },
+        new RarityCostEntry { rarityKey = "Legionarius", multiplier = 3f },
+        new RarityCostEntry { rarityKey = "Veteranus", multiplier = 4f },
+        new RarityCostEntry { rarityKey = "Centurio", multiplier = 5f },
+        new RarityCostEntry { rarityKey = "Tribunus", multiplier = 6f },
+        new RarityCostEntry { rarityKey = "Praetorianus", multiplier = 7f },
+        new RarityCostEntry { rarityKey = "Imperialis", multiplier = 8f },
+        new RarityCostEntry { rarityKey = "Augustus", multiplier = 9f },
+        new RarityCostEntry { rarityKey = "Apocalipsis", multiplier = 10f },
+        new RarityCostEntry { rarityKey = "Abismo", multiplier = 10f }
+    };
 
     // Eventos
     public System.Action<ItemInstance, int, int> OnItemImproved; // item, nivelAnterior, nivelNuevo
     public System.Action<ItemInstance> OnImprovementFailed; // item, razón del fallo
 
     public int MaxLevel => maxLevel;
+
+    private const float DefaultRarityMultiplier = 1f;
+    private readonly Dictionary<string, float> rarityMultiplierLookup = new Dictionary<string, float>();
+
+    private void Awake()
+    {
+        RebuildRarityLookup();
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        RebuildRarityLookup();
+    }
+#endif
 
     /// <summary>
     /// Mejora un item equipado en el slot especificado.
@@ -97,7 +132,7 @@ public class ItemImprovementSystem : MonoBehaviour
         }
 
         // Calcular coste de mejora
-        int improvementCost = CalculateImprovementCost(itemInstance.currentLevel);
+        int improvementCost = CalculateImprovementCost(itemInstance);
         
         // Verificar dinero suficiente
         if (playerMoney == null)
@@ -133,18 +168,26 @@ public class ItemImprovementSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Calcula el coste de mejorar un item desde un nivel específico al siguiente.
-    /// Fórmula: coste = baseCost * (nivelActual ^ costMultiplier)
+    /// Calcula el coste total de mejora teniendo en cuenta nivel y rareza.
     /// </summary>
-    /// <param name="currentLevel">Nivel actual del item</param>
-    /// <returns>Coste en monedas para subir al siguiente nivel</returns>
-    public int CalculateImprovementCost(int currentLevel)
+    public int CalculateImprovementCost(ItemInstance itemInstance)
+    {
+        if (itemInstance == null || !itemInstance.IsValid())
+        {
+            return Mathf.Max(1, CalculateLevelCost(1));
+        }
+
+        int levelCost = CalculateLevelCost(itemInstance.currentLevel);
+        float rarityMultiplier = GetRarityMultiplier(itemInstance);
+        int rarityCost = Mathf.RoundToInt(baseCost * rarityMultiplier);
+        return Mathf.Max(1, levelCost + rarityCost);
+    }
+
+    private int CalculateLevelCost(int currentLevel)
     {
         if (currentLevel < 1)
             currentLevel = 1;
 
-        // Fórmula: baseCost * (nivelActual ^ costMultiplier)
-        // Redondeado al entero más cercano
         float cost = baseCost * Mathf.Pow(currentLevel, costMultiplier);
         return Mathf.RoundToInt(cost);
     }
@@ -166,7 +209,7 @@ public class ItemImprovementSystem : MonoBehaviour
         if (itemInstance.currentLevel >= maxLevel)
             return -1;
 
-        return CalculateImprovementCost(itemInstance.currentLevel);
+        return CalculateImprovementCost(itemInstance);
     }
 
     /// <summary>
@@ -226,7 +269,7 @@ public class ItemImprovementSystem : MonoBehaviour
         if (heroLevel < nextLevel)
             return false;
 
-        int cost = CalculateImprovementCost(itemInstance.currentLevel);
+        int cost = CalculateImprovementCost(itemInstance);
         return playerMoney.GetMoney() >= cost;
     }
 
@@ -255,8 +298,8 @@ public class ItemImprovementSystem : MonoBehaviour
             canImprove = itemInstance.currentLevel < maxLevel,
             currentStats = itemInstance.GetFinalStats(),
             projectedStats = GetProjectedStats(itemInstance),
-            improvementCost = itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance.currentLevel) : -1,
-            hasEnoughMoney = playerMoney != null && playerMoney.GetMoney() >= (itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance.currentLevel) : 0),
+            improvementCost = itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance) : -1,
+            hasEnoughMoney = playerMoney != null && playerMoney.GetMoney() >= (itemInstance.currentLevel < maxLevel ? CalculateImprovementCost(itemInstance) : 0),
             heroLevel = heroLevel,
             requiredHeroLevelForNextUpgrade = nextLevel,
             heroMeetsLevelRequirement = heroLevel >= nextLevel
@@ -278,6 +321,72 @@ public class ItemImprovementSystem : MonoBehaviour
         heroLevel = profile.heroLevel;
         return true;
     }
+
+    private float GetRarityMultiplier(ItemInstance itemInstance)
+    {
+        if (itemInstance == null || !itemInstance.IsValid())
+            return DefaultRarityMultiplier;
+
+        string rarityKey = itemInstance.GetRarity();
+        if (string.IsNullOrWhiteSpace(rarityKey) && itemInstance.baseItem != null)
+        {
+            rarityKey = itemInstance.baseItem.rareza;
+        }
+
+        return GetRarityMultiplier(rarityKey);
+    }
+
+    private float GetRarityMultiplier(string rarityKey)
+    {
+        string normalized = NormalizeRarityKey(rarityKey);
+        if (!string.IsNullOrEmpty(normalized) && rarityMultiplierLookup.TryGetValue(normalized, out float multiplier))
+        {
+            return multiplier;
+        }
+
+        return DefaultRarityMultiplier;
+    }
+
+    private void RebuildRarityLookup()
+    {
+        rarityMultiplierLookup.Clear();
+
+        if (rarityCostEntries == null)
+            return;
+
+        foreach (var entry in rarityCostEntries)
+        {
+            if (entry == null)
+                continue;
+
+            string normalized = NormalizeRarityKey(entry.rarityKey);
+            if (string.IsNullOrEmpty(normalized))
+                continue;
+
+            float multiplier = entry.multiplier <= 0f ? DefaultRarityMultiplier : entry.multiplier;
+            rarityMultiplierLookup[normalized] = multiplier;
+        }
+    }
+
+    private static string NormalizeRarityKey(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        string trimmed = value.Trim().ToLowerInvariant();
+        string normalized = trimmed.Normalize(NormalizationForm.FormD);
+        var builder = new StringBuilder(normalized.Length);
+        foreach (char c in normalized)
+        {
+            var category = CharUnicodeInfo.GetUnicodeCategory(c);
+            if (category == UnicodeCategory.NonSpacingMark)
+                continue;
+
+            builder.Append(c);
+        }
+
+        return builder.ToString();
+    }
 }
 
 /// <summary>
@@ -297,5 +406,15 @@ public class ImprovementInfo
     public int heroLevel;
     public int requiredHeroLevelForNextUpgrade;
     public bool heroMeetsLevelRequirement;
+}
+
+[System.Serializable]
+public class RarityCostEntry
+{
+    [Tooltip("Nombre de la rareza (se normaliza ignorando mayúsculas/acentos)")]
+    public string rarityKey;
+
+    [Tooltip("Multiplicador adicional aplicado al coste base")]
+    public float multiplier = 1f;
 }
 

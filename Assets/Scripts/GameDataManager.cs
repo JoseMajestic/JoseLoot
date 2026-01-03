@@ -591,23 +591,21 @@ public class GameDataManager : MonoBehaviour
         {
             int oldLevel = playerProfile.heroLevel;
             playerProfile.AddHeroExperience(experience);
-            bool progressionUpdated = ApplyHeroProgressionToCurrentLevel();
+            bool leveledUp = playerProfile.heroLevel > oldLevel;
+            ApplyHeroProgressionToCurrentLevel();
             SavePlayerProfile();
-            
+
+            RefreshHeroProfileStatistics();
+
             // Si subió de nivel, actualizar botones de ataque
-            if (playerProfile.heroLevel > oldLevel)
+            if (leveledUp)
             {
-                RefreshHeroProfileStatistics();
                 // Notificar a CombatManager si está activo
                 CombatManager combatManager = FindFirstObjectByType<CombatManager>();
                 if (combatManager != null)
                 {
                     combatManager.OnHeroLevelUp();
                 }
-            }
-            else if (progressionUpdated)
-            {
-                RefreshHeroProfileStatistics();
             }
         }
     }

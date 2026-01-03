@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /// <summary>
@@ -95,6 +96,13 @@ public class InventoryUIManager : MonoBehaviour
 
     [Tooltip("Texto combinado que muestra todos los datos del ITEM EQUIPADO correspondiente al tipo visualizado")]
     [SerializeField] private TextMeshProUGUI itemSummaryText;
+
+    [Header("Información de Sets del Item Seleccionado")]
+    [Tooltip("Texto que muestra el nombre del set y las piezas con su estado (verde si está equipada)")]
+    [SerializeField] private TextMeshProUGUI setNameAndPiecesText;
+
+    [Tooltip("Texto que muestra las bonificaciones de set y cuáles están activas")]
+    [SerializeField] private TextMeshProUGUI setBonusesText;
 
     [Header("Resumen Visual del Item Equipado")]
     [Tooltip("Panel (o contenedor) donde se mostrará la imagen del item equipado asociado al resumen")]
@@ -1081,6 +1089,7 @@ public class InventoryUIManager : MonoBehaviour
         }
 
         UpdateEquippedItemSummary(updatedItem);
+        UpdateSetBonusInfo(updatedItem);
 
         // Establecer el item visualizado en EquipmentManager para que los botones Equipar/Quitar funcionen
         if (equipmentManager != null)
@@ -1150,6 +1159,7 @@ public class InventoryUIManager : MonoBehaviour
         }
 
         ClearEquippedItemSummaryDisplay();
+        HideSetBonusInfo();
     }
 
     /// <summary>
@@ -1769,6 +1779,257 @@ public class InventoryUIManager : MonoBehaviour
     {
         return CombatPercentLabels.Contains(label);
     }
+
+    #region Set Bonus Helpers
+
+    private void UpdateSetBonusInfo(ItemInstance itemInstance)
+    {
+        if (!HasSetBonusTextTargets())
+            return;
+
+        if (itemInstance == null || !itemInstance.IsValid())
+        {
+            HideSetBonusInfo();
+            return;
+        }
+
+        SetBonusesData setData = FindSetDataForItem(itemInstance);
+        if (setData == null)
+        {
+            HideSetBonusInfo();
+            return;
+        }
+
+        int equippedPieces;
+        string piecesText = BuildSetPiecesText(setData, itemInstance, out equippedPieces);
+        if (setNameAndPiecesText != null)
+        {
+            setNameAndPiecesText.text = piecesText;
+        }
+
+        if (setBonusesText != null)
+        {
+            setBonusesText.text = BuildSetBonusesText(setData, equippedPieces);
+        }
+    }
+
+    private void HideSetBonusInfo()
+    {
+        if (setNameAndPiecesText != null)
+        {
+            setNameAndPiecesText.text = string.Empty;
+        }
+
+        if (setBonusesText != null)
+        {
+            setBonusesText.text = string.Empty;
+        }
+    }
+
+    private bool HasSetBonusTextTargets()
+    {
+        return setNameAndPiecesText != null || setBonusesText != null;
+    }
+
+    private SetBonusesData FindSetDataForItem(ItemInstance itemInstance)
+    {
+        if (itemInstance?.baseItem == null || SetBonusManager.Instance == null)
+            return null;
+
+        string identifier = itemInstance.baseItem.itemName;
+        foreach (var setData in SetBonusManager.Instance.allSetBonuses)
+        {
+            if (setData == null)
+                continue;
+
+            if (setData.MatchesIdentifier(identifier) && ItemMeetsSetRequirements(setData, itemInstance))
+            {
+                return setData;
+            }
+        }
+
+        return null;
+    }
+
+    private string BuildSetPiecesText(SetBonusesData setData, ItemInstance sourceItem, out int equippedPieces)
+    {
+        equippedPieces = 0;
+        Dictionary<string, bool> pieceStatus = new Dictionary<string, bool>();
+
+        if (setData?.bonuses != null)
+        {
+            foreach (var bonus in setData.bonuses)
+            {
+                if (bonus == null)
+                    continue;
+
+                string normalizedName = NormalizePieceName(bonus.setName);
+                if (!pieceStatus.ContainsKey(normalizedName))
+                {
+                    pieceStatus[normalizedName] = false;
+                }
+            }
+        }
+
+        if (equipmentManager != null)
+        {
+            foreach (EquipmentManager.EquipmentSlotType slotType in System.Enum.GetValues(typeof(EquipmentManager.EquipmentSlotType)))
+            {
+                ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+                if (ItemMatchesSet(setData, equippedItem))
+                {
+                    equippedPieces++;
+                    string normalizedName = NormalizePieceName(equippedItem.GetItemName());
+                    pieceStatus[normalizedName] = true;
+                }
+            }
+        }
+        else if (ItemMatchesSet(setData, sourceItem))
+        {
+            equippedPieces = 1;
+            string normalizedName = NormalizePieceName(sourceItem.GetItemName());
+            pieceStatus[normalizedName] = true;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"{setData.setName} ({equippedPieces} piezas equipadas)");
+
+        if (pieceStatus.Count == 0)
+        {
+            sb.Append("Sin piezas registradas para este set");
+        }
+        else
+        {
+            foreach (var pieceName in pieceStatus.Keys.OrderBy(name => name))
+            {
+                bool isEquipped = pieceStatus[pieceName];
+                string displayLine = isEquipped ? $"<color=#6CFF9C>{pieceName}</color>" : pieceName;
+                sb.AppendLine(displayLine);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private string BuildSetBonusesText(SetBonusesData setData, int equippedPieces)
+    {
+        if (setData == null || setData.bonuses == null || setData.bonuses.Count == 0)
+            return "No hay bonificaciones registradas para este set.";
+
+        StringBuilder sb = new StringBuilder();
+        var orderedBonuses = setData.bonuses.OrderBy(b => b.minPieces);
+
+        foreach (var bonus in orderedBonuses)
+        {
+            if (bonus == null)
+                continue;
+
+            bool isActive = equippedPieces >= bonus.minPieces;
+            string statsText = FormatItemStats(bonus.bonusStats);
+            string lineContent = $"{bonus.minPieces} piezas: {statsText}";
+
+            if (!string.IsNullOrEmpty(bonus.description))
+            {
+                lineContent += $" ({bonus.description})";
+            }
+
+            if (isActive)
+            {
+                sb.AppendLine($"<color=#6CFF9C>{lineContent}</color>");
+            }
+            else
+            {
+                sb.AppendLine(lineContent);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private string NormalizePieceName(string rawName)
+    {
+        if (string.IsNullOrWhiteSpace(rawName))
+            return "Pieza sin nombre";
+
+        return rawName.Trim();
+    }
+
+    private bool ItemMatchesSet(SetBonusesData setData, ItemInstance item)
+    {
+        if (setData == null || item?.baseItem == null)
+            return false;
+
+        return setData.MatchesIdentifier(item.baseItem.itemName) && ItemMeetsSetRequirements(setData, item);
+    }
+
+    private bool ItemMeetsSetRequirements(SetBonusesData setData, ItemInstance item)
+    {
+        if (setData == null || item == null)
+            return false;
+
+        string itemRarity = item.GetRarity();
+        if (string.IsNullOrEmpty(setData.minRarity))
+            return true;
+
+        return GetRarityRank(itemRarity) >= GetRarityRank(setData.minRarity);
+    }
+
+    private int GetRarityRank(string rarity)
+    {
+        if (string.IsNullOrEmpty(rarity))
+            return 0;
+
+        string rarityLower = rarity.ToLowerInvariant();
+
+        if (rarityLower.Contains("plebeius") || rarityLower.Contains("comun") || rarityLower.Contains("común"))
+            return 1;
+        if (rarityLower.Contains("auxiliaris") || rarityLower.Contains("magico") || rarityLower.Contains("mágico"))
+            return 2;
+        if (rarityLower.Contains("legionarius") || rarityLower.Contains("raro") || rarityLower.Contains("rara"))
+            return 3;
+        if (rarityLower.Contains("veteranus") || rarityLower.Contains("excelente"))
+            return 4;
+        if (rarityLower.Contains("centurio") || rarityLower.Contains("legendario") || rarityLower.Contains("legendaria"))
+            return 5;
+        if (rarityLower.Contains("tribunus") || rarityLower.Contains("epico") || rarityLower.Contains("épico") || rarityLower.Contains("epica") || rarityLower.Contains("épica"))
+            return 6;
+        if (rarityLower.Contains("praetorianus") || rarityLower.Contains("extremo") || rarityLower.Contains("extrema"))
+            return 7;
+        if (rarityLower.Contains("imperialis") || rarityLower.Contains("demoniaco") || rarityLower.Contains("demoníaco") || rarityLower.Contains("demoniaca") || rarityLower.Contains("demoníaca"))
+            return 8;
+        if (rarityLower.Contains("augustus") || rarityLower.Contains("celestial"))
+            return 9;
+        if (rarityLower.Contains("divinus") || rarityLower.Contains("etereo") || rarityLower.Contains("etéreo"))
+            return 10;
+
+        return 0;
+    }
+
+    private string FormatItemStats(ItemStats stats)
+    {
+        List<string> parts = new List<string>();
+        AppendSetStatText(parts, "HP", stats.hp);
+        AppendSetStatText(parts, "Mana", stats.mana);
+        AppendSetStatText(parts, "Ataque", stats.ataque);
+        AppendSetStatText(parts, "Defensa", stats.defensa);
+        AppendSetStatText(parts, "Vel. Ataque", stats.velocidadAtaque);
+        AppendSetStatText(parts, "Prob. Critico", stats.ataqueCritico);
+        AppendSetStatText(parts, "Daño Crit.", stats.danoCritico);
+        AppendSetStatText(parts, "Suerte", stats.suerte);
+        AppendSetStatText(parts, "Destreza", stats.destreza);
+
+        return parts.Count > 0 ? string.Join(", ", parts) : "Sin bonificación";
+    }
+
+    private void AppendSetStatText(List<string> parts, string label, int value)
+    {
+        if (value == 0)
+            return;
+
+        parts.Add($"{label} {FormatStatValue(label, value)}");
+    }
+
+    #endregion
 
     private void UpdateEquippedItemSummaryVisuals(ItemInstance equippedItem)
     {

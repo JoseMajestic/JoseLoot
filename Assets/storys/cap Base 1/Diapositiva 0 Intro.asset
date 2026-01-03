@@ -18,6 +18,7 @@ MonoBehaviour:
     para morir o matar. Rumores \nde monstruos en las fronteras alimentan tus sue\xF1os\n
     de libertad y gloria legionaria."
   nodeRewardCoins: 0
+  nodeRewardExperience: 50
   nodeRewardItems: []
   title: "Cap\xEDtulo 0: Cadenas en el Ludus"
   acceptText: Continuar
