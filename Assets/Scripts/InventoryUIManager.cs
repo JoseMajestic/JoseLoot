@@ -1014,12 +1014,9 @@ public class InventoryUIManager : MonoBehaviour
         // Título del item (nombre con color de rareza)
         if (itemTitleText != null)
         {
-            itemTitleText.text = baseItem != null ? baseItem.itemName : item.GetItemName();
-            if (baseItem != null)
-            {
-                Color rarityColor = GetRarityColor(baseItem.rareza);
-                itemTitleText.color = rarityColor;
-            }
+            string itemName = baseItem != null ? baseItem.itemName : item.GetItemName();
+            string rarityId = baseItem != null ? baseItem.rareza : updatedItem.GetRarity();
+            ApplyRarityColorToTitle(itemName, rarityId);
         }
 
         // Actualizar todos los textos de estadísticas usando el item actualizado
@@ -1344,6 +1341,31 @@ public class InventoryUIManager : MonoBehaviour
     private Color GetRarityColor(string rarity)
     {
         return RarityColorProvider.GetColor(rarity);
+    }
+
+    /// <summary>
+    /// Aplica el color asociado a la rareza tanto al contenido como (si es posible) al propio texto.
+    /// Si TMP RichText está habilitado, se inyecta una etiqueta <color> para garantizar el tinte
+    /// aun cuando el material/fuente tenga gradientes especiales.
+    /// </summary>
+    private void ApplyRarityColorToTitle(string itemName, string rarityId)
+    {
+        if (itemTitleText == null)
+            return;
+
+        Color rarityColor = GetRarityColor(rarityId);
+
+        if (itemTitleText.richText)
+        {
+            string hexColor = ColorUtility.ToHtmlStringRGB(rarityColor);
+            itemTitleText.text = $"<color=#{hexColor}>{itemName}</color>";
+            itemTitleText.color = Color.white; // Mantener el color base neutro cuando se usan etiquetas
+        }
+        else
+        {
+            itemTitleText.text = itemName;
+            itemTitleText.color = rarityColor;
+        }
     }
 
     /// <summary>

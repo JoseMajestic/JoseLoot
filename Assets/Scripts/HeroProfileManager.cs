@@ -208,6 +208,11 @@ public class HeroProfileManager : MonoBehaviour
     // Diccionario para guardar los sprites por defecto de cada slot
     private Dictionary<Image, Sprite> defaultSlotSprites = new Dictionary<Image, Sprite>();
     private HeroProfileEquipmentSlotButton activeSlotButton = null;
+
+    private void Awake()
+    {
+        SaveDefaultSlotSprites();
+    }
     
     private void Start()
     {
@@ -684,10 +689,18 @@ public class HeroProfileManager : MonoBehaviour
         }
         
         UpdateEquipmentSlot(slot, null, forceRefresh: true); // Forzar actualización del sprite
+        RefreshAllEquipmentSlots(); // Garantizar que todos los slots se sincronicen
+        
+        // Actualizar stats de inmediato para que los textos respondan incluso con el panel visible
+        RefreshHeroStats();
         
         // SOLUCIÓN: Usar corrutina para refrescar stats después de un frame, similar a OnItemEquipped
-        // Esto asegura que EquipmentManager haya actualizado sus stats internos antes de refrescar la UI
-        StartCoroutine(RefreshHeroStatsAfterFrame());
+        // Esto asegura que EquipmentManager haya actualizado sus stats internos antes de refrescar la UI.
+        if (isActiveAndEnabled)
+        {
+            StartCoroutine(ForceRefreshAllEquipmentSlotsAfterFrame());
+            StartCoroutine(RefreshHeroStatsAfterFrame());
+        }
     }
     
     /// <summary>
@@ -955,7 +968,22 @@ public class HeroProfileManager : MonoBehaviour
     private string BuildSetPiecesText(SetBonusesData setData, ItemInstance sourceItem, out int equippedPieces)
     {
         equippedPieces = 0;
-        List<string> pieceNames = new List<string>();
+        Dictionary<string, bool> pieceStatus = new Dictionary<string, bool>();
+
+        if (setData?.bonuses != null)
+        {
+            foreach (var bonus in setData.bonuses)
+            {
+                if (bonus == null)
+                    continue;
+
+                string normalizedName = NormalizePieceName(bonus.setName);
+                if (!pieceStatus.ContainsKey(normalizedName))
+                {
+                    pieceStatus[normalizedName] = false;
+                }
+            }
+        }
 
         if (equipmentManager != null)
         {
@@ -965,19 +993,45 @@ public class HeroProfileManager : MonoBehaviour
                 if (ItemMatchesSet(setData, equippedItem))
                 {
                     equippedPieces++;
-                    pieceNames.Add(equippedItem.GetItemName());
+                    string normalizedName = NormalizePieceName(equippedItem.GetItemName());
+                    pieceStatus[normalizedName] = true;
                 }
             }
         }
         else if (ItemMatchesSet(setData, sourceItem))
         {
             equippedPieces = 1;
-            pieceNames.Add(sourceItem.GetItemName());
+            string normalizedName = NormalizePieceName(sourceItem.GetItemName());
+            pieceStatus[normalizedName] = true;
         }
 
-        string header = $"{setData.setName} ({equippedPieces} piezas)";
-        string piecesList = pieceNames.Count > 0 ? string.Join(", ", pieceNames.Distinct()) : "Sin piezas equipadas de este set";
-        return $"{header}\n{piecesList}";
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"{setData.setName} ({equippedPieces} piezas)");
+
+        if (pieceStatus.Count == 0)
+        {
+            sb.Append("Sin piezas equipadas de este set");
+        }
+        else
+        {
+            var orderedPieces = pieceStatus.Keys.OrderBy(name => name);
+            foreach (var pieceName in orderedPieces)
+            {
+                bool isEquipped = pieceStatus[pieceName];
+                string displayLine = isEquipped ? $"<color=#6CFF9C>{pieceName}</color>" : pieceName;
+                sb.AppendLine(displayLine);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private string NormalizePieceName(string rawName)
+    {
+        if (string.IsNullOrWhiteSpace(rawName))
+            return "Pieza sin nombre";
+
+        return rawName.Trim();
     }
 
     private string BuildSetBonusesText(SetBonusesData setData, int equippedPieces)
