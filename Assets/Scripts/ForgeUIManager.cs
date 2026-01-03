@@ -677,6 +677,7 @@ public class ForgeUIManager : MonoBehaviour
         if (selectedItemNameText != null)
         {
             selectedItemNameText.text = titleText;
+            selectedItemNameText.color = titleColor;
         }
         
         if (itemTitleTextA != null)
@@ -806,7 +807,11 @@ public class ForgeUIManager : MonoBehaviour
         if (detailViewPanel != null) detailViewPanel.SetActive(false);
         if (arrowsPanel != null) arrowsPanel.SetActive(false);
 
-        if (selectedItemNameText != null) selectedItemNameText.text = "";
+        if (selectedItemNameText != null)
+        {
+            selectedItemNameText.text = "";
+            selectedItemNameText.color = Color.white;
+        }
         if (itemTitleTextA != null) { itemTitleTextA.text = ""; itemTitleTextA.color = Color.white; }
         if (itemTitleTextB != null) { itemTitleTextB.text = ""; itemTitleTextB.color = Color.white; }
         if (rarezaText != null) { rarezaText.text = ""; rarezaText.color = Color.white; }

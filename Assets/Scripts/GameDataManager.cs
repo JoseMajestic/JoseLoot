@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,7 @@ using UnityEngine;
 public class GameDataManager : MonoBehaviour
 {
     private static GameDataManager instance;
+    public static event Action HeroLeveledUp;
 
     [Header("Referencias a Managers")]
     [Tooltip("Referencia al InventoryManager")]
@@ -606,6 +608,8 @@ public class GameDataManager : MonoBehaviour
                 {
                     combatManager.OnHeroLevelUp();
                 }
+
+                HeroLeveledUp?.Invoke();
             }
         }
     }
