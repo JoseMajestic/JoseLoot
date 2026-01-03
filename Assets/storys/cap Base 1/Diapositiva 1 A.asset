@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: Diapositiva 1 A
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 0 Intro cap 2 \n {ITEM0_COLORED}\n {ITEM0} {COINS}\n {COINS_COLORED}
+  text: "Una tarde, durante un combate de entrenamiento,\n derribas a un campe\xF3n
+    invicto con un golpe certero \nal cuello.\n\n La multitud de espectadores patricios
+    aplaude. Varro,\n impresionado por tu ferocidad, te convoca a su villa al anochecer.\n
+    \"Tu sangre es digna del arena eterna\", dice.\n\nVarro te ofrece la rudis si
+    vences en los pr\xF3ximos juegos. Un murmillo veterano ser\xE1 tu rival. La multitud
+    ruge. Sientes el peso de las cadenas."
   nodeRewardCoins: 150
   nodeRewardItems:
   - {fileID: 11400000, guid: 16003bebb8fa66f47af8539803a9aaa4, type: 2}
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: 7520efe8bb275224e9b2b1c8bf897a53, type: 2}
+  title: Oportunidad Sangrienta
+  optionAText: Aceptar y luchar con furia desesperada.
+  optionANode: {fileID: 11400000, guid: 9b54b63b8fb6c5f4d8bc60c3075494ab, type: 2}
   hasOptionB: 0
-  optionBText: "Opci\xF3n B"
+  optionBText: Negociar mejor recompensa antes del combate
   optionBNode: {fileID: 0}

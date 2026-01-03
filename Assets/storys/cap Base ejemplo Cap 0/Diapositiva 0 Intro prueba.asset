@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Diapositiva 0 Intro prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelIntroNode
   image: {fileID: 21300000, guid: 081356166226f4b4ebb07635242d01f2, type: 3}
-  text: Diapositiva 0 Intro
-  acceptText: Continuar
+  text: "El lanista alza la mano y el ludus enmudece. Hoy decides\n si obedeces sin
+    pensar o si miras a la arena como a un \nenemigo consciente. Cada paso pesa como
+    una cadena.\n\n Servus es, pero incluso los esclavos eligen c\xF3mo sangrar \nante
+    Roma. El destino no espera, exige acci\xF3n inmediata."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: La Orden del Dominus
+  acceptText: Descubre
   nextNode: {fileID: 11400000, guid: 236f96e779438f8498e5d40ed2466989, type: 2}

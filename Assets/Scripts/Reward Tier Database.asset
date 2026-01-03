@@ -3018,6 +3018,1166 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f868f445bfc044a4497d85b60f349e08, type: 2}
   - {fileID: 11400000, guid: 48d5e01ee6f14bd4290fd3eddcff6606, type: 2}
   - {fileID: 11400000, guid: 43d164360ffbbf34b913c12e4b417a33, type: 2}
+  tier1Config:
+    itemTypeWeights:
+    - itemType: 0
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 1
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 2
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 3
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 4
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 6
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 7
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 8
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 9
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 5
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+  tier2Config:
+    itemTypeWeights:
+    - itemType: 0
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 1
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 2
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 3
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 4
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 6
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 7
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 8
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 9
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 5
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+  tier3Config:
+    itemTypeWeights:
+    - itemType: 0
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 1
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 2
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 3
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 4
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 6
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 7
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 8
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 9
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 5
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+  tier4Config:
+    itemTypeWeights:
+    - itemType: 0
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 1
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 2
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 3
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 4
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 6
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 7
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 8
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 9
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 5
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+  tier5Config:
+    itemTypeWeights:
+    - itemType: 0
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 1
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 2
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 3
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 4
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 6
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 7
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 8
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 9
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
+    - itemType: 5
+      weight: 1
+      rarityWeights:
+      - rarityId: Plebeius
+        weight: 41
+      - rarityId: Auxiliaris
+        weight: 18
+      - rarityId: Legionarius
+        weight: 10
+      - rarityId: Veteranus
+        weight: 8
+      - rarityId: Centurio
+        weight: 7
+      - rarityId: Tribunus
+        weight: 6
+      - rarityId: Praetorianus
+        weight: 4
+      - rarityId: Imperialis
+        weight: 3
+      - rarityId: Augustus
+        weight: 2
+      - rarityId: Divinus
+        weight: 1
   tier1Probability: 45
   tier2Probability: 25
   tier3Probability: 15

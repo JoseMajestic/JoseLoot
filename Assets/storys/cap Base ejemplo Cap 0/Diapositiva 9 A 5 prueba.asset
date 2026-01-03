@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: Diapositiva 9 A 5 prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 9 A 5
-  optionAText: Continuar
+  text: "Aceptas lo que Roma ha hecho de ti. El dolor deja de \nser enemigo y se
+    vuelve herramienta. Caminas erguido \nentre esclavos rotos, ya sin expectativas.
+    \n\nVarro te observa con inter\xE9s renovado. Un cuerpo as\xED \nsirve para m\xE1s
+    que la arena. Sin saberlo, acabas de sobrevivir\nlo suficiente para ser reclamado
+    por algo peor. \nEl imperio siempre aprovecha a quienes no mueren cuando deber\xEDan."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: Armadura de Ruina
+  optionAText: "Aceptar el reclutamiento forzado cuando el emisario romano pronuncia
+    tu nombre sin mirarte, entregar tu cuerpo roto a la legi\xF3n y marchar lejos
+    del ludus, sabiendo que has cambiado cadenas por disciplina, y espect\xE1culo
+    por guerra real."
   optionANode: {fileID: 11400000, guid: 8478c3ddd1ad9a447b600df76385a2f7, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"

@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: Diapositiva 11 Fin prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelChapterEndNode
   image: {fileID: 21300000, guid: 6c2f3f59b78fbd247bd1f0865a43eb65, type: 3}
-  text: Diapositiva 11 final
-  acceptText: Aceptar
+  text: "De una forma u otra, el ludus queda atr\xE1s. No eres libre, \npero ya no
+    eres espect\xE1culo. Roma te arrastra hacia \nalgo mayor, m\xE1s sucio y definitivo.
+    \n\nLa sangre ya no entretiene, ahora conquista. Entre legiones, \nmonstruos
+    y \xF3rdenes imposibles, tu vida deja de pertenecerte. \nEl camino contin\xFAa,
+    y esta vez no hay arena que oculte lo que viene."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  acceptText: FIN

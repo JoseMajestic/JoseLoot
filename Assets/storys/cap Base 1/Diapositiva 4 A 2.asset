@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: Diapositiva 4 A 2
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 4 A 2
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: 0ea4c58cb36c3bd48b70feb8372bdf38, type: 2}
+  text: "Las heridas se infectan y la fiebre nubla tu juicio. \nNadie ayuda. Un compa\xF1ero
+    te vende por pan, un\nguardia te empuja por la espalda.\n\n Caes en el barro
+    del ludus. Roma te quiere roto, d\xF3cil o\n muerto. No te concede descanso.
+    \n\nSigues vivo por inercia, convertido en advertencia para \notros esclavos.
+    El martirio contin\xFAa sin testigos ni gloria."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: El Precio de Seguir Vivo
+  optionAText: "Levantarte del barro, ignorar la infecci\xF3n, la traici\xF3n y el
+    dolor constante, y seguir caminando dentro del ludus como un cuerpo que Roma
+    a\xFAn no ha conseguido romper del todo."
+  optionANode: {fileID: 11400000, guid: fe444cb411105884d8483f277030b035, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"
   optionBNode: {fileID: 0}

@@ -12,6 +12,9 @@ public abstract class StoryPanelNode : ScriptableObject
     [Tooltip("Monedas añadidas a la recompensa final al pasar por este nodo")]
     public int nodeRewardCoins = 0;
 
+    [Tooltip("Experiencia añadida a la recompensa final al pasar por este nodo")]
+    public int nodeRewardExperience = 0;
+
     [Tooltip("Objetos añadidos a la recompensa final al pasar por este nodo")]
     public ItemData[] nodeRewardItems = new ItemData[0];
 

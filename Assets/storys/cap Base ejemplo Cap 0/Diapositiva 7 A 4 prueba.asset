@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Diapositiva 7 A 4 prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 7 A 4
-  optionAText: Continuar
+  text: "Te arrastras ante Varro. Besas el polvo, no por fe, sino\n por c\xE1lculo.
+    El lanista sonr\xEDe al ver tu degradaci\xF3n. \n\nTe asigna tareas sucias, castigos
+    ajenos, trabajos nocturnos. \nSobrevives, pero ya no como hombre. Roma te conserva
+    \nporque eres \xFAtil, no porque valgas. \n\nCada d\xEDa obedeces, cada noche
+    te odias m\xE1s. \nEl cuerpo aguanta, el alma se endurece como hierro viejo."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: "La Sumisi\xF3n del Roto"
+  optionAText: "Varro te vende como carne barata a un destacamento militar, iniciando
+    un camino forzado hacia la guerra que a\xFAn no comprendes."
   optionANode: {fileID: 11400000, guid: 8478c3ddd1ad9a447b600df76385a2f7, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"

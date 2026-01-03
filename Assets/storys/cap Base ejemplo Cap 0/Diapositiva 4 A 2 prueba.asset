@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: Diapositiva 4 A 2 prueba
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 4 A 2
-  optionAText: Continuar
+  text: "Tu rebeli\xF3n dura segundos. Los guardias te derriban, \nte rompen costillas
+    y te exhiben como advertencia. \nVarro ordena el castigo p\xFAblico. \n\nEl l\xE1tigo
+    cae hasta que el mundo se vuelve rojo. \nNo mueres. Roma no desperdicia carne.
+    Te arrastran\n de vuelta al ludus, marcado, vigilado, convertido en\n ejemplo
+    vivo del precio de desafiar al poder.\n\nEl dolor te acompa\xF1a incluso al respirar."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: Lo Que Roma No Mata
+  optionAText: "Soportar el castigo ejemplar sin morir, aceptar que Roma ya te ha
+    marcado como advertencia viviente y seguir respirando \xFAnicamente porque incluso
+    el imperio necesita cuerpos rotos para recordar a otros lo que ocurre cuando
+    se desaf\xEDa al poder."
   optionANode: {fileID: 11400000, guid: 0ea4c58cb36c3bd48b70feb8372bdf38, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"

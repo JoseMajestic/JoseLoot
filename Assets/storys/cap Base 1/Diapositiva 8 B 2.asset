@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: Diapositiva 8 B 2
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 21300000, guid: ca3b6c27caad8124d82ed478e8b72c94, type: 3}
-  text: Diapositiva 8 B 2
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: ea87eac057aacc44aaeecfc32c0f12c7, type: 2}
+  text: "El tiempo pasa y sigues respirando, para desgracia de Roma.\n Has perdido
+    nombre, salud y pasado, pero no el pulso.\n Algo se endurece dentro de ti. No
+    es fe. No es honor.\n Es resistencia. \n\nEl imperio crea monstruos sin darse
+    cuenta. Tu historia \nno termina aqu\xED. Solo ha aprendido a odiar en silencio.\n\n
+    El siguiente paso te arrastrar\xE1 fuera del ludus, hacia una\n Roma a\xFAn m\xE1s
+    cruel, donde la sangre ya no ser\xE1 \nespect\xE1culo, sino herramienta."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: Lo Que Roma No Mata
+  optionAText: "Aceptar que el ludus te ha destruido y usar esa destrucci\xF3n como
+    armadura, ofreciendo tu cuerpo roto a Roma con la \xFAnica intenci\xF3n de sobrevivir
+    lo suficiente para devolver cada humillaci\xF3n multiplicada por sangre."
+  optionANode: {fileID: 11400000, guid: c92571910faa8e54b8fba543ce635a07, type: 2}
   hasOptionB: 1
-  optionBText: "Opci\xF3n B"
-  optionBNode: {fileID: 11400000, guid: 37444223ec2e77546916451abc742e7f, type: 2}
+  optionBText: Aferrarte al odio puro, rechazar toda obediencia interior y comenzar
+    a tramar en silencio una salida violenta, aunque eso implique traiciones, muerte
+    cercana y perder cualquier resto de humanidad antes que vivir sometido.
+  optionBNode: {fileID: 11400000, guid: 4b3bfd86d7e4c094a96b263463b98088, type: 2}

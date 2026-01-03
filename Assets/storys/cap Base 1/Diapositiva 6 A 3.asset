@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Diapositiva 6 A 3
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: 
-  optionAText: Continuar
+  text: "Noche cerrada. Forzas grilletes con manos temblorosas.\n Un esclavo cae
+    y delata el plan. Antorchas brotan. \nCorres entre sombras, herido, febril.\n
+    Roma despierta hambrienta.\n El muro est\xE1 cerca.\n\nO saltas hacia lo desconocido,
+    o te ocultas bajo cad\xE1veres, \nesperando que el terror pase. Los dioses guardan
+    silencio \nantiguo cruel eterno."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: La Noche de los Fugitivos
+  optionAText: Saltas el muro del ludus, caes destrozado y desapareces en la oscuridad,
+    convertido en proscrito antes de ser libre.
   optionANode: {fileID: 11400000, guid: 55ab1b17ae988424a9600a55e5f229fa, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"

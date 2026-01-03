@@ -361,6 +361,13 @@ public class OptionsManager : MonoBehaviour
                     equipmentManager.ClearAllEquippedItems();
                 }
 
+                // Resetear las monedas del jugador al valor inicial configurado en PlayerMoney
+                PlayerMoney playerMoney = GameDataManager.Instance.PlayerMoney;
+                if (playerMoney != null)
+                {
+                    playerMoney.ResetToInitialMoney();
+                }
+
                 // Persistir el estado vacío.
                 GameDataManager.Instance.SavePlayerProfile();
             }

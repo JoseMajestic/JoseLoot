@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: Diapositiva 3 A 1
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 3 A 1
-  optionAText: Continuar
+  text: "Aceptas las cadenas sin un grito. El hierro \nmuerde la carne y aprendes
+    a no reaccionar. \nVarro cree haberte domado.\n\n Error com\xFAn. Mientras arrastras
+    los pies, memorizas \npasillos, guardias y rutinas. \n\nPatientia est arma. El
+    odio crece ordenado, esperando\n el d\xEDa correcto para estallar. Roma ense\xF1a
+    a sobrevivir \nantes de matar."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: Juramento en Silencio
+  optionAText: "Arrastrarte de vuelta al ludus, aceptar cada traici\xF3n, cada enfermedad
+    y cada golpe por la espalda, y seguir respirando solo para que Roma no tenga
+    el placer de verte morir todav\xEDa."
   optionANode: {fileID: 11400000, guid: 352270a6255c90a408c2dba6f03dbece, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"

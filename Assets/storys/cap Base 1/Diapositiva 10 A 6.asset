@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: Diapositiva 10 A 6
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 0}
-  text: Diapositiva 10 A 6
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: 8478c3ddd1ad9a447b600df76385a2f7, type: 2}
+  text: "El odio gobierna cada pensamiento. Finges obediencia \nmientras afilas rencores.
+    Robas llaves, escuchas pasos,\naprendes sombras. Traicionar\xE1s antes de ser
+    traicionado.\n\n Roma no te tendr\xE1 d\xF3cil. Prefieres arder r\xE1pido que
+    pudrirte \xFAtil.\n La noche se convierte en aliada cruel. Cada respiraci\xF3n
+    promete \nsangre pr\xF3xima aunque duela, avance, caiga, mate solo."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: "El Odio como Gu\xEDa"
+  optionAText: "Abandonar el ludus en la primera oportunidad violenta, sin plan ni
+    aliados, llevando solo odio, heridas mal cerradas y la certeza de que Roma te
+    cazar\xE1, pero jam\xE1s volver\xE1 a usarte como herramienta d\xF3cil."
+  optionANode: {fileID: 11400000, guid: 55ab1b17ae988424a9600a55e5f229fa, type: 2}
   hasOptionB: 0
   optionBText: "Opci\xF3n B"
   optionBNode: {fileID: 0}

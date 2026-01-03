@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: Diapositiva 5 B 1
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 21300000, guid: ca3b6c27caad8124d82ed478e8b72c94, type: 3}
-  text: Diapositiva 5 B 1
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: d7f52fd4f9f9cb0449c1791cefe903f9, type: 2}
+  text: "La enfermedad no cede y el dolor se vuelve costumbre. \nUna noche escuchas
+    rumores entre esclavos: unos \nhablan de huida, otros de someterse al lanista
+    para sobrevivir. \n\nRoma te ha llevado al l\xEDmite. Aqu\xED no hay honor, solo
+    c\xE1lculo.\n El martirio te empuja a decidir si resistes como sombra o \nte
+    arriesgas a desaparecer. \n\nEl siguiente paso define si sigues siendo esclavo
+    o algo peor."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: El Umbral del Quebranto
+  optionAText: "Aprovechar el caos nocturno, confiar en esclavos desesperados y preparar
+    una huida que puede terminar en crucifixi\xF3n."
+  optionANode: {fileID: 11400000, guid: 541563fb282e05a4a880ebafa4639ab1, type: 2}
   hasOptionB: 1
-  optionBText: "Opci\xF3n B"
-  optionBNode: {fileID: 11400000, guid: f65f1fc9b160af2408d340f7ed1cb5ab, type: 2}
+  optionBText: "Arrastrarte ante Varro, ofrecer obediencia absoluta y convertirte
+    en su herramienta m\xE1s rota, esperando sobrevivir un d\xEDa m\xE1s bajo su
+    sombra."
+  optionBNode: {fileID: 11400000, guid: fda4a60c44cfbdb4baef0609c3fba02f, type: 2}

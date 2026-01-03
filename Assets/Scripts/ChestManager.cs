@@ -470,7 +470,11 @@ public class ChestManager : MonoBehaviour
 
         int heroLevel = GetHeroLevel();
         int targetTier = DetermineTierForLevel(heroLevel);
-        ItemData tierItem = rewardTierDatabase.GetRandomItemFromTier(targetTier);
+        ItemData tierItem = rewardTierDatabase.GetRandomItemFromTierWeightedByType(targetTier);
+        if (tierItem == null)
+        {
+            tierItem = rewardTierDatabase.GetRandomItemFromTier(targetTier);
+        }
 
         if (tierItem == null)
         {

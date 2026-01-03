@@ -86,6 +86,7 @@ public class StoryPanelManager : MonoBehaviour
 
     private GameDataManager gameDataManager;
     private int accumulatedNodeRewardCoins = 0;
+    private int accumulatedNodeRewardExperience = 0;
     private readonly List<ItemData> accumulatedNodeRewardItems = new List<ItemData>();
 
     private void Awake()
@@ -364,6 +365,7 @@ public class StoryPanelManager : MonoBehaviour
         if (gameDataManager != null)
         {
             int totalCoins = GetTotalRewardCoins();
+            int totalExperience = GetTotalRewardExperience();
             List<ItemData> totalItems = GetTotalRewardItems();
 
             if (totalCoins > 0)
@@ -380,6 +382,11 @@ public class StoryPanelManager : MonoBehaviour
                         profile.playerMoney += totalCoins;
                     }
                 }
+            }
+
+            if (totalExperience > 0)
+            {
+                gameDataManager.AddHeroExperience(totalExperience);
             }
 
             if (gameDataManager.InventoryManager != null && totalItems != null)
@@ -444,15 +451,15 @@ public class StoryPanelManager : MonoBehaviour
         List<ItemData> totalRewardItems = GetTotalRewardItems();
         string itemsLine = BuildItemsLine(totalRewardItems);
         int totalCoins = GetTotalRewardCoins();
+        int totalExperience = GetTotalRewardExperience();
 
+        string rewardsMessage = $"Monedas: {totalCoins}\nExperiencia: {totalExperience} XP";
         if (!string.IsNullOrEmpty(itemsLine) && !canShowSlots)
         {
-            SetRewardsText($"Monedas: {totalCoins}\nObjetos: {itemsLine}");
+            rewardsMessage += $"\nObjetos: {itemsLine}";
         }
-        else
-        {
-            SetRewardsText($"Monedas: {totalCoins}");
-        }
+
+        SetRewardsText(rewardsMessage);
 
         if (canShowSlots)
         {
@@ -525,6 +532,7 @@ public class StoryPanelManager : MonoBehaviour
     private void ResetAccumulatedNodeRewards()
     {
         accumulatedNodeRewardCoins = 0;
+        accumulatedNodeRewardExperience = 0;
         accumulatedNodeRewardItems.Clear();
     }
 
@@ -536,6 +544,11 @@ public class StoryPanelManager : MonoBehaviour
         if (node.nodeRewardCoins > 0)
         {
             accumulatedNodeRewardCoins += node.nodeRewardCoins;
+        }
+
+        if (node.nodeRewardExperience > 0)
+        {
+            accumulatedNodeRewardExperience += node.nodeRewardExperience;
         }
 
         if (node.nodeRewardItems != null && node.nodeRewardItems.Length > 0)
@@ -554,6 +567,11 @@ public class StoryPanelManager : MonoBehaviour
     {
         int baseCoins = currentChapter != null ? currentChapter.rewardCoins : 0;
         return baseCoins + accumulatedNodeRewardCoins;
+    }
+
+    private int GetTotalRewardExperience()
+    {
+        return accumulatedNodeRewardExperience;
     }
 
     private List<ItemData> GetTotalRewardItems()

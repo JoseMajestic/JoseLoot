@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: Diapositiva 2 B
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelTransitionNode
   image: {fileID: 21300000, guid: ca3b6c27caad8124d82ed478e8b72c94, type: 3}
-  text: Diapositiva 2 B 0
-  optionAText: Continuar
-  optionANode: {fileID: 11400000, guid: 72d5dac4accc95242abee7f6a18a3cb2, type: 2}
+  text: "Triunfas, herido pero vivo y Varro no cumple: \neres encadenado y te sorprende
+    la traici\xF3n del lanista.\n\n La multitud celebra sin saber. Tu sangre riega
+    la arena, \ntu victoria no libera. Roma paga con mentiras. \n\nAprendes que la
+    fuerza no basta. Juras sobrevivir,\n romper cadenas y cobrar deudas con sangre."
+  nodeRewardCoins: 0
+  nodeRewardItems: []
+  title: Victoria en la Arena
+  optionAText: "Bajar la cabeza, aceptar las cadenas mordiendo el hierro, grabar
+    el rostro de Varro en tu memoria y jurar en silencio que su muerte ser\xE1 lenta,
+    p\xFAblica y ejemplar, cuando Roma ya no pueda protegerlo."
+  optionANode: {fileID: 11400000, guid: cf031517edb47f24080135e76486bf07, type: 2}
   hasOptionB: 1
-  optionBText: "Opci\xF3n B"
-  optionBNode: {fileID: 11400000, guid: d237abe8624122c4ba735145a9fb0c20, type: 2}
+  optionBText: "Alzar la mirada ensangrentada, escupir al lanista ante todos, forzar
+    a los guardias a romperte los huesos all\xED mismo y demostrar que incluso encadenado
+    sigues siendo peligroso para los hombres que juegan a ser dioses."
+  optionBNode: {fileID: 11400000, guid: 5c02ee78b0844614ab2b7c497e4373ab, type: 2}

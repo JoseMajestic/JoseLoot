@@ -8,6 +8,32 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Reward Tier Database", menuName = "Combate/Reward Tier Database")]
 public class RewardTierDatabase : ScriptableObject
 {
+    [System.Serializable]
+    public class RarityWeight
+    {
+        [Tooltip("Identificador exacto de la rareza (ej. \"Plebeius\")")]
+        public string rarityId;
+        [Tooltip("Peso relativo. Si todos los pesos valen 1, la probabilidad es uniforme.")]
+        public int weight = 1;
+    }
+
+    [System.Serializable]
+    public class ItemTypeWeight
+    {
+        public ItemType itemType;
+        [Tooltip("Peso relativo para este tipo dentro del tier.")]
+        public int weight = 1;
+        [Tooltip("Pesos de rareza específicos para este tipo (opcional).")]
+        public RarityWeight[] rarityWeights;
+    }
+
+    [System.Serializable]
+    public class TierDropConfig
+    {
+        [Tooltip("Distribución de tipos de objeto dentro de este tier.")]
+        public ItemTypeWeight[] itemTypeWeights;
+    }
+
     [Header("Configuración de Tiers")]
     [Tooltip("Número de tiers disponibles (ej: 5 tiers del 1 al 5)")]
     [SerializeField] private int tierCount = 5;
@@ -18,6 +44,12 @@ public class RewardTierDatabase : ScriptableObject
     [SerializeField] private ItemData[] tier3Items;
     [SerializeField] private ItemData[] tier4Items;
     [SerializeField] private ItemData[] tier5Items;
+    [Header("Configuración avanzada por tier (opcional)")]
+    [SerializeField] private TierDropConfig tier1Config;
+    [SerializeField] private TierDropConfig tier2Config;
+    [SerializeField] private TierDropConfig tier3Config;
+    [SerializeField] private TierDropConfig tier4Config;
+    [SerializeField] private TierDropConfig tier5Config;
     
     [Header("Configuración de Probabilidades")]
     [Tooltip("Probabilidad base para cada tier (debe sumar 100).")]
@@ -100,6 +132,40 @@ public class RewardTierDatabase : ScriptableObject
         // Seleccionar objeto aleatorio
         int randomIndex = Random.Range(0, validItems.Count);
         return validItems[randomIndex];
+    }
+
+    /// <summary>
+    /// Obtiene un objeto aleatorio de un tier aplicando pesos por tipo y rareza.
+    /// Si no hay configuración válida, cae de nuevo en GetRandomItemFromTier.
+    /// </summary>
+    public ItemData GetRandomItemFromTierWeightedByType(int tier)
+    {
+        if (tier < 1 || tier > tierCount)
+            return GetRandomItemFromTier(tier);
+
+        TierDropConfig config = GetTierConfig(tier);
+        if (config == null || config.itemTypeWeights == null || config.itemTypeWeights.Length == 0)
+            return GetRandomItemFromTier(tier);
+
+        int tierIndex = tier - 1;
+        ItemData[] tierItems = tierArrays[tierIndex];
+        if (tierItems == null || tierItems.Length == 0)
+            return GetRandomItemFromTier(tier);
+
+        Dictionary<ItemType, List<ItemData>> buckets = BuildBucketsByType(tierItems);
+        ItemTypeWeight selectedType = PickItemType(config.itemTypeWeights, buckets);
+        if (selectedType == null)
+            return GetRandomItemFromTier(tier);
+
+        List<ItemData> typePool = buckets[selectedType.itemType];
+        List<ItemData> filteredByRarity = FilterByRarity(typePool, selectedType.rarityWeights);
+
+        List<ItemData> finalPool = filteredByRarity.Count > 0 ? filteredByRarity : typePool;
+        if (finalPool.Count == 0)
+            return GetRandomItemFromTier(tier);
+
+        int randomIndex = Random.Range(0, finalPool.Count);
+        return finalPool[randomIndex];
     }
     
     /// <summary>
@@ -278,5 +344,123 @@ public class RewardTierDatabase : ScriptableObject
             }
             Debug.Log($"Tier {i + 1}: {validItems} objetos válidos, {tierProbabilities[i]}% probabilidad");
         }
+    }
+
+    private TierDropConfig GetTierConfig(int tier)
+    {
+        switch (tier)
+        {
+            case 1: return tier1Config;
+            case 2: return tier2Config;
+            case 3: return tier3Config;
+            case 4: return tier4Config;
+            case 5: return tier5Config;
+            default: return null;
+        }
+    }
+
+    private Dictionary<ItemType, List<ItemData>> BuildBucketsByType(ItemData[] tierItems)
+    {
+        Dictionary<ItemType, List<ItemData>> buckets = new Dictionary<ItemType, List<ItemData>>();
+        if (tierItems == null)
+            return buckets;
+
+        foreach (var item in tierItems)
+        {
+            if (item == null)
+                continue;
+
+            ItemType type = item.itemType;
+            if (!buckets.TryGetValue(type, out var list))
+            {
+                list = new List<ItemData>();
+                buckets[type] = list;
+            }
+            list.Add(item);
+        }
+
+        return buckets;
+    }
+
+    private ItemTypeWeight PickItemType(ItemTypeWeight[] weights, Dictionary<ItemType, List<ItemData>> buckets)
+    {
+        List<ItemTypeWeight> validWeights = new List<ItemTypeWeight>();
+        int totalWeight = 0;
+
+        foreach (var weight in weights)
+        {
+            if (weight == null || weight.weight <= 0)
+                continue;
+
+            if (buckets.TryGetValue(weight.itemType, out var list) && list.Count > 0)
+            {
+                validWeights.Add(weight);
+                totalWeight += weight.weight;
+            }
+        }
+
+        if (totalWeight <= 0 || validWeights.Count == 0)
+            return null;
+
+        int randomValue = Random.Range(0, totalWeight);
+        int currentSum = 0;
+        foreach (var weight in validWeights)
+        {
+            currentSum += weight.weight;
+            if (randomValue < currentSum)
+            {
+                return weight;
+            }
+        }
+
+        return validWeights[validWeights.Count - 1];
+    }
+
+    private List<ItemData> FilterByRarity(List<ItemData> items, RarityWeight[] rarityWeights)
+    {
+        List<ItemData> result = new List<ItemData>();
+        if (items == null || items.Count == 0 || rarityWeights == null || rarityWeights.Length == 0)
+            return result;
+
+        List<RarityWeight> validWeights = new List<RarityWeight>();
+        int totalWeight = 0;
+        foreach (var rarity in rarityWeights)
+        {
+            if (rarity == null || rarity.weight <= 0 || string.IsNullOrWhiteSpace(rarity.rarityId))
+                continue;
+
+            bool exists = items.Exists(item => item != null && item.rareza == rarity.rarityId);
+            if (exists)
+            {
+                validWeights.Add(rarity);
+                totalWeight += rarity.weight;
+            }
+        }
+
+        if (totalWeight <= 0 || validWeights.Count == 0)
+            return result;
+
+        int randomValue = Random.Range(0, totalWeight);
+        int currentSum = 0;
+        string selectedRarity = validWeights[validWeights.Count - 1].rarityId;
+        foreach (var rarity in validWeights)
+        {
+            currentSum += rarity.weight;
+            if (randomValue < currentSum)
+            {
+                selectedRarity = rarity.rarityId;
+                break;
+            }
+        }
+
+        foreach (var item in items)
+        {
+            if (item != null && item.rareza == selectedRarity)
+            {
+                result.Add(item);
+            }
+        }
+
+        return result;
     }
 }

@@ -27,7 +27,7 @@ MonoBehaviour:
       danoCritico: 0
       suerte: 0
       destreza: 0
-    description: +45HP \n +69 Vel ataque
+    description: 
   - setName: Infernum Augustus
     minPieces: 2
     bonusStats:
@@ -40,4 +40,69 @@ MonoBehaviour:
       danoCritico: 0
       suerte: 0
       destreza: 0
-    description: +45HP \n +69 Vel ataque
+    description: 
+  - setName: Infernum Augustus
+    minPieces: 2
+    bonusStats:
+      hp: 45
+      mana: 38
+      ataque: 0
+      defensa: 0
+      velocidadAtaque: 68
+      ataqueCritico: 0
+      danoCritico: 0
+      suerte: 0
+      destreza: 0
+    description: 
+  - setName: Infernum Augustus
+    minPieces: 2
+    bonusStats:
+      hp: 45
+      mana: 38
+      ataque: 0
+      defensa: 0
+      velocidadAtaque: 68
+      ataqueCritico: 0
+      danoCritico: 0
+      suerte: 0
+      destreza: 0
+    description: 
+  - setName: Infernum Augustus
+    minPieces: 2
+    bonusStats:
+      hp: 45
+      mana: 38
+      ataque: 0
+      defensa: 0
+      velocidadAtaque: 68
+      ataqueCritico: 0
+      danoCritico: 0
+      suerte: 0
+      destreza: 0
+    description: 
+  - setName: Infernum Augustus
+    minPieces: 2
+    bonusStats:
+      hp: 45
+      mana: 38
+      ataque: 0
+      defensa: 0
+      velocidadAtaque: 68
+      ataqueCritico: 0
+      danoCritico: 0
+      suerte: 0
+      destreza: 0
+    description: 
+  - setName: Infernum Augustus
+    minPieces: 2
+    bonusStats:
+      hp: 45
+      mana: 38
+      ataque: 0
+      defensa: 0
+      velocidadAtaque: 68
+      ataqueCritico: 0
+      danoCritico: 0
+      suerte: 0
+      destreza: 0
+    description: 

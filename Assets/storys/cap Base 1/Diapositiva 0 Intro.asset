@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Diapositiva 0 Intro
   m_EditorClassIdentifier: Assembly-CSharp::StoryPanelIntroNode
   image: {fileID: 21300000, guid: 081356166226f4b4ebb07635242d01f2, type: 3}
-  text: "\xC9rase una vez, durante la \xE9poca romana. En el 14 a.c. \ncu\xE1ndo
-    a\xFAn las antiguas carreteras del imperio estaban\nsiendo constru\xEDdas, comienza
-    tu aventura.\n\nEn tu primer d\xEDa miras a tu alrededor y te encuentras \nen
-    el campo de entrenamiento de la casa de gladiadores\nde la que eres esclavo desde
-    que naciste.\n\nAhora eres un adolescente con ganas de demostrar su valor."
+  text: "La arena quema bajo el sol de Capua. \nT\xFA, esclavo traciano, portas cicatrices
+    de \ncombates brutales en el ludus de Marcus Varro.\n\n Cada d\xEDa entrenas
+    para morir o matar. Rumores \nde monstruos en las fronteras alimentan tus sue\xF1os\n
+    de libertad y gloria legionaria."
   nodeRewardCoins: 0
   nodeRewardItems: []
+  title: "Cap\xEDtulo 0: Cadenas en el Ludus"
   acceptText: Continuar
-  nextNode: {fileID: 11400000, guid: 236f96e779438f8498e5d40ed2466989, type: 2}
+  nextNode: {fileID: 11400000, guid: 6ebdd8a612bceb84b8b25772a15767d0, type: 2}
