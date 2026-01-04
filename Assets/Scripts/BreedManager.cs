@@ -200,6 +200,13 @@ public class BreedManager : MonoBehaviour
     
     [Tooltip("Sprite que se mostrará en el panel de animaciones")]
     [SerializeField] private Sprite animationSprite;
+
+    [Header("Modelo 3D Idle")]
+    [Tooltip("Modelo 3D opcional que acompaña al panel idle")]
+    [SerializeField] private GameObject breed3DModel;
+    [Tooltip("Umbral de alpha del panel idle a partir del cual el modelo vuelve a mostrarse")]
+    [Range(0.5f, 1f)]
+    [SerializeField] private float breedModelAlphaThreshold = 0.95f;
     
     [System.Serializable]
     public class AnimationConfig
@@ -339,6 +346,7 @@ public class BreedManager : MonoBehaviour
     private bool isVoiceEnabled = true; // Estado del audio (activado/desactivado)
 
     private AnimationConfig[] currentIdleAnimations = null;
+    private float currentAnimationPanelAlpha = 0f;
     
     private void Start()
     {
@@ -346,6 +354,8 @@ public class BreedManager : MonoBehaviour
         gameDataManager = GameDataManager.Instance;
         energySystem = FindFirstObjectByType<EnergySystem>();
         noria = FindFirstObjectByType<Noria>();
+
+        SetBreedModelActive(false);
         
         if (gameDataManager == null)
         {
@@ -414,6 +424,15 @@ public class BreedManager : MonoBehaviour
             if (audioVisualizer != null && isVoiceEnabled)
             {
                 audioVisualizer.EnableVisualizer();
+            }
+
+            if (animationPanel != null && !animationPanel.activeSelf)
+            {
+                OpenAnimationPanel();
+            }
+            else if (animationPanel != null && animationPanel.activeSelf)
+            {
+                SetAnimationPanelAlpha(1f);
             }
         }
         
@@ -613,6 +632,8 @@ public class BreedManager : MonoBehaviour
         {
             animationPanel.SetActive(false);
         }
+
+        SetBreedModelActive(false);
     }
     
     /// <summary>
@@ -1062,6 +1083,26 @@ public class BreedManager : MonoBehaviour
                 sr.color = color;
             }
         }
+    }
+
+    private void SetBreedModelActive(bool active)
+    {
+        if (breed3DModel == null)
+            return;
+
+        if (breed3DModel.activeSelf != active)
+        {
+            breed3DModel.SetActive(active);
+        }
+    }
+
+    private void UpdateBreedModelVisibilityFromAlpha()
+    {
+        if (breed3DModel == null)
+            return;
+
+        bool shouldBeActive = currentAnimationPanelAlpha >= breedModelAlphaThreshold;
+        SetBreedModelActive(shouldBeActive);
     }
     
     /// <summary>
@@ -2600,31 +2641,35 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     private void SetAnimationPanelAlpha(float alpha)
     {
-        if (animationPanel == null)
-            return;
+        currentAnimationPanelAlpha = Mathf.Clamp01(alpha);
 
-        // Buscar todos los componentes Image y SpriteRenderer en el panel y sus hijos
-        Image[] images = animationPanel.GetComponentsInChildren<Image>();
-        foreach (Image img in images)
+        if (animationPanel != null)
         {
-            if (img != null)
+            // Buscar todos los componentes Image y SpriteRenderer en el panel y sus hijos
+            Image[] images = animationPanel.GetComponentsInChildren<Image>();
+            foreach (Image img in images)
             {
-                Color color = img.color;
-                color.a = alpha;
-                img.color = color;
+                if (img != null)
+                {
+                    Color color = img.color;
+                    color.a = alpha;
+                    img.color = color;
+                }
+            }
+
+            SpriteRenderer[] spriteRenderers = animationPanel.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                if (sr != null)
+                {
+                    Color color = sr.color;
+                    color.a = alpha;
+                    sr.color = color;
+                }
             }
         }
 
-        SpriteRenderer[] spriteRenderers = animationPanel.GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sr in spriteRenderers)
-        {
-            if (sr != null)
-            {
-                Color color = sr.color;
-                color.a = alpha;
-                sr.color = color;
-            }
-        }
+        UpdateBreedModelVisibilityFromAlpha();
     }
 
     /// <summary>
