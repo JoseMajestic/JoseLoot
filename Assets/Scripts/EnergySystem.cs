@@ -11,10 +11,12 @@ using UnityEngine;
 public class EnergySystem : MonoBehaviour
 {
     private const int MAX_ENERGY = 100;
-    private const float RECOVERY_TIME_HOURS = 0.083f; // 4 horas para recuperar completamente (de 0% a 100%)
+    private const float RECOVERY_TIME_HOURS = 0.0013f; // 4 horas para recuperar completamente (de 0% a 100%)
     private const float RECOVERY_RATE_PER_SECOND = MAX_ENERGY / (RECOVERY_TIME_HOURS * 3600f); // Energía recuperada por segundo
     private const double MAX_OFFLINE_RECOVERY_SECONDS = 60d * 60d * 24d; // Limitar a 24h de progreso por vez
     private const float ENERGY_SAVE_INTERVAL = 1f;
+    
+    public event Action<int, int, bool> OnEnergyChanged;
     
     private GameDataManager gameDataManager;
     private float saveTimer = 0f;
