@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 /// <summary>
@@ -92,8 +93,11 @@ public class PlayerProfileData
     [Tooltip("Si el héroe está durmiendo (recuperando energía)")]
     public bool isSleeping = false;
     
-    [Tooltip("Última vez que se durmió (para calcular recuperación offline - DESACTIVADO POR AHORA)")]
+    [Tooltip("Última vez que se durmió (para calcular recuperación offline)")]
     public string lastSleepTimeString = ""; // Serializado como string porque DateTime no es serializable directamente
+    
+    [Tooltip("Última marca temporal usada para actualizar la energía (UTC ISO 8601)")]
+    public string lastEnergyUpdateString = "";
 
     // Sistema de evolución
     [Tooltip("Clase de evolución (0 = Primera, 1 = Segunda, etc.)")]
@@ -104,6 +108,9 @@ public class PlayerProfileData
     
     [Tooltip("Tiempo total de vida en segundos (solo cuenta cuando se juega)")]
     public float totalLifeTime = 0f;
+    
+    [Tooltip("Timestamp ISO 8601 de la última vez que se actualizó el tiempo de vida total")]
+    public string lastLifeTimeUpdateString = "";
 
     // Mejoras de gimnasio (niveles de cada stat)
     [Tooltip("Nivel de mejora de HP (máximo 999)")]
@@ -525,9 +532,10 @@ public class PlayerProfileData
     /// <summary>
     /// Guarda la fecha/hora actual como string serializable.
     /// </summary>
-    public void SaveLastSleepTime()
+    public void SaveLastSleepTime(DateTime? utcNow = null)
     {
-        lastSleepTimeString = DateTime.Now.ToString("O"); // ISO 8601 format
+        DateTime timestamp = (utcNow ?? DateTime.UtcNow).ToUniversalTime();
+        lastSleepTimeString = timestamp.ToString("O", CultureInfo.InvariantCulture); // ISO 8601 format
     }
     
     /// <summary>
@@ -538,8 +546,8 @@ public class PlayerProfileData
         if (string.IsNullOrEmpty(lastSleepTimeString))
             return DateTime.MinValue; // Si no hay fecha guardada, nunca durmió
         
-        if (DateTime.TryParse(lastSleepTimeString, out DateTime result))
-            return result;
+        if (DateTime.TryParse(lastSleepTimeString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime result))
+            return result.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(result, DateTimeKind.Utc) : result.ToUniversalTime();
         
         return DateTime.MinValue; // Fallback: nunca durmió
     }
@@ -547,9 +555,10 @@ public class PlayerProfileData
     /// <summary>
     /// Guarda la fecha/hora de la última evolución como string serializable.
     /// </summary>
-    public void SaveLastEvolutionTime()
+    public void SaveLastEvolutionTime(DateTime? utcNow = null)
     {
-        lastEvolutionTimeString = DateTime.Now.ToString("O"); // ISO 8601 format
+        DateTime timestamp = (utcNow ?? DateTime.UtcNow).ToUniversalTime();
+        lastEvolutionTimeString = timestamp.ToString("O", CultureInfo.InvariantCulture); // ISO 8601 format
     }
     
     /// <summary>
@@ -560,10 +569,66 @@ public class PlayerProfileData
         if (string.IsNullOrEmpty(lastEvolutionTimeString))
             return DateTime.MinValue; // Si no hay fecha guardada, nunca evolucionó
         
-        if (DateTime.TryParse(lastEvolutionTimeString, out DateTime result))
-            return result;
+        if (DateTime.TryParse(lastEvolutionTimeString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime result))
+            return result.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(result, DateTimeKind.Utc) : result.ToUniversalTime();
         
         return DateTime.MinValue; // Fallback
+    }
+    
+    /// <summary>
+    /// Guarda el timestamp (UTC) de la última actualización de tiempo de vida.
+    /// </summary>
+    public void SaveLifeTimeTimestamp(DateTime utcNow)
+    {
+        lastLifeTimeUpdateString = utcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+    }
+    
+    /// <summary>
+    /// Obtiene la última marca de tiempo utilizada para el cálculo de vida total.
+    /// </summary>
+    public DateTime GetLastLifeTimeUpdate()
+    {
+        if (string.IsNullOrEmpty(lastLifeTimeUpdateString))
+            return DateTime.MinValue;
+        
+        if (DateTime.TryParse(lastLifeTimeUpdateString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime parsed))
+        {
+            if (parsed.Kind == DateTimeKind.Unspecified)
+            {
+                parsed = DateTime.SpecifyKind(parsed, DateTimeKind.Utc);
+            }
+            return parsed.ToUniversalTime();
+        }
+        
+        return DateTime.MinValue;
+    }
+    
+    /// <summary>
+    /// Guarda la marca temporal de energía (UTC).
+    /// </summary>
+    public void SaveEnergyTimestamp(DateTime utcNow)
+    {
+        lastEnergyUpdateString = utcNow.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+    }
+    
+    /// <summary>
+    /// Obtiene la última marca utilizada para actualizar energía.
+    /// </summary>
+    public DateTime GetLastEnergyUpdate()
+    {
+        if (string.IsNullOrEmpty(lastEnergyUpdateString))
+            return DateTime.MinValue;
+        
+        if (DateTime.TryParse(lastEnergyUpdateString, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime parsed))
+        {
+            if (parsed.Kind == DateTimeKind.Unspecified)
+            {
+                parsed = DateTime.SpecifyKind(parsed, DateTimeKind.Utc);
+            }
+            return parsed.ToUniversalTime();
+        }
+        
+        return DateTime.MinValue;
     }
 
     // ===== MÉTODOS DE RESET =====

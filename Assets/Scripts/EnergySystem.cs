@@ -11,10 +11,13 @@ using UnityEngine;
 public class EnergySystem : MonoBehaviour
 {
     private const int MAX_ENERGY = 100;
-    private const float RECOVERY_TIME_HOURS = 4f; // 4 horas para recuperar completamente (de 0% a 100%)
+    private const float RECOVERY_TIME_HOURS = 0.083f; // 4 horas para recuperar completamente (de 0% a 100%)
     private const float RECOVERY_RATE_PER_SECOND = MAX_ENERGY / (RECOVERY_TIME_HOURS * 3600f); // Energía recuperada por segundo
+    private const double MAX_OFFLINE_RECOVERY_SECONDS = 60d * 60d * 24d; // Limitar a 24h de progreso por vez
+    private const float ENERGY_SAVE_INTERVAL = 1f;
     
     private GameDataManager gameDataManager;
+    private float saveTimer = 0f;
     
     private void Start()
     {
@@ -26,8 +29,7 @@ public class EnergySystem : MonoBehaviour
             return;
         }
         
-        // NOTA: Sistema offline desactivado por ahora para evitar problemas
-        // CalculateOfflineRecovery();
+        ApplyRecoveryInternal(resetTimer: true);
     }
     
     private void Update()
@@ -39,35 +41,16 @@ public class EnergySystem : MonoBehaviour
         if (profile == null)
             return;
         
-        // Si está durmiendo, recuperar energía automáticamente
         if (profile.isSleeping)
         {
-            // Calcular energía a recuperar en este frame
-            float energyToRecover = RECOVERY_RATE_PER_SECOND * Time.deltaTime;
-            
-            // Aplicar recuperación con redondeo
-            float newEnergy = profile.currentEnergy + energyToRecover;
-            
-            // Redondear: si es >= 0.5, redondear hacia arriba; si es < 0.5, redondear hacia abajo
-            int energyRounded = Mathf.RoundToInt(newEnergy);
-            profile.currentEnergy = Mathf.Min(MAX_ENERGY, energyRounded);
-            
-            // Si llegó al 100%, despertar automáticamente
-            if (profile.currentEnergy >= MAX_ENERGY)
-            {
-                profile.currentEnergy = MAX_ENERGY;
-                profile.isSleeping = false;
-                gameDataManager.SavePlayerProfile();
-            }
-            else
-            {
-                // Guardar cambios periódicamente mientras duerme (cada segundo aproximadamente)
-                if (Time.frameCount % 60 == 0)
-                {
-                    gameDataManager.SavePlayerProfile();
-                }
-            }
+            saveTimer += Time.deltaTime;
         }
+        else
+        {
+            saveTimer = 0f;
+        }
+        
+        ApplyRecoveryInternal(resetTimer: false, profile);
     }
     
     /// <summary>
@@ -154,6 +137,7 @@ public class EnergySystem : MonoBehaviour
         if (profile.isSleeping)
         {
             profile.isSleeping = false;
+            profile.SaveEnergyTimestamp(DateTime.UtcNow);
         }
         
         if (profile.currentEnergy < amount)
@@ -187,8 +171,10 @@ public class EnergySystem : MonoBehaviour
         // Activar estado de sueño
         profile.isSleeping = true;
         
-        // Guardar fecha/hora actual (para futuro sistema offline)
-        profile.SaveLastSleepTime();
+        // Guardar fecha/hora actual (para recuperación offline)
+        DateTime now = DateTime.UtcNow;
+        profile.SaveLastSleepTime(now);
+        profile.SaveEnergyTimestamp(now);
         
         // Guardar cambios
         gameDataManager.SavePlayerProfile();
@@ -209,6 +195,7 @@ public class EnergySystem : MonoBehaviour
         if (profile.isSleeping)
         {
             profile.isSleeping = false;
+            profile.SaveEnergyTimestamp(DateTime.UtcNow);
             gameDataManager.SavePlayerProfile();
         }
     }
@@ -228,32 +215,66 @@ public class EnergySystem : MonoBehaviour
         return profile.isSleeping;
     }
     
-    // ===== MÉTODOS DESACTIVADOS (sistema offline desactivado por ahora) =====
-    
     /// <summary>
-    /// DESACTIVADO: Calcula la recuperación de energía basada en el tiempo offline.
+    /// Aplica la recuperación de energía usando el reloj del sistema.
     /// </summary>
-    private void CalculateOfflineRecovery()
+    public void ApplyRecovery(bool resetTimer = false)
     {
-        // Sistema offline desactivado por ahora
-        return;
+        ApplyRecoveryInternal(resetTimer, null);
     }
     
-    /// <summary>
-    /// DESACTIVADO: Calcula cuánta energía se recuperará basada en el tiempo transcurrido desde que durmió.
-    /// </summary>
-    public int CalculateRecoveryFromSleep()
+    private void ApplyRecoveryInternal(bool resetTimer, PlayerProfileData cachedProfile = null)
     {
-        // Sistema offline desactivado por ahora
-        return 0;
-    }
-    
-    /// <summary>
-    /// DESACTIVADO: Aplica la recuperación de energía calculada.
-    /// </summary>
-    public void ApplyRecovery()
-    {
-        // Sistema offline desactivado por ahora
-        return;
+        if (gameDataManager == null)
+            return;
+        
+        PlayerProfileData profile = cachedProfile ?? gameDataManager.GetPlayerProfile();
+        if (profile == null)
+            return;
+        
+        DateTime now = DateTime.UtcNow;
+        DateTime lastUpdate = profile.GetLastEnergyUpdate();
+        
+        if (lastUpdate == DateTime.MinValue || resetTimer)
+        {
+            profile.SaveEnergyTimestamp(now);
+            lastUpdate = now;
+        }
+        
+        if (!profile.isSleeping)
+        {
+            profile.SaveEnergyTimestamp(now);
+            if (resetTimer)
+            {
+                gameDataManager.SavePlayerProfile();
+            }
+            return;
+        }
+        
+        double elapsedSeconds = Math.Max(0d, (now - lastUpdate).TotalSeconds);
+        if (elapsedSeconds <= 0d)
+            return;
+        
+        double secondsToProcess = Math.Min(elapsedSeconds, MAX_OFFLINE_RECOVERY_SECONDS);
+        float energyGain = (float)(secondsToProcess * RECOVERY_RATE_PER_SECOND);
+        
+        float newEnergyValue = profile.currentEnergy + energyGain;
+        int roundedEnergy = Mathf.Clamp(Mathf.RoundToInt(newEnergyValue), 0, MAX_ENERGY);
+        bool energyChanged = roundedEnergy != profile.currentEnergy;
+        profile.currentEnergy = roundedEnergy;
+        
+        if (profile.currentEnergy >= MAX_ENERGY)
+        {
+            profile.currentEnergy = MAX_ENERGY;
+            profile.isSleeping = false;
+        }
+        
+        profile.SaveEnergyTimestamp(now);
+        
+        if (resetTimer || energyChanged || profile.currentEnergy >= MAX_ENERGY || saveTimer >= ENERGY_SAVE_INTERVAL)
+        {
+            gameDataManager.SavePlayerProfile();
+            saveTimer = 0f;
+        }
     }
 }

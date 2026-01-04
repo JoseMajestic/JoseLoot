@@ -348,6 +348,10 @@ public class BreedManager : MonoBehaviour
     private AnimationConfig[] currentIdleAnimations = null;
     private float currentAnimationPanelAlpha = 0f;
     
+    private const float LIFE_TIME_SYNC_INTERVAL = 1f;
+    private const double MAX_LIFE_TIME_STEP_SECONDS = 60d * 60d * 24d * 30d; // Máximo 30 días por actualización
+    private float lifeTimeSyncTimer = 0f;
+    
     private void Start()
     {
         // Obtener referencias
@@ -400,6 +404,9 @@ public class BreedManager : MonoBehaviour
         
         // Inicializar bloques de mensajes
         InitializeMessageBlocks();
+        
+        // Aplicar tiempo de vida acumulado offline
+        InitializeLifeTimeTracking();
         
         // Iniciar corrutinas
         decayCoroutine = StartCoroutine(DecayStats());
@@ -469,6 +476,8 @@ public class BreedManager : MonoBehaviour
         // Cuando se cierra el panel General Breed, detener corutinas y animaciones
         usedMessageIndices.Clear();
         
+        ForceLifeTimeSync(persistProfile: true);
+        
         // Cerrar el panel de animaciones y detener las animaciones
         CloseAnimationPanel();
     }
@@ -502,6 +511,8 @@ public class BreedManager : MonoBehaviour
             experienceAnimationLocked = false;
         }
 
+        ForceLifeTimeSync(persistProfile: true);
+        
         UnsubscribeMoneyTracking();
 
         if (idleAnimationCoroutine != null)
@@ -2468,12 +2479,9 @@ public class BreedManager : MonoBehaviour
     
     private void Update()
     {
-        // Actualizar tiempo de vida (solo cuenta cuando se juega)
+        UpdateLifeTimeTracking(Time.deltaTime);
+        
         PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
-        if (profile != null)
-        {
-            profile.totalLifeTime += Time.deltaTime;
-        }
         
         // Actualizar UI periódicamente (cada segundo)
         if (Time.frameCount % 60 == 0) // Aproximadamente cada segundo (60 FPS)
@@ -2528,6 +2536,77 @@ public class BreedManager : MonoBehaviour
             // Actualizar estado de botones de acción periódicamente
             UpdateActionButtonsState();
         }
+    }
+
+    private void ForceLifeTimeSync(bool persistProfile)
+    {
+        UpdateLifeTimeTracking(LIFE_TIME_SYNC_INTERVAL);
+        
+        if (persistProfile)
+        {
+            gameDataManager?.SavePlayerProfile();
+        }
+    }
+
+    /// <summary>
+    /// Inicializa el seguimiento de tiempo de vida acumulando el tiempo transcurrido desde la última marca.
+    /// </summary>
+    private void InitializeLifeTimeTracking()
+    {
+        PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
+        if (profile == null)
+            return;
+        
+        DateTime lastUpdate = profile.GetLastLifeTimeUpdate();
+        DateTime now = DateTime.UtcNow;
+        
+        if (lastUpdate == DateTime.MinValue)
+        {
+            profile.SaveLifeTimeTimestamp(now);
+            return;
+        }
+        
+        double seconds = (now - lastUpdate).TotalSeconds;
+        if (seconds > 0d)
+        {
+            double clamped = Math.Min(seconds, MAX_LIFE_TIME_STEP_SECONDS);
+            profile.totalLifeTime += (float)clamped;
+        }
+        
+        profile.SaveLifeTimeTimestamp(now);
+    }
+    
+    /// <summary>
+    /// Actualiza el tiempo de vida total usando el reloj del sistema y guarda el timestamp periódicamente.
+    /// </summary>
+    private void UpdateLifeTimeTracking(float deltaTime)
+    {
+        PlayerProfileData profile = gameDataManager?.GetPlayerProfile();
+        if (profile == null)
+            return;
+        
+        lifeTimeSyncTimer += deltaTime;
+        if (lifeTimeSyncTimer < LIFE_TIME_SYNC_INTERVAL)
+            return;
+        
+        lifeTimeSyncTimer = 0f;
+        DateTime lastUpdate = profile.GetLastLifeTimeUpdate();
+        DateTime now = DateTime.UtcNow;
+        
+        if (lastUpdate == DateTime.MinValue)
+        {
+            profile.SaveLifeTimeTimestamp(now);
+            return;
+        }
+        
+        double seconds = (now - lastUpdate).TotalSeconds;
+        if (seconds > 0d)
+        {
+            double clamped = Math.Min(seconds, MAX_LIFE_TIME_STEP_SECONDS);
+            profile.totalLifeTime += (float)clamped;
+        }
+        
+        profile.SaveLifeTimeTimestamp(now);
     }
 
     /// <summary>
