@@ -21,6 +21,28 @@ public class PlayerProfileData
 
     public List<EquippedItemData> equippedItems = new List<EquippedItemData>();
 
+    [System.Serializable]
+    public class RecollectItemSnapshot
+    {
+        public string itemId;
+        public string itemName;
+        public int level;
+        public string rarityId;
+        public int sellPrice;
+    }
+
+    [System.Serializable]
+    private class RecollectItemSnapshotList
+    {
+        public List<RecollectItemSnapshot> items = new List<RecollectItemSnapshot>();
+    }
+
+    [System.Serializable]
+    private class RecollectHistoryList
+    {
+        public List<string> entries = new List<string>();
+    }
+
     // SOLUCIÓN: Datos del inventario completo (serializado)
     // Array de strings, cada string es "nombreItemData|nivel|id|version" o null si el slot está vacío
     public string[] inventoryData = new string[InventoryManager.INVENTORY_SIZE];
@@ -111,6 +133,38 @@ public class PlayerProfileData
     
     [Tooltip("Timestamp ISO 8601 de la última vez que se actualizó el tiempo de vida total")]
     public string lastLifeTimeUpdateString = "";
+
+    // Sistema de recolección automática
+    [Header("Sistema de recolección automática")]
+    [Tooltip("Indica si la expedición automática está en curso")]
+    public bool recollectIsRunning = false;
+
+    [Tooltip("Indica si la expedición terminó y está pendiente de reclamar")]
+    public bool recollectCompleted = false;
+
+    [Tooltip("Hora de inicio de la expedición (UTC ISO 8601)")]
+    public string recollectStartUtcString = "";
+
+    [Tooltip("Última actualización de progreso (UTC ISO 8601)")]
+    public string recollectLastUpdateUtcString = "";
+
+    [Tooltip("Milisegundos acumulados de la expedición")]
+    public double recollectElapsedMilliseconds = 0d;
+
+    [Tooltip("Monedas pendientes de reclamar generadas por la expedición")]
+    public double recollectPendingCoins = 0d;
+
+    [Tooltip("Acumulador de tiempo restante para monedas (ms)")]
+    public double recollectCoinTimerMs = 0d;
+
+    [Tooltip("Acumulador de tiempo restante para objetos (ms)")]
+    public double recollectItemTimerMs = 0d;
+
+    [Tooltip("Lista serializada de objetos pendientes (JSON)")]
+    public string recollectItemsJson = "";
+
+    [Tooltip("Historial serializado de mensajes (JSON)")]
+    public string recollectHistoryJson = "";
 
     // Mejoras de gimnasio (niveles de cada stat)
     [Tooltip("Nivel de mejora de HP (máximo 999)")]
@@ -629,6 +683,98 @@ public class PlayerProfileData
         }
         
         return DateTime.MinValue;
+    }
+
+    // ===== SISTEMA DE RECOLECCIÓN AUTOMÁTICA =====
+
+    public void SaveRecollectState(bool isRunning, bool isCompleted, double elapsedMs, double pendingCoins, double coinTimerMs, double itemTimerMs, DateTime startUtc, DateTime lastUpdateUtc)
+    {
+        recollectIsRunning = isRunning;
+        recollectCompleted = isCompleted;
+        recollectElapsedMilliseconds = elapsedMs;
+        recollectPendingCoins = pendingCoins;
+        recollectCoinTimerMs = coinTimerMs;
+        recollectItemTimerMs = itemTimerMs;
+        recollectStartUtcString = startUtc == DateTime.MinValue ? "" : startUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+        recollectLastUpdateUtcString = lastUpdateUtc == DateTime.MinValue ? "" : lastUpdateUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+    }
+
+    public void ClearRecollectState()
+    {
+        recollectIsRunning = false;
+        recollectCompleted = false;
+        recollectElapsedMilliseconds = 0d;
+        recollectPendingCoins = 0d;
+        recollectCoinTimerMs = 0d;
+        recollectItemTimerMs = 0d;
+        recollectStartUtcString = "";
+        recollectLastUpdateUtcString = "";
+        recollectItemsJson = "";
+        recollectHistoryJson = "";
+    }
+
+    public void SaveRecollectItems(List<RecollectItemSnapshot> snapshots)
+    {
+        var wrapper = new RecollectItemSnapshotList
+        {
+            items = snapshots != null ? new List<RecollectItemSnapshot>(snapshots) : new List<RecollectItemSnapshot>()
+        };
+        recollectItemsJson = JsonUtility.ToJson(wrapper);
+    }
+
+    public List<RecollectItemSnapshot> LoadRecollectItems()
+    {
+        if (string.IsNullOrEmpty(recollectItemsJson))
+        {
+            return new List<RecollectItemSnapshot>();
+        }
+
+        try
+        {
+            var wrapper = JsonUtility.FromJson<RecollectItemSnapshotList>(recollectItemsJson);
+            if (wrapper != null && wrapper.items != null)
+            {
+                return wrapper.items;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"PlayerProfileData: Error al leer objetos de recolección: {ex.Message}");
+        }
+
+        return new List<RecollectItemSnapshot>();
+    }
+
+    public void SaveRecollectHistory(List<string> entries)
+    {
+        var wrapper = new RecollectHistoryList
+        {
+            entries = entries != null ? new List<string>(entries) : new List<string>()
+        };
+        recollectHistoryJson = JsonUtility.ToJson(wrapper);
+    }
+
+    public List<string> LoadRecollectHistory()
+    {
+        if (string.IsNullOrEmpty(recollectHistoryJson))
+        {
+            return new List<string>();
+        }
+
+        try
+        {
+            var wrapper = JsonUtility.FromJson<RecollectHistoryList>(recollectHistoryJson);
+            if (wrapper != null && wrapper.entries != null)
+            {
+                return wrapper.entries;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"PlayerProfileData: Error al leer historial de recolección: {ex.Message}");
+        }
+
+        return new List<string>();
     }
 
     // ===== MÉTODOS DE RESET =====
