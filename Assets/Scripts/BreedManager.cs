@@ -419,6 +419,7 @@ public class BreedManager : MonoBehaviour
         // Inicializar estado anterior de sueño
         if (energySystem != null)
         {
+            energySystem.OnEnergyChanged += HandleEnergyChanged;
             previousIsSleeping = energySystem.IsSleeping();
         }
         
@@ -492,6 +493,11 @@ public class BreedManager : MonoBehaviour
         }
         
         // Detener corrutinas
+        if (energySystem != null)
+        {
+            energySystem.OnEnergyChanged -= HandleEnergyChanged;
+        }
+
         if (decayCoroutine != null)
             StopCoroutine(decayCoroutine);
         if (messageCoroutine != null)
@@ -517,6 +523,26 @@ public class BreedManager : MonoBehaviour
 
         if (idleAnimationCoroutine != null)
             StopCoroutine(idleAnimationCoroutine);
+    }
+
+    private void HandleEnergyChanged(int currentEnergy, int maxEnergy, bool isSleeping)
+    {
+        previousIsSleeping = isSleeping;
+
+        if (!isSleeping && sleepAnimationPanel != null)
+        {
+            Animator sleepAnimator = GetAnimatorFromPanel(sleepAnimationPanel);
+            if (sleepAnimator != null)
+            {
+                sleepAnimator.speed = 1f;
+            }
+            SetPanelAlpha(sleepAnimationPanel, 0f);
+            SetAnimationPanelAlpha(1f);
+            RestartIdleAnimationPool();
+        }
+
+        RefreshBreedStatsUI();
+        UpdateActionButtonsState();
     }
     
     /// <summary>

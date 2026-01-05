@@ -20,6 +20,7 @@ public class EnergySystem : MonoBehaviour
     
     private GameDataManager gameDataManager;
     private float saveTimer = 0f;
+    private float recoveryFraction = 0f;
     
     private void Start()
     {
@@ -150,6 +151,7 @@ public class EnergySystem : MonoBehaviour
         
         profile.currentEnergy -= amount;
         profile.currentEnergy = Mathf.Clamp(profile.currentEnergy, 0, MAX_ENERGY);
+        RaiseEnergyChanged(profile);
         
         // Guardar cambios
         gameDataManager.SavePlayerProfile();
@@ -245,6 +247,7 @@ public class EnergySystem : MonoBehaviour
         
         if (!profile.isSleeping)
         {
+            recoveryFraction = 0f;
             profile.SaveEnergyTimestamp(now);
             if (resetTimer)
             {
@@ -260,23 +263,49 @@ public class EnergySystem : MonoBehaviour
         double secondsToProcess = Math.Min(elapsedSeconds, MAX_OFFLINE_RECOVERY_SECONDS);
         float energyGain = (float)(secondsToProcess * RECOVERY_RATE_PER_SECOND);
         
-        float newEnergyValue = profile.currentEnergy + energyGain;
-        int roundedEnergy = Mathf.Clamp(Mathf.RoundToInt(newEnergyValue), 0, MAX_ENERGY);
-        bool energyChanged = roundedEnergy != profile.currentEnergy;
-        profile.currentEnergy = roundedEnergy;
+        float totalGain = energyGain + recoveryFraction;
+        int wholeGain = Mathf.FloorToInt(totalGain);
+        recoveryFraction = totalGain - wholeGain;
+
+        bool energyChanged = false;
+        if (wholeGain > 0)
+        {
+            int newEnergyValue = Mathf.Clamp(profile.currentEnergy + wholeGain, 0, MAX_ENERGY);
+            energyChanged = newEnergyValue != profile.currentEnergy;
+            profile.currentEnergy = newEnergyValue;
+        }
         
+        bool wokeUpFromSleep = false;
         if (profile.currentEnergy >= MAX_ENERGY)
         {
             profile.currentEnergy = MAX_ENERGY;
-            profile.isSleeping = false;
+            if (profile.isSleeping)
+            {
+                profile.isSleeping = false;
+                wokeUpFromSleep = true;
+            }
+            recoveryFraction = 0f;
         }
         
         profile.SaveEnergyTimestamp(now);
+        
+        if (energyChanged || wokeUpFromSleep)
+        {
+            RaiseEnergyChanged(profile);
+        }
         
         if (resetTimer || energyChanged || profile.currentEnergy >= MAX_ENERGY || saveTimer >= ENERGY_SAVE_INTERVAL)
         {
             gameDataManager.SavePlayerProfile();
             saveTimer = 0f;
         }
+    }
+
+    private void RaiseEnergyChanged(PlayerProfileData profile)
+    {
+        if (profile == null)
+            return;
+
+        OnEnergyChanged?.Invoke(profile.currentEnergy, MAX_ENERGY, profile.isSleeping);
     }
 }

@@ -390,15 +390,23 @@ public class Recollect : MonoBehaviour
         }
         else
         {
-            IEnumerable<PlayerProfileData.RecollectItemSnapshot> ordered = pendingSnapshots
+            const int maxVisibleItems = 4;
+            var ordered = pendingSnapshots
                 .OrderBy(s => GetRarityRank(s.rarityId))
-                .ThenBy(s => s.itemName);
+                .ThenBy(s => s.itemName)
+                .ToList();
 
-            foreach (var snapshot in ordered)
+            for (int i = 0; i < ordered.Count && i < maxVisibleItems; i++)
             {
+                var snapshot = ordered[i];
                 string rarityLabel = RarityColorProvider.GetDisplayName(snapshot.rarityId);
                 string coloredLabel = ColorizeByRarity(snapshot.rarityId, $"[{rarityLabel}] {snapshot.itemName}");
                 lines.Add($"- {coloredLabel}");
+            }
+
+            if (ordered.Count > maxVisibleItems)
+            {
+                lines.Add("...");
             }
         }
 
