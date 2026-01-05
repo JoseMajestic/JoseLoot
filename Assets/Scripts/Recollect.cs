@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Recollect : MonoBehaviour
@@ -39,7 +40,11 @@ public class Recollect : MonoBehaviour
     [SerializeField] private Button collectAllButton;
     [SerializeField] private Button historyOpenButton;
     [SerializeField] private Button historyCloseButton;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [FormerlySerializedAs("timerText")]
+    [SerializeField] private TextMeshProUGUI collectingTimerText;
+    [SerializeField] private TextMeshProUGUI travelStatusText;
+    [SerializeField] private TextMeshProUGUI collectingStatusText;
+    [SerializeField] private TextMeshProUGUI travelCountdownText;
     [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private TextMeshProUGUI itemsText;
     [SerializeField] private TextMeshProUGUI statusText;
@@ -558,40 +563,6 @@ public class Recollect : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region UI Helpers
-
-    private void UpdateUI()
-    {
-        if (timerText != null)
-        {
-            switch (currentPhase)
-            {
-                case ExpeditionPhase.TravelingOut:
-                    timerText.SetText($"Llegando en {FormatTime(GetTravelTimeRemaining())}");
-                    break;
-                case ExpeditionPhase.TravelingBack:
-                    timerText.SetText($"Regresando en {FormatTime(GetTravelTimeRemaining())}");
-                    break;
-                case ExpeditionPhase.Collecting:
-                    timerText.SetText(FormatTime(elapsedMilliseconds));
-                    break;
-                case ExpeditionPhase.Completed:
-                    timerText.SetText("Expedición lista");
-                    break;
-                default:
-                    timerText.SetText("00:00:00");
-                    break;
-            }
-        }
-
-        coinsText?.SetText($"Monedas acumuladas: {Mathf.FloorToInt((float)accumulatedCoins)}");
-        itemsText?.SetText($"Objetos acumulados: {pendingSnapshots.Count}");
-        UpdateStatusText();
-        UpdateButtonStates();
-    }
-
     private void UpdateStatusText()
     {
         if (statusText == null)
@@ -652,6 +623,77 @@ public class Recollect : MonoBehaviour
     private void UpdateEnergyUI(int current, int max)
     {
         energyText?.SetText($"Energía: {current}/{max}");
+    }
+
+    #endregion
+
+    #region UI Helpers
+
+    private void UpdateUI()
+    {
+        UpdateTravelTexts();
+        UpdateCollectingTexts();
+        coinsText?.SetText($"Monedas acumuladas: {Mathf.FloorToInt((float)accumulatedCoins)}");
+        itemsText?.SetText($"Objetos acumulados: {pendingSnapshots.Count}");
+        UpdateStatusText();
+        UpdateButtonStates();
+    }
+
+    private void UpdateTravelTexts()
+    {
+        bool inTravel = currentPhase == ExpeditionPhase.TravelingOut || currentPhase == ExpeditionPhase.TravelingBack;
+
+        if (travelCountdownText != null)
+        {
+            travelCountdownText.SetText(inTravel ? FormatTime(GetTravelTimeRemaining()) : string.Empty);
+        }
+
+        if (travelStatusText != null)
+        {
+            if (inTravel)
+            {
+                travelStatusText.SetText(currentPhase == ExpeditionPhase.TravelingOut ? STATUS_TRAVELING_OUT : STATUS_TRAVELING_BACK);
+            }
+            else
+            {
+                travelStatusText.SetText(string.Empty);
+            }
+        }
+    }
+
+    private void UpdateCollectingTexts()
+    {
+        if (collectingTimerText != null)
+        {
+            if (currentPhase == ExpeditionPhase.Collecting)
+            {
+                collectingTimerText.SetText(FormatTime(elapsedMilliseconds));
+            }
+            else if (expeditionCompleted)
+            {
+                collectingTimerText.SetText("Expedición lista");
+            }
+            else
+            {
+                collectingTimerText.SetText("00:00:00");
+            }
+        }
+
+        if (collectingStatusText != null)
+        {
+            if (currentPhase == ExpeditionPhase.Collecting)
+            {
+                collectingStatusText.SetText(STATUS_RUNNING);
+            }
+            else if (expeditionCompleted)
+            {
+                collectingStatusText.SetText(STATUS_COMPLETED);
+            }
+            else
+            {
+                collectingStatusText.SetText(string.Empty);
+            }
+        }
     }
 
     #endregion
