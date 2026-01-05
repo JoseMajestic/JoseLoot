@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a2bb669c4b6c78d458cbfa15b7e26e57
+guid: c658aa2379dce804294957b5286b2a31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,35 +123,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bc02e3fe-f1b6-4689-ba17-c38dcd4b5a29_0
+      name: story marco fin_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 193
         y: 0
-        width: 1533
-        height: 1024
+        width: 1114
+        height: 881
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40f4ea5258607a649a97363e5edec04d
-      internalID: 906160417
+      spriteID: e252a9bd701a31a4ab312ea6f429ebfb
+      internalID: -363578572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bc02e3fe-f1b6-4689-ba17-c38dcd4b5a29_1
+      name: story marco fin_1
       rect:
         serializedVersion: 2
-        x: 550
-        y: 257
-        width: 501
-        height: 377
+        x: 342
+        y: 881
+        width: 781
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,8 +160,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b214ce60b6918644a1155f231ebfe92
-      internalID: 506547917
+      spriteID: e15f8958a426f7f489cd48c774af8c55
+      internalID: -1172431181
       vertices: []
       indices: 
       edges: []
@@ -170,8 +170,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 7f504c6bbb8ae444bb68e6a4353e120b
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -180,8 +180,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bc02e3fe-f1b6-4689-ba17-c38dcd4b5a29_0: 906160417
-      bc02e3fe-f1b6-4689-ba17-c38dcd4b5a29_1: 506547917
+      story marco fin_0: -363578572
+      story marco fin_1: -1172431181
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

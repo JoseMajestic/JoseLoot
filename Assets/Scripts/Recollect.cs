@@ -397,7 +397,8 @@ public class Recollect : MonoBehaviour
             foreach (var snapshot in ordered)
             {
                 string rarityLabel = RarityColorProvider.GetDisplayName(snapshot.rarityId);
-                lines.Add($"- [{rarityLabel}] {snapshot.itemName}");
+                string coloredLabel = ColorizeByRarity(snapshot.rarityId, $"[{rarityLabel}] {snapshot.itemName}");
+                lines.Add($"- {coloredLabel}");
             }
         }
 
@@ -536,7 +537,9 @@ public class Recollect : MonoBehaviour
         {
             ItemInstance item = historyItems[0];
             string rarity = RarityColorProvider.GetDisplayName(item?.GetRarity());
-            return $"El héroe ha encontrado un enemigo y ha ganado +{Mathf.FloorToInt((float)historyCoins)} monedas por una gran victoria.\nAdemás obtuvo {item?.GetItemName()} ({rarity}) por una victoria fascinante.";
+            string coloredName = ColorizeByRarity(item?.GetRarity(), item?.GetItemName());
+            string coloredRarity = ColorizeByRarity(item?.GetRarity(), rarity);
+            return $"El héroe ha encontrado un enemigo y ha ganado +{Mathf.FloorToInt((float)historyCoins)} monedas por una gran victoria.\nAdemás obtuvo {coloredName} ({coloredRarity}) por una victoria fascinante.";
         }
 
         if (hasCoins)
@@ -545,8 +548,9 @@ public class Recollect : MonoBehaviour
         }
 
         ItemInstance earnedItem = historyItems[0];
-        string rarityLabel = RarityColorProvider.GetDisplayName(earnedItem?.GetRarity());
-        return $"El héroe ha ganado {earnedItem?.GetItemName()} ({rarityLabel}) por una victoria fascinante.";
+        string earnedName = ColorizeByRarity(earnedItem?.GetRarity(), earnedItem?.GetItemName());
+        string earnedRarity = ColorizeByRarity(earnedItem?.GetRarity(), RarityColorProvider.GetDisplayName(earnedItem?.GetRarity()));
+        return $"El héroe ha ganado {earnedName} ({earnedRarity}) por una victoria fascinante.";
     }
 
     private void AddHistoryEntry(string message)
@@ -789,6 +793,18 @@ public class Recollect : MonoBehaviour
         }
 
         return int.MaxValue;
+    }
+
+    private string ColorizeByRarity(string rarityId, string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return string.Empty;
+
+        string hex = RarityColorProvider.GetColorHex(rarityId);
+        if (string.IsNullOrEmpty(hex))
+            return text;
+
+        return $"<color=#{hex}>{text}</color>";
     }
 
     #endregion
