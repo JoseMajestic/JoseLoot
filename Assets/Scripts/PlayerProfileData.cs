@@ -160,6 +160,18 @@ public class PlayerProfileData
     [Tooltip("Acumulador de tiempo restante para objetos (ms)")]
     public double recollectItemTimerMs = 0d;
 
+    [Tooltip("Fase actual de la expedición automática")]
+    public int recollectPhase = 0;
+
+    [Tooltip("Tiempo acumulado del tramo de viaje actual (ms)")]
+    public double recollectTravelElapsedMs = 0d;
+
+    [Tooltip("Duración objetivo del tramo de viaje actual (ms)")]
+    public double recollectTravelDurationMs = 0d;
+
+    [Tooltip("Indica si las recompensas deben otorgarse automáticamente al finalizar el viaje de regreso")]
+    public bool recollectPendingAutoClaim = false;
+
     [Tooltip("Lista serializada de objetos pendientes (JSON)")]
     public string recollectItemsJson = "";
 
@@ -687,14 +699,18 @@ public class PlayerProfileData
 
     // ===== SISTEMA DE RECOLECCIÓN AUTOMÁTICA =====
 
-    public void SaveRecollectState(bool isRunning, bool isCompleted, double elapsedMs, double pendingCoins, double coinTimerMs, double itemTimerMs, DateTime startUtc, DateTime lastUpdateUtc)
+    public void SaveRecollectState(bool isRunning, bool isCompleted, int phaseValue, double elapsedMs, double pendingCoins, double coinTimerMs, double itemTimerMs, double travelElapsedMs, double travelDurationMs, bool pendingAutoClaim, DateTime startUtc, DateTime lastUpdateUtc)
     {
         recollectIsRunning = isRunning;
         recollectCompleted = isCompleted;
+        recollectPhase = phaseValue;
         recollectElapsedMilliseconds = elapsedMs;
         recollectPendingCoins = pendingCoins;
         recollectCoinTimerMs = coinTimerMs;
         recollectItemTimerMs = itemTimerMs;
+        recollectTravelElapsedMs = travelElapsedMs;
+        recollectTravelDurationMs = travelDurationMs;
+        recollectPendingAutoClaim = pendingAutoClaim;
         recollectStartUtcString = startUtc == DateTime.MinValue ? "" : startUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
         recollectLastUpdateUtcString = lastUpdateUtc == DateTime.MinValue ? "" : lastUpdateUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
     }
@@ -707,6 +723,10 @@ public class PlayerProfileData
         recollectPendingCoins = 0d;
         recollectCoinTimerMs = 0d;
         recollectItemTimerMs = 0d;
+        recollectPhase = 0;
+        recollectTravelElapsedMs = 0d;
+        recollectTravelDurationMs = 0d;
+        recollectPendingAutoClaim = false;
         recollectStartUtcString = "";
         recollectLastUpdateUtcString = "";
         recollectItemsJson = "";
