@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 /// <summary>
 /// Gestiona la UI del inventario, conectando los botones y textos con el InventoryManager.
@@ -111,6 +113,12 @@ public class InventoryUIManager : MonoBehaviour
     [Tooltip("Image que mostrará el sprite del item equipado del mismo tipo que el item visualizado")]
     [SerializeField] private Image equippedItemSummaryImage;
 
+    [Header("Panel flotante de información de set")]
+    [Tooltip("Botón que debe mantenerse presionado para mostrar la información del set")]
+    [SerializeField] private Button setInfoHoldButton;
+    [Tooltip("Panel que contiene los textos de nombre y bonificaciones del set")]
+    [SerializeField] private GameObject setInfoPanel;
+
     [Header("Botones de Acción")]
     [Tooltip("Botón para vender el item visualizado en el visor")]
     [SerializeField] private Button sellButton;
@@ -147,6 +155,7 @@ public class InventoryUIManager : MonoBehaviour
     // Estado guardado del inventario para comparación
     private ItemInstance[] savedVisualState; // Estado VISUAL de los slots la última vez que se cerró el panel (lo que cada slot mostraba)
     private bool initialized; // Evita inicializar más de una vez cuando el GO estaba inactivo
+    private bool currentItemHasSetInfo;
 
     private void Awake()
     {
@@ -258,6 +267,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             confirmSellPanel.SetActive(false);
         }
+
+        ConfigureSetInfoHoldButton();
 
         // Inicializar componentes InventorySlot (no depende de GameDataManager)
         InitializeSlotComponents();
@@ -1561,6 +1572,71 @@ public class InventoryUIManager : MonoBehaviour
         return number.ToString("N0");
     }
 
+    private void ConfigureSetInfoHoldButton()
+    {
+        if (setInfoPanel != null)
+        {
+            setInfoPanel.SetActive(false);
+        }
+
+        if (setInfoHoldButton == null)
+            return;
+
+        EventTrigger trigger = setInfoHoldButton.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = setInfoHoldButton.gameObject.AddComponent<EventTrigger>();
+        }
+
+        trigger.triggers ??= new List<EventTrigger.Entry>();
+        trigger.triggers.Clear();
+
+        AddSetInfoTrigger(trigger, EventTriggerType.PointerDown, _ => SetSetInfoPanelVisible(true));
+        AddSetInfoTrigger(trigger, EventTriggerType.PointerUp, _ => SetSetInfoPanelVisible(false));
+        AddSetInfoTrigger(trigger, EventTriggerType.PointerExit, _ => SetSetInfoPanelVisible(false));
+        AddSetInfoTrigger(trigger, EventTriggerType.EndDrag, _ => SetSetInfoPanelVisible(false));
+
+        if (setInfoHoldButton != null)
+        {
+            setInfoHoldButton.interactable = currentItemHasSetInfo;
+        }
+    }
+
+    private void AddSetInfoTrigger(EventTrigger trigger, EventTriggerType eventType, UnityAction<BaseEventData> action)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = eventType };
+        entry.callback.AddListener(action);
+        trigger.triggers.Add(entry);
+    }
+
+    private void SetSetInfoPanelVisible(bool visible)
+    {
+        if (setInfoPanel == null)
+            return;
+
+        if (!currentItemHasSetInfo)
+            visible = false;
+
+        if (setInfoPanel.activeSelf != visible)
+        {
+            setInfoPanel.SetActive(visible);
+        }
+    }
+
+    private void UpdateSetInfoButtonState(bool enabled)
+    {
+        currentItemHasSetInfo = enabled;
+        if (setInfoHoldButton != null)
+        {
+            setInfoHoldButton.interactable = enabled;
+        }
+
+        if (!enabled)
+        {
+            SetSetInfoPanelVisible(false);
+        }
+    }
+
     private bool TryGetEquippedStatsForComparison(ItemInstance referenceItem, out ItemStats equippedStats)
     {
         equippedStats = default;
@@ -1833,7 +1909,10 @@ public class InventoryUIManager : MonoBehaviour
     private void UpdateSetBonusInfo(ItemInstance itemInstance)
     {
         if (!HasSetBonusTextTargets())
+        {
+            UpdateSetInfoButtonState(false);
             return;
+        }
 
         if (itemInstance == null || !itemInstance.IsValid())
         {
@@ -1859,6 +1938,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             setBonusesText.text = BuildSetBonusesText(setData, equippedPieces);
         }
+
+        UpdateSetInfoButtonState(true);
     }
 
     private void HideSetBonusInfo()
@@ -1872,6 +1953,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             setBonusesText.text = string.Empty;
         }
+
+        UpdateSetInfoButtonState(false);
     }
 
     private bool HasSetBonusTextTargets()
