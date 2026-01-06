@@ -45909,6 +45909,7 @@ GameObject:
   - component: {fileID: 410087040}
   - component: {fileID: 410087042}
   - component: {fileID: 410087043}
+  - component: {fileID: 410087044}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -46047,6 +46048,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &410087044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410087039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6baa3811d976014a98390d0812e1974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightManager3D
+  targetLight: {fileID: 410087040}
+  intensityPerLevel: 2
+  referenceLevel: 1
+  applyInitialSync: 1
+  clampIntensity: 0
+  minIntensity: 2
+  maxIntensity: 2000
 --- !u!1 &410324620
 GameObject:
   m_ObjectHideFlags: 0
@@ -64079,11 +64099,6 @@ RectTransform:
   - {fileID: 2094145417}
   - {fileID: 2117907549}
   - {fileID: 1614554043}
-  - {fileID: 1471403247}
-  - {fileID: 1540756185}
-  - {fileID: 1024036540}
-  - {fileID: 1686682176}
-  - {fileID: 1339654460}
   - {fileID: 1158406933}
   - {fileID: 361976500}
   - {fileID: 72782647}
@@ -64094,6 +64109,11 @@ RectTransform:
   - {fileID: 91645983}
   - {fileID: 1539442292}
   - {fileID: 1917897871}
+  - {fileID: 1471403247}
+  - {fileID: 1540756185}
+  - {fileID: 1024036540}
+  - {fileID: 1686682176}
+  - {fileID: 1339654460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -178488,13 +178508,20 @@ MonoBehaviour:
   reverseRotation: 0
   pauseRotation: 0
   cylinderMaterial: {fileID: 2100000, guid: 70c42f4753c24b84f95a2d365a44570a, type: 2}
-  backgroundSprites:
-  - {fileID: 21300000, guid: 0be3f769b3f8ffd4a8256c20a56592a6, type: 3}
-  - {fileID: 21300000, guid: a9edbc70f832f484c85625129ef0ba95, type: 3}
-  - {fileID: 21300000, guid: 17a525a5be9ed0146bfcf687eb8d3110, type: 3}
-  - {fileID: 21300000, guid: 36cf9da86ba2fd5419f46b73abdf8542, type: 3}
-  - {fileID: 21300000, guid: 7c8a7666b8d0b7c4d9b534069459aa76, type: 3}
-  changeIntervalMs: 5000
+  levelBackgrounds:
+  - {fileID: 21300000, guid: c8857ead3f6b48d4c9be7c3f1658d4f9, type: 3}
+  - {fileID: 21300000, guid: 98576f8efd997f84cab23f69b0d73fc3, type: 3}
+  - {fileID: -891952256, guid: eb3df25eb6ac5e946aa118db68673f3d, type: 3}
+  - {fileID: 21300000, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
+  - {fileID: 21300000, guid: ee3b693dccf55574eab10be6628ebe66, type: 3}
+  defaultBackground: {fileID: 21300000, guid: f54531c00655eb3428bd7aab8c36a2ae, type: 3}
+  expeditionBackground: {fileID: 21300000, guid: d5d7a715882215e49852d8490384881c, type: 3}
+  combatBackground: {fileID: 21300000, guid: c1186943ddf8e7545bc2a7a2c2db11a8, type: 3}
+  panelNavigationManager: {fileID: 1770052688}
+  expeditionPanels:
+  - {fileID: 1263074659}
+  combatPanels:
+  - {fileID: 1686682175}
 --- !u!136 &1526478822
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -197860,11 +197887,11 @@ RectTransform:
   - {fileID: 508569964}
   - {fileID: 151540537}
   - {fileID: 1392062513}
-  - {fileID: 1205263733}
   - {fileID: 628733115}
   - {fileID: 588531433}
   - {fileID: 259130172}
   - {fileID: 1532984526}
+  - {fileID: 1205263733}
   m_Father: {fileID: 567688724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
