@@ -57,6 +57,7 @@ public class Recollect : MonoBehaviour
     [SerializeField] private GameObject historyPanel;
     [SerializeField] private Transform historyEntriesRoot;
     [SerializeField] private GameObject historyEntryPrefab;
+    [SerializeField] private LightManager lightManager;
 
     [Header("Configuración")]
     [SerializeField] private int energyCost = 10;
@@ -113,6 +114,11 @@ public class Recollect : MonoBehaviour
         if (energySystem == null)
         {
             energySystem = FindFirstObjectByType<EnergySystem>(FindObjectsInactive.Include);
+        }
+
+        if (lightManager == null)
+        {
+            lightManager = FindFirstObjectByType<LightManager>(FindObjectsInactive.Include);
         }
     }
 
@@ -1031,13 +1037,23 @@ public class Recollect : MonoBehaviour
         }
 
         int experienceAward = Mathf.FloorToInt((float)accumulatedExperience);
+        bool leveledUp = false;
         if (experienceAward > 0 && gameDataManager != null)
         {
+            int previousLevel = profile != null ? profile.heroLevel : 0;
             gameDataManager.AddHeroExperience(experienceAward);
+            profile = gameDataManager.GetPlayerProfile();
+            int currentLevel = profile != null ? profile.heroLevel : previousLevel;
+            leveledUp = currentLevel > previousLevel;
         }
 
         string summary = BuildRewardsSummary(experienceAward, totalCoins, coinsAward, coinsFromLiquidation, itemsDestroyed);
         rewardsSummaryText?.SetText(summary);
+
+        if (leveledUp && lightManager != null)
+        {
+            lightManager.TriggerLevelUpGlow();
+        }
 
         accumulatedCoins = 0d;
         accumulatedExperience = 0d;
