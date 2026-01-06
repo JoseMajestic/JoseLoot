@@ -1027,37 +1027,39 @@ public class InventoryUIManager : MonoBehaviour
             ApplyRarityColorToTitle(itemName, rarityId);
         }
 
+        bool hasComparison = TryGetEquippedStatsForComparison(updatedItem, out ItemStats equippedStats);
+
         // Actualizar todos los textos de estadísticas usando el item actualizado
         if (levelText != null)
             levelText.text = $"Nv. {updatedItem.currentLevel}";
         UpdateRequiredHeroLevelText(updatedItem);
 
         if (hpText != null)
-            hpText.text = FormatNumberWithSign(stats.hp);
+            hpText.text = FormatStatValueWithComparison(stats.hp, hasComparison ? equippedStats.hp : (int?)null, isCombatPercent: false);
 
         if (manaText != null)
-            manaText.text = FormatNumberWithSign(stats.mana);
+            manaText.text = FormatStatValueWithComparison(stats.mana, hasComparison ? equippedStats.mana : (int?)null, isCombatPercent: false);
 
         if (ataqueText != null)
-            ataqueText.text = FormatNumberWithSign(stats.ataque);
+            ataqueText.text = FormatStatValueWithComparison(stats.ataque, hasComparison ? equippedStats.ataque : (int?)null, isCombatPercent: false);
 
         if (defensaText != null)
-            defensaText.text = FormatNumberWithSign(stats.defensa);
+            defensaText.text = FormatStatValueWithComparison(stats.defensa, hasComparison ? equippedStats.defensa : (int?)null, isCombatPercent: false);
 
         if (velocidadAtaqueText != null)
-            velocidadAtaqueText.text = FormatCombatStatWithSign(stats.velocidadAtaque);
+            velocidadAtaqueText.text = FormatStatValueWithComparison(stats.velocidadAtaque, hasComparison ? equippedStats.velocidadAtaque : (int?)null, isCombatPercent: true);
 
         if (ataqueCriticoText != null)
-            ataqueCriticoText.text = FormatCombatStatWithSign(stats.ataqueCritico);
+            ataqueCriticoText.text = FormatStatValueWithComparison(stats.ataqueCritico, hasComparison ? equippedStats.ataqueCritico : (int?)null, isCombatPercent: true);
 
         if (danoCriticoText != null)
-            danoCriticoText.text = FormatCombatStatWithSign(stats.danoCritico);
+            danoCriticoText.text = FormatStatValueWithComparison(stats.danoCritico, hasComparison ? equippedStats.danoCritico : (int?)null, isCombatPercent: true);
 
         if (suerteText != null)
-            suerteText.text = FormatCombatStatWithSign(stats.suerte);
+            suerteText.text = FormatStatValueWithComparison(stats.suerte, hasComparison ? equippedStats.suerte : (int?)null, isCombatPercent: true);
 
         if (destrezaText != null)
-            destrezaText.text = FormatNumberWithSign(stats.destreza);
+            destrezaText.text = FormatStatValueWithComparison(stats.destreza, hasComparison ? equippedStats.destreza : (int?)null, isCombatPercent: false);
 
         if (rarezaText != null)
         {
@@ -1557,6 +1559,52 @@ public class InventoryUIManager : MonoBehaviour
     private string FormatNumber(int number)
     {
         return number.ToString("N0");
+    }
+
+    private bool TryGetEquippedStatsForComparison(ItemInstance referenceItem, out ItemStats equippedStats)
+    {
+        equippedStats = default;
+
+        if (referenceItem == null || !referenceItem.IsValid() || equipmentManager == null)
+            return false;
+
+        if (!TryGetSlotTypeForItem(referenceItem, out var slotType))
+            return false;
+
+        ItemInstance equippedItem = equipmentManager.GetEquippedItem(slotType);
+        if (equippedItem == null || !equippedItem.IsValid())
+            return false;
+
+        if (equippedItem.IsSameInstance(referenceItem))
+            return false;
+
+        equippedStats = equippedItem.GetFinalStats();
+        return true;
+    }
+
+    private const string ComparisonPositiveColorHex = "6DFF8F";
+    private const string ComparisonNegativeColorHex = "FF6B6B";
+    private const string ComparisonNeutralColorHex = "B0BEC5";
+
+    private string FormatStatValueWithComparison(int value, int? equippedValue, bool isCombatPercent)
+    {
+        string baseText = isCombatPercent ? NumberFormatter.FormatCombatPercentWithSign(value) : FormatNumberWithSign(value);
+
+        if (!equippedValue.HasValue)
+            return baseText;
+
+        int difference = value - equippedValue.Value;
+        string diffText = isCombatPercent
+            ? NumberFormatter.FormatCombatPercentWithSign(difference)
+            : FormatNumberWithSign(difference);
+
+        string colorHex = ComparisonNeutralColorHex;
+        if (difference > 0)
+            colorHex = ComparisonPositiveColorHex;
+        else if (difference < 0)
+            colorHex = ComparisonNegativeColorHex;
+
+        return $"{baseText}, (<color=#{colorHex}>{diffText}</color>)";
     }
 
     private const string EquippedSummaryLabelSeparator = " :    ";

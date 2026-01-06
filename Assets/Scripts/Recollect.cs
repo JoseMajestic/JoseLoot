@@ -45,7 +45,10 @@ public class Recollect : MonoBehaviour
     [SerializeField] private TextMeshProUGUI travelStatusText;
     [SerializeField] private TextMeshProUGUI collectingStatusText;
     [SerializeField] private TextMeshProUGUI travelCountdownText;
+    [SerializeField] private Slider travelProgressSlider;
+
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI experienceText;
     [SerializeField] private TextMeshProUGUI itemsText;
     [SerializeField] private TextMeshProUGUI statusText;
     [SerializeField] private TextMeshProUGUI energyText;
@@ -62,16 +65,26 @@ public class Recollect : MonoBehaviour
     [SerializeField] private double itemIntervalMilliseconds = 60_000d;
     [SerializeField] private float historyEntryIntervalSeconds = 30f;
     [SerializeField] private int maxHistoryEntries = 10;
-    [SerializeField] private double travelDurationMilliseconds = 30_000d;
+    [Tooltip("Duración del trayecto (ida y vuelta comparten el mismo valor).")]
+    [SerializeField] private float travelDurationSeconds = 30f;
+    [Header("Experiencia de expedición")]
+    [Tooltip("Milisegundos entre cada entrega de experiencia durante la fase de recolección.")]
+    [SerializeField] private double experienceIntervalMilliseconds = 5_000d;
+    [Tooltip("Experiencia otorgada por cada intervalo completado.")]
+    [SerializeField] private int experiencePerInterval = 5;
 
     private PlayerProfileData profile;
     private bool expeditionRunning;
     private bool expeditionCompleted;
     private double accumulatedCoins;
+    private double accumulatedExperience;
     private double elapsedMilliseconds;
     private double coinTimerMs;
     private double itemTimerMs;
+    private double experienceTimerMs;
     private double historyCoins;
+    private double historyExperience;
+
     private readonly List<ItemInstance> pendingItems = new();
     private readonly List<PlayerProfileData.RecollectItemSnapshot> pendingSnapshots = new();
     private readonly List<ItemInstance> historyItems = new();
@@ -180,9 +193,12 @@ public class Recollect : MonoBehaviour
         expeditionRunning = profile.recollectIsRunning;
         expeditionCompleted = profile.recollectCompleted;
         accumulatedCoins = profile.recollectPendingCoins;
+        accumulatedExperience = profile.recollectPendingExperience;
         elapsedMilliseconds = profile.recollectElapsedMilliseconds;
         coinTimerMs = profile.recollectCoinTimerMs;
         itemTimerMs = profile.recollectItemTimerMs;
+        experienceTimerMs = profile.recollectExperienceTimerMs;
+
         expeditionStartUtc = ParseUtc(profile.recollectStartUtcString);
         lastUpdateUtc = ParseUtc(profile.recollectLastUpdateUtcString);
         currentPhase = (ExpeditionPhase)Mathf.Clamp(profile.recollectPhase, (int)ExpeditionPhase.Idle, (int)ExpeditionPhase.Completed);
@@ -241,8 +257,10 @@ public class Recollect : MonoBehaviour
             (int)currentPhase,
             elapsedMilliseconds,
             accumulatedCoins,
+            accumulatedExperience,
             coinTimerMs,
             itemTimerMs,
+            experienceTimerMs,
             travelElapsedMilliseconds,
             travelTargetMilliseconds,
             pendingAutoClaim,
@@ -405,8 +423,10 @@ public class Recollect : MonoBehaviour
         elapsedMilliseconds += usableDelta;
         coinTimerMs += usableDelta;
         itemTimerMs += usableDelta;
+        experienceTimerMs += usableDelta;
 
         bool gainedCoins = false;
+        bool gainedExperience = false;
 
         if (coinIntervalMilliseconds > 0d && coinTimerMs >= coinIntervalMilliseconds)
         {
@@ -438,7 +458,20 @@ public class Recollect : MonoBehaviour
             }
         }
 
-        if (gainedCoins || historyItems.Count > 0)
+        if (experienceIntervalMilliseconds > 0d && experiencePerInterval > 0 && experienceTimerMs >= experienceIntervalMilliseconds)
+        {
+            double expEarned = Math.Floor(experienceTimerMs / experienceIntervalMilliseconds);
+            if (expEarned > 0d)
+            {
+                double totalExp = expEarned * experiencePerInterval;
+                accumulatedExperience += totalExp;
+                historyExperience += totalExp;
+                experienceTimerMs -= expEarned * experienceIntervalMilliseconds;
+                gainedExperience = true;
+            }
+        }
+
+        if (gainedCoins || gainedExperience || historyItems.Count > 0)
         {
             stateDirty = true;
         }
@@ -457,43 +490,52 @@ public class Recollect : MonoBehaviour
     private void FlushHistoryInterval(bool forceMessage = false)
     {
         bool hasCoins = historyCoins > 0d;
+        bool hasExperience = historyExperience > 0d;
         bool hasItems = historyItems.Count > 0;
 
-        if (!forceMessage && !hasCoins && !hasItems)
+        if (!forceMessage && !hasCoins && !hasExperience && !hasItems)
             return;
 
-        string message = BuildHistoryMessage(hasCoins, hasItems);
+        string message = BuildHistoryMessage(hasCoins, hasExperience, hasItems);
         AddHistoryEntry(message);
 
         historyCoins = 0d;
+        historyExperience = 0d;
         historyItems.Clear();
     }
 
-    private string BuildHistoryMessage(bool hasCoins, bool hasItems)
+    private string BuildHistoryMessage(bool hasCoins, bool hasExperience, bool hasItems)
     {
-        if (!hasCoins && !hasItems)
+        if (!hasCoins && !hasExperience && !hasItems)
         {
             return "El héroe no ha encontrado enemigos y no ha ganado nada.";
         }
 
-        if (hasCoins && hasItems)
+        List<string> parts = new();
+        if (hasExperience)
+        {
+            parts.Add($"+{Mathf.FloorToInt((float)historyExperience)} EXP obtenida");
+        }
+        if (hasCoins)
+        {
+            parts.Add($"+{Mathf.FloorToInt((float)historyCoins)} monedas ganadas");
+        }
+
+        string rewardsLine = parts.Count > 0
+            ? $"El héroe ha logrado {string.Join(" y ", parts)}."
+            : string.Empty;
+
+        if (hasItems)
         {
             ItemInstance item = historyItems[0];
             string rarity = RarityColorProvider.GetDisplayName(item?.GetRarity());
             string coloredName = ColorizeByRarity(item?.GetRarity(), item?.GetItemName());
             string coloredRarity = ColorizeByRarity(item?.GetRarity(), rarity);
-            return $"El héroe ha encontrado un enemigo y ha ganado +{Mathf.FloorToInt((float)historyCoins)} monedas por una gran victoria.\nAdemás obtuvo {coloredName} ({coloredRarity}) por una victoria fascinante.";
+            string itemsLine = $"Además obtuvo {coloredName} ({coloredRarity}) por una victoria fascinante.";
+            return string.IsNullOrEmpty(rewardsLine) ? itemsLine : $"{rewardsLine}\n{itemsLine}";
         }
 
-        if (hasCoins)
-        {
-            return $"El héroe ha encontrado un enemigo y ha ganado +{Mathf.FloorToInt((float)historyCoins)} monedas por una gran victoria.";
-        }
-
-        ItemInstance earnedItem = historyItems[0];
-        string earnedName = ColorizeByRarity(earnedItem?.GetRarity(), earnedItem?.GetItemName());
-        string earnedRarity = ColorizeByRarity(earnedItem?.GetRarity(), RarityColorProvider.GetDisplayName(earnedItem?.GetRarity()));
-        return $"El héroe ha ganado {earnedName} ({earnedRarity}) por una victoria fascinante.";
+        return rewardsLine;
     }
 
     private void AddHistoryEntry(string message)
@@ -632,8 +674,10 @@ public class Recollect : MonoBehaviour
     private void UpdateUI()
     {
         UpdateTravelTexts();
+        UpdateTravelProgressSlider();
         UpdateCollectingTexts();
         coinsText?.SetText($"Monedas acumuladas: {Mathf.FloorToInt((float)accumulatedCoins)}");
+        experienceText?.SetText($"EXP acumulada: {Mathf.FloorToInt((float)accumulatedExperience)}");
         itemsText?.SetText($"Objetos acumulados: {pendingSnapshots.Count}");
         UpdateStatusText();
         UpdateButtonStates();
@@ -659,6 +703,35 @@ public class Recollect : MonoBehaviour
                 travelStatusText.SetText(string.Empty);
             }
         }
+    }
+
+    private void UpdateTravelProgressSlider()
+    {
+        if (travelProgressSlider == null)
+            return;
+
+        travelProgressSlider.interactable = false;
+        float normalized = 0f;
+
+        if (currentPhase == ExpeditionPhase.TravelingOut || currentPhase == ExpeditionPhase.TravelingBack)
+        {
+            double target = travelTargetMilliseconds > 0d ? travelTargetMilliseconds : GetConfiguredTravelDuration();
+            if (target > 0d)
+            {
+                normalized = Mathf.Clamp01((float)(travelElapsedMilliseconds / target));
+            }
+        }
+
+        float value = currentPhase switch
+        {
+            ExpeditionPhase.TravelingOut => normalized * 0.5f,
+            ExpeditionPhase.Collecting => 0.5f,
+            ExpeditionPhase.TravelingBack => 0.5f + normalized * 0.5f,
+            ExpeditionPhase.Completed => 1f,
+            _ => 0f
+        };
+
+        travelProgressSlider.value = value;
     }
 
     private void UpdateCollectingTexts()
@@ -730,7 +803,7 @@ public class Recollect : MonoBehaviour
         return new ItemInstance(data, Mathf.Max(1, snapshot.level));
     }
 
-  private DateTime ParseUtc(string isoString)
+    private DateTime ParseUtc(string isoString)
     {
         if (string.IsNullOrEmpty(isoString))
             return DateTime.MinValue;
@@ -744,6 +817,7 @@ public class Recollect : MonoBehaviour
         }
         return DateTime.MinValue;
     }
+
     private bool EnsureDependencies()
     {
         if (gameDataManager == null)
@@ -766,6 +840,7 @@ public class Recollect : MonoBehaviour
         }
         return true;
     }
+
     private int GetTierForHeroLevel(int heroLevel)
     {
         if (heroLevel >= 500) return 5;
@@ -774,12 +849,14 @@ public class Recollect : MonoBehaviour
         if (heroLevel >= 200) return 2;
         return 1;
     }
+
     private int GetSellPrice(ItemInstance instance)
     {
         if (instance?.baseItem == null)
             return 0;
         return Mathf.Max(0, instance.baseItem.price);
     }
+
     private int GetRarityRank(string rarity)
     {
         string[] order =
@@ -802,6 +879,7 @@ public class Recollect : MonoBehaviour
         }
         return int.MaxValue;
     }
+
     private string ColorizeByRarity(string rarityId, string text)
     {
         if (string.IsNullOrEmpty(text))
@@ -811,6 +889,7 @@ public class Recollect : MonoBehaviour
             return text;
         return $"<color=#{hex}>{text}</color>";
     }
+
     private string FormatTime(double milliseconds)
     {
         if (milliseconds < 0d)
@@ -818,18 +897,23 @@ public class Recollect : MonoBehaviour
         TimeSpan span = TimeSpan.FromMilliseconds(milliseconds);
         return $"{(int)span.TotalHours:00}:{span.Minutes:00}:{span.Seconds:00}";
     }
+
     private double GetTravelTimeRemaining()
     {
         if (travelTargetMilliseconds <= 0d)
             return 0d;
         return Math.Max(0d, travelTargetMilliseconds - travelElapsedMilliseconds);
     }
+
     private double GetConfiguredTravelDuration()
     {
-        return Math.Max(ONE_SECOND_MS, travelDurationMilliseconds);
+        float seconds = Mathf.Max(1f, travelDurationSeconds);
+        return Math.Max(ONE_SECOND_MS, seconds * 1000f);
     }
+
     private bool IsTravelPhase(ExpeditionPhase phase) =>
         phase == ExpeditionPhase.TravelingOut || phase == ExpeditionPhase.TravelingBack;
+
     private bool TryGenerateItem(out ItemInstance instance, out PlayerProfileData.RecollectItemSnapshot snapshot)
     {
         instance = null;
@@ -858,9 +942,11 @@ public class Recollect : MonoBehaviour
         expeditionCompleted = false;
         currentPhase = ExpeditionPhase.TravelingOut;
         accumulatedCoins = 0d;
+        accumulatedExperience = 0d;
         elapsedMilliseconds = 0d;
         coinTimerMs = 0d;
         itemTimerMs = 0d;
+        experienceTimerMs = 0d;
         travelElapsedMilliseconds = 0d;
         travelTargetMilliseconds = GetConfiguredTravelDuration();
         pendingAutoClaim = false;
@@ -873,6 +959,7 @@ public class Recollect : MonoBehaviour
         historyCache.Clear();
         historyTimer = 0f;
         historyCoins = 0d;
+        historyExperience = 0d;
         historyItems.Clear();
         SetAnimationPanel(true);
         UpdateButtonStates();
@@ -880,6 +967,7 @@ public class Recollect : MonoBehaviour
         stateDirty = true;
         PersistState(forceImmediate: true);
     }
+
     private void BeginReturnTrip()
     {
         if (!expeditionRunning || currentPhase != ExpeditionPhase.Collecting)
@@ -892,6 +980,7 @@ public class Recollect : MonoBehaviour
         historyTimer = 0f;
         stateDirty = true;
     }
+
     private void CompleteExpedition(bool autoClaim)
     {
         if (!expeditionRunning)
@@ -910,10 +999,12 @@ public class Recollect : MonoBehaviour
         stateDirty = true;
         PersistState(forceImmediate: true);
     }
+
     private void ClaimRewards(bool autoClaim)
     {
         if (!EnsureDependencies())
             return;
+
         int coinsAward = Mathf.FloorToInt((float)accumulatedCoins);
         int coinsFromLiquidation = 0;
         int itemsDestroyed = 0;
@@ -923,6 +1014,7 @@ public class Recollect : MonoBehaviour
             {
                 if (item == null || !item.IsValid())
                     continue;
+
                 int slotIndex = inventoryManager.AddItem(item);
                 if (slotIndex < 0)
                 {
@@ -931,29 +1023,43 @@ public class Recollect : MonoBehaviour
                 }
             }
         }
+
         int totalCoins = coinsAward + coinsFromLiquidation;
         if (totalCoins > 0 && playerMoney != null)
         {
             playerMoney.AddMoney(totalCoins);
         }
-        string summary = BuildRewardsSummary(totalCoins, coinsAward, coinsFromLiquidation, itemsDestroyed);
+
+        int experienceAward = Mathf.FloorToInt((float)accumulatedExperience);
+        if (experienceAward > 0 && gameDataManager != null)
+        {
+            gameDataManager.AddHeroExperience(experienceAward);
+        }
+
+        string summary = BuildRewardsSummary(experienceAward, totalCoins, coinsAward, coinsFromLiquidation, itemsDestroyed);
         rewardsSummaryText?.SetText(summary);
+
         accumulatedCoins = 0d;
+        accumulatedExperience = 0d;
         pendingItems.Clear();
         pendingSnapshots.Clear();
         stateDirty = true;
     }
-    private string BuildRewardsSummary(int totalCoins, int baseCoins, int compensationCoins, int itemsDestroyed)
+
+    private string BuildRewardsSummary(int experienceAward, int totalCoins, int baseCoins, int compensationCoins, int itemsDestroyed)
     {
         List<string> lines = new()
         {
             "Has obtenido:",
+            $"Experiencia: +{experienceAward}",
             $"Monedas: +{totalCoins}"
         };
+
         if (compensationCoins > 0)
         {
             lines.Add($"(Incluye +{compensationCoins} por objetos destruidos)");
         }
+
         lines.Add("Objetos:");
         if (pendingSnapshots.Count == 0)
         {
@@ -966,6 +1072,7 @@ public class Recollect : MonoBehaviour
                 .OrderBy(s => GetRarityRank(s.rarityId))
                 .ThenBy(s => s.itemName)
                 .ToList();
+
             for (int i = 0; i < ordered.Count && i < maxVisibleItems; i++)
             {
                 var snapshot = ordered[i];
@@ -973,27 +1080,32 @@ public class Recollect : MonoBehaviour
                 string coloredLabel = ColorizeByRarity(snapshot.rarityId, $"[{rarityLabel}] {snapshot.itemName}");
                 lines.Add($"- {coloredLabel}");
             }
+
             if (ordered.Count > maxVisibleItems)
             {
                 lines.Add("...");
             }
         }
+
         if (itemsDestroyed > 0)
         {
             lines.Add($"{itemsDestroyed} objetos fueron destruidos por falta de espacio. Roma te paga +{compensationCoins} monedas.");
         }
+
         return string.Join("\n", lines);
     }
+
     private void ResetRuntimeState()
     {
         expeditionRunning = false;
         expeditionCompleted = false;
         currentPhase = ExpeditionPhase.Idle;
         accumulatedCoins = 0d;
+        accumulatedExperience = 0d;
         elapsedMilliseconds = 0d;
         coinTimerMs = 0d;
         itemTimerMs = 0d;
-        historyCoins = 0d;
+        experienceTimerMs = 0d;
         travelElapsedMilliseconds = 0d;
         travelTargetMilliseconds = 0d;
         pendingAutoClaim = false;
@@ -1005,6 +1117,7 @@ public class Recollect : MonoBehaviour
         SetAnimationPanel(false);
         UpdateButtonStates();
         UpdateStatusText();
+        stateDirty = true;
     }
     #endregion
 }

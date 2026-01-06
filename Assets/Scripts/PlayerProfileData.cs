@@ -154,8 +154,14 @@ public class PlayerProfileData
     [Tooltip("Monedas pendientes de reclamar generadas por la expedición")]
     public double recollectPendingCoins = 0d;
 
+    [Tooltip("Experiencia pendiente de reclamar generada por la expedición")]
+    public double recollectPendingExperience = 0d;
+
     [Tooltip("Acumulador de tiempo restante para monedas (ms)")]
     public double recollectCoinTimerMs = 0d;
+
+    [Tooltip("Acumulador de tiempo restante para experiencia (ms)")]
+    public double recollectExperienceTimerMs = 0d;
 
     [Tooltip("Acumulador de tiempo restante para objetos (ms)")]
     public double recollectItemTimerMs = 0d;
@@ -699,15 +705,17 @@ public class PlayerProfileData
 
     // ===== SISTEMA DE RECOLECCIÓN AUTOMÁTICA =====
 
-    public void SaveRecollectState(bool isRunning, bool isCompleted, int phaseValue, double elapsedMs, double pendingCoins, double coinTimerMs, double itemTimerMs, double travelElapsedMs, double travelDurationMs, bool pendingAutoClaim, DateTime startUtc, DateTime lastUpdateUtc)
+    public void SaveRecollectState(bool isRunning, bool isCompleted, int phaseValue, double elapsedMs, double pendingCoins, double pendingExperience, double coinTimerMs, double itemTimerMs, double experienceTimerMs, double travelElapsedMs, double travelDurationMs, bool pendingAutoClaim, DateTime startUtc, DateTime lastUpdateUtc)
     {
         recollectIsRunning = isRunning;
         recollectCompleted = isCompleted;
         recollectPhase = phaseValue;
         recollectElapsedMilliseconds = elapsedMs;
         recollectPendingCoins = pendingCoins;
+        recollectPendingExperience = pendingExperience;
         recollectCoinTimerMs = coinTimerMs;
         recollectItemTimerMs = itemTimerMs;
+        recollectExperienceTimerMs = experienceTimerMs;
         recollectTravelElapsedMs = travelElapsedMs;
         recollectTravelDurationMs = travelDurationMs;
         recollectPendingAutoClaim = pendingAutoClaim;
@@ -721,8 +729,10 @@ public class PlayerProfileData
         recollectCompleted = false;
         recollectElapsedMilliseconds = 0d;
         recollectPendingCoins = 0d;
+        recollectPendingExperience = 0d;
         recollectCoinTimerMs = 0d;
         recollectItemTimerMs = 0d;
+        recollectExperienceTimerMs = 0d;
         recollectPhase = 0;
         recollectTravelElapsedMs = 0d;
         recollectTravelDurationMs = 0d;
