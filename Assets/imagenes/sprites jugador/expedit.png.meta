@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 768786c40b77c1d478882f43294a235d
+guid: 36acb42e98675f44bb4b005ba7936d7d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,45 +123,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 4bb35f35-825a-49bd-9d6e-3117324a0fb7_0
+      name: expedit_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 559
+        y: 541
         width: 1536
-        height: 465
+        height: 483
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df33586c1d69887478a3445c3b22836c
-      internalID: -309581936
+      spriteID: 3230ef12d2f752f4a9b61b595053a037
+      internalID: 563545245
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4bb35f35-825a-49bd-9d6e-3117324a0fb7_1
+      name: expedit_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 0
         width: 1536
-        height: 465
+        height: 540
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbe0b21af8ee1b9478a223acd627c0ca
-      internalID: 1511752802
+      spriteID: 9f23bb282f5caa14098698b21265811d
+      internalID: 1795272990
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: c808c90db9c7a284b988f1eda7a8e095
     internalID: 0
     vertices: []
     indices: 
@@ -180,8 +180,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      4bb35f35-825a-49bd-9d6e-3117324a0fb7_0: -309581936
-      4bb35f35-825a-49bd-9d6e-3117324a0fb7_1: 1511752802
+      expedit_0: 563545245
+      expedit_1: 1795272990
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

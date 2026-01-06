@@ -339,37 +339,9 @@ public class OptionsManager : MonoBehaviour
     {
         try
         {
-            PlayerPrefs.DeleteKey(PlayerProfileKey);
-            PlayerPrefs.Save();
-
             if (GameDataManager.Instance != null)
             {
-                GameDataManager.Instance.LoadPlayerProfile(silent: false);
-
-                // Reset completo de objetos: inventario + equipo.
-                // La forja se alimenta del inventario/equipo, así que quedará vacía al refrescar.
-                InventoryManager inventoryManager = GameDataManager.Instance.InventoryManager;
-                if (inventoryManager != null)
-                {
-                    inventoryManager.ClearInventory();
-                    inventoryManager.NotifyInventoryChanged();
-                }
-
-                EquipmentManager equipmentManager = GameDataManager.Instance.EquipmentManager;
-                if (equipmentManager != null)
-                {
-                    equipmentManager.ClearAllEquippedItems();
-                }
-
-                // Resetear las monedas del jugador al valor inicial configurado en PlayerMoney
-                PlayerMoney playerMoney = GameDataManager.Instance.PlayerMoney;
-                if (playerMoney != null)
-                {
-                    playerMoney.ResetToInitialMoney();
-                }
-
-                // Persistir el estado vacío.
-                GameDataManager.Instance.SavePlayerProfile();
+                GameDataManager.Instance.PerformFullReset(refreshUI: true);
             }
         }
         finally

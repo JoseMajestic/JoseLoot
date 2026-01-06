@@ -1228,36 +1228,20 @@ public class BreedManager : MonoBehaviour
     /// </summary>
     public void OnResetAcceptButtonClicked()
     {
-        PlayerProfileData profile = gameDataManager.GetPlayerProfile();
-        if (profile == null)
-            return;
-        
-        profile.ResetBreedData();
-        
-        // SOLUCIÓN: Resetear las monedas a las monedas iniciales del Inspector cuando se confirma el reset completo
-        if (gameDataManager.PlayerMoney != null)
+        if (gameDataManager == null)
         {
-            // Obtener las monedas iniciales desde PlayerMoney
-            // Necesitamos acceder al campo initialMoney, pero es privado
-            // Usaremos un método público para obtenerlo o establecerlo directamente
-            // Por ahora, usaremos SetMoney con el valor que debería estar en el Inspector
-            // Necesitamos agregar un método en PlayerMoney para obtener initialMoney
-            PlayerMoney playerMoney = gameDataManager.PlayerMoney;
-            if (playerMoney != null)
-            {
-                // Resetear a las monedas iniciales (se obtendrá desde el Inspector)
-                playerMoney.ResetToInitialMoney();
-            }
+            gameDataManager = GameDataManager.Instance;
         }
-        
-        gameDataManager.SavePlayerProfile();
-        
+
+        if (gameDataManager == null)
+            return;
+
+        gameDataManager.PerformFullReset(refreshUI: true);
+
         if (resetConfirmPanel != null)
         {
             resetConfirmPanel.SetActive(false);
         }
-        
-        RefreshAllUI();
     }
     
     /// <summary>
@@ -2166,7 +2150,7 @@ public class BreedManager : MonoBehaviour
     /// <summary>
     /// Actualiza toda la UI del panel BREED.
     /// </summary>
-    private void RefreshAllUI()
+    public void RefreshAllUI()
     {
         RefreshBreedStatsUI();
         RefreshClassTitle();

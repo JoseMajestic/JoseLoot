@@ -615,6 +615,47 @@ public class GameDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Restablece completamente el progreso del jugador y refresca la UI.
+    /// </summary>
+    /// <param name="refreshUI">True para forzar actualización inmediata de las UIs dependientes.</param>
+    public void PerformFullReset(bool refreshUI = true)
+    {
+        PlayerPrefs.DeleteKey(PLAYER_PROFILE_KEY);
+        PlayerPrefs.Save();
+
+        LoadPlayerProfile(silent: false);
+
+        if (inventoryManager != null)
+        {
+            inventoryManager.ClearInventory();
+            inventoryManager.NotifyInventoryChanged();
+        }
+
+        if (equipmentManager != null)
+        {
+            equipmentManager.ClearAllEquippedItems();
+        }
+
+        if (playerMoney != null)
+        {
+            playerMoney.ResetToInitialMoney();
+        }
+
+        SavePlayerProfile();
+
+        if (refreshUI)
+        {
+            RefreshHeroProfileStatistics();
+
+            BreedManager breedManager = FindFirstObjectByType<BreedManager>();
+            if (breedManager != null)
+            {
+                breedManager.RefreshAllUI();
+            }
+        }
+    }
+
+    /// <summary>
     /// Desbloquea un ataque en la biblioteca.
     /// </summary>
     /// <param name="attackName">Nombre del ataque a desbloquear</param>

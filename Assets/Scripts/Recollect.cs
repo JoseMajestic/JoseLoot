@@ -534,10 +534,8 @@ public class Recollect : MonoBehaviour
         if (hasItems)
         {
             ItemInstance item = historyItems[0];
-            string rarity = RarityColorProvider.GetDisplayName(item?.GetRarity());
             string coloredName = ColorizeByRarity(item?.GetRarity(), item?.GetItemName());
-            string coloredRarity = ColorizeByRarity(item?.GetRarity(), rarity);
-            string itemsLine = $"Además obtuvo {coloredName} ({coloredRarity}) por una victoria fascinante.";
+            string itemsLine = $"Además obtuvo {coloredName} por una victoria fascinante.";
             return string.IsNullOrEmpty(rewardsLine) ? itemsLine : $"{rewardsLine}\n{itemsLine}";
         }
 

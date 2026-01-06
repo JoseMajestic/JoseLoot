@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 768786c40b77c1d478882f43294a235d
+guid: fab8a7a9cb3ea9f4bac0f8c44bfea8ed
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 4bb35f35-825a-49bd-9d6e-3117324a0fb7_0
+      name: expedit 2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 559
+        y: 659
         width: 1536
-        height: 465
+        height: 365
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df33586c1d69887478a3445c3b22836c
-      internalID: -309581936
+      spriteID: 49db48c9975c2b94ca595ade81554997
+      internalID: -1867730711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4bb35f35-825a-49bd-9d6e-3117324a0fb7_1
+      name: expedit 2_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 306
         width: 1536
-        height: 465
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,8 +160,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbe0b21af8ee1b9478a223acd627c0ca
-      internalID: 1511752802
+      spriteID: 45ecb4183c0e4d4409baf8a328cc6d38
+      internalID: -1634617267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: expedit 2_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1536
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f9eb956b23f90647aaffbdd77f111f9
+      internalID: -1913938781
       vertices: []
       indices: 
       edges: []
@@ -170,7 +192,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: ce8c1bb4eecf44d408dc33b2dc284419
     internalID: 0
     vertices: []
     indices: 
@@ -180,8 +202,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      4bb35f35-825a-49bd-9d6e-3117324a0fb7_0: -309581936
-      4bb35f35-825a-49bd-9d6e-3117324a0fb7_1: 1511752802
+      expedit 2_0: -1867730711
+      expedit 2_1: -1634617267
+      expedit 2_2: -1913938781
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

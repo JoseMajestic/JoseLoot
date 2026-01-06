@@ -178504,19 +178504,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51cf936fc4bd024abeb2745b21279b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Noria
-  rotationSpeed: 6
-  reverseRotation: 0
+  rotationSpeed: 1.2
+  reverseRotation: 1
   pauseRotation: 0
   cylinderMaterial: {fileID: 2100000, guid: 70c42f4753c24b84f95a2d365a44570a, type: 2}
   levelBackgrounds:
-  - {fileID: 21300000, guid: c8857ead3f6b48d4c9be7c3f1658d4f9, type: 3}
-  - {fileID: 21300000, guid: 98576f8efd997f84cab23f69b0d73fc3, type: 3}
-  - {fileID: -891952256, guid: eb3df25eb6ac5e946aa118db68673f3d, type: 3}
-  - {fileID: 21300000, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
+  - {fileID: 21300000, guid: 6c354ae5a020a8b43ad6617e673ca40f, type: 3}
+  - {fileID: 898450884, guid: c8857ead3f6b48d4c9be7c3f1658d4f9, type: 3}
+  - {fileID: 226721148, guid: c8857ead3f6b48d4c9be7c3f1658d4f9, type: 3}
+  - {fileID: 1947759221, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
   - {fileID: 21300000, guid: ee3b693dccf55574eab10be6628ebe66, type: 3}
+  - {fileID: -309581936, guid: 768786c40b77c1d478882f43294a235d, type: 3}
+  - {fileID: 1511752802, guid: 768786c40b77c1d478882f43294a235d, type: 3}
+  - {fileID: -1442936100, guid: 17e8ab8fd1b28c544a9c0253e5a1eabe, type: 3}
+  - {fileID: 1771977872, guid: 17e8ab8fd1b28c544a9c0253e5a1eabe, type: 3}
+  - {fileID: -759214048, guid: 17e8ab8fd1b28c544a9c0253e5a1eabe, type: 3}
+  - {fileID: 776606339, guid: 8e35bb338c1c364429bf96b215a67d9b, type: 3}
+  - {fileID: -1236701420, guid: 8e35bb338c1c364429bf96b215a67d9b, type: 3}
+  - {fileID: 646958851, guid: 8e35bb338c1c364429bf96b215a67d9b, type: 3}
+  - {fileID: -1110585398, guid: 8e35bb338c1c364429bf96b215a67d9b, type: 3}
+  - {fileID: 762225657, guid: 8e35bb338c1c364429bf96b215a67d9b, type: 3}
+  - {fileID: 157998206, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
+  - {fileID: -895331083, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
+  - {fileID: -693095112, guid: 60e9297c42a5b7f4eb9c2dbcb9815f06, type: 3}
   defaultBackground: {fileID: 21300000, guid: f54531c00655eb3428bd7aab8c36a2ae, type: 3}
-  expeditionBackground: {fileID: 21300000, guid: d5d7a715882215e49852d8490384881c, type: 3}
-  combatBackground: {fileID: 21300000, guid: c1186943ddf8e7545bc2a7a2c2db11a8, type: 3}
+  expeditionBackground: {fileID: 563545245, guid: 36acb42e98675f44bb4b005ba7936d7d, type: 3}
+  combatBackground: {fileID: 55807782, guid: c1186943ddf8e7545bc2a7a2c2db11a8, type: 3}
   panelNavigationManager: {fileID: 1770052688}
   expeditionPanels:
   - {fileID: 1263074659}
@@ -187055,7 +187068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1255.89, y: 10516}
+  m_AnchoredPosition: {x: -1255.89, y: 7455}
   m_SizeDelta: {x: 20.04, y: 3.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1602972245
