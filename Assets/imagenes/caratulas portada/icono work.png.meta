@@ -126,9 +126,9 @@ TextureImporter:
       name: icono work_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 111
         y: 384
-        width: 1024
+        width: 799
         height: 205
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -153,7 +153,7 @@ TextureImporter:
         width: 497
         height: 109
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
